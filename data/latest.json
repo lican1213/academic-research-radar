@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-06T08:38:22.486640+00:00",
-  "status": "ok",
+  "generated_at": "2026-11-06T17:28:48.808441+00:00",
+  "status": "degraded",
   "since": "2026-11-03",
   "source_status": {
     "crossref": {
@@ -11,24 +11,21 @@
       "errors": []
     },
     "arxiv": {
-      "status": "ok",
-      "queries_ok": 4,
+      "status": "failed",
+      "queries_ok": 0,
       "queries_total": 4,
-      "records": 31,
-      "errors": []
+      "records": 0,
+      "errors": [
+        "all:patent AND (all:embedding OR all:semantic): TimeoutError: The read operation timed out",
+        "all:innovation AND all:patent: TimeoutError: The read operation timed out",
+        "all:\"supply chain\" AND (all:resilience OR all:geopolitical): TimeoutError: The read operation timed out",
+        "all:\"artificial intelligence\" AND (all:wages OR all:productivity): TimeoutError: The read operation timed out"
+      ]
     }
   },
-  "scanned_candidates": 294,
-  "prefilter_pass_count": 9,
+  "scanned_candidates": 266,
+  "prefilter_pass_count": 8,
   "prefilter_diagnostics": [
-    {
-      "title": "Impact of tax incentives on corporate patient capital: evidence from income tax preferences and pretax additional deduction on R&D expenditure in China",
-      "project": "P0",
-      "score": 45,
-      "source": "crossref",
-      "event_at": "2026-11-05",
-      "url": "https://doi.org/10.1080/00036846.2026.2754316"
-    },
     {
       "title": "Patient Capital and Green Innovation: AI Attention as a Mediating Mechanism and Corporate Social Responsibility as a Boundary Condition",
       "project": "P0",
@@ -76,237 +73,16 @@
       "source": "crossref",
       "event_at": "2026-11-03",
       "url": "https://doi.org/10.30838/ep.218.405-412"
-    }
-  ],
-  "new_candidates": [
-    {
-      "id": "doi:10.1080/00036846.2026.2754316",
-      "title": "Impact of tax incentives on corporate patient capital: evidence from income tax preferences and pretax additional deduction on R&D expenditure in China",
-      "authors": [
-        "Hang Liu",
-        "Zhenghao Yao",
-        "Qifeng Gu"
-      ],
-      "url": "https://doi.org/10.1080/00036846.2026.2754316",
-      "doi": "10.1080/00036846.2026.2754316",
-      "source": "crossref",
-      "sources": [
-        "crossref"
-      ],
-      "venue": "Applied Economics",
-      "type": "journal-article",
-      "published_at": "2026-11-05",
-      "metadata_created_at": "2026-11-05",
-      "event_at": "2026-11-05",
-      "event_type": "crossref_registration",
-      "version": "",
-      "project": "P0",
-      "eligible": true,
-      "prefilter_score": 45,
-      "change": "newly_selected"
     },
     {
-      "id": "doi:10.37272/jiecr.2026.10.26.5.179",
-      "title": "Patient Capital and Green Innovation: AI Attention as a Mediating Mechanism and Corporate Social Responsibility as a Boundary Condition",
-      "authors": [
-        "Zhu Liu",
-        "Xin Qiao",
-        "Sehwan Oh"
-      ],
-      "url": "https://doi.org/10.37272/jiecr.2026.10.26.5.179",
-      "doi": "10.37272/jiecr.2026.10.26.5.179",
-      "source": "crossref",
-      "sources": [
-        "crossref"
-      ],
-      "venue": "The Journal of Internet Electronic Commerce Resarch",
-      "type": "journal-article",
-      "published_at": "2026-10-31",
-      "metadata_created_at": "2026-11-03",
-      "event_at": "2026-11-03",
-      "event_type": "crossref_registration",
-      "version": "",
-      "project": "P0",
-      "eligible": true,
-      "prefilter_score": 45,
-      "change": "newly_selected"
-    },
-    {
-      "id": "doi:10.1080/1540496x.2026.2752907",
-      "title": "Public Data Openness, Patient Capital, and Corporate Disruptive Innovation",
-      "authors": [
-        "Qiang Wang",
-        "Shanshan Li",
-        "Zhenyue Cao",
-        "Zhaoyi Liu"
-      ],
-      "url": "https://doi.org/10.1080/1540496x.2026.2752907",
-      "doi": "10.1080/1540496x.2026.2752907",
-      "source": "crossref",
-      "sources": [
-        "crossref"
-      ],
-      "venue": "Emerging Markets Finance and Trade",
-      "type": "journal-article",
-      "published_at": "2026-11-05",
-      "metadata_created_at": "2026-11-06",
-      "event_at": "2026-11-06",
-      "event_type": "crossref_registration",
-      "version": "",
-      "project": "P0",
-      "eligible": true,
-      "prefilter_score": 45,
-      "change": "newly_selected"
-    },
-    {
-      "id": "doi:10.62051/ijgem.v10n10.06",
-      "title": "Discussion on Paths to Enhance Supply Chain Resilience Based on ESG Concepts in Light of Global Value Chain Restructuring",
-      "authors": [
-        "Yuanyuan Yang"
-      ],
-      "url": "https://doi.org/10.62051/ijgem.v10n10.06",
-      "doi": "10.62051/ijgem.v10n10.06",
-      "source": "crossref",
-      "sources": [
-        "crossref"
-      ],
-      "venue": "International Journal of Global Economics and Management",
-      "type": "journal-article",
-      "published_at": "2026-11-03",
-      "metadata_created_at": "2026-11-04",
-      "event_at": "2026-11-04",
-      "event_type": "crossref_registration",
-      "version": "",
-      "project": "P1",
-      "eligible": true,
-      "prefilter_score": 73,
-      "change": "newly_selected"
-    },
-    {
-      "id": "doi:10.36719/2706-6185/64/209-213",
-      "title": "The Impact of Global Economic Fragmentation on Foreign Direct Investment Flows: An Empirical Analysis",
-      "authors": [
-        "Nurlan Maharramov"
-      ],
-      "url": "https://doi.org/10.36719/2706-6185/64/209-213",
-      "doi": "10.36719/2706-6185/64/209-213",
-      "source": "crossref",
-      "sources": [
-        "crossref"
-      ],
-      "venue": "ANCIENT LAND",
-      "type": "journal-article",
-      "published_at": "2026-10-27",
-      "metadata_created_at": "2026-11-05",
-      "event_at": "2026-11-05",
-      "event_type": "crossref_registration",
-      "version": "",
-      "project": "P1",
-      "eligible": true,
-      "prefilter_score": 52,
-      "change": "newly_selected"
-    },
-    {
-      "id": "doi:10.31235/osf.io/fkprh",
-      "title": "Role of Industry 4.0 Technologies in Enhancing Supply Chain Resilience of Original Equipment Manufacturers (OEMs): A PLSSEM Based Empirical Investigation",
-      "authors": [
-        "Komal Sharma",
-        "Deepika Rathi",
-        "Jainish Bhagat",
-        "RONAK AJAYKUMAR MEHTA"
-      ],
-      "url": "https://doi.org/10.31235/osf.io/fkprh",
-      "doi": "10.31235/osf.io/fkprh",
-      "source": "crossref",
-      "sources": [
-        "crossref"
-      ],
-      "venue": "",
-      "type": "posted-content",
-      "published_at": "2026-09-17",
-      "metadata_created_at": "2026-11-03",
-      "event_at": "2026-11-03",
-      "event_type": "crossref_registration",
-      "version": "",
-      "project": "P1",
-      "eligible": true,
-      "prefilter_score": 50,
-      "change": "newly_selected"
-    },
-    {
-      "id": "doi:10.30838/ep.218.405-412",
-      "title": "SUPPLY CHAIN RESILIENCE AS A PREREQUISITE FOR EFFECTIVE COMMERCIAL ACTIVITY OF ENTERPRISES",
-      "authors": [
-        "Viacheslav Kuzhel"
-      ],
-      "url": "https://doi.org/10.30838/ep.218.405-412",
-      "doi": "10.30838/ep.218.405-412",
-      "source": "crossref",
-      "sources": [
-        "crossref"
-      ],
-      "venue": "Economic Scope",
-      "type": "journal-article",
-      "published_at": "2026-11-02",
-      "metadata_created_at": "2026-11-03",
-      "event_at": "2026-11-03",
-      "event_type": "crossref_registration",
-      "version": "",
-      "project": "P1",
-      "eligible": true,
-      "prefilter_score": 50,
-      "change": "newly_selected"
-    },
-    {
-      "id": "doi:10.54660/ijmor.2026.5.6.50-60",
       "title": "Supply Chain Resilience and Energy Security under Strait of Hormuz Disruption",
-      "authors": [
-        "Youssef Saad Al-Harby",
-        "Dhurgham Hassan Abid",
-        "Ammer Sinedih Jawad"
-      ],
-      "url": "https://doi.org/10.54660/ijmor.2026.5.6.50-60",
-      "doi": "10.54660/ijmor.2026.5.6.50-60",
-      "source": "crossref",
-      "sources": [
-        "crossref"
-      ],
-      "venue": "International Journal of Management and Organizational Research",
-      "type": "journal-article",
-      "published_at": "2026-01-01",
-      "metadata_created_at": "2026-11-04",
-      "event_at": "2026-11-04",
-      "event_type": "crossref_registration",
-      "version": "",
       "project": "P1",
-      "eligible": true,
-      "prefilter_score": 50,
-      "change": "newly_selected"
-    },
-    {
-      "id": "doi:10.67591/lscm2026.15.1.60",
-      "title": "Managing Global Supply Chains in a Geopolitically Volatile Environment: Risks and Resilience",
-      "authors": [
-        "Chitra Rathore"
-      ],
-      "url": "https://doi.org/10.67591/lscm2026.15.1.60",
-      "doi": "10.67591/lscm2026.15.1.60",
+      "score": 50,
       "source": "crossref",
-      "sources": [
-        "crossref"
-      ],
-      "venue": "International Journal of Logistics &amp; Supply Chain Management Perspectives",
-      "type": "journal-article",
-      "published_at": "2026-06-30",
-      "metadata_created_at": "2026-11-04",
       "event_at": "2026-11-04",
-      "event_type": "crossref_registration",
-      "version": "",
-      "project": "P1",
-      "eligible": true,
-      "prefilter_score": 41,
-      "change": "newly_selected"
+      "url": "https://doi.org/10.54660/ijmor.2026.5.6.50-60"
     }
   ],
+  "new_candidates": [],
   "note": "Metadata candidates only; verify paper content and bibliographic dates at primary sources."
 }

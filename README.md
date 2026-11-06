@@ -40,7 +40,7 @@ python3 -m unittest discover -s tests -v
 python3 radar.py --out data --lookback-days 7
 ```
 
-首次运行默认回溯 7 天，已有扫描状态时默认回溯 3 天，避免因为 GitHub 定时延迟漏掉跨日更新。参数 `--lookback-days` 可用于补扫，最长 30 天。每次运行最多保留 30 个候选；同一 DOI、arXiv ID 或标准化标题合并，并对 arXiv 版本、标题与首次 DOI 出现进行变更识别。Crossref 摘要元数据小修不会触发“新论文”。`data/seen.json` 保存最近 180 天的索引以避免跨次重复推送，输出不转载论文摘要。
+首次运行默认回溯 7 天，已有扫描状态时默认回溯 3 天，避免因为 GitHub 定时延迟漏掉跨日更新。参数 `--lookback-days` 可用于补扫，最长 30 天。每次运行最多保留 30 个候选，额外要求研究主题有至少两个相关维度（例如地缘政治冲击与 OFDI，而非泛泛外国直接投资）；各项目有独立上限，优先 P0。相同 DOI、arXiv ID 或标准化标题合并，并对 arXiv 版本、标题与首次 DOI 出现进行变更识别。Crossref 摘要元数据小修不会触发“新论文”。`data/seen.json` 保存最近 180 天的索引以避免跨次重复推送，输出不转载论文摘要。
 
 失败语义：单一来源不可用标记 `degraded`，全部失败标记 `failed` 并使 Action 失败；失败仍写 `latest.json` 供次日诊断。**没有新增不等于抓取失败；抓取失败也不等于没有新论文。**
 

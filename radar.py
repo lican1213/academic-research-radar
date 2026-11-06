@@ -76,6 +76,7 @@ PROJECT_TERMS = {
 ATOM = "{http://www.w3.org/2005/Atom}"
 KEEP_DAYS = 180
 MAX_CANDIDATES = 30
+PROJECT_CAPS = {"P0": 12, "P1": 7, "P2": 7, "P3": 3, "P4": 3}
 
 
 class _TextExtractor(HTMLParser):
@@ -199,14 +200,39 @@ def arxiv_items(payload: bytes) -> list[dict]:
 def prefilter(item: dict) -> dict:
     title = item["title"].casefold()
     abstract = (item.get("abstract") or "").casefold()
+    combined = title + " " + abstract
+    def any_term(*terms: str) -> bool:
+        return any(term in combined for term in terms)
+
+    patent = any_term("patent", "intellectual property", "专利", "知识产权")
+    long_capital = any_term("patient capital", "long-term investor", "investor horizon", "耐心资本")
+    investor = any_term("institutional investor", "institutional ownership", "机构投资者", "机构持股")
+    innovation = any_term("innovation", "r&d", "研发", "创新")
+    crossborder = any_term("international", "global", "cross-border", "foreign", "overseas", "pct", "多国", "国际", "海外", "跨境")
+    fdi = any_term("foreign direct investment", "ofdi", "overseas subsidiary", "跨境布局", "海外子公司", "对外直接投资")
+    supply = any_term("supply chain", "global value chain", "供应链", "产业链")
+    shock = any_term("geopolitical", "trade war", "tariff", "geoeconomic", "地缘政治", "贸易摩擦")
+    ai = any_term("artificial intelligence", "generative ai", "machine learning", "人工智能", "大模型")
+    eligibility = {
+        "P0": (patent and (crossborder or investor or long_capital or any_term("patent family", "专利族")))
+              or (long_capital and innovation),
+        "P1": (shock and (fdi or supply)) or (ai and (fdi or supply))
+              or (supply and any_term("resilience", "韧性") and crossborder),
+        "P2": (patent and any_term("embedding", "semantic", "text", "similarity", "prior art", "claim", "retrieval", "citation", "突破", "颠覆", "文本", "相似度"))
+              or any_term("突破式创新", "breakthrough innovation", "disruptive innovation"),
+        "P3": investor and innovation,
+        "P4": ai and any_term("wage", "labor", "income", "productivity", "收入", "劳动", "生产率"),
+    }
     scored = {}
     for project, terms in PROJECT_TERMS.items():
         value = sum(weight for term, weight in terms.items() if term in title)
         value += sum(weight // 3 for term, weight in terms.items() if term not in title and term in abstract)
         scored[project] = value
-    best = max(scored, key=lambda p: scored[p])
+    eligible = [project for project in PROJECT_TERMS if eligibility[project]]
+    best = eligible[0] if eligible else max(scored, key=lambda p: scored[p])
     item = dict(item)
     item["project"] = best
+    item["eligible"] = bool(eligible)
     item["prefilter_score"] = min(100, 22 + scored[best])
     return item
 
@@ -255,8 +281,9 @@ def consolidate(items: list[dict]) -> list[dict]:
 def select_new(items: list[dict], seen: dict, now: datetime, *, limit: int = MAX_CANDIDATES) -> tuple[list[dict], dict]:
     state = dict(seen)
     new = []
-    for item in sorted(items, key=lambda p: (-p["prefilter_score"], p["title"])):
-        if item["prefilter_score"] < 40:
+    selected_by_project = {project: 0 for project in PROJECT_CAPS}
+    for item in sorted(items, key=lambda p: (list(PROJECT_CAPS).index(p["project"]), -p["prefilter_score"], p["title"])):
+        if not item.get("eligible") or item["prefilter_score"] < 40:
             continue
         keys = identity_keys(item) + item.get("alternate_ids", [])
         old = next((state[k] for k in keys if k in state), None)
@@ -276,7 +303,9 @@ def select_new(items: list[dict], seen: dict, now: datetime, *, limit: int = MAX
             item = {k: v for k, v in item.items() if k != "abstract"}
             item["change"] = ("new" if not old else "formal_publication_or_doi_added" if newly_published
                               else "new_version" if updated_version else "title_revision")
-            new.append(item)
+            if selected_by_project[item["project"]] < PROJECT_CAPS[item["project"]] and len(new) < limit:
+                new.append(item)
+                selected_by_project[item["project"]] += 1
     cutoff = (now.date() - timedelta(days=KEEP_DAYS)).isoformat()
     state = {k: v for k, v in state.items() if v.get("last_seen", "") >= cutoff}
     return new[:limit], state
@@ -382,17 +411,18 @@ def run(out: Path, now: datetime, lookback_days: int | None = None,
     candidates = consolidate([prefilter(item) for item in cross_items + arxiv_items_result])
     # Crossref registered date and arXiv updated date are events, not a shared publication date.
     candidates = [item for item in candidates if item.get("event_at") and since <= item["event_at"] <= now.date().isoformat()]
-    ranked = sorted(candidates, key=lambda p: (-p["prefilter_score"], p["title"]))
+    ranked = sorted((item for item in candidates if item.get("eligible")),
+                    key=lambda p: (list(PROJECT_CAPS).index(p["project"]), -p["prefilter_score"], p["title"]))
     new, state = select_new(candidates, seen, now)
     report = {
         "generated_at": now.isoformat(), "status": status, "since": since,
         "source_status": sources, "scanned_candidates": len(candidates),
-        "prefilter_pass_count": sum(item["prefilter_score"] >= 40 for item in candidates),
+        "prefilter_pass_count": sum(item["eligible"] and item["prefilter_score"] >= 40 for item in candidates),
         "prefilter_diagnostics": [{
             "title": item["title"], "project": item["project"],
             "score": item["prefilter_score"], "source": item["source"],
             "event_at": item["event_at"], "url": item["url"]
-        } for item in ranked[:8]],
+        } for item in ranked[:12] if item["prefilter_score"] >= 40],
         "new_candidates": new, "note": "Metadata candidates only; verify paper content and bibliographic dates at primary sources."
     }
     (out / "latest.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

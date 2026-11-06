@@ -59,6 +59,40 @@ class ParsingTests(unittest.TestCase):
 
 
 class DedupTests(unittest.TestCase):
+    def test_generic_fdi_paper_is_not_project_relevant(self):
+        item = prefilter({"id": "doi:10.1/test", "title": "Foreign Direct Investment and Growth in Kenya",
+                          "abstract": "Economic growth.", "project": "P1"})
+        self.assertFalse(item["eligible"])
+        new, _ = select_new([item], {}, UTC_NOW)
+        self.assertEqual(new, [])
+
+    def test_supply_chain_without_crossborder_dimension_excluded(self):
+        item = prefilter({"id": "doi:10.1/test", "title": "Supply Chain Resilience in Local Construction",
+                          "abstract": "Resilience in a construction project."})
+        self.assertFalse(item["eligible"])
+
+    def test_crossborder_supply_chain_resilience_is_eligible(self):
+        item = prefilter({"id": "doi:10.1/test", "title": "Global Supply Chain Resilience under Geopolitical Shocks",
+                          "abstract": "Evidence from exporters."})
+        self.assertTrue(item["eligible"])
+        self.assertEqual(item["project"], "P1")
+
+    def test_p0_priority_and_p1_cap(self):
+        generic = {
+            "authors": [], "url": "https://doi.org/10.1000/example", "doi": "10.1000/example",
+            "source": "crossref", "sources": ["crossref"], "venue": "", "type": "journal-article",
+            "published_at": "2026-11-05", "metadata_created_at": "2026-11-05",
+            "event_at": "2026-11-05", "event_type": "crossref_registration", "version": "",
+            "abstract": ""
+        }
+        candidates = [prefilter({**generic, "id": f"doi:10.1/{i}", "doi": f"10.1/{i}",
+                                 "title": f"Global Supply Chain Resilience and Internationalization {i}"}) for i in range(15)]
+        candidates.append(prefilter({**generic, "id": "doi:10.1/p0", "doi": "10.1/p0",
+                                     "title": "International Patent Families and Patient Capital"}))
+        new, _ = select_new(candidates, {}, UTC_NOW)
+        self.assertEqual(new[0]["project"], "P0")
+        self.assertEqual(sum(item["project"] == "P1" for item in new), 7)
+
     def test_crossref_and_arxiv_same_title_merge(self):
         merged = consolidate([prefilter(example_arxiv("v2")), prefilter(example_crossref())])
         self.assertEqual(len(merged), 1)

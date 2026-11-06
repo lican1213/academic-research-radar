@@ -284,8 +284,21 @@ def select_new(items: list[dict], seen: dict, now: datetime, *, limit: int = MAX
 
 def get_url(url: str, *, timeout: int = 20) -> bytes:
     req = urllib.request.Request(url, headers={"User-Agent": "AcademicResearchRadar/0.1 (public metadata researcher)", "Accept": "application/json,application/atom+xml"})
-    with urllib.request.urlopen(req, timeout=timeout) as response:
-        return response.read()
+    for attempt in range(3):
+        try:
+            with urllib.request.urlopen(req, timeout=timeout) as response:
+                return response.read()
+        except urllib.error.HTTPError as error:
+            if error.code not in (429, 502, 503) or attempt == 2:
+                raise
+            # Rate-limit responses can occur on shared GitHub runner IPs.
+            retry_after = error.headers.get("Retry-After") if error.headers else None
+            try:
+                pause = min(8.0, max(1.0, float(retry_after))) if retry_after else 2.0 ** (attempt + 1)
+            except ValueError:
+                pause = 2.0 ** (attempt + 1)
+            time.sleep(pause)
+    raise AssertionError("unreachable")
 
 
 def fetch_crossref(since: str, get=get_url) -> tuple[list[dict], dict]:
@@ -296,7 +309,6 @@ def fetch_crossref(since: str, get=get_url) -> tuple[list[dict], dict]:
         params = urllib.parse.urlencode({
             "query.bibliographic": query, "filter": "from-created-date:" + since,
             "rows": 30, "select": "DOI,title,author,created,published-online,published,published-print,issued,container-title,abstract,type",
-            "sort": "created", "order": "desc",
         })
         try:
             data = json.loads(get("https://api.crossref.org/works?" + params))
@@ -305,7 +317,7 @@ def fetch_crossref(since: str, get=get_url) -> tuple[list[dict], dict]:
             ok += 1
         except (OSError, ValueError, KeyError, TypeError, ET.ParseError) as exc:
             errors.append(f"{query}: {type(exc).__name__}: {str(exc)[:120]}")
-        time.sleep(0.22)  # Public Crossref pool permits 5 req/s; remain sequential.
+        time.sleep(0.75)  # Leave headroom for shared-runner rate limiting.
     return all_items, {"status": "ok" if not errors else "degraded" if ok else "failed",
                        "queries_ok": ok, "queries_total": len(QUERIES),
                        "records": len(all_items), "errors": errors}
@@ -370,10 +382,17 @@ def run(out: Path, now: datetime, lookback_days: int | None = None,
     candidates = consolidate([prefilter(item) for item in cross_items + arxiv_items_result])
     # Crossref registered date and arXiv updated date are events, not a shared publication date.
     candidates = [item for item in candidates if item.get("event_at") and since <= item["event_at"] <= now.date().isoformat()]
+    ranked = sorted(candidates, key=lambda p: (-p["prefilter_score"], p["title"]))
     new, state = select_new(candidates, seen, now)
     report = {
         "generated_at": now.isoformat(), "status": status, "since": since,
         "source_status": sources, "scanned_candidates": len(candidates),
+        "prefilter_pass_count": sum(item["prefilter_score"] >= 40 for item in candidates),
+        "prefilter_diagnostics": [{
+            "title": item["title"], "project": item["project"],
+            "score": item["prefilter_score"], "source": item["source"],
+            "event_at": item["event_at"], "url": item["url"]
+        } for item in ranked[:8]],
         "new_candidates": new, "note": "Metadata candidates only; verify paper content and bibliographic dates at primary sources."
     }
     (out / "latest.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

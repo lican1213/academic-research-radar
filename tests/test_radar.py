@@ -140,6 +140,8 @@ class PipelineTests(unittest.TestCase):
             first = run(folder, UTC_NOW, crossref=self.fake_source([example_crossref()]), arxiv=self.fake_source([]))
             self.assertEqual(first["status"], "ok")
             self.assertEqual(len(first["new_candidates"]), 1)
+            self.assertEqual(first["prefilter_pass_count"], 1)
+            self.assertNotIn("abstract", first["prefilter_diagnostics"][0])
             second = run(folder, UTC_NOW, crossref=self.fake_source([example_crossref()]), arxiv=self.fake_source([]))
             self.assertEqual(second["new_candidates"], [])
             self.assertEqual(json.loads((folder / "latest.json").read_text())["status"], "ok")

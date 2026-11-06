@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-11-06T08:31:35.514165+00:00",
+  "generated_at": "2026-11-06T08:35:24.278838+00:00",
   "status": "ok",
-  "since": "2026-10-30",
+  "since": "2026-11-03",
   "source_status": {
     "crossref": {
       "status": "ok",
@@ -14,13 +14,37 @@
       "status": "ok",
       "queries_ok": 4,
       "queries_total": 4,
-      "records": 32,
+      "records": 31,
       "errors": []
     }
   },
-  "scanned_candidates": 283,
-  "prefilter_pass_count": 56,
+  "scanned_candidates": 294,
+  "prefilter_pass_count": 9,
   "prefilter_diagnostics": [
+    {
+      "title": "Impact of tax incentives on corporate patient capital: evidence from income tax preferences and pretax additional deduction on R&D expenditure in China",
+      "project": "P0",
+      "score": 45,
+      "source": "crossref",
+      "event_at": "2026-11-05",
+      "url": "https://doi.org/10.1080/00036846.2026.2754316"
+    },
+    {
+      "title": "Patient Capital and Green Innovation: AI Attention as a Mediating Mechanism and Corporate Social Responsibility as a Boundary Condition",
+      "project": "P0",
+      "score": 45,
+      "source": "crossref",
+      "event_at": "2026-11-03",
+      "url": "https://doi.org/10.37272/jiecr.2026.10.26.5.179"
+    },
+    {
+      "title": "Public Data Openness, Patient Capital, and Corporate Disruptive Innovation",
+      "project": "P0",
+      "score": 45,
+      "source": "crossref",
+      "event_at": "2026-11-06",
+      "url": "https://doi.org/10.1080/1540496x.2026.2752907"
+    },
     {
       "title": "Discussion on Paths to Enhance Supply Chain Resilience Based on ESG Concepts in Light of Global Value Chain Restructuring",
       "project": "P1",
@@ -28,14 +52,6 @@
       "source": "crossref",
       "event_at": "2026-11-04",
       "url": "https://doi.org/10.62051/ijgem.v10n10.06"
-    },
-    {
-      "title": "The Role Foreign Direct Investment and the Multinational Enterprise in Shaping Neighborhoods: The Case of the European Union",
-      "project": "P1",
-      "score": 56,
-      "source": "crossref",
-      "event_at": "2026-10-30",
-      "url": "https://doi.org/10.46697/001c.173093"
     },
     {
       "title": "The Impact of Global Economic Fragmentation on Foreign Direct Investment Flows: An Empirical Analysis",
@@ -46,434 +62,65 @@
       "url": "https://doi.org/10.36719/2706-6185/64/209-213"
     },
     {
-      "title": "A Fuzzy Markov Chain–Driven Hyper-Heuristic Framework for Multi-Stage Supply Chain Resilience Optimization",
+      "title": "Role of Industry 4.0 Technologies in Enhancing Supply Chain Resilience of Original Equipment Manufacturers (OEMs): A PLSSEM Based Empirical Investigation",
       "project": "P1",
       "score": 50,
       "source": "crossref",
-      "event_at": "2026-11-02",
-      "url": "https://doi.org/10.30919/es2642"
+      "event_at": "2026-11-03",
+      "url": "https://doi.org/10.31235/osf.io/fkprh"
     },
     {
-      "title": "DEVELOPMENT OF A CONSTRUCTION SUPPLY CHAIN RESILIENCE MODEL FOR GIGA PROJECTS IN SAUDI ARABIA",
+      "title": "SUPPLY CHAIN RESILIENCE AS A PREREQUISITE FOR EFFECTIVE COMMERCIAL ACTIVITY OF ENTERPRISES",
       "project": "P1",
       "score": 50,
       "source": "crossref",
-      "event_at": "2026-10-31",
-      "url": "https://doi.org/10.21474/ijar01/24409"
-    },
-    {
-      "title": "Digital Collaboration and Supply Chain Resilience in Prefabricated Construction: A System Dynamics Case Study",
-      "project": "P1",
-      "score": 50,
-      "source": "crossref",
-      "event_at": "2026-11-05",
-      "url": "https://doi.org/10.54097/vmp07513"
-    },
-    {
-      "title": "Enhancing Energy Supply Chain Resilience Through SME Integration: A Practical Framework for Emerging Markets",
-      "project": "P1",
-      "score": 50,
-      "source": "crossref",
-      "event_at": "2026-11-02",
-      "url": "https://doi.org/10.2118/236037-ms"
-    },
-    {
-      "title": "Exploring the effects of supply chain network in improving supply chain resilience",
-      "project": "P1",
-      "score": 50,
-      "source": "crossref",
-      "event_at": "2026-10-30",
-      "url": "https://doi.org/10.1108/jgoss-03-2026-0028"
+      "event_at": "2026-11-03",
+      "url": "https://doi.org/10.30838/ep.218.405-412"
     }
   ],
   "new_candidates": [
     {
-      "id": "doi:10.62051/ijgem.v10n10.06",
-      "title": "Discussion on Paths to Enhance Supply Chain Resilience Based on ESG Concepts in Light of Global Value Chain Restructuring",
+      "id": "doi:10.31235/osf.io/fkprh",
+      "title": "Role of Industry 4.0 Technologies in Enhancing Supply Chain Resilience of Original Equipment Manufacturers (OEMs): A PLSSEM Based Empirical Investigation",
       "authors": [
-        "Yuanyuan Yang"
+        "Komal Sharma",
+        "Deepika Rathi",
+        "Jainish Bhagat",
+        "RONAK AJAYKUMAR MEHTA"
       ],
-      "url": "https://doi.org/10.62051/ijgem.v10n10.06",
-      "doi": "10.62051/ijgem.v10n10.06",
+      "url": "https://doi.org/10.31235/osf.io/fkprh",
+      "doi": "10.31235/osf.io/fkprh",
       "source": "crossref",
       "sources": [
         "crossref"
       ],
-      "venue": "International Journal of Global Economics and Management",
-      "type": "journal-article",
-      "published_at": "2026-11-03",
-      "metadata_created_at": "2026-11-04",
-      "event_at": "2026-11-04",
-      "event_type": "crossref_registration",
-      "version": "",
-      "project": "P1",
-      "prefilter_score": 73,
-      "change": "new"
-    },
-    {
-      "id": "doi:10.46697/001c.173093",
-      "title": "The Role Foreign Direct Investment and the Multinational Enterprise in Shaping Neighborhoods: The Case of the European Union",
-      "authors": [
-        "Marina Papanastassiou"
-      ],
-      "url": "https://doi.org/10.46697/001c.173093",
-      "doi": "10.46697/001c.173093",
-      "source": "crossref",
-      "sources": [
-        "crossref"
-      ],
-      "venue": "AIB Insights",
-      "type": "journal-article",
-      "published_at": "2004-04-01",
-      "metadata_created_at": "2026-10-30",
-      "event_at": "2026-10-30",
-      "event_type": "crossref_registration",
-      "version": "",
-      "project": "P1",
-      "prefilter_score": 56,
-      "change": "new"
-    },
-    {
-      "id": "doi:10.36719/2706-6185/64/209-213",
-      "title": "The Impact of Global Economic Fragmentation on Foreign Direct Investment Flows: An Empirical Analysis",
-      "authors": [
-        "Nurlan Maharramov"
-      ],
-      "url": "https://doi.org/10.36719/2706-6185/64/209-213",
-      "doi": "10.36719/2706-6185/64/209-213",
-      "source": "crossref",
-      "sources": [
-        "crossref"
-      ],
-      "venue": "ANCIENT LAND",
-      "type": "journal-article",
-      "published_at": "2026-10-27",
-      "metadata_created_at": "2026-11-05",
-      "event_at": "2026-11-05",
-      "event_type": "crossref_registration",
-      "version": "",
-      "project": "P1",
-      "prefilter_score": 52,
-      "change": "new"
-    },
-    {
-      "id": "doi:10.30919/es2642",
-      "title": "A Fuzzy Markov Chain–Driven Hyper-Heuristic Framework for Multi-Stage Supply Chain Resilience Optimization",
-      "authors": [
-        "Kassem Danach",
-        "Rushdi Zaiter",
-        "Sofiane Hamrioui",
-        "Abbass Nasser"
-      ],
-      "url": "https://doi.org/10.30919/es2642",
-      "doi": "10.30919/es2642",
-      "source": "crossref",
-      "sources": [
-        "crossref"
-      ],
-      "venue": "Engineered Science",
-      "type": "journal-article",
-      "published_at": "2026-01-01",
-      "metadata_created_at": "2026-11-02",
-      "event_at": "2026-11-02",
-      "event_type": "crossref_registration",
-      "version": "",
-      "project": "P1",
-      "prefilter_score": 50,
-      "change": "new"
-    },
-    {
-      "id": "doi:10.21474/ijar01/24409",
-      "title": "DEVELOPMENT OF A CONSTRUCTION SUPPLY CHAIN RESILIENCE MODEL FOR GIGA PROJECTS IN SAUDI ARABIA",
-      "authors": [
-        "Samhar Samoon"
-      ],
-      "url": "https://doi.org/10.21474/ijar01/24409",
-      "doi": "10.21474/ijar01/24409",
-      "source": "crossref",
-      "sources": [
-        "crossref"
-      ],
-      "venue": "International Journal of Advanced Research",
-      "type": "journal-article",
-      "published_at": "2026-10-31",
-      "metadata_created_at": "2026-10-31",
-      "event_at": "2026-10-31",
-      "event_type": "crossref_registration",
-      "version": "",
-      "project": "P1",
-      "prefilter_score": 50,
-      "alternate_ids": [
-        "doi:10.21474/ijar01/24410"
-      ],
-      "change": "new"
-    },
-    {
-      "id": "doi:10.54097/vmp07513",
-      "title": "Digital Collaboration and Supply Chain Resilience in Prefabricated Construction: A System Dynamics Case Study",
-      "authors": [
-        "Jueming Chen"
-      ],
-      "url": "https://doi.org/10.54097/vmp07513",
-      "doi": "10.54097/vmp07513",
-      "source": "crossref",
-      "sources": [
-        "crossref"
-      ],
-      "venue": "Journal of Innovation and Development",
-      "type": "journal-article",
-      "published_at": "2026-11-03",
-      "metadata_created_at": "2026-11-05",
-      "event_at": "2026-11-05",
-      "event_type": "crossref_registration",
-      "version": "",
-      "project": "P1",
-      "prefilter_score": 50,
-      "change": "new"
-    },
-    {
-      "id": "doi:10.2118/236037-ms",
-      "title": "Enhancing Energy Supply Chain Resilience Through SME Integration: A Practical Framework for Emerging Markets",
-      "authors": [
-        "Sami Al-Washali"
-      ],
-      "url": "https://doi.org/10.2118/236037-ms",
-      "doi": "10.2118/236037-ms",
-      "source": "crossref",
-      "sources": [
-        "crossref"
-      ],
-      "venue": "ADIPEC",
-      "type": "proceedings-article",
-      "published_at": "2026-11-02",
-      "metadata_created_at": "2026-11-02",
-      "event_at": "2026-11-02",
-      "event_type": "crossref_registration",
-      "version": "",
-      "project": "P1",
-      "prefilter_score": 50,
-      "change": "new"
-    },
-    {
-      "id": "doi:10.1108/jgoss-03-2026-0028",
-      "title": "Exploring the effects of supply chain network in improving supply chain resilience",
-      "authors": [
-        "Zuoming Liu"
-      ],
-      "url": "https://doi.org/10.1108/jgoss-03-2026-0028",
-      "doi": "10.1108/jgoss-03-2026-0028",
-      "source": "crossref",
-      "sources": [
-        "crossref"
-      ],
-      "venue": "Journal of Global Operations and Strategic Sourcing",
-      "type": "journal-article",
-      "published_at": "2026-11-02",
-      "metadata_created_at": "2026-10-30",
-      "event_at": "2026-10-30",
-      "event_type": "crossref_registration",
-      "version": "",
-      "project": "P1",
-      "prefilter_score": 50,
-      "change": "new"
-    },
-    {
-      "id": "doi:10.33168/jliss.2026.1101",
-      "title": "IT-Enabled Supply Chain Resilience in Global Logistics Operations: A Scenario-Based Informatics and Service-System Coordination Framework",
-      "authors": [],
-      "url": "https://doi.org/10.33168/jliss.2026.1101",
-      "doi": "10.33168/jliss.2026.1101",
-      "source": "crossref",
-      "sources": [
-        "crossref"
-      ],
-      "venue": "Journal of Logistics, Informatics and Service Science",
-      "type": "journal-article",
-      "published_at": "2026-11-01",
-      "metadata_created_at": "2026-11-01",
-      "event_at": "2026-11-01",
-      "event_type": "crossref_registration",
-      "version": "",
-      "project": "P1",
-      "prefilter_score": 50,
-      "change": "new"
-    },
-    {
-      "id": "doi:10.25236/ajbm.2026.080903",
-      "title": "Identifying and Analyzing Key Factors Influencing Corporate Supply Chain Resilience: A PTOE Framework",
-      "authors": [],
-      "url": "https://doi.org/10.25236/ajbm.2026.080903",
-      "doi": "10.25236/ajbm.2026.080903",
-      "source": "crossref",
-      "sources": [
-        "crossref"
-      ],
-      "venue": "Academic Journal of Business &amp; Management",
-      "type": "journal-article",
-      "published_at": "2026-01-01",
+      "venue": "",
+      "type": "posted-content",
+      "published_at": "2026-09-17",
       "metadata_created_at": "2026-11-03",
       "event_at": "2026-11-03",
       "event_type": "crossref_registration",
       "version": "",
       "project": "P1",
+      "eligible": true,
       "prefilter_score": 50,
       "change": "new"
     },
     {
-      "id": "doi:10.33168/jliss.2026.1114",
-      "title": "Investigation of the Impact of Digital Twin Technology on Strategic Supply Chain Resilience and Enterprise Operational Performance",
-      "authors": [],
-      "url": "https://doi.org/10.33168/jliss.2026.1114",
-      "doi": "10.33168/jliss.2026.1114",
-      "source": "crossref",
-      "sources": [
-        "crossref"
-      ],
-      "venue": "Journal of Logistics, Informatics and Service Science",
-      "type": "journal-article",
-      "published_at": "2026-11-01",
-      "metadata_created_at": "2026-11-01",
-      "event_at": "2026-11-01",
-      "event_type": "crossref_registration",
-      "version": "",
-      "project": "P1",
-      "prefilter_score": 50,
-      "change": "new"
-    },
-    {
-      "id": "doi:10.12677/fin.2026.166065",
-      "title": "Mechanism Analysis of the Impact of Patient Capital on Supply Chain Resilience in Manufacturing Enterprises",
+      "id": "doi:10.54660/ijmor.2026.5.6.50-60",
+      "title": "Supply Chain Resilience and Energy Security under Strait of Hormuz Disruption",
       "authors": [
-        "霄 滕"
+        "Youssef Saad Al-Harby",
+        "Dhurgham Hassan Abid",
+        "Ammer Sinedih Jawad"
       ],
-      "url": "https://doi.org/10.12677/fin.2026.166065",
-      "doi": "10.12677/fin.2026.166065",
+      "url": "https://doi.org/10.54660/ijmor.2026.5.6.50-60",
+      "doi": "10.54660/ijmor.2026.5.6.50-60",
       "source": "crossref",
       "sources": [
         "crossref"
       ],
-      "venue": "Finance",
-      "type": "journal-article",
-      "published_at": "2026-01-01",
-      "metadata_created_at": "2026-11-03",
-      "event_at": "2026-11-03",
-      "event_type": "crossref_registration",
-      "version": "",
-      "project": "P1",
-      "prefilter_score": 50,
-      "alternate_ids": [
-        "doi:10.12677/fin.2026.166065"
-      ],
-      "change": "new"
-    },
-    {
-      "id": "doi:10.30838/ep.218.405-412",
-      "title": "SUPPLY CHAIN RESILIENCE AS A PREREQUISITE FOR EFFECTIVE COMMERCIAL ACTIVITY OF ENTERPRISES",
-      "authors": [
-        "Viacheslav Kuzhel"
-      ],
-      "url": "https://doi.org/10.30838/ep.218.405-412",
-      "doi": "10.30838/ep.218.405-412",
-      "source": "crossref",
-      "sources": [
-        "crossref"
-      ],
-      "venue": "Economic Scope",
-      "type": "journal-article",
-      "published_at": "2026-11-02",
-      "metadata_created_at": "2026-11-03",
-      "event_at": "2026-11-03",
-      "event_type": "crossref_registration",
-      "version": "",
-      "project": "P1",
-      "prefilter_score": 50,
-      "change": "new"
-    },
-    {
-      "id": "doi:10.65080/mgtmscm.v2.cm2602112016",
-      "title": "Supply Chain Digitalization and Supply Chain Resilience in Manufacturing SMES in Italy",
-      "authors": [
-        "Jiyad Shaikh"
-      ],
-      "url": "https://doi.org/10.65080/mgtmscm.v2.cm2602112016",
-      "doi": "10.65080/mgtmscm.v2.cm2602112016",
-      "source": "crossref",
-      "sources": [
-        "crossref"
-      ],
-      "venue": "Majestic Global Trends in Marketing &amp; Supply Chain Management",
-      "type": "journal-article",
-      "published_at": "2026-10-23",
-      "metadata_created_at": "2026-11-02",
-      "event_at": "2026-11-02",
-      "event_type": "crossref_registration",
-      "version": "",
-      "project": "P1",
-      "prefilter_score": 50,
-      "change": "new"
-    },
-    {
-      "id": "doi:10.67591/lscm2026.15.1.59",
-      "title": "The Impact of Climate Change on Supply Chain Resilience",
-      "authors": [
-        "Amal Taha Yassin"
-      ],
-      "url": "https://doi.org/10.67591/lscm2026.15.1.59",
-      "doi": "10.67591/lscm2026.15.1.59",
-      "source": "crossref",
-      "sources": [
-        "crossref"
-      ],
-      "venue": "International Journal of Logistics &amp; Supply Chain Management Perspectives",
-      "type": "journal-article",
-      "published_at": "2026-06-30",
-      "metadata_created_at": "2026-11-04",
-      "event_at": "2026-11-04",
-      "event_type": "crossref_registration",
-      "version": "",
-      "project": "P1",
-      "prefilter_score": 50,
-      "change": "new"
-    },
-    {
-      "id": "doi:10.64083/ste2610808",
-      "title": "数字化转型下装配式建筑供应链韧性提升机理分析",
-      "authors": [
-        "超 盛",
-        "晗 盛"
-      ],
-      "url": "https://doi.org/10.64083/ste2610808",
-      "doi": "10.64083/ste2610808",
-      "source": "crossref",
-      "sources": [
-        "crossref"
-      ],
-      "venue": "科学技术与教育",
-      "type": "journal-article",
-      "published_at": "2026-08-01",
-      "metadata_created_at": "2026-11-06",
-      "event_at": "2026-11-06",
-      "event_type": "crossref_registration",
-      "version": "",
-      "project": "P1",
-      "prefilter_score": 50,
-      "change": "new"
-    },
-    {
-      "id": "doi:10.18402/resci.2026.10.04",
-      "title": "数字化转型对中国能源产业链供应链韧性提升的影响",
-      "authors": [
-        "Shengzhe RUAN",
-        "Jianzhong XIAO",
-        "Siyu WEI"
-      ],
-      "url": "https://doi.org/10.18402/resci.2026.10.04",
-      "doi": "10.18402/resci.2026.10.04",
-      "source": "crossref",
-      "sources": [
-        "crossref"
-      ],
-      "venue": "资源科学",
+      "venue": "International Journal of Management and Organizational Research",
       "type": "journal-article",
       "published_at": "2026-01-01",
       "metadata_created_at": "2026-11-04",
@@ -481,315 +128,8 @@
       "event_type": "crossref_registration",
       "version": "",
       "project": "P1",
+      "eligible": true,
       "prefilter_score": 50,
-      "change": "new"
-    },
-    {
-      "id": "doi:10.1109/ubmk71847.2026.11745354",
-      "title": "A Comparative Analysis of the Term Frequency-Inverse Document Frequency Performance of Different Text Fields in Patent Similarity Detection",
-      "authors": [
-        "Şevval Bilğin",
-        "Halime Nur İzmirli",
-        "Feyza Ayar",
-        "Ebu Yusuf Güven"
-      ],
-      "url": "https://doi.org/10.1109/ubmk71847.2026.11745354",
-      "doi": "10.1109/ubmk71847.2026.11745354",
-      "source": "crossref",
-      "sources": [
-        "crossref"
-      ],
-      "venue": "2026 11th International Conference on Computer Science and Engineering (UBMK)",
-      "type": "proceedings-article",
-      "published_at": "2026-09-01",
-      "metadata_created_at": "2026-10-30",
-      "event_at": "2026-10-30",
-      "event_type": "crossref_registration",
-      "version": "",
-      "project": "P2",
-      "prefilter_score": 47,
-      "change": "new"
-    },
-    {
-      "id": "doi:10.68861/ijas.v27i1-2.438",
-      "title": "Analyzing Foreign Direct Investment Disparities in Africa: A Regional Perspective:",
-      "authors": [
-        "Jyoti Gupta",
-        "A. S. Yaruingam"
-      ],
-      "url": "https://doi.org/10.68861/ijas.v27i1-2.438",
-      "doi": "10.68861/ijas.v27i1-2.438",
-      "source": "crossref",
-      "sources": [
-        "crossref"
-      ],
-      "venue": "IJAS Indian Journal of African Studies",
-      "type": "journal-article",
-      "published_at": "2025-04-01",
-      "metadata_created_at": "2026-11-02",
-      "event_at": "2026-11-02",
-      "event_type": "crossref_registration",
-      "version": "",
-      "project": "P1",
-      "prefilter_score": 45,
-      "change": "new"
-    },
-    {
-      "id": "doi:10.61421/ijssmer.2026.4511",
-      "title": "CLIMATE CHANGE, FOREIGN DIRECT INVESTMENT AND FISCAL SUSTAINABILITY IN SUB-SAHARAN AFRICA",
-      "authors": [
-        "Rahab Kinuthia",
-        "Cornelius Serem"
-      ],
-      "url": "https://doi.org/10.61421/ijssmer.2026.4511",
-      "doi": "10.61421/ijssmer.2026.4511",
-      "source": "crossref",
-      "sources": [
-        "crossref"
-      ],
-      "venue": "International Journal of Social Science, Management and Economics Research",
-      "type": "journal-article",
-      "published_at": "2026-10-31",
-      "metadata_created_at": "2026-11-03",
-      "event_at": "2026-11-03",
-      "event_type": "crossref_registration",
-      "version": "",
-      "project": "P1",
-      "prefilter_score": 45,
-      "change": "new"
-    },
-    {
-      "id": "doi:10.3390/jrfm19110884",
-      "title": "Digital Media Information Risk and Foreign Direct Investment in GCC Markets: A Wavelet-Denoising and Correspondence-Analysis Approach with Evidence from Saudi Arabia",
-      "authors": [
-        "Majed S. Balalaa"
-      ],
-      "url": "https://doi.org/10.3390/jrfm19110884",
-      "doi": "10.3390/jrfm19110884",
-      "source": "crossref",
-      "sources": [
-        "crossref"
-      ],
-      "venue": "Journal of Risk and Financial Management",
-      "type": "journal-article",
-      "published_at": "2026-11-03",
-      "metadata_created_at": "2026-11-04",
-      "event_at": "2026-11-04",
-      "event_type": "crossref_registration",
-      "version": "",
-      "project": "P1",
-      "prefilter_score": 45,
-      "change": "new"
-    },
-    {
-      "id": "doi:10.47814/3225vp18",
-      "title": "Does Foreign Direct Investment Improve Healthcare Outcomes?",
-      "authors": [
-        "Hruday Wadhwa"
-      ],
-      "url": "https://doi.org/10.47814/3225vp18",
-      "doi": "10.47814/3225vp18",
-      "source": "crossref",
-      "sources": [
-        "crossref"
-      ],
-      "venue": "International Journal of Social Science Research and Review",
-      "type": "journal-article",
-      "published_at": "2026-11-03",
-      "metadata_created_at": "2026-11-03",
-      "event_at": "2026-11-03",
-      "event_type": "crossref_registration",
-      "version": "",
-      "project": "P1",
-      "prefilter_score": 45,
-      "change": "new"
-    },
-    {
-      "id": "doi:10.1016/j.frl.2026.111034",
-      "title": "ESG investment and employment in the high-tech industry: examining the mediating role of foreign direct investment",
-      "authors": [
-        "Haitian Zhang",
-        "Benxue Wang"
-      ],
-      "url": "https://doi.org/10.1016/j.frl.2026.111034",
-      "doi": "10.1016/j.frl.2026.111034",
-      "source": "crossref",
-      "sources": [
-        "crossref"
-      ],
-      "venue": "Finance Research Letters",
-      "type": "journal-article",
-      "published_at": "2026-12-01",
-      "metadata_created_at": "2026-11-01",
-      "event_at": "2026-11-01",
-      "event_type": "crossref_registration",
-      "version": "",
-      "project": "P1",
-      "prefilter_score": 45,
-      "change": "new"
-    },
-    {
-      "id": "doi:10.5040/9798216501763.ch04",
-      "title": "Ecotourism, Foreign Direct Investment, And the Costa Rican Model",
-      "authors": [],
-      "url": "https://doi.org/10.5040/9798216501763.ch04",
-      "doi": "10.5040/9798216501763.ch04",
-      "source": "crossref",
-      "sources": [
-        "crossref"
-      ],
-      "venue": "Ecotourism Development in Costa Rica",
-      "type": "other",
-      "published_at": "2012-01-01",
-      "metadata_created_at": "2026-10-30",
-      "event_at": "2026-10-30",
-      "event_type": "crossref_registration",
-      "version": "",
-      "project": "P1",
-      "prefilter_score": 45,
-      "change": "new"
-    },
-    {
-      "id": "doi:10.9734/jemt/2026/v32i111486",
-      "title": "Foreign Direct Investment and Economic Growth in Kenya",
-      "authors": [
-        "Wycliffe Nyaemo Motende"
-      ],
-      "url": "https://doi.org/10.9734/jemt/2026/v32i111486",
-      "doi": "10.9734/jemt/2026/v32i111486",
-      "source": "crossref",
-      "sources": [
-        "crossref"
-      ],
-      "venue": "Journal of Economics, Management and Trade",
-      "type": "journal-article",
-      "published_at": "2026-11-05",
-      "metadata_created_at": "2026-11-05",
-      "event_at": "2026-11-05",
-      "event_type": "crossref_registration",
-      "version": "",
-      "project": "P1",
-      "prefilter_score": 45,
-      "change": "new"
-    },
-    {
-      "id": "doi:10.56201/wjfir.v10.no10.2026.pg.31.42",
-      "title": "Foreign Direct Investment and Exchange Rate on Macroeconomic Performance in Nigeria",
-      "authors": [
-        "C. S. Oparandu"
-      ],
-      "url": "https://doi.org/10.56201/wjfir.v10.no10.2026.pg.31.42",
-      "doi": "10.56201/wjfir.v10.no10.2026.pg.31.42",
-      "source": "crossref",
-      "sources": [
-        "crossref"
-      ],
-      "venue": "WORLD JOURNAL OF FINANCE AND INVESTMENT RESEARCH",
-      "type": "journal-article",
-      "published_at": "2026-11-04",
-      "metadata_created_at": "2026-11-04",
-      "event_at": "2026-11-04",
-      "event_type": "crossref_registration",
-      "version": "",
-      "project": "P1",
-      "prefilter_score": 45,
-      "change": "new"
-    },
-    {
-      "id": "doi:10.1002/sd.71864",
-      "title": "Foreign Direct Investment, Institutional Quality, and Sustainability‐Development Configurations: Evidence From Eight ASEAN Economies",
-      "authors": [
-        "Tin Maw Maw Tun",
-        "Paravee Maneejuk",
-        "Woraphon Yamaka"
-      ],
-      "url": "https://doi.org/10.1002/sd.71864",
-      "doi": "10.1002/sd.71864",
-      "source": "crossref",
-      "sources": [
-        "crossref"
-      ],
-      "venue": "Sustainable Development",
-      "type": "journal-article",
-      "published_at": "2026-11-03",
-      "metadata_created_at": "2026-11-03",
-      "event_at": "2026-11-03",
-      "event_type": "crossref_registration",
-      "version": "",
-      "project": "P1",
-      "prefilter_score": 45,
-      "change": "new"
-    },
-    {
-      "id": "doi:10.56201/wjfir.v10.no10.2026.pg.43.55",
-      "title": "Foreign Direct Investment, Stock Market Performance and Economic Growth: Evidence Form Nigeria",
-      "authors": [
-        "Dan-Azumi Umar"
-      ],
-      "url": "https://doi.org/10.56201/wjfir.v10.no10.2026.pg.43.55",
-      "doi": "10.56201/wjfir.v10.no10.2026.pg.43.55",
-      "source": "crossref",
-      "sources": [
-        "crossref"
-      ],
-      "venue": "WORLD JOURNAL OF FINANCE AND INVESTMENT RESEARCH",
-      "type": "journal-article",
-      "published_at": "2026-11-04",
-      "metadata_created_at": "2026-11-04",
-      "event_at": "2026-11-04",
-      "event_type": "crossref_registration",
-      "version": "",
-      "project": "P1",
-      "prefilter_score": 45,
-      "change": "new"
-    },
-    {
-      "id": "doi:10.33545/26633140.2026.v8.i11a.88055",
-      "title": "Foreign direct investment, technology diffusion and economic growth in Iraq: Evidence from Johansen cointegration and Toda–Yamamoto causality, 2004–2024",
-      "authors": [
-        "Abbas Mahdi Kadhim",
-        "Fakhri Mahdi Hamad",
-        "Salam Yaseen Taha",
-        "Laith Ali Zgair"
-      ],
-      "url": "https://doi.org/10.33545/26633140.2026.v8.i11a.88055",
-      "doi": "10.33545/26633140.2026.v8.i11a.88055",
-      "source": "crossref",
-      "sources": [
-        "crossref"
-      ],
-      "venue": "International Journal of Foreign Trade and International Business",
-      "type": "journal-article",
-      "published_at": "2026-11-01",
-      "metadata_created_at": "2026-11-04",
-      "event_at": "2026-11-04",
-      "event_type": "crossref_registration",
-      "version": "",
-      "project": "P1",
-      "prefilter_score": 45,
-      "change": "new"
-    },
-    {
-      "id": "doi:10.1016/j.inteco.2026.100760",
-      "title": "Foreign direct investment, trade, and endogenous economic growth: investigating the contingent growth effects of openness",
-      "authors": [
-        "Fatih Ciftci"
-      ],
-      "url": "https://doi.org/10.1016/j.inteco.2026.100760",
-      "doi": "10.1016/j.inteco.2026.100760",
-      "source": "crossref",
-      "sources": [
-        "crossref"
-      ],
-      "venue": "International Economics",
-      "type": "journal-article",
-      "published_at": "2026-11-01",
-      "metadata_created_at": "2026-11-06",
-      "event_at": "2026-11-06",
-      "event_type": "crossref_registration",
-      "version": "",
-      "project": "P1",
-      "prefilter_score": 45,
       "change": "new"
     }
   ],

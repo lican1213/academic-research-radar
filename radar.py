@@ -1,0 +1,400 @@
+"""Daily candidate finder for economics research; metadata is not a paper review."""
+
+from __future__ import annotations
+
+import argparse
+import hashlib
+import html
+import json
+import re
+import time
+import unicodedata
+import urllib.error
+import urllib.parse
+import urllib.request
+import xml.etree.ElementTree as ET
+from datetime import datetime, timedelta, timezone
+from html.parser import HTMLParser
+from pathlib import Path
+
+
+QUERIES = [
+    "patient capital innovation",
+    "institutional investors patent innovation",
+    "international patent family",
+    "patent PCT national phase",
+    "geopolitical risk foreign direct investment",
+    "supply chain resilience multinational firms",
+    "patent text embedding innovation",
+    "耐心资本 创新",
+    "国际专利 布局",
+    "跨境供应链 韧性",
+]
+
+ARXIV_QUERIES = [
+    'all:patent AND (all:embedding OR all:semantic)',
+    'all:innovation AND all:patent',
+    'all:"supply chain" AND (all:resilience OR all:geopolitical)',
+    'all:"artificial intelligence" AND (all:wages OR all:productivity)',
+]
+
+PROJECT_TERMS = {
+    "P0": {
+        "patient capital": 23, "long-term investor": 17,
+        "institutional investor": 15, "intellectual property": 13,
+        "international patent": 25, "patent family": 23,
+        "pct national phase": 32, "patent grant": 15,
+        "耐心资本": 26, "机构投资者": 15, "专利国际": 27,
+        "专利族": 19, "知识产权": 12, "patent": 7,
+    },
+    "P1": {
+        "geopolitical risk": 23, "foreign direct investment": 23,
+        "overseas subsidiary": 25, "supply chain resilience": 28,
+        "global value chain": 16, "multinational": 11,
+        "地缘政治": 23, "跨境布局": 24, "海外子公司": 25,
+        "供应链韧性": 28, "对外直接投资": 23,
+    },
+    "P2": {
+        "patent embedding": 27, "patent text": 23,
+        "prior art retrieval": 24, "patent similarity": 25,
+        "breakthrough innovation": 20, "disruptive innovation": 15,
+        "patent citation": 14, "cross-lingual": 14,
+        "专利文本": 25, "突破式创新": 22, "渐进式创新": 19,
+    },
+    "P3": {
+        "institutional ownership": 20, "corporate governance": 16,
+        "digital transformation": 14, "investor horizon": 20,
+        "企业创新": 15, "机构持股": 20,
+    },
+    "P4": {
+        "ai wage": 22, "artificial intelligence productivity": 22,
+        "labor share": 15, "income inequality": 15,
+        "新质生产力": 16, "劳动收入": 20,
+    },
+}
+
+ATOM = "{http://www.w3.org/2005/Atom}"
+KEEP_DAYS = 180
+MAX_CANDIDATES = 30
+
+
+class _TextExtractor(HTMLParser):
+    def __init__(self) -> None:
+        super().__init__()
+        self.bits: list[str] = []
+
+    def handle_data(self, data: str) -> None:
+        self.bits.append(data)
+
+
+def strip_html(value: str) -> str:
+    parser = _TextExtractor()
+    parser.feed(html.unescape(value))
+    return re.sub(r"\s+", " ", " ".join(parser.bits)).strip()
+
+
+def normalize_title(title: str) -> str:
+    title = unicodedata.normalize("NFKC", title).casefold()
+    return re.sub(r"[^\w]+", "", title, flags=re.UNICODE).replace("_", "")
+
+
+def iso_date(value: object) -> str | None:
+    if not value:
+        return None
+    if isinstance(value, dict):
+        parts = value.get("date-parts", [[]])
+        if not parts or not parts[0]:
+            return None
+        nums = parts[0]
+        try:
+            return f"{int(nums[0]):04d}-{int(nums[1]) if len(nums) > 1 else 1:02d}-{int(nums[2]) if len(nums) > 2 else 1:02d}"
+        except (TypeError, ValueError, IndexError):
+            return None
+    try:
+        return datetime.fromisoformat(str(value).replace("Z", "+00:00")).date().isoformat()
+    except ValueError:
+        return None
+
+
+def first_date(item: dict, fields: tuple[str, ...]) -> str | None:
+    for field in fields:
+        date = iso_date(item.get(field))
+        if date:
+            return date
+    return None
+
+
+def canonical_arxiv_id(url: str) -> tuple[str, str]:
+    raw = url.split("/abs/")[-1].split("/pdf/")[-1].split("?")[0]
+    match = re.search(r"(\d{4}\.\d{4,5}|[a-z.\-]+/\d{7})(v\d+)?$", raw, re.I)
+    if not match:
+        return raw, "v1"
+    return match.group(1), match.group(2) or "v1"
+
+
+def crossref_item(item: dict) -> dict | None:
+    titles = item.get("title") or []
+    title = strip_html(str(titles[0])) if titles else ""
+    doi = str(item.get("DOI") or "").strip().lower()
+    if not title or not doi:
+        return None
+    authors = []
+    for author in item.get("author") or []:
+        name = " ".join(str(author.get(x, "")).strip() for x in ("given", "family")).strip()
+        if name:
+            authors.append(name)
+    outlet = item.get("container-title") or []
+    created = first_date(item, ("created",))
+    published = first_date(item, ("published-online", "published", "issued", "published-print"))
+    return {
+        "id": "doi:" + doi,
+        "title": title,
+        "authors": authors[:12],
+        "url": "https://doi.org/" + doi,
+        "doi": doi,
+        "source": "crossref",
+        "sources": ["crossref"],
+        "venue": str(outlet[0]) if outlet else "",
+        "type": str(item.get("type") or ""),
+        "published_at": published,
+        "metadata_created_at": created,
+        "event_at": created,
+        "event_type": "crossref_registration",
+        "version": "",
+        "abstract": strip_html(str(item.get("abstract") or ""))[:1800],
+    }
+
+
+def arxiv_items(payload: bytes) -> list[dict]:
+    root = ET.fromstring(payload)
+    items = []
+    for entry in root.findall(ATOM + "entry"):
+        title = " ".join((entry.findtext(ATOM + "title") or "").split())
+        url = entry.findtext(ATOM + "id") or ""
+        if not title or not url:
+            continue
+        ident, version = canonical_arxiv_id(url)
+        authors = [" ".join((a.findtext(ATOM + "name") or "").split())
+                   for a in entry.findall(ATOM + "author")]
+        items.append({
+            "id": "arxiv:" + ident,
+            "title": title,
+            "authors": [a for a in authors if a][:12],
+            "url": "https://arxiv.org/abs/" + ident,
+            "doi": "",
+            "source": "arxiv",
+            "sources": ["arxiv"],
+            "venue": "arXiv",
+            "type": "preprint",
+            "published_at": iso_date(entry.findtext(ATOM + "published")),
+            "metadata_created_at": None,
+            "event_at": iso_date(entry.findtext(ATOM + "updated")),
+            "event_type": "arxiv_version_update",
+            "version": version,
+            "abstract": " ".join((entry.findtext(ATOM + "summary") or "").split())[:1800],
+        })
+    return items
+
+
+def prefilter(item: dict) -> dict:
+    title = item["title"].casefold()
+    abstract = (item.get("abstract") or "").casefold()
+    scored = {}
+    for project, terms in PROJECT_TERMS.items():
+        value = sum(weight for term, weight in terms.items() if term in title)
+        value += sum(weight // 3 for term, weight in terms.items() if term not in title and term in abstract)
+        scored[project] = value
+    best = max(scored, key=lambda p: scored[p])
+    item = dict(item)
+    item["project"] = best
+    item["prefilter_score"] = min(100, 22 + scored[best])
+    return item
+
+
+def fingerprint(item: dict) -> str:
+    # Exclude metadata timestamps and abstracts: indexing churn is not a paper revision.
+    content = "\0".join((normalize_title(item["title"]), item.get("version") or ""))
+    return hashlib.sha256(content.encode("utf-8")).hexdigest()[:20]
+
+
+def identity_keys(item: dict) -> list[str]:
+    result = [item["id"]]
+    norm = normalize_title(item["title"])
+    if norm:
+        result.append("title:" + norm)
+    return result
+
+
+def consolidate(items: list[dict]) -> list[dict]:
+    grouped: dict[str, dict] = {}
+    for item in items:
+        key = normalize_title(item["title"]) or item["id"]
+        previous = grouped.get(key)
+        if previous is None:
+            grouped[key] = item
+            continue
+        # Prefer the journal's canonical DOI while preserving the preprint source.
+        preferred = item if item.get("doi") and not previous.get("doi") else previous
+        other = previous if preferred is item else item
+        preferred = dict(preferred)
+        preferred["sources"] = sorted(set(preferred["sources"] + other["sources"]))
+        preferred["alternate_ids"] = sorted(set(
+            preferred.get("alternate_ids", []) + other.get("alternate_ids", []) + [other["id"]]
+        ))
+        if other.get("version") and not preferred.get("version"):
+            preferred["version"] = other["version"]
+        if len(other.get("abstract") or "") > len(preferred.get("abstract") or ""):
+            preferred["abstract"] = other["abstract"]
+        if other.get("event_at") and (not preferred.get("event_at") or other["event_at"] > preferred["event_at"]):
+            preferred["event_at"] = other["event_at"]
+            preferred["event_type"] = other["event_type"]
+        grouped[key] = preferred
+    return list(grouped.values())
+
+
+def select_new(items: list[dict], seen: dict, now: datetime, *, limit: int = MAX_CANDIDATES) -> tuple[list[dict], dict]:
+    state = dict(seen)
+    new = []
+    for item in sorted(items, key=lambda p: (-p["prefilter_score"], p["title"])):
+        if item["prefilter_score"] < 40:
+            continue
+        keys = identity_keys(item) + item.get("alternate_ids", [])
+        old = next((state[k] for k in keys if k in state), None)
+        title_norm = normalize_title(item["title"])
+        version = item.get("version") or (old.get("version", "") if old else "")
+        doi = item.get("doi") or (old.get("doi", "") if old else "")
+        record = {"fingerprint": fingerprint({**item, "version": version}),
+                  "title_norm": title_norm, "version": version, "doi": doi,
+                  "last_seen": now.date().isoformat()}
+        for key in keys:
+            state[key] = record
+        updated_version = bool(old and item.get("version") and old.get("version") and item["version"] != old["version"])
+        changed_title = bool(old and old.get("title_norm") and old["title_norm"] != title_norm)
+        newly_published = bool(old and "doi" in old and item.get("doi") and not old.get("doi"))
+        legacy_changed = bool(old and "title_norm" not in old and old.get("fingerprint") != record["fingerprint"])
+        if not old or updated_version or changed_title or newly_published or legacy_changed:
+            item = {k: v for k, v in item.items() if k != "abstract"}
+            item["change"] = ("new" if not old else "formal_publication_or_doi_added" if newly_published
+                              else "new_version" if updated_version else "title_revision")
+            new.append(item)
+    cutoff = (now.date() - timedelta(days=KEEP_DAYS)).isoformat()
+    state = {k: v for k, v in state.items() if v.get("last_seen", "") >= cutoff}
+    return new[:limit], state
+
+
+def get_url(url: str, *, timeout: int = 20) -> bytes:
+    req = urllib.request.Request(url, headers={"User-Agent": "AcademicResearchRadar/0.1 (public metadata researcher)", "Accept": "application/json,application/atom+xml"})
+    with urllib.request.urlopen(req, timeout=timeout) as response:
+        return response.read()
+
+
+def fetch_crossref(since: str, get=get_url) -> tuple[list[dict], dict]:
+    all_items = []
+    errors = []
+    ok = 0
+    for query in QUERIES:
+        params = urllib.parse.urlencode({
+            "query.bibliographic": query, "filter": "from-created-date:" + since,
+            "rows": 30, "select": "DOI,title,author,created,published-online,published,published-print,issued,container-title,abstract,type",
+            "sort": "created", "order": "desc",
+        })
+        try:
+            data = json.loads(get("https://api.crossref.org/works?" + params))
+            records = data["message"]["items"]
+            all_items.extend(row for obj in records if (row := crossref_item(obj)))
+            ok += 1
+        except (OSError, ValueError, KeyError, TypeError, ET.ParseError) as exc:
+            errors.append(f"{query}: {type(exc).__name__}: {str(exc)[:120]}")
+        time.sleep(0.22)  # Public Crossref pool permits 5 req/s; remain sequential.
+    return all_items, {"status": "ok" if not errors else "degraded" if ok else "failed",
+                       "queries_ok": ok, "queries_total": len(QUERIES),
+                       "records": len(all_items), "errors": errors}
+
+
+def fetch_arxiv(since: str, get=get_url) -> tuple[list[dict], dict]:
+    all_items = []
+    errors = []
+    ok = 0
+    for n, query in enumerate(ARXIV_QUERIES):
+        if n:
+            time.sleep(3)  # arXiv asks for a 3s interval between requests.
+        params = urllib.parse.urlencode({"search_query": query, "start": 0, "max_results": 30,
+                                         "sortBy": "lastUpdatedDate", "sortOrder": "descending"})
+        try:
+            all_items.extend(item for item in arxiv_items(get("https://export.arxiv.org/api/query?" + params))
+                             if item["event_at"] and item["event_at"] >= since)
+            ok += 1
+        except (OSError, ValueError, KeyError, TypeError, ET.ParseError) as exc:
+            errors.append(f"{query}: {type(exc).__name__}: {str(exc)[:120]}")
+    return all_items, {"status": "ok" if not errors else "degraded" if ok else "failed",
+                       "queries_ok": ok, "queries_total": len(ARXIV_QUERIES),
+                       "records": len(all_items), "errors": errors}
+
+
+def markdown_report(report: dict) -> str:
+    result = ["# Academic Research Radar — " + report["generated_at"], "",
+              f"**Status:** {report['status']}; **New or changed candidates:** {len(report['new_candidates'])}", "",
+              "This is metadata triage, not a verified reading or recommendation.", ""]
+    for name, status in report["source_status"].items():
+        result.append(f"- {name}: {status['status']}; {status['queries_ok']}/{status['queries_total']} queries; {status['records']} records")
+        for error in status["errors"]:
+            result.append(f"  - Error: {error}")
+    result.extend(["", "## New or revised candidates", ""])
+    for item in report["new_candidates"]:
+        safe_title = item["title"].replace("[", r"\[").replace("]", r"\]")
+        result.append(f"- [{safe_title}]({item['url']}) — {item['project']}, prefilter {item['prefilter_score']}, {item['event_type']} {item['event_at']}, {item['change']}")
+    if not report["new_candidates"]:
+        result.append("None passed the metadata prefilter. This does not imply no relevant papers exist.")
+    result.append("")
+    return "\n".join(result)
+
+
+def run(out: Path, now: datetime, lookback_days: int | None = None,
+        crossref=fetch_crossref, arxiv=fetch_arxiv) -> dict:
+    out.mkdir(parents=True, exist_ok=True)
+    seen_file = out / "seen.json"
+    if seen_file.exists():
+        seen = json.loads(seen_file.read_text(encoding="utf-8"))
+        if not isinstance(seen, dict):
+            raise ValueError("seen.json is not an object")
+    else:
+        seen = {}
+    days = lookback_days if lookback_days is not None else (3 if seen else 7)
+    since = (now.date() - timedelta(days=days)).isoformat()
+    cross_items, cross_status = crossref(since)
+    arxiv_items_result, arxiv_status = arxiv(since)
+    sources = {"crossref": cross_status, "arxiv": arxiv_status}
+    successful = sum(status["queries_ok"] for status in sources.values())
+    total = sum(status["queries_total"] for status in sources.values())
+    status = "failed" if successful == 0 else "ok" if successful == total else "degraded"
+    candidates = consolidate([prefilter(item) for item in cross_items + arxiv_items_result])
+    # Crossref registered date and arXiv updated date are events, not a shared publication date.
+    candidates = [item for item in candidates if item.get("event_at") and since <= item["event_at"] <= now.date().isoformat()]
+    new, state = select_new(candidates, seen, now)
+    report = {
+        "generated_at": now.isoformat(), "status": status, "since": since,
+        "source_status": sources, "scanned_candidates": len(candidates),
+        "new_candidates": new, "note": "Metadata candidates only; verify paper content and bibliographic dates at primary sources."
+    }
+    (out / "latest.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    (out / "latest.md").write_text(markdown_report(report), encoding="utf-8")
+    # On complete outage keep the old seen state; recovered sources must still be discoverable.
+    if successful:
+        seen_file.write_text(json.dumps(state, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    return report
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--out", type=Path, default=Path("data"))
+    parser.add_argument("--lookback-days", type=int)
+    args = parser.parse_args()
+    if args.lookback_days is not None and not 1 <= args.lookback_days <= 30:
+        parser.error("--lookback-days must be from 1 to 30")
+    report = run(args.out, datetime.now(timezone.utc), args.lookback_days)
+    print(json.dumps({k: v for k, v in report.items() if k != "new_candidates"}, ensure_ascii=False))
+    return 2 if report["status"] == "failed" else 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

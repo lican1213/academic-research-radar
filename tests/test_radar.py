@@ -93,6 +93,32 @@ class DedupTests(unittest.TestCase):
         self.assertEqual(new[0]["project"], "P0")
         self.assertEqual(sum(item["project"] == "P1" for item in new), 7)
 
+    def test_overflow_does_not_mark_undelivered_candidate_as_emitted(self):
+        prototype = {
+            "authors": [], "url": "https://doi.org/10.1/x", "doi": "10.1/x",
+            "source": "crossref", "sources": ["crossref"], "venue": "", "type": "journal-article",
+            "published_at": "2026-11-05", "metadata_created_at": "2026-11-05",
+            "event_at": "2026-11-05", "event_type": "crossref_registration", "version": "",
+            "abstract": ""
+        }
+        items = [prefilter({**prototype, "id": f"doi:10.1/{i}", "doi": f"10.1/{i}",
+                            "title": f"Global Supply Chain Resilience and Trade Routes {i}"}) for i in range(8)]
+        first, state = select_new(items, {}, UTC_NOW)
+        self.assertEqual(len(first), 7)
+        withheld = next(item for item in items if item["id"] not in {a["id"] for a in first})
+        self.assertFalse(state[withheld["id"]]["emitted"])
+        second, _ = select_new([withheld], state, UTC_NOW)
+        self.assertEqual(second[0]["change"], "newly_selected")
+
+    def test_legacy_seen_record_without_emitted_flag_is_recovered(self):
+        item = prefilter(example_crossref())
+        legacy = {item["id"]: {"fingerprint": fingerprint(item),
+                               "title_norm": normalize_title(item["title"]),
+                               "doi": item["doi"], "version": "", "last_seen": "2026-11-05"}}
+        recovered, updated = select_new([item], legacy, UTC_NOW)
+        self.assertEqual(recovered[0]["change"], "newly_selected")
+        self.assertTrue(updated[item["id"]]["emitted"])
+
     def test_crossref_and_arxiv_same_title_merge(self):
         merged = consolidate([prefilter(example_arxiv("v2")), prefilter(example_crossref())])
         self.assertEqual(len(merged), 1)
@@ -155,7 +181,7 @@ class DedupTests(unittest.TestCase):
         item = prefilter(example_crossref())
         old = {"title:" + normalize_title(item["title"]): {
             "fingerprint": fingerprint(item), "title_norm": normalize_title(item["title"]),
-            "doi": item["doi"], "version": "", "last_seen": "2025-01-01"
+            "doi": item["doi"], "version": "", "emitted": True, "last_seen": "2025-01-01"
         }}
         new, refreshed = select_new([item], old, UTC_NOW)
         self.assertEqual(new, [])  # Still deduplicate if re-encountered today.

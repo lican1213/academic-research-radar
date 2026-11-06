@@ -287,25 +287,34 @@ def select_new(items: list[dict], seen: dict, now: datetime, *, limit: int = MAX
             continue
         keys = identity_keys(item) + item.get("alternate_ids", [])
         old = next((state[k] for k in keys if k in state), None)
+        emitted_before = bool(old and old.get("emitted", False))
         title_norm = normalize_title(item["title"])
         version = item.get("version") or (old.get("version", "") if old else "")
         doi = item.get("doi") or (old.get("doi", "") if old else "")
         record = {"fingerprint": fingerprint({**item, "version": version}),
                   "title_norm": title_norm, "version": version, "doi": doi,
-                  "last_seen": now.date().isoformat()}
-        for key in keys:
-            state[key] = record
+                  "last_seen": now.date().isoformat(), "emitted": emitted_before}
         updated_version = bool(old and item.get("version") and old.get("version") and item["version"] != old["version"])
         changed_title = bool(old and old.get("title_norm") and old["title_norm"] != title_norm)
         newly_published = bool(old and "doi" in old and item.get("doi") and not old.get("doi"))
         legacy_changed = bool(old and "title_norm" not in old and old.get("fingerprint") != record["fingerprint"])
-        if not old or updated_version or changed_title or newly_published or legacy_changed:
+        must_emit = not emitted_before or updated_version or changed_title or newly_published or legacy_changed
+        can_emit = selected_by_project[item["project"]] < PROJECT_CAPS[item["project"]] and len(new) < limit
+        if must_emit and can_emit:
             item = {k: v for k, v in item.items() if k != "abstract"}
-            item["change"] = ("new" if not old else "formal_publication_or_doi_added" if newly_published
+            item["change"] = ("new" if not old else "newly_selected" if not emitted_before
+                              else "formal_publication_or_doi_added" if newly_published
                               else "new_version" if updated_version else "title_revision")
-            if selected_by_project[item["project"]] < PROJECT_CAPS[item["project"]] and len(new) < limit:
-                new.append(item)
-                selected_by_project[item["project"]] += 1
+            new.append(item)
+            selected_by_project[item["project"]] += 1
+            record["emitted"] = True
+        elif must_emit and old:
+            # Keep last emitted version/DOI until the revision is actually surfaced.
+            record = dict(old)
+            record["last_seen"] = now.date().isoformat()
+            record.setdefault("emitted", False)
+        for key in keys:
+            state[key] = record
     cutoff = (now.date() - timedelta(days=KEEP_DAYS)).isoformat()
     state = {k: v for k, v in state.items() if v.get("last_seen", "") >= cutoff}
     return new[:limit], state

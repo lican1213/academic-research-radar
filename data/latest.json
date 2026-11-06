@@ -1,7 +1,26 @@
 {
-  "status": "not_run",
-  "generated_at": null,
-  "source_status": {},
+  "generated_at": "2026-11-06T08:27:55.868289+00:00",
+  "status": "degraded",
+  "since": "2026-10-30",
+  "source_status": {
+    "crossref": {
+      "status": "degraded",
+      "queries_ok": 9,
+      "queries_total": 10,
+      "records": 270,
+      "errors": [
+        "international patent family: HTTPError: HTTP Error 429: Too Many Requests"
+      ]
+    },
+    "arxiv": {
+      "status": "ok",
+      "queries_ok": 4,
+      "queries_total": 4,
+      "records": 32,
+      "errors": []
+    }
+  },
+  "scanned_candidates": 246,
   "new_candidates": [],
-  "note": "Placeholder. Run the GitHub Action before treating this as live evidence."
+  "note": "Metadata candidates only; verify paper content and bibliographic dates at primary sources."
 }

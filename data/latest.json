@@ -1,39 +1,26 @@
 {
-  "generated_at": "2026-11-06T17:28:48.808441+00:00",
-  "status": "degraded",
-  "since": "2026-11-03",
+  "generated_at": "2026-11-07T01:54:32.573966+00:00",
+  "status": "ok",
+  "since": "2026-11-04",
   "source_status": {
     "crossref": {
       "status": "ok",
       "queries_ok": 10,
       "queries_total": 10,
-      "records": 300,
+      "records": 298,
       "errors": []
     },
     "arxiv": {
-      "status": "failed",
-      "queries_ok": 0,
+      "status": "ok",
+      "queries_ok": 4,
       "queries_total": 4,
-      "records": 0,
-      "errors": [
-        "all:patent AND (all:embedding OR all:semantic): TimeoutError: The read operation timed out",
-        "all:innovation AND all:patent: TimeoutError: The read operation timed out",
-        "all:\"supply chain\" AND (all:resilience OR all:geopolitical): TimeoutError: The read operation timed out",
-        "all:\"artificial intelligence\" AND (all:wages OR all:productivity): TimeoutError: The read operation timed out"
-      ]
+      "records": 31,
+      "errors": []
     }
   },
-  "scanned_candidates": 266,
-  "prefilter_pass_count": 8,
+  "scanned_candidates": 299,
+  "prefilter_pass_count": 7,
   "prefilter_diagnostics": [
-    {
-      "title": "Patient Capital and Green Innovation: AI Attention as a Mediating Mechanism and Corporate Social Responsibility as a Boundary Condition",
-      "project": "P0",
-      "score": 45,
-      "source": "crossref",
-      "event_at": "2026-11-03",
-      "url": "https://doi.org/10.37272/jiecr.2026.10.26.5.179"
-    },
     {
       "title": "Public Data Openness, Patient Capital, and Corporate Disruptive Innovation",
       "project": "P0",
@@ -59,20 +46,12 @@
       "url": "https://doi.org/10.36719/2706-6185/64/209-213"
     },
     {
-      "title": "Role of Industry 4.0 Technologies in Enhancing Supply Chain Resilience of Original Equipment Manufacturers (OEMs): A PLSSEM Based Empirical Investigation",
+      "title": "A conceptual model for enhancing enterprise and supply chain resilience through artificial intelligence, optimisation, and gamification",
       "project": "P1",
       "score": 50,
       "source": "crossref",
-      "event_at": "2026-11-03",
-      "url": "https://doi.org/10.31235/osf.io/fkprh"
-    },
-    {
-      "title": "SUPPLY CHAIN RESILIENCE AS A PREREQUISITE FOR EFFECTIVE COMMERCIAL ACTIVITY OF ENTERPRISES",
-      "project": "P1",
-      "score": 50,
-      "source": "crossref",
-      "event_at": "2026-11-03",
-      "url": "https://doi.org/10.30838/ep.218.405-412"
+      "event_at": "2026-11-06",
+      "url": "https://doi.org/10.52152/d11581"
     },
     {
       "title": "Supply Chain Resilience and Energy Security under Strait of Hormuz Disruption",
@@ -81,8 +60,67 @@
       "source": "crossref",
       "event_at": "2026-11-04",
       "url": "https://doi.org/10.54660/ijmor.2026.5.6.50-60"
+    },
+    {
+      "title": "Managing Global Supply Chains in a Geopolitically Volatile Environment: Risks and Resilience",
+      "project": "P1",
+      "score": 41,
+      "source": "crossref",
+      "event_at": "2026-11-04",
+      "url": "https://doi.org/10.67591/lscm2026.15.1.60"
     }
   ],
-  "new_candidates": [],
+  "new_candidates": [
+    {
+      "id": "doi:10.52152/d11581",
+      "title": "A conceptual model for enhancing enterprise and supply chain resilience through artificial intelligence, optimisation, and gamification",
+      "authors": [
+        "marco arias",
+        "RAQUEL SANCHIS GISBERT",
+        "RAUL POLER ESCOTO"
+      ],
+      "url": "https://doi.org/10.52152/d11581",
+      "doi": "10.52152/d11581",
+      "source": "crossref",
+      "sources": [
+        "crossref"
+      ],
+      "venue": "DYNA",
+      "type": "journal-article",
+      "published_at": "2026-11-01",
+      "metadata_created_at": "2026-11-06",
+      "event_at": "2026-11-06",
+      "event_type": "crossref_registration",
+      "version": "",
+      "project": "P1",
+      "eligible": true,
+      "prefilter_score": 50,
+      "change": "new"
+    },
+    {
+      "id": "doi:10.1177/21582440261505615",
+      "title": "How Institutional Ownership and State Ownership Reshape the Relationship Between Digital Technology Application and Corporate Environmental Innovation",
+      "authors": [
+        "Tingqian Pu"
+      ],
+      "url": "https://doi.org/10.1177/21582440261505615",
+      "doi": "10.1177/21582440261505615",
+      "source": "crossref",
+      "sources": [
+        "crossref"
+      ],
+      "venue": "Sage Open",
+      "type": "journal-article",
+      "published_at": "2026-11-06",
+      "metadata_created_at": "2026-11-06",
+      "event_at": "2026-11-06",
+      "event_type": "crossref_registration",
+      "version": "",
+      "project": "P3",
+      "eligible": true,
+      "prefilter_score": 42,
+      "change": "new"
+    }
+  ],
   "note": "Metadata candidates only; verify paper content and bibliographic dates at primary sources."
 }

@@ -867,5 +867,21 @@
     "doi": "10.1177/21582440261505615",
     "last_seen": "2026-11-07",
     "emitted": true
+  },
+  "doi:10.36871/u.i.k.2026.09.02.002": {
+    "fingerprint": "40e71e7d37a405e272dc",
+    "title_norm": "supplychainresilienceauditinthecontextofglobaleconomicinstability",
+    "version": "",
+    "doi": "10.36871/u.i.k.2026.09.02.002",
+    "last_seen": "2026-11-07",
+    "emitted": true
+  },
+  "title:supplychainresilienceauditinthecontextofglobaleconomicinstability": {
+    "fingerprint": "40e71e7d37a405e272dc",
+    "title_norm": "supplychainresilienceauditinthecontextofglobaleconomicinstability",
+    "version": "",
+    "doi": "10.36871/u.i.k.2026.09.02.002",
+    "last_seen": "2026-11-07",
+    "emitted": true
   }
 }

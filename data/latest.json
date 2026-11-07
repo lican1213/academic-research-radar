@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-07T01:54:32.573966+00:00",
+  "generated_at": "2026-11-07T16:25:29.319579+00:00",
   "status": "ok",
   "since": "2026-11-04",
   "source_status": {
@@ -7,7 +7,7 @@
       "status": "ok",
       "queries_ok": 10,
       "queries_total": 10,
-      "records": 298,
+      "records": 297,
       "errors": []
     },
     "arxiv": {
@@ -46,12 +46,12 @@
       "url": "https://doi.org/10.36719/2706-6185/64/209-213"
     },
     {
-      "title": "A conceptual model for enhancing enterprise and supply chain resilience through artificial intelligence, optimisation, and gamification",
+      "title": "SUPPLY CHAIN RESILIENCE AUDIT IN THE CONTEXT OF GLOBAL ECONOMIC INSTABILITY",
       "project": "P1",
       "score": 50,
       "source": "crossref",
-      "event_at": "2026-11-06",
-      "url": "https://doi.org/10.52152/d11581"
+      "event_at": "2026-11-07",
+      "url": "https://doi.org/10.36871/u.i.k.2026.09.02.002"
     },
     {
       "title": "Supply Chain Resilience and Energy Security under Strait of Hormuz Disruption",
@@ -72,53 +72,29 @@
   ],
   "new_candidates": [
     {
-      "id": "doi:10.52152/d11581",
-      "title": "A conceptual model for enhancing enterprise and supply chain resilience through artificial intelligence, optimisation, and gamification",
+      "id": "doi:10.36871/u.i.k.2026.09.02.002",
+      "title": "SUPPLY CHAIN RESILIENCE AUDIT IN THE CONTEXT OF GLOBAL ECONOMIC INSTABILITY",
       "authors": [
-        "marco arias",
-        "RAQUEL SANCHIS GISBERT",
-        "RAUL POLER ESCOTO"
+        "Svetlana B. Aleksina",
+        "Natalia P. Savina",
+        "Zina A. Arsakhanova"
       ],
-      "url": "https://doi.org/10.52152/d11581",
-      "doi": "10.52152/d11581",
+      "url": "https://doi.org/10.36871/u.i.k.2026.09.02.002",
+      "doi": "10.36871/u.i.k.2026.09.02.002",
       "source": "crossref",
       "sources": [
         "crossref"
       ],
-      "venue": "DYNA",
+      "venue": "ACCOUNTING AND CONTROL",
       "type": "journal-article",
-      "published_at": "2026-11-01",
-      "metadata_created_at": "2026-11-06",
-      "event_at": "2026-11-06",
+      "published_at": "2026-01-01",
+      "metadata_created_at": "2026-11-07",
+      "event_at": "2026-11-07",
       "event_type": "crossref_registration",
       "version": "",
       "project": "P1",
       "eligible": true,
       "prefilter_score": 50,
-      "change": "new"
-    },
-    {
-      "id": "doi:10.1177/21582440261505615",
-      "title": "How Institutional Ownership and State Ownership Reshape the Relationship Between Digital Technology Application and Corporate Environmental Innovation",
-      "authors": [
-        "Tingqian Pu"
-      ],
-      "url": "https://doi.org/10.1177/21582440261505615",
-      "doi": "10.1177/21582440261505615",
-      "source": "crossref",
-      "sources": [
-        "crossref"
-      ],
-      "venue": "Sage Open",
-      "type": "journal-article",
-      "published_at": "2026-11-06",
-      "metadata_created_at": "2026-11-06",
-      "event_at": "2026-11-06",
-      "event_type": "crossref_registration",
-      "version": "",
-      "project": "P3",
-      "eligible": true,
-      "prefilter_score": 42,
       "change": "new"
     }
   ],

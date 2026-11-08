@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-11-07T16:25:29.319579+00:00",
+  "generated_at": "2026-11-08T01:25:43.671038+00:00",
   "status": "ok",
-  "since": "2026-11-04",
+  "since": "2026-11-05",
   "source_status": {
     "crossref": {
       "status": "ok",
@@ -14,13 +14,21 @@
       "status": "ok",
       "queries_ok": 4,
       "queries_total": 4,
-      "records": 31,
+      "records": 15,
       "errors": []
     }
   },
-  "scanned_candidates": 299,
-  "prefilter_pass_count": 7,
+  "scanned_candidates": 281,
+  "prefilter_pass_count": 6,
   "prefilter_diagnostics": [
+    {
+      "title": "Impact of tax incentives on corporate patient capital: evidence from income tax preferences and pretax additional deduction on R&D expenditure in China",
+      "project": "P0",
+      "score": 45,
+      "source": "crossref",
+      "event_at": "2026-11-05",
+      "url": "https://doi.org/10.1080/00036846.2026.2754316"
+    },
     {
       "title": "Public Data Openness, Patient Capital, and Corporate Disruptive Innovation",
       "project": "P0",
@@ -28,14 +36,6 @@
       "source": "crossref",
       "event_at": "2026-11-06",
       "url": "https://doi.org/10.1080/1540496x.2026.2752907"
-    },
-    {
-      "title": "Discussion on Paths to Enhance Supply Chain Resilience Based on ESG Concepts in Light of Global Value Chain Restructuring",
-      "project": "P1",
-      "score": 73,
-      "source": "crossref",
-      "event_at": "2026-11-04",
-      "url": "https://doi.org/10.62051/ijgem.v10n10.06"
     },
     {
       "title": "The Impact of Global Economic Fragmentation on Foreign Direct Investment Flows: An Empirical Analysis",
@@ -46,57 +46,22 @@
       "url": "https://doi.org/10.36719/2706-6185/64/209-213"
     },
     {
+      "title": "A conceptual model for enhancing enterprise and supply chain resilience through artificial intelligence, optimisation, and gamification",
+      "project": "P1",
+      "score": 50,
+      "source": "crossref",
+      "event_at": "2026-11-06",
+      "url": "https://doi.org/10.52152/d11581"
+    },
+    {
       "title": "SUPPLY CHAIN RESILIENCE AUDIT IN THE CONTEXT OF GLOBAL ECONOMIC INSTABILITY",
       "project": "P1",
       "score": 50,
       "source": "crossref",
       "event_at": "2026-11-07",
       "url": "https://doi.org/10.36871/u.i.k.2026.09.02.002"
-    },
-    {
-      "title": "Supply Chain Resilience and Energy Security under Strait of Hormuz Disruption",
-      "project": "P1",
-      "score": 50,
-      "source": "crossref",
-      "event_at": "2026-11-04",
-      "url": "https://doi.org/10.54660/ijmor.2026.5.6.50-60"
-    },
-    {
-      "title": "Managing Global Supply Chains in a Geopolitically Volatile Environment: Risks and Resilience",
-      "project": "P1",
-      "score": 41,
-      "source": "crossref",
-      "event_at": "2026-11-04",
-      "url": "https://doi.org/10.67591/lscm2026.15.1.60"
     }
   ],
-  "new_candidates": [
-    {
-      "id": "doi:10.36871/u.i.k.2026.09.02.002",
-      "title": "SUPPLY CHAIN RESILIENCE AUDIT IN THE CONTEXT OF GLOBAL ECONOMIC INSTABILITY",
-      "authors": [
-        "Svetlana B. Aleksina",
-        "Natalia P. Savina",
-        "Zina A. Arsakhanova"
-      ],
-      "url": "https://doi.org/10.36871/u.i.k.2026.09.02.002",
-      "doi": "10.36871/u.i.k.2026.09.02.002",
-      "source": "crossref",
-      "sources": [
-        "crossref"
-      ],
-      "venue": "ACCOUNTING AND CONTROL",
-      "type": "journal-article",
-      "published_at": "2026-01-01",
-      "metadata_created_at": "2026-11-07",
-      "event_at": "2026-11-07",
-      "event_type": "crossref_registration",
-      "version": "",
-      "project": "P1",
-      "eligible": true,
-      "prefilter_score": 50,
-      "change": "new"
-    }
-  ],
+  "new_candidates": [],
   "note": "Metadata candidates only; verify paper content and bibliographic dates at primary sources."
 }

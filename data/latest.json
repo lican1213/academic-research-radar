@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-08T01:25:43.671038+00:00",
+  "generated_at": "2026-11-08T16:39:21.973414+00:00",
   "status": "ok",
   "since": "2026-11-05",
   "source_status": {
@@ -7,7 +7,7 @@
       "status": "ok",
       "queries_ok": 10,
       "queries_total": 10,
-      "records": 297,
+      "records": 295,
       "errors": []
     },
     "arxiv": {
@@ -18,8 +18,8 @@
       "errors": []
     }
   },
-  "scanned_candidates": 281,
-  "prefilter_pass_count": 6,
+  "scanned_candidates": 279,
+  "prefilter_pass_count": 7,
   "prefilter_diagnostics": [
     {
       "title": "Impact of tax incentives on corporate patient capital: evidence from income tax preferences and pretax additional deduction on R&D expenditure in China",
@@ -62,6 +62,34 @@
       "url": "https://doi.org/10.36871/u.i.k.2026.09.02.002"
     }
   ],
-  "new_candidates": [],
+  "new_candidates": [
+    {
+      "id": "doi:10.70248/jmie.v4i1.4742",
+      "title": "INSTITUTIONAL OWNERSHIP MODERATING CARBON DISCLOSURE, GREEN INNOVATION, AND FIRM VALUE IN THE INDONESIAN ENERGY SECTOR",
+      "authors": [
+        "Fathihani Fathihani",
+        "Ainun Jariah",
+        "Ika Sari",
+        "Retno Puji Astuti"
+      ],
+      "url": "https://doi.org/10.70248/jmie.v4i1.4742",
+      "doi": "10.70248/jmie.v4i1.4742",
+      "source": "crossref",
+      "sources": [
+        "crossref"
+      ],
+      "venue": "Journal of Management and Innovation Entrepreneurship (JMIE)",
+      "type": "journal-article",
+      "published_at": "2026-10-30",
+      "metadata_created_at": "2026-11-08",
+      "event_at": "2026-11-08",
+      "event_type": "crossref_registration",
+      "version": "",
+      "project": "P3",
+      "eligible": true,
+      "prefilter_score": 47,
+      "change": "new"
+    }
+  ],
   "note": "Metadata candidates only; verify paper content and bibliographic dates at primary sources."
 }

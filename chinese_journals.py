@@ -141,7 +141,7 @@ def parse_toc(payload: bytes, *, journal: str, kind: str, url: str) -> tuple[str
             except ValueError:
                 pass
         doi_match = DOI_RE.search(section) if kind == "publisher" else None
-        articles.append({"title": title, "url": absolute, "published_at": published,
+        articles.append({"title": title, "url": absolute, "toc_online_at": published,
                          "doi": doi_match.group(0).rstrip(".,;") if doi_match else None})
     return issue, issue_date, articles
 
@@ -194,10 +194,10 @@ def scan_chinese_journals(out: Path, now: datetime, get=fetch_html) -> dict:
                     if title_key in current:
                         continue
                     current.add(title_key)
-                    recent_published = bool(article.get("published_at") and
-                                           now.date() - timedelta(days=14) <=
-                                           datetime.fromisoformat(article["published_at"]).date() <= now.date())
-                    if previous.get("baselined") or recent_published:
+                    recent_listing = bool(article.get("toc_online_at") and
+                                          now.date() - timedelta(days=14) <=
+                                          datetime.fromisoformat(article["toc_online_at"]).date() <= now.date())
+                    if previous.get("baselined") or recent_listing:
                         ident = hashlib.sha256((slug + ":" + title_key).encode()).hexdigest()[:16]
                         new_items.append({
                             "id": "journal:" + slug + ":" + ident,
@@ -208,12 +208,13 @@ def scan_chinese_journals(out: Path, now: datetime, get=fetch_html) -> dict:
                             "source_kind": kind,
                             "issue": issue,
                             "issue_date": issue_date,
-                            "published_at": article.get("published_at"),
+                            "published_at": None,
+                            "toc_online_at": article.get("toc_online_at"),
                             "doi": article.get("doi"),
                             "first_observed_at": checked,
-                            "event_type": "publisher_online_date" if article.get("published_at") else "first_seen_in_toc",
-                            "date_verified": bool(article.get("published_at")),
-                            "note": "First observation is not publication; publisher online date is verified where available.",
+                            "event_type": "toc_online_listing" if article.get("toc_online_at") else "first_seen_in_toc",
+                            "date_verified": False,
+                            "note": "TOC online date may differ from article detail publication date; verify both.",
                         })
                 updated[slug] = {"issue": issue, "articles": sorted(current), "baselined": True,
                                  "last_success_at": now.isoformat()}

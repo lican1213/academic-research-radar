@@ -310,6 +310,58 @@ class ChineseJournalTests(unittest.TestCase):
         self.assertIsNone(date)
         self.assertEqual(articles, [])
 
+    def test_sufe_real_detail_links_exclude_issuetoc_and_verify_online_date(self):
+        url = "https://qks.sufe.edu.cn/J/CJYJ/Article/CurrentIssue/CN"
+        source = (
+            '<h1>财经研究</h1><div>2026年52卷第9期</div>'
+            '<a href="/J/CJYJ/Article/2026/09/CN">《财经研究》第52卷第09期</a>'
+            '<a href="/J/CJYJ/Article/Details/A0pgbFuTsz-vRzo-GypL-0h9O-AptmzpGperJG/CN">'
+            '政府赋能企业“出海”：国家海外知识产权纠纷应对指导中心与企业对外直接投资</a>'
+            '<a href="/J/CJYJ/Article/Details/A0pgbFuTsz-vRzo-GypL-0h9O-AptmzpGperJG/CN">'
+            '母国支持如何驱动企业对外直接投资</a>'
+            '<p>在线出版日期：2026年11月3日</p>'
+            '<p>doi:10.16538/j.cnki.jfe.20260611.202</p>'
+        ).encode()
+        issue, date, articles = cj.parse_toc(source, journal="财经研究",
+                                            kind="publisher", url=url)
+        self.assertEqual(issue, "2026-09")
+        self.assertIsNone(date)
+        self.assertEqual(len(articles), 1)
+        self.assertTrue(articles[0]["title"].startswith("政府赋能企业"))
+        self.assertEqual(articles[0]["published_at"], "2026-11-03")
+        self.assertEqual(articles[0]["doi"], "10.16538/j.cnki.jfe.20260611.202")
+
+    def test_first_scan_recent_publisher_date_surfaces_without_calling_it_today(self):
+        with tempfile.TemporaryDirectory() as temp:
+            url = "https://qks.sufe.edu.cn/J/CJYJ/Article/CurrentIssue/CN"
+            detail = "/J/CJYJ/Article/Details/A0pgbFuTsz-vRzo-GypL-0h9O-AptmzpGperJG/CN"
+            page = ('<h1>财经研究</h1><p>2026年第09期</p>'
+                    f'<a href="{detail}">政府赋能企业出海与知识产权保护研究</a>'
+                    '<p>在线出版日期：2026年11月3日</p>').encode()
+            with patch.object(cj, "JOURNALS", (("finance_economics", "财经研究", "publisher", url),)):
+                result = cj.scan_chinese_journals(Path(temp), UTC_NOW, get=lambda _: page)
+                self.assertEqual(len(result["new_candidates"]), 1)
+                self.assertEqual(result["new_candidates"][0]["published_at"], "2026-11-03")
+                self.assertTrue(result["new_candidates"][0]["date_verified"])
+                self.assertEqual(cj.scan_chinese_journals(Path(temp), UTC_NOW, get=lambda _: page)["new_candidates"], [])
+
+    def test_primary_tls_failure_uses_explicit_catalog_fallback(self):
+        with tempfile.TemporaryDirectory() as temp:
+            primary = "https://www.jryj.org.cn/CN/1002-7246/current.shtml"
+            fallback = "https://m.ncpssd.cn/journal/details?gch=97926X&langType=1&nav=1"
+            def source(url):
+                if url == primary:
+                    raise OSError("TLS hostname mismatch")
+                return "<h1>金融研究</h1><p>2026年 第7期</p>".encode()
+            with patch.object(cj, "JOURNALS", (("financial_research", "金融研究", "publisher", primary),)):
+                result = cj.scan_chinese_journals(Path(temp), UTC_NOW, get=source)
+                j = result["source_status"]["journals"]["financial_research"]
+                self.assertEqual(j["status"], "catalog_only")
+                self.assertEqual(j["source_kind"], "catalog")
+                self.assertEqual(j["url"], fallback)
+                self.assertIn("primary_failure", j)
+                self.assertEqual(result["source_status"]["status"], "degraded")
+
     def test_english_pipeline_report_has_independent_chinese_coverage(self):
         with tempfile.TemporaryDirectory() as temp:
             folder = Path(temp)

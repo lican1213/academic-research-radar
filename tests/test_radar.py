@@ -310,7 +310,7 @@ class ChineseJournalTests(unittest.TestCase):
         self.assertIsNone(date)
         self.assertEqual(articles, [])
 
-    def test_sufe_real_detail_links_exclude_issuetoc_and_verify_online_date(self):
+    def test_sufe_detail_links_and_toc_date_not_publication_date(self):
         url = "https://qks.sufe.edu.cn/J/CJYJ/Article/CurrentIssue/CN"
         source = (
             '<h1>财经研究</h1><div>2026年52卷第9期</div>'
@@ -328,7 +328,8 @@ class ChineseJournalTests(unittest.TestCase):
         self.assertIsNone(date)
         self.assertEqual(len(articles), 1)
         self.assertTrue(articles[0]["title"].startswith("政府赋能企业"))
-        self.assertEqual(articles[0]["published_at"], "2026-11-03")
+        self.assertEqual(articles[0]["toc_online_at"], "2026-11-03")
+        self.assertNotIn("published_at", articles[0])
         self.assertEqual(articles[0]["doi"], "10.16538/j.cnki.jfe.20260611.202")
 
     def test_sufe_superscript_title_precedes_abstract_link_same_url(self):
@@ -346,7 +347,8 @@ class ChineseJournalTests(unittest.TestCase):
         self.assertEqual(issue, "2026-09")
         self.assertEqual(len(papers), 1)
         self.assertTrue(papers[0]["title"].startswith("注册制改革"))
-        self.assertEqual(papers[0]["published_at"], "2026-11-03")
+        self.assertEqual(papers[0]["toc_online_at"], "2026-11-03")
+        self.assertNotIn("published_at", papers[0])
 
     def test_first_scan_recent_publisher_date_surfaces_without_calling_it_today(self):
         with tempfile.TemporaryDirectory() as temp:
@@ -358,8 +360,9 @@ class ChineseJournalTests(unittest.TestCase):
             with patch.object(cj, "JOURNALS", (("finance_economics", "财经研究", "publisher", url),)):
                 result = cj.scan_chinese_journals(Path(temp), UTC_NOW, get=lambda _: page)
                 self.assertEqual(len(result["new_candidates"]), 1)
-                self.assertEqual(result["new_candidates"][0]["published_at"], "2026-11-03")
-                self.assertTrue(result["new_candidates"][0]["date_verified"])
+                self.assertIsNone(result["new_candidates"][0]["published_at"])
+                self.assertEqual(result["new_candidates"][0]["toc_online_at"], "2026-11-03")
+                self.assertFalse(result["new_candidates"][0]["date_verified"])
                 self.assertEqual(cj.scan_chinese_journals(Path(temp), UTC_NOW, get=lambda _: page)["new_candidates"], [])
 
     def test_primary_tls_failure_uses_explicit_catalog_fallback(self):

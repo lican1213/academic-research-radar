@@ -13,7 +13,7 @@ import json
 import re
 import urllib.parse
 import urllib.request
-from datetime import datetime
+from datetime import datetime, timedelta
 from html.parser import HTMLParser
 from pathlib import Path
 
@@ -25,10 +25,17 @@ JOURNALS = (
     ("china_industrial", "中国工业经济", "catalog", "https://ncpssd.org/journal/details.aspx?gch=93800A"),
     ("management_world", "管理世界", "catalog", "https://m.ncpssd.cn/journal/details?gch=95499X&langType=1&nav=1"),
     ("world_economy", "世界经济", "publisher", "https://sjjj.magtech.com.cn/CN/home"),
-    ("quant_economics", "数量经济技术经济研究", "catalog", "https://www.ncpssd.cn/journal/details?gch=94503X"),
+    ("quant_economics", "数量经济技术经济研究", "catalog", "https://www.ncpssd.org/journal/details?gch=94503X"),
     ("finance_economics", "财经研究", "publisher", "https://qks.sufe.edu.cn/J/CJYJ/Article/CurrentIssue/CN"),
     ("financial_research", "金融研究", "publisher", "https://www.jryj.org.cn/CN/1002-7246/current.shtml"),
 )
+
+FALLBACKS = {
+    "financial_research": ("catalog", "https://m.ncpssd.cn/journal/details?gch=97926X&langType=1&nav=1"),
+}
+
+ONLINE_RE = re.compile(r"在线出版日期\s*[:：]\s*(20\d{2})年(\d{1,2})月(\d{1,2})日")
+DOI_RE = re.compile(r"10\.\d{4,9}/[A-Za-z0-9._;()/:+-]+", re.I)
 
 ISSUE_RE = re.compile(r"(20\d{2})\s*年[^\n]{0,40}?第\s*([1-9]|1[0-2])\s*期")
 DATE_RE = re.compile(r"(?:刊出日期|出版日期)\s*[:：]\s*(20\d{2}-\d{2}-\d{2})")
@@ -82,7 +89,11 @@ def article_link(kind: str, url: str) -> bool:
         # National catalog may expose an issue but not verifiable article pages.
         # Do not mistake download links, buttons or site navigation for papers.
         return bool(re.search(r"/(?:article|literature|paper)/[A-Za-z0-9_-]{8,}", path, re.I))
-    return bool(re.search(r"/CN/Y20\d{2}/|/CN/10\.\d{4,9}/|/J/CJYJ/Article/20\d{2}/\d{2}/[^/]+", path, re.I))
+    if "/J/CJYJ/" in path:
+        # SUFE issue links look like /Article/2026/09/CN and must NOT be
+        # mistaken for articles. Real detail links use /Article/Details/<id>/CN.
+        return bool(re.fullmatch(r"/J/CJYJ/Article/Details/[A-Za-z0-9_-]{12,}/CN", path, re.I))
+    return bool(re.search(r"/CN/Y20\d{2}/|/CN/10\.\d{4,9}/", path, re.I))
 
 
 def parse_toc(payload: bytes, *, journal: str, kind: str, url: str) -> tuple[str | None, str | None, list[dict]]:
@@ -98,7 +109,8 @@ def parse_toc(payload: bytes, *, journal: str, kind: str, url: str) -> tuple[str
     date_match = DATE_RE.search(text)
     issue_date = date_match.group(1) if date_match else None
     articles: list[dict] = []
-    found: set[str] = set()
+    links: list[tuple[str, str, int]] = []
+    seen_urls: set[str] = set()
     for title, href in parser.links:
         absolute = urllib.parse.urljoin(url, html.unescape(href))
         if urllib.parse.urlparse(absolute).hostname != urllib.parse.urlparse(url).hostname:
@@ -108,13 +120,28 @@ def parse_toc(payload: bytes, *, journal: str, kind: str, url: str) -> tuple[str
         title = " ".join(title.split())
         if not 8 <= len(title) <= 150 or not re.search(r"[\u3400-\u9fff]", title):
             continue
-        if any(junk in title for junk in BAD_TITLES):
+        if any(junk in title for junk in BAD_TITLES) or absolute in seen_urls:
             continue
-        key = re.sub(r"[^\w]", "", title).casefold()
-        if key in found:
+        position = text.find(title)
+        if position < 0:
             continue
-        found.add(key)
-        articles.append({"title": title, "url": absolute})
+        seen_urls.add(absolute)
+        links.append((title, absolute, position))
+    links.sort(key=lambda x: x[2])
+    for index, (title, absolute, position) in enumerate(links):
+        following = links[index + 1][2] if index + 1 < len(links) else len(text)
+        section = text[position:min(following, position + 1600)]
+        published = None
+        match = ONLINE_RE.search(section)
+        if match:
+            y, m, d = map(int, match.groups())
+            try:
+                published = datetime(y, m, d).date().isoformat()
+            except ValueError:
+                pass
+        doi_match = DOI_RE.search(section) if kind == "publisher" else None
+        articles.append({"title": title, "url": absolute, "published_at": published,
+                         "doi": doi_match.group(0).rstrip(".,;") if doi_match else None})
     return issue, issue_date, articles
 
 
@@ -136,7 +163,18 @@ def scan_chinese_journals(out: Path, now: datetime, get=fetch_html) -> dict:
                 "status": "not_run", "issue": None, "issue_date": None, "article_count": 0}
         previous = seen.get(slug, {})
         try:
-            issue, issue_date, articles = parse_toc(get(url), journal=journal, kind=kind, url=url)
+            try:
+                payload = get(url)
+            except (OSError, ValueError) as primary_error:
+                if slug not in FALLBACKS:
+                    raise
+                fallback_kind, fallback_url = FALLBACKS[slug]
+                payload = get(fallback_url)
+                info["primary_url"] = url
+                info["primary_failure"] = f"{type(primary_error).__name__}: {str(primary_error)[:140]}"
+                info["url"] = url = fallback_url
+                info["source_kind"] = kind = fallback_kind
+            issue, issue_date, articles = parse_toc(payload, journal=journal, kind=kind, url=url)
             if not issue:
                 info.update(status="unverified", reason="journal_or_issue_not_recognized")
             elif previous.get("issue") and issue < previous["issue"]:
@@ -146,6 +184,8 @@ def scan_chinese_journals(out: Path, now: datetime, get=fetch_html) -> dict:
                             status="ok" if articles else "catalog_only")
                 if not articles:
                     info["reason"] = "issue_visible_but_articles_not_verified"
+                if info.get("primary_failure"):
+                    info["reason"] = "publisher_unavailable; " + info.get("reason", "catalog_fallback")
                 previous_articles = set(previous.get("articles", []))
                 current = set(previous_articles)
                 for article in articles:
@@ -153,7 +193,10 @@ def scan_chinese_journals(out: Path, now: datetime, get=fetch_html) -> dict:
                     if title_key in current:
                         continue
                     current.add(title_key)
-                    if previous.get("baselined"):
+                    recent_published = bool(article.get("published_at") and
+                                           now.date() - timedelta(days=14) <=
+                                           datetime.fromisoformat(article["published_at"]).date() <= now.date())
+                    if previous.get("baselined") or recent_published:
                         ident = hashlib.sha256((slug + ":" + title_key).encode()).hexdigest()[:16]
                         new_items.append({
                             "id": "journal:" + slug + ":" + ident,
@@ -164,11 +207,12 @@ def scan_chinese_journals(out: Path, now: datetime, get=fetch_html) -> dict:
                             "source_kind": kind,
                             "issue": issue,
                             "issue_date": issue_date,
-                            "published_at": None,
+                            "published_at": article.get("published_at"),
+                            "doi": article.get("doi"),
                             "first_observed_at": checked,
-                            "event_type": "first_seen_in_toc",
-                            "date_verified": False,
-                            "note": "First observation is not the publication date; verify publisher article.",
+                            "event_type": "publisher_online_date" if article.get("published_at") else "first_seen_in_toc",
+                            "date_verified": bool(article.get("published_at")),
+                            "note": "First observation is not publication; publisher online date is verified where available.",
                         })
                 updated[slug] = {"issue": issue, "articles": sorted(current), "baselined": True,
                                  "last_success_at": now.isoformat()}

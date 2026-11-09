@@ -365,6 +365,21 @@ class ChineseJournalTests(unittest.TestCase):
                 self.assertFalse(result["new_candidates"][0]["date_verified"])
                 self.assertEqual(cj.scan_chinese_journals(Path(temp), UTC_NOW, get=lambda _: page)["new_candidates"], [])
 
+    def test_quant_publisher_2026_issue_and_real_article_link(self):
+        url = "https://www.jqte.net/sljjjsjjyj/ch/index.aspx"
+        html = ('<h1>数量经济技术经济研究</h1><div>本刊最新目录</div>'
+                '<a href="/sljjjsjjyj/ch/reader/view_abstract.aspx?file_no=20261007&flag=1">'
+                '外部供应风险、技术结构与自主创新能力提升</a>'
+                '<span>2026,(10):166-191</span>'
+                '<a href="/sljjjsjjyj/ch/reader/download.aspx?file_no=20261007">下载全文及数据</a>').encode()
+        issue, date, articles = cj.parse_toc(html, journal="数量经济技术经济研究",
+                                            kind="publisher", url=url)
+        self.assertEqual(issue, "2026-10")
+        self.assertIsNone(date)
+        self.assertEqual(len(articles), 1)
+        self.assertEqual(articles[0]["title"], "外部供应风险、技术结构与自主创新能力提升")
+        self.assertIsNone(articles[0]["toc_online_at"])
+
     def test_primary_tls_failure_uses_explicit_catalog_fallback(self):
         with tempfile.TemporaryDirectory() as temp:
             primary = "https://www.jryj.org.cn/CN/1002-7246/current.shtml"

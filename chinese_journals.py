@@ -48,14 +48,16 @@ class TocHTML(HTMLParser):
     def __init__(self) -> None:
         super().__init__(convert_charrefs=True)
         self.text_parts: list[str] = []
-        self.links: list[tuple[str, str]] = []
+        self.links: list[tuple[str, str, int]] = []
         self.href: str | None = None
         self.anchor_parts: list[str] = []
+        self.anchor_index = 0
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         if tag == "a":
             self.href = dict(attrs).get("href")
             self.anchor_parts = []
+            self.anchor_index = len(self.text_parts)
 
     def handle_data(self, data: str) -> None:
         self.text_parts.append(data)
@@ -65,7 +67,7 @@ class TocHTML(HTMLParser):
     def handle_endtag(self, tag: str) -> None:
         if tag == "a":
             if self.href:
-                self.links.append((" ".join(" ".join(self.anchor_parts).split()), self.href))
+                self.links.append((" ".join(" ".join(self.anchor_parts).split()), self.href, self.anchor_index))
             self.href = None
             self.anchor_parts = []
 
@@ -111,7 +113,7 @@ def parse_toc(payload: bytes, *, journal: str, kind: str, url: str) -> tuple[str
     articles: list[dict] = []
     links: list[tuple[str, str, int]] = []
     seen_urls: set[str] = set()
-    for title, href in parser.links:
+    for title, href, part_index in parser.links:
         absolute = urllib.parse.urljoin(url, html.unescape(href))
         if urllib.parse.urlparse(absolute).hostname != urllib.parse.urlparse(url).hostname:
             continue
@@ -122,15 +124,14 @@ def parse_toc(payload: bytes, *, journal: str, kind: str, url: str) -> tuple[str
             continue
         if any(junk in title for junk in BAD_TITLES) or absolute in seen_urls:
             continue
-        position = text.find(title)
-        if position < 0:
-            continue
+        # Anchor may contain <sup> or other markup; use DOM text-part offsets,
+        # not an exact title string search (which drops such legitimate titles).
         seen_urls.add(absolute)
-        links.append((title, absolute, position))
+        links.append((title, absolute, part_index))
     links.sort(key=lambda x: x[2])
     for index, (title, absolute, position) in enumerate(links):
         following = links[index + 1][2] if index + 1 < len(links) else len(text)
-        section = text[position:min(following, position + 1600)]
+        section = "\n".join(parser.text_parts[position:min(following, position + 150)])
         published = None
         match = ONLINE_RE.search(section)
         if match:

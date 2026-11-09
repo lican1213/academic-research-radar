@@ -39,7 +39,18 @@ jobs:
           git add data/latest.json data/latest.md data/seen.json data/chinese_seen.json
           if ! git diff --cached --quiet; then
             git commit -m 'data: refresh academic radar metadata [skip ci]'
-            git push
+            for attempt in 1 2 3; do
+              if git push; then
+                break
+              fi
+              # A concurrent code/MOC push must not silently lose new scan data.
+              git pull --rebase origin main
+              if [ "$attempt" -eq 3 ]; then
+                echo "Scan data could not be published after three attempts" >&2
+                exit 1
+              fi
+              sleep 2
+            done
           fi
       - name: Upload independent audit snapshot
         if: always()

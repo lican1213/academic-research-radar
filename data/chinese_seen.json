@@ -1,0 +1,41 @@
+{
+  "economic_research": {
+    "issue": "2026-09",
+    "articles": [],
+    "baselined": true,
+    "last_success_at": "2026-11-09T11:53:50.611999+00:00"
+  },
+  "china_industrial": {
+    "issue": "2026-08",
+    "articles": [],
+    "baselined": true,
+    "last_success_at": "2026-11-09T11:53:50.611999+00:00"
+  },
+  "management_world": {
+    "issue": "2026-10",
+    "articles": [],
+    "baselined": true,
+    "last_success_at": "2026-11-09T11:53:50.611999+00:00"
+  },
+  "world_economy": {
+    "issue": "2026-10",
+    "articles": [
+      "中国国际进口博览会的溢出效应研究",
+      "人工智能专利首发竞赛中的逆境突破失败何以激励创新",
+      "出口管制技术脱钩与人才培养来自中国高考的证据",
+      "劳动司法保障与民营企业高质量创新",
+      "历史文化创造性转化产业转型升级与乡村绿色发展",
+      "政府采购能否促进专精特新中小企业强链塑链"
+    ],
+    "baselined": true,
+    "last_success_at": "2026-11-09T11:53:50.611999+00:00"
+  },
+  "finance_economics": {
+    "issue": "2026-09",
+    "articles": [
+      "财经研究第52卷第09期"
+    ],
+    "baselined": true,
+    "last_success_at": "2026-11-09T11:53:50.611999+00:00"
+  }
+}

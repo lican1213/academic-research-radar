@@ -1,24 +1,114 @@
 {
-  "generated_at": "2026-11-09T01:43:13.604269+00:00",
-  "status": "ok",
+  "generated_at": "2026-11-09T11:53:50.611999+00:00",
+  "status": "degraded",
   "since": "2026-11-06",
   "source_status": {
     "crossref": {
       "status": "ok",
       "queries_ok": 10,
       "queries_total": 10,
-      "records": 298,
+      "records": 297,
       "errors": []
     },
     "arxiv": {
       "status": "ok",
       "queries_ok": 4,
       "queries_total": 4,
-      "records": 0,
+      "records": 16,
       "errors": []
+    },
+    "chinese_journals": {
+      "status": "degraded",
+      "queries_ok": 2,
+      "queries_total": 7,
+      "records": 7,
+      "errors": [
+        "经济研究: catalog_only (issue_visible_but_articles_not_verified)",
+        "中国工业经济: catalog_only (issue_visible_but_articles_not_verified)",
+        "管理世界: catalog_only (issue_visible_but_articles_not_verified)",
+        "数量经济技术经济研究: unverified (journal_or_issue_not_recognized)",
+        "金融研究: failed (URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid f)"
+      ],
+      "journals": {
+        "economic_research": {
+          "journal": "经济研究",
+          "source_kind": "catalog",
+          "url": "https://www.ncpssd.org/journal/details?gch=95645X",
+          "checked_at": "2026-11-09T11:53:50.611999+00:00",
+          "status": "catalog_only",
+          "issue": "2026-09",
+          "issue_date": null,
+          "article_count": 0,
+          "reason": "issue_visible_but_articles_not_verified"
+        },
+        "china_industrial": {
+          "journal": "中国工业经济",
+          "source_kind": "catalog",
+          "url": "https://ncpssd.org/journal/details.aspx?gch=93800A",
+          "checked_at": "2026-11-09T11:53:50.611999+00:00",
+          "status": "catalog_only",
+          "issue": "2026-08",
+          "issue_date": null,
+          "article_count": 0,
+          "reason": "issue_visible_but_articles_not_verified"
+        },
+        "management_world": {
+          "journal": "管理世界",
+          "source_kind": "catalog",
+          "url": "https://m.ncpssd.cn/journal/details?gch=95499X&langType=1&nav=1",
+          "checked_at": "2026-11-09T11:53:50.611999+00:00",
+          "status": "catalog_only",
+          "issue": "2026-10",
+          "issue_date": null,
+          "article_count": 0,
+          "reason": "issue_visible_but_articles_not_verified"
+        },
+        "world_economy": {
+          "journal": "世界经济",
+          "source_kind": "publisher",
+          "url": "https://sjjj.magtech.com.cn/CN/home",
+          "checked_at": "2026-11-09T11:53:50.611999+00:00",
+          "status": "ok",
+          "issue": "2026-10",
+          "issue_date": "2026-10-10",
+          "article_count": 6
+        },
+        "quant_economics": {
+          "journal": "数量经济技术经济研究",
+          "source_kind": "catalog",
+          "url": "https://www.ncpssd.cn/journal/details?gch=94503X",
+          "checked_at": "2026-11-09T11:53:50.611999+00:00",
+          "status": "unverified",
+          "issue": null,
+          "issue_date": null,
+          "article_count": 0,
+          "reason": "journal_or_issue_not_recognized"
+        },
+        "finance_economics": {
+          "journal": "财经研究",
+          "source_kind": "publisher",
+          "url": "https://qks.sufe.edu.cn/J/CJYJ/Article/CurrentIssue/CN",
+          "checked_at": "2026-11-09T11:53:50.611999+00:00",
+          "status": "ok",
+          "issue": "2026-09",
+          "issue_date": null,
+          "article_count": 1
+        },
+        "financial_research": {
+          "journal": "金融研究",
+          "source_kind": "publisher",
+          "url": "https://www.jryj.org.cn/CN/1002-7246/current.shtml",
+          "checked_at": "2026-11-09T11:53:50.611999+00:00",
+          "status": "failed",
+          "issue": null,
+          "issue_date": null,
+          "article_count": 0,
+          "reason": "URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid f"
+        }
+      }
     }
   },
-  "scanned_candidates": 270,
+  "scanned_candidates": 289,
   "prefilter_pass_count": 5,
   "prefilter_diagnostics": [
     {
@@ -47,5 +137,83 @@
     }
   ],
   "new_candidates": [],
-  "note": "Metadata candidates only; verify paper content and bibliographic dates at primary sources."
+  "note": "Metadata candidates only; verify paper content and bibliographic dates at primary sources. Chinese catalog first_seen is NOT publication date; incomplete catalogs require manual checking.",
+  "chinese_journals": {
+    "economic_research": {
+      "journal": "经济研究",
+      "source_kind": "catalog",
+      "url": "https://www.ncpssd.org/journal/details?gch=95645X",
+      "checked_at": "2026-11-09T11:53:50.611999+00:00",
+      "status": "catalog_only",
+      "issue": "2026-09",
+      "issue_date": null,
+      "article_count": 0,
+      "reason": "issue_visible_but_articles_not_verified"
+    },
+    "china_industrial": {
+      "journal": "中国工业经济",
+      "source_kind": "catalog",
+      "url": "https://ncpssd.org/journal/details.aspx?gch=93800A",
+      "checked_at": "2026-11-09T11:53:50.611999+00:00",
+      "status": "catalog_only",
+      "issue": "2026-08",
+      "issue_date": null,
+      "article_count": 0,
+      "reason": "issue_visible_but_articles_not_verified"
+    },
+    "management_world": {
+      "journal": "管理世界",
+      "source_kind": "catalog",
+      "url": "https://m.ncpssd.cn/journal/details?gch=95499X&langType=1&nav=1",
+      "checked_at": "2026-11-09T11:53:50.611999+00:00",
+      "status": "catalog_only",
+      "issue": "2026-10",
+      "issue_date": null,
+      "article_count": 0,
+      "reason": "issue_visible_but_articles_not_verified"
+    },
+    "world_economy": {
+      "journal": "世界经济",
+      "source_kind": "publisher",
+      "url": "https://sjjj.magtech.com.cn/CN/home",
+      "checked_at": "2026-11-09T11:53:50.611999+00:00",
+      "status": "ok",
+      "issue": "2026-10",
+      "issue_date": "2026-10-10",
+      "article_count": 6
+    },
+    "quant_economics": {
+      "journal": "数量经济技术经济研究",
+      "source_kind": "catalog",
+      "url": "https://www.ncpssd.cn/journal/details?gch=94503X",
+      "checked_at": "2026-11-09T11:53:50.611999+00:00",
+      "status": "unverified",
+      "issue": null,
+      "issue_date": null,
+      "article_count": 0,
+      "reason": "journal_or_issue_not_recognized"
+    },
+    "finance_economics": {
+      "journal": "财经研究",
+      "source_kind": "publisher",
+      "url": "https://qks.sufe.edu.cn/J/CJYJ/Article/CurrentIssue/CN",
+      "checked_at": "2026-11-09T11:53:50.611999+00:00",
+      "status": "ok",
+      "issue": "2026-09",
+      "issue_date": null,
+      "article_count": 1
+    },
+    "financial_research": {
+      "journal": "金融研究",
+      "source_kind": "publisher",
+      "url": "https://www.jryj.org.cn/CN/1002-7246/current.shtml",
+      "checked_at": "2026-11-09T11:53:50.611999+00:00",
+      "status": "failed",
+      "issue": null,
+      "issue_date": null,
+      "article_count": 0,
+      "reason": "URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid f"
+    }
+  },
+  "chinese_new_candidates": []
 }

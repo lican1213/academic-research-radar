@@ -25,12 +25,13 @@ JOURNALS = (
     ("china_industrial", "中国工业经济", "catalog", "https://ncpssd.org/journal/details.aspx?gch=93800A"),
     ("management_world", "管理世界", "catalog", "https://m.ncpssd.cn/journal/details?gch=95499X&langType=1&nav=1"),
     ("world_economy", "世界经济", "publisher", "https://sjjj.magtech.com.cn/CN/home"),
-    ("quant_economics", "数量经济技术经济研究", "catalog", "https://www.ncpssd.org/journal/details?gch=94503X"),
+    ("quant_economics", "数量经济技术经济研究", "publisher", "https://www.jqte.net/sljjjsjjyj/ch/index.aspx"),
     ("finance_economics", "财经研究", "publisher", "https://qks.sufe.edu.cn/J/CJYJ/Article/CurrentIssue/CN"),
     ("financial_research", "金融研究", "publisher", "https://www.jryj.org.cn/CN/1002-7246/current.shtml"),
 )
 
 FALLBACKS = {
+    "quant_economics": ("catalog", "https://www.ncpssd.org/journal/details?gch=94503X"),
     "financial_research": ("catalog", "https://m.ncpssd.cn/journal/details?gch=97926X&langType=1&nav=1"),
 }
 
@@ -38,6 +39,7 @@ ONLINE_RE = re.compile(r"在线出版日期\s*[:：]\s*(20\d{2})年(\d{1,2})月(
 DOI_RE = re.compile(r"10\.\d{4,9}/[A-Za-z0-9._;()/:+-]+", re.I)
 
 ISSUE_RE = re.compile(r"(20\d{2})\s*年[^\n]{0,40}?第\s*(0?[1-9]|1[0-2])\s*期")
+QUANT_ISSUE_RE = re.compile(r"(20\d{2})\s*,\s*\((0?[1-9]|1[0-2])\)\s*:")
 DATE_RE = re.compile(r"(?:刊出日期|出版日期)\s*[:：]\s*(20\d{2}-\d{2}-\d{2})")
 BAD_TITLES = ("当期目录", "过刊浏览", "摘要点击", "全文下载", "期刊介绍", "下载全文",
               "复现包", "补充材料", "作者在线", "在线投稿", "责任编辑", "目录文件",
@@ -91,6 +93,9 @@ def article_link(kind: str, url: str) -> bool:
         # National catalog may expose an issue but not verifiable article pages.
         # Do not mistake download links, buttons or site navigation for papers.
         return bool(re.search(r"/(?:article|literature|paper)/[A-Za-z0-9_-]{8,}", path, re.I))
+    if "/sljjjsjjyj/ch/reader/view_abstract.aspx" in path.lower():
+        query = urllib.parse.parse_qs(urllib.parse.urlparse(url).query)
+        return bool(re.fullmatch(r"20\d{6}", (query.get("file_no") or [""])[0]))
     if "/J/CJYJ/" in path:
         # SUFE issue links look like /Article/2026/09/CN and must NOT be
         # mistaken for articles. Real detail links use /Article/Details/<id>/CN.
@@ -105,6 +110,8 @@ def parse_toc(payload: bytes, *, journal: str, kind: str, url: str) -> tuple[str
     if journal not in text:
         return None, None, []
     issues = ISSUE_RE.findall(text)
+    if journal == "数量经济技术经济研究":
+        issues.extend(QUANT_ISSUE_RE.findall(text))
     # Homepage content can contain prior issues; take the latest issue for
     # the year and reject year/month regression later in scan().
     issue = max((f"{y}-{int(m):02d}" for y, m in issues), default=None)

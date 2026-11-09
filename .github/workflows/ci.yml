@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - 'radar.py'
+      - 'chinese_journals.py'
       - 'tests/**'
       - '.github/workflows/**'
   pull_request:

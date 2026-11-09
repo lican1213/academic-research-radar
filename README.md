@@ -7,9 +7,9 @@
 ## 工作流程
 
 ```
-Crossref + arXiv (公开元数据)
+Crossref + arXiv (英文/开放元数据) + 中文七刊 (出版方目录/权威目录索引)
     -> 时间窗筛选 -> 主题打分 -> DOI/arXiv/标题去重
-    -> data/latest.json / data/latest.md + data/seen.json
+    -> data/latest.json / data/latest.md + data/seen.json + data/chinese_seen.json
     -> ChatGPT 每日核对原文并筛出高价值增量
 ```
 
@@ -25,7 +25,19 @@ Crossref + arXiv (公开元数据)
 |---|---|---|
 | Crossref REST | 带关键词的论文与工作论文元数据，包含中文词检索 | 入库/更新时间不等于发表日；摘要不一定存在 |
 | arXiv API | 创新、专利文本、AI/供应链相关新稿、版本更新 | 预印本；需要区别 v1 与 v2，不等于正式发表 |
-| 中文 CSSCI、NBER、CEPR、RePEc、WIPO、USPTO、EPO | 每日 ChatGPT 根据实际检索结果人工核验 | 不虚构抓取覆盖；需要把未检索或失败源列入日报 |
+| 中文经济学七刊（自动逐刊监控） | `chinese_journals.py` 从《经济研究》《中国工业经济》《管理世界》《世界经济》《数量经济技术经济研究》《财经研究》《金融研究》的公开目录/国家哲社文献中心目录提取期次、可验证文章链接、逐刊状态 | 对无法取得可验证文章链接的目录标为 `catalog_only`，不会伪称全文覆盖。期次不是发表日期 |
+| 中文七刊深度核验、NBER、CEPR、RePEc、WIPO、USPTO、EPO | 每日 ChatGPT 对新候选和 `catalog_only/unverified/failed` 逐刊补查 | 官网更新滞后或抓取失败需要单独报告；搜索结果/元数据仅作候选 |
+
+### 中文七刊逐刊状态
+
+每日 `data/latest.json` 新增 `chinese_journals`（七个刊名各一项）和 `chinese_new_candidates`，同时在 `source_status.chinese_journals` 报告整体健康。关键状态：
+
+- `ok`：公开目录期次及文章详情链接均已解析。**不是全文阅读或发表日期验证**。
+- `catalog_only`：只确认期次，未取得可靠文章链接，ChatGPT 必须独立补查该刊。
+- `unverified`：页面返回但刊名/期次无法可靠识别；`stale_index`：当前页面期次落后于此前成功观察记录；`failed`：网络/内容类型失败。
+- 目录新文章的 `first_observed_at` 是雷达**首次发现日期**，不等于 `published_at`；后者保持 null，必须从文章官方页面复核。
+- `data/chinese_seen.json` 保存已见文章与最后成功期次。首次部署先建立已见基线，不将整期旧文章伪报为当日新文。
+- 国家哲社文献中心为权威目录聚合源，并**非期刊出版社官网**；`source_kind=catalog` 明确标注。部分目录只有期次没有可解析的文章链接，属于待补查状态，不是“无新论文”。
 
 默认关键词与打分只做**候选预筛**，不是论文质量评分。实际推荐需经 ChatGPT 核验：期刊官网或作者原文、作者、DOI、日期、文章内容、与当前研究设计的可迁移性。
 
@@ -36,6 +48,7 @@ Crossref + arXiv (公开元数据)
 要求 Python 3.11+，无第三方运行依赖。
 
 ```bash
+python3 -m compileall -q radar.py chinese_journals.py tests
 python3 -m unittest discover -s tests -v
 python3 radar.py --out data --lookback-days 7
 ```
@@ -46,7 +59,7 @@ python3 radar.py --out data --lookback-days 7
 
 ## 与 ChatGPT 定时任务配合
 
-每天先读 `data/latest.json` 的 `generated_at`、`status`、`source_status`、`new_candidates`；只把其中有 DOI/arXiv/稳定链接的元数据当作候选。随后通过期刊官网、工作论文官网、中文期刊官方页面和其他一手来源补齐覆盖。
+每天先读 `data/latest.json` 的 `generated_at`、`status`、`source_status`、`new_candidates`、`chinese_journals`、`chinese_new_candidates`；只把其中有 DOI/arXiv/稳定链接的元数据当作候选。随后通过期刊官网、工作论文官网、中文期刊官方页面和其他一手来源补齐覆盖。
 
 推荐决策的门槛由 ChatGPT 日报执行：项目匹配度和可执行性优先，0—3 篇重点，0—2 篇观察，不凑数。不要把本工具的 `prefilter_score` 当成论文质量分。
 

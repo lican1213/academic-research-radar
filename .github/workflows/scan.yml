@@ -8,6 +8,7 @@ on:
     branches: [main]
     paths:
       - 'radar.py'
+      - 'chinese_journals.py'
       - '.github/workflows/scan.yml'
 
 permissions:
@@ -35,7 +36,7 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add data/latest.json data/latest.md data/seen.json
+          git add data/latest.json data/latest.md data/seen.json data/chinese_seen.json
           if ! git diff --cached --quiet; then
             git commit -m 'data: refresh academic radar metadata [skip ci]'
             git push
@@ -48,6 +49,7 @@ jobs:
           path: |
             data/latest.json
             data/latest.md
+            data/chinese_seen.json
           if-no-files-found: error
           retention-days: 30
       - name: Fail if all sources failed

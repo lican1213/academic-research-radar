@@ -400,7 +400,9 @@ def markdown_report(report: dict) -> str:
         result.extend(["", "### 本次首次观察到的中文目录文章（不等于今日发表）", ""])
         for item in report.get("chinese_new_candidates", []):
             result.append(f"- [{item['title']}]({item['url']}) — {item['journal']} "
-                          f"{item['issue']}; 首次观察 {item['first_observed_at']}; 发表日期待核验")
+                          f"{item['issue']}; 首次观察 {item['first_observed_at']}; "
+                          f"目录在线标记 {item.get('toc_online_at') or '无'}（非论文发表日期）; "
+                          "单篇论文发表日期待核验")
         if not report.get("chinese_new_candidates"):
             result.append("本次无新目录文章；若存在 catalog_only/unverified/failed，则不能宣称已覆盖全部中文论文。")
     result.extend(["", "## New or revised candidates", ""])

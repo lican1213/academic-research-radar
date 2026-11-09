@@ -223,5 +223,112 @@ class PipelineTests(unittest.TestCase):
             self.assertIn("failed", markdown_report(report))
 
 
+
+# Chinese journal monitor adversarial tests: independent source health and time semantics.
+import chinese_journals as cj
+from unittest.mock import patch
+
+
+class ChineseJournalTests(unittest.TestCase):
+    SITE = "https://sjjj.magtech.com.cn/CN/home"
+    def toc(self, issue=10, articles=None):
+        if articles is None:
+            articles = [("人工智能专利首发竞赛中的逆境突破：失败何以激励创新", "100"),
+                        ("出口管制、技术脱钩与人才培养：来自中国高考的证据", "101")]
+        anchors = "".join(
+            f'<a href="/CN/Y2026/V49/I{issue}/{slug}">{title}</a>' for title, slug in articles)
+        return (f'<html><h1>世界经济</h1><p>2026年, 49卷, 第{issue}期</p>'
+                f'<p>刊出日期：2026-10-10</p>{anchors}</html>').encode()
+
+    def test_official_toc_extracts_articles_and_issue_date(self):
+        issue, date, articles = cj.parse_toc(self.toc(), journal="世界经济",
+                                            kind="publisher", url=self.SITE)
+        self.assertEqual(issue, "2026-10")
+        self.assertEqual(date, "2026-10-10")
+        self.assertEqual(len(articles), 2)
+
+    def test_catalog_only_is_not_ok(self):
+        page = "<html><h1>经济研究</h1><p>2026年 第10期</p><span>耐心资本与企业海外布局</span></html>"
+        issue, date, articles = cj.parse_toc(page.encode(), journal="经济研究", kind="catalog",
+                                            url="https://ncpssd.org/journal/details?gch=95645X")
+        self.assertEqual(issue, "2026-10")
+        self.assertIsNone(date)
+        self.assertEqual(articles, [])
+
+    def test_initial_scan_baselines_then_new_issue_surfaces_once(self):
+        with tempfile.TemporaryDirectory() as temp:
+            folder = Path(temp)
+            url = self.SITE
+            with patch.object(cj, "JOURNALS", (("world_economy", "世界经济", "publisher", url),)):
+                initial = cj.scan_chinese_journals(folder, UTC_NOW, get=lambda _url: self.toc())
+                self.assertEqual(initial["new_candidates"], [])
+                self.assertEqual(initial["source_status"]["status"], "ok")
+                repeat = cj.scan_chinese_journals(folder, UTC_NOW, get=lambda _url: self.toc())
+                self.assertEqual(repeat["new_candidates"], [])
+                later = self.toc(issue=11, articles=[
+                    ("突破式创新与耐心资本长期投入的交互机制", "202")])
+                changed = cj.scan_chinese_journals(folder, UTC_NOW, get=lambda _url: later)
+                self.assertEqual(len(changed["new_candidates"]), 1)
+                candidate = changed["new_candidates"][0]
+                self.assertIsNone(candidate["published_at"])
+                self.assertFalse(candidate["date_verified"])
+                self.assertEqual(candidate["event_type"], "first_seen_in_toc")
+                self.assertEqual(candidate["issue"], "2026-11")
+                self.assertEqual(cj.scan_chinese_journals(folder, UTC_NOW, get=lambda _url: later)["new_candidates"], [])
+
+    def test_regressed_index_does_not_reemit_or_overwrite_ledger(self):
+        with tempfile.TemporaryDirectory() as temp:
+            folder = Path(temp)
+            url = self.SITE
+            with patch.object(cj, "JOURNALS", (("world_economy", "世界经济", "publisher", url),)):
+                cj.scan_chinese_journals(folder, UTC_NOW, get=lambda _url: self.toc(issue=11))
+                stale = cj.scan_chinese_journals(folder, UTC_NOW, get=lambda _url: self.toc(issue=9))
+                self.assertEqual(stale["source_status"]["journals"]["world_economy"]["status"], "stale_index")
+                self.assertEqual(stale["new_candidates"], [])
+                self.assertEqual(json.loads((folder / "chinese_seen.json").read_text())["world_economy"]["issue"], "2026-11")
+
+    def test_failed_source_preserves_ledger_and_reports_failure(self):
+        with tempfile.TemporaryDirectory() as temp:
+            folder = Path(temp)
+            url = self.SITE
+            with patch.object(cj, "JOURNALS", (("world_economy", "世界经济", "publisher", url),)):
+                cj.scan_chinese_journals(folder, UTC_NOW, get=lambda _url: self.toc())
+                def fail(_url):
+                    raise OSError("site timeout")
+                report = cj.scan_chinese_journals(folder, UTC_NOW, get=fail)
+                self.assertEqual(report["source_status"]["status"], "failed")
+                self.assertEqual(report["source_status"]["journals"]["world_economy"]["status"], "failed")
+                self.assertEqual(json.loads((folder / "chinese_seen.json").read_text())["world_economy"]["issue"], "2026-10")
+
+    def test_no_article_without_concrete_link_or_fake_date(self):
+        html = '<h1>世界经济</h1><p>2026年,49卷,第11期</p>' \
+               '<a href="/CN/current">耐心资本与国际专利布局深度</a>' \
+               '<a href="https://evil.example/CN/Y2026/V49/I11/10">专利文本与创新质量</a>'
+        issue, date, articles = cj.parse_toc(html.encode(), journal="世界经济",
+                                            kind="publisher", url=self.SITE)
+        self.assertEqual(issue, "2026-11")
+        self.assertIsNone(date)
+        self.assertEqual(articles, [])
+
+    def test_english_pipeline_report_has_independent_chinese_coverage(self):
+        with tempfile.TemporaryDirectory() as temp:
+            folder = Path(temp)
+            fake_c = lambda out, now: {"source_status": {
+                "status": "degraded", "queries_ok": 1, "queries_total": 7,
+                "records": 6, "errors": ["经济研究: catalog_only"],
+                "journals": {"economic_research": {
+                    "journal": "经济研究", "url": "https://ncpssd.org/example",
+                    "source_kind": "catalog", "status": "catalog_only",
+                    "issue": "2026-10", "article_count": 0, "reason": "issue_visible"}}},
+                "new_candidates": []}
+            report = run(folder, UTC_NOW,
+                         crossref=lambda since: ([], {"status":"ok","queries_ok":1,"queries_total":1,"records":0,"errors":[]}),
+                         arxiv=lambda since: ([], {"status":"ok","queries_ok":1,"queries_total":1,"records":0,"errors":[]}),
+                         chinese=fake_c)
+            self.assertEqual(report["status"], "degraded")
+            self.assertIn("chinese_journals", report["source_status"])
+            self.assertIn("经济研究", (folder / "latest.md").read_text())
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -331,6 +331,23 @@ class ChineseJournalTests(unittest.TestCase):
         self.assertEqual(articles[0]["published_at"], "2026-11-03")
         self.assertEqual(articles[0]["doi"], "10.16538/j.cnki.jfe.20260611.202")
 
+    def test_sufe_superscript_title_precedes_abstract_link_same_url(self):
+        url = "https://qks.sufe.edu.cn/J/CJYJ/Article/2026/09/CN"
+        detail = "/J/CJYJ/Article/Details/A0pgbFuTsz-vRzo-GypL-0h9O-AptmzpGperJG/CN"
+        source = (
+            '<h1>财经研究</h1><p>2026年第09期</p>'
+            f'<a href="{detail}">注册制改革与企业环境信息披露<sup>*</sup>'
+            '——基于同行溢出效应的视角</a>'
+            f'<a href="{detail}">文章研究了信息披露监管带来的经济后果与机制......</a>'
+            '<p>在线出版日期：2026年11月3日</p>'
+            '<p>doi:10.16538/j.cnki.jfe.20260619.301</p>'
+        ).encode()
+        issue, _, papers = cj.parse_toc(source, journal="财经研究", kind="publisher", url=url)
+        self.assertEqual(issue, "2026-09")
+        self.assertEqual(len(papers), 1)
+        self.assertTrue(papers[0]["title"].startswith("注册制改革"))
+        self.assertEqual(papers[0]["published_at"], "2026-11-03")
+
     def test_first_scan_recent_publisher_date_surfaces_without_calling_it_today(self):
         with tempfile.TemporaryDirectory() as temp:
             url = "https://qks.sufe.edu.cn/J/CJYJ/Article/CurrentIssue/CN"

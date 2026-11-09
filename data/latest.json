@@ -1,34 +1,26 @@
 {
-  "generated_at": "2026-11-08T16:39:21.973414+00:00",
+  "generated_at": "2026-11-09T01:43:13.604269+00:00",
   "status": "ok",
-  "since": "2026-11-05",
+  "since": "2026-11-06",
   "source_status": {
     "crossref": {
       "status": "ok",
       "queries_ok": 10,
       "queries_total": 10,
-      "records": 295,
+      "records": 298,
       "errors": []
     },
     "arxiv": {
       "status": "ok",
       "queries_ok": 4,
       "queries_total": 4,
-      "records": 15,
+      "records": 0,
       "errors": []
     }
   },
-  "scanned_candidates": 279,
-  "prefilter_pass_count": 7,
+  "scanned_candidates": 270,
+  "prefilter_pass_count": 5,
   "prefilter_diagnostics": [
-    {
-      "title": "Impact of tax incentives on corporate patient capital: evidence from income tax preferences and pretax additional deduction on R&D expenditure in China",
-      "project": "P0",
-      "score": 45,
-      "source": "crossref",
-      "event_at": "2026-11-05",
-      "url": "https://doi.org/10.1080/00036846.2026.2754316"
-    },
     {
       "title": "Public Data Openness, Patient Capital, and Corporate Disruptive Innovation",
       "project": "P0",
@@ -36,14 +28,6 @@
       "source": "crossref",
       "event_at": "2026-11-06",
       "url": "https://doi.org/10.1080/1540496x.2026.2752907"
-    },
-    {
-      "title": "The Impact of Global Economic Fragmentation on Foreign Direct Investment Flows: An Empirical Analysis",
-      "project": "P1",
-      "score": 52,
-      "source": "crossref",
-      "event_at": "2026-11-05",
-      "url": "https://doi.org/10.36719/2706-6185/64/209-213"
     },
     {
       "title": "A conceptual model for enhancing enterprise and supply chain resilience through artificial intelligence, optimisation, and gamification",
@@ -62,34 +46,6 @@
       "url": "https://doi.org/10.36871/u.i.k.2026.09.02.002"
     }
   ],
-  "new_candidates": [
-    {
-      "id": "doi:10.70248/jmie.v4i1.4742",
-      "title": "INSTITUTIONAL OWNERSHIP MODERATING CARBON DISCLOSURE, GREEN INNOVATION, AND FIRM VALUE IN THE INDONESIAN ENERGY SECTOR",
-      "authors": [
-        "Fathihani Fathihani",
-        "Ainun Jariah",
-        "Ika Sari",
-        "Retno Puji Astuti"
-      ],
-      "url": "https://doi.org/10.70248/jmie.v4i1.4742",
-      "doi": "10.70248/jmie.v4i1.4742",
-      "source": "crossref",
-      "sources": [
-        "crossref"
-      ],
-      "venue": "Journal of Management and Innovation Entrepreneurship (JMIE)",
-      "type": "journal-article",
-      "published_at": "2026-10-30",
-      "metadata_created_at": "2026-11-08",
-      "event_at": "2026-11-08",
-      "event_type": "crossref_registration",
-      "version": "",
-      "project": "P3",
-      "eligible": true,
-      "prefilter_score": 47,
-      "change": "new"
-    }
-  ],
+  "new_candidates": [],
   "note": "Metadata candidates only; verify paper content and bibliographic dates at primary sources."
 }

@@ -1,10 +1,10 @@
-# Academic Research Radar — 2026-11-09T12:09:28.510732+00:00
+# Academic Research Radar — 2026-11-09T20:42:33.619270+00:00
 
-**Status:** degraded; **New or changed candidates:** 0
+**Status:** degraded; **New or changed candidates:** 4
 
 This is metadata triage, not a verified reading or recommendation.
 
-- crossref: ok; 10/10 queries; 297 records
+- crossref: ok; 10/10 queries; 296 records
 - arxiv: ok; 4/4 queries; 16 records
 - chinese_journals: degraded; 2/7 queries; 17 records
   - Error: 经济研究: catalog_only (issue_visible_but_articles_not_verified)
@@ -29,4 +29,7 @@ This is metadata triage, not a verified reading or recommendation.
 
 ## New or revised candidates
 
-None passed the metadata prefilter. This does not imply no relevant papers exist.
+- [Artificial Intelligence and Agricultural Supply Chain Resilience: Empirical Evidence From China](https://doi.org/10.1002/fes3.70334) — P1, prefilter 50, crossref_registration 2026-11-09, new
+- [The Economics of Agri-Food Supply Chain Resilience: Pandemics, Climate Shocks and Global Disruptions](https://doi.org/10.9734/acri/2026/v26i112274) — P1, prefilter 50, crossref_registration 2026-11-09, new
+- [When resilience erodes itself: double machine learning evidence on extreme precipitation and supply chain resilience in the textile value chain](https://doi.org/10.1080/00405000.2026.2757477) — P1, prefilter 50, crossref_registration 2026-11-09, new
+- [Foreign Direct Investment and Nigeria’s Economic Growth (1981-2021)](https://doi.org/10.4314/ngjsd.v13i2.20) — P1, prefilter 45, crossref_registration 2026-11-09, new

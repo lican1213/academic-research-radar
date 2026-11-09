@@ -3,19 +3,19 @@
     "issue": "2026-09",
     "articles": [],
     "baselined": true,
-    "last_success_at": "2026-11-09T12:06:54.622164+00:00"
+    "last_success_at": "2026-11-09T12:09:28.510732+00:00"
   },
   "china_industrial": {
     "issue": "2026-08",
     "articles": [],
     "baselined": true,
-    "last_success_at": "2026-11-09T12:06:54.622164+00:00"
+    "last_success_at": "2026-11-09T12:09:28.510732+00:00"
   },
   "management_world": {
     "issue": "2026-10",
     "articles": [],
     "baselined": true,
-    "last_success_at": "2026-11-09T12:06:54.622164+00:00"
+    "last_success_at": "2026-11-09T12:09:28.510732+00:00"
   },
   "world_economy": {
     "issue": "2026-10",
@@ -28,7 +28,7 @@
       "政府采购能否促进专精特新中小企业强链塑链"
     ],
     "baselined": true,
-    "last_success_at": "2026-11-09T12:06:54.622164+00:00"
+    "last_success_at": "2026-11-09T12:09:28.510732+00:00"
   },
   "finance_economics": {
     "issue": "2026-09",
@@ -48,18 +48,18 @@
       "面值退市制度对企业高送转行为的治理效应研究"
     ],
     "baselined": true,
-    "last_success_at": "2026-11-09T12:06:54.622164+00:00"
+    "last_success_at": "2026-11-09T12:09:28.510732+00:00"
   },
   "quant_economics": {
     "issue": "2026-10",
     "articles": [],
     "baselined": true,
-    "last_success_at": "2026-11-09T12:06:54.622164+00:00"
+    "last_success_at": "2026-11-09T12:09:28.510732+00:00"
   },
   "financial_research": {
     "issue": "2026-07",
     "articles": [],
     "baselined": true,
-    "last_success_at": "2026-11-09T12:06:54.622164+00:00"
+    "last_success_at": "2026-11-09T12:09:28.510732+00:00"
   }
 }

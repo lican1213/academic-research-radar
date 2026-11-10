@@ -1,20 +1,20 @@
 {
-  "generated_at": "2026-11-09T20:42:33.619270+00:00",
+  "generated_at": "2026-11-10T04:06:19.324402+00:00",
   "status": "degraded",
-  "since": "2026-11-06",
+  "since": "2026-11-07",
   "source_status": {
     "crossref": {
       "status": "ok",
       "queries_ok": 10,
       "queries_total": 10,
-      "records": 296,
+      "records": 295,
       "errors": []
     },
     "arxiv": {
       "status": "ok",
       "queries_ok": 4,
       "queries_total": 4,
-      "records": 16,
+      "records": 17,
       "errors": []
     },
     "chinese_journals": {
@@ -34,7 +34,7 @@
           "journal": "经济研究",
           "source_kind": "catalog",
           "url": "https://www.ncpssd.org/journal/details?gch=95645X",
-          "checked_at": "2026-11-09T20:42:33.619270+00:00",
+          "checked_at": "2026-11-10T04:06:19.324402+00:00",
           "status": "catalog_only",
           "issue": "2026-09",
           "issue_date": null,
@@ -45,7 +45,7 @@
           "journal": "中国工业经济",
           "source_kind": "catalog",
           "url": "https://ncpssd.org/journal/details.aspx?gch=93800A",
-          "checked_at": "2026-11-09T20:42:33.619270+00:00",
+          "checked_at": "2026-11-10T04:06:19.324402+00:00",
           "status": "catalog_only",
           "issue": "2026-08",
           "issue_date": null,
@@ -56,7 +56,7 @@
           "journal": "管理世界",
           "source_kind": "catalog",
           "url": "https://m.ncpssd.cn/journal/details?gch=95499X&langType=1&nav=1",
-          "checked_at": "2026-11-09T20:42:33.619270+00:00",
+          "checked_at": "2026-11-10T04:06:19.324402+00:00",
           "status": "catalog_only",
           "issue": "2026-10",
           "issue_date": null,
@@ -67,7 +67,7 @@
           "journal": "世界经济",
           "source_kind": "publisher",
           "url": "https://sjjj.magtech.com.cn/CN/home",
-          "checked_at": "2026-11-09T20:42:33.619270+00:00",
+          "checked_at": "2026-11-10T04:06:19.324402+00:00",
           "status": "ok",
           "issue": "2026-10",
           "issue_date": "2026-10-10",
@@ -77,7 +77,7 @@
           "journal": "数量经济技术经济研究",
           "source_kind": "catalog",
           "url": "https://www.ncpssd.org/journal/details?gch=94503X",
-          "checked_at": "2026-11-09T20:42:33.619270+00:00",
+          "checked_at": "2026-11-10T04:06:19.324402+00:00",
           "status": "catalog_only",
           "issue": "2026-10",
           "issue_date": null,
@@ -90,7 +90,7 @@
           "journal": "财经研究",
           "source_kind": "publisher",
           "url": "https://qks.sufe.edu.cn/J/CJYJ/Article/CurrentIssue/CN",
-          "checked_at": "2026-11-09T20:42:33.619270+00:00",
+          "checked_at": "2026-11-10T04:06:19.324402+00:00",
           "status": "ok",
           "issue": "2026-09",
           "issue_date": null,
@@ -100,7 +100,7 @@
           "journal": "金融研究",
           "source_kind": "catalog",
           "url": "https://m.ncpssd.cn/journal/details?gch=97926X&langType=1&nav=1",
-          "checked_at": "2026-11-09T20:42:33.619270+00:00",
+          "checked_at": "2026-11-10T04:06:19.324402+00:00",
           "status": "catalog_only",
           "issue": "2026-07",
           "issue_date": null,
@@ -112,25 +112,9 @@
       }
     }
   },
-  "scanned_candidates": 281,
-  "prefilter_pass_count": 9,
+  "scanned_candidates": 283,
+  "prefilter_pass_count": 6,
   "prefilter_diagnostics": [
-    {
-      "title": "Public Data Openness, Patient Capital, and Corporate Disruptive Innovation",
-      "project": "P0",
-      "score": 45,
-      "source": "crossref",
-      "event_at": "2026-11-06",
-      "url": "https://doi.org/10.1080/1540496x.2026.2752907"
-    },
-    {
-      "title": "A conceptual model for enhancing enterprise and supply chain resilience through artificial intelligence, optimisation, and gamification",
-      "project": "P1",
-      "score": 50,
-      "source": "crossref",
-      "event_at": "2026-11-06",
-      "url": "https://doi.org/10.52152/d11581"
-    },
     {
       "title": "Artificial Intelligence and Agricultural Supply Chain Resilience: Empirical Evidence From China",
       "project": "P1",
@@ -172,116 +156,14 @@
       "url": "https://doi.org/10.4314/ngjsd.v13i2.20"
     }
   ],
-  "new_candidates": [
-    {
-      "id": "doi:10.1002/fes3.70334",
-      "title": "Artificial Intelligence and Agricultural Supply Chain Resilience: Empirical Evidence From China",
-      "authors": [
-        "Shengze Xue",
-        "Lei Wang",
-        "Ziyu Wang"
-      ],
-      "url": "https://doi.org/10.1002/fes3.70334",
-      "doi": "10.1002/fes3.70334",
-      "source": "crossref",
-      "sources": [
-        "crossref"
-      ],
-      "venue": "Food and Energy Security",
-      "type": "journal-article",
-      "published_at": "2026-11-09",
-      "metadata_created_at": "2026-11-09",
-      "event_at": "2026-11-09",
-      "event_type": "crossref_registration",
-      "version": "",
-      "project": "P1",
-      "eligible": true,
-      "prefilter_score": 50,
-      "change": "new"
-    },
-    {
-      "id": "doi:10.9734/acri/2026/v26i112274",
-      "title": "The Economics of Agri-Food Supply Chain Resilience: Pandemics, Climate Shocks and Global Disruptions",
-      "authors": [
-        "Harkesh Kumar Balai",
-        "Sanjiv Kumar",
-        "Sarita Meena"
-      ],
-      "url": "https://doi.org/10.9734/acri/2026/v26i112274",
-      "doi": "10.9734/acri/2026/v26i112274",
-      "source": "crossref",
-      "sources": [
-        "crossref"
-      ],
-      "venue": "Archives of Current Research International",
-      "type": "journal-article",
-      "published_at": "2026-11-09",
-      "metadata_created_at": "2026-11-09",
-      "event_at": "2026-11-09",
-      "event_type": "crossref_registration",
-      "version": "",
-      "project": "P1",
-      "eligible": true,
-      "prefilter_score": 50,
-      "change": "new"
-    },
-    {
-      "id": "doi:10.1080/00405000.2026.2757477",
-      "title": "When resilience erodes itself: double machine learning evidence on extreme precipitation and supply chain resilience in the textile value chain",
-      "authors": [
-        "Han Yan",
-        "Ding Li"
-      ],
-      "url": "https://doi.org/10.1080/00405000.2026.2757477",
-      "doi": "10.1080/00405000.2026.2757477",
-      "source": "crossref",
-      "sources": [
-        "crossref"
-      ],
-      "venue": "The Journal of The Textile Institute",
-      "type": "journal-article",
-      "published_at": "2026-11-09",
-      "metadata_created_at": "2026-11-09",
-      "event_at": "2026-11-09",
-      "event_type": "crossref_registration",
-      "version": "",
-      "project": "P1",
-      "eligible": true,
-      "prefilter_score": 50,
-      "change": "new"
-    },
-    {
-      "id": "doi:10.4314/ngjsd.v13i2.20",
-      "title": "Foreign Direct Investment and Nigeria’s Economic Growth (1981-2021)",
-      "authors": [
-        "Cyril Okpala"
-      ],
-      "url": "https://doi.org/10.4314/ngjsd.v13i2.20",
-      "doi": "10.4314/ngjsd.v13i2.20",
-      "source": "crossref",
-      "sources": [
-        "crossref"
-      ],
-      "venue": "NG Journal of Social Development",
-      "type": "journal-article",
-      "published_at": "2024-01-01",
-      "metadata_created_at": "2026-11-09",
-      "event_at": "2026-11-09",
-      "event_type": "crossref_registration",
-      "version": "",
-      "project": "P1",
-      "eligible": true,
-      "prefilter_score": 45,
-      "change": "new"
-    }
-  ],
+  "new_candidates": [],
   "note": "Metadata candidates only; verify paper content and bibliographic dates at primary sources. Chinese catalog first_seen is NOT publication date; incomplete catalogs require manual checking.",
   "chinese_journals": {
     "economic_research": {
       "journal": "经济研究",
       "source_kind": "catalog",
       "url": "https://www.ncpssd.org/journal/details?gch=95645X",
-      "checked_at": "2026-11-09T20:42:33.619270+00:00",
+      "checked_at": "2026-11-10T04:06:19.324402+00:00",
       "status": "catalog_only",
       "issue": "2026-09",
       "issue_date": null,
@@ -292,7 +174,7 @@
       "journal": "中国工业经济",
       "source_kind": "catalog",
       "url": "https://ncpssd.org/journal/details.aspx?gch=93800A",
-      "checked_at": "2026-11-09T20:42:33.619270+00:00",
+      "checked_at": "2026-11-10T04:06:19.324402+00:00",
       "status": "catalog_only",
       "issue": "2026-08",
       "issue_date": null,
@@ -303,7 +185,7 @@
       "journal": "管理世界",
       "source_kind": "catalog",
       "url": "https://m.ncpssd.cn/journal/details?gch=95499X&langType=1&nav=1",
-      "checked_at": "2026-11-09T20:42:33.619270+00:00",
+      "checked_at": "2026-11-10T04:06:19.324402+00:00",
       "status": "catalog_only",
       "issue": "2026-10",
       "issue_date": null,
@@ -314,7 +196,7 @@
       "journal": "世界经济",
       "source_kind": "publisher",
       "url": "https://sjjj.magtech.com.cn/CN/home",
-      "checked_at": "2026-11-09T20:42:33.619270+00:00",
+      "checked_at": "2026-11-10T04:06:19.324402+00:00",
       "status": "ok",
       "issue": "2026-10",
       "issue_date": "2026-10-10",
@@ -324,7 +206,7 @@
       "journal": "数量经济技术经济研究",
       "source_kind": "catalog",
       "url": "https://www.ncpssd.org/journal/details?gch=94503X",
-      "checked_at": "2026-11-09T20:42:33.619270+00:00",
+      "checked_at": "2026-11-10T04:06:19.324402+00:00",
       "status": "catalog_only",
       "issue": "2026-10",
       "issue_date": null,
@@ -337,7 +219,7 @@
       "journal": "财经研究",
       "source_kind": "publisher",
       "url": "https://qks.sufe.edu.cn/J/CJYJ/Article/CurrentIssue/CN",
-      "checked_at": "2026-11-09T20:42:33.619270+00:00",
+      "checked_at": "2026-11-10T04:06:19.324402+00:00",
       "status": "ok",
       "issue": "2026-09",
       "issue_date": null,
@@ -347,7 +229,7 @@
       "journal": "金融研究",
       "source_kind": "catalog",
       "url": "https://m.ncpssd.cn/journal/details?gch=97926X&langType=1&nav=1",
-      "checked_at": "2026-11-09T20:42:33.619270+00:00",
+      "checked_at": "2026-11-10T04:06:19.324402+00:00",
       "status": "catalog_only",
       "issue": "2026-07",
       "issue_date": null,

@@ -963,5 +963,53 @@
     "doi": "10.4314/ngjsd.v13i2.20",
     "last_seen": "2026-11-10",
     "emitted": true
+  },
+  "doi:10.3390/su182211467": {
+    "fingerprint": "6dbbe00a8010e5535570",
+    "title_norm": "artificialintelligenceadoptionandsupplychainresilienceimplicationsforsustainabledevelopmentinchinasintegratedcircuitindustry",
+    "version": "",
+    "doi": "10.3390/su182211467",
+    "last_seen": "2026-11-10",
+    "emitted": true
+  },
+  "title:artificialintelligenceadoptionandsupplychainresilienceimplicationsforsustainabledevelopmentinchinasintegratedcircuitindustry": {
+    "fingerprint": "6dbbe00a8010e5535570",
+    "title_norm": "artificialintelligenceadoptionandsupplychainresilienceimplicationsforsustainabledevelopmentinchinasintegratedcircuitindustry",
+    "version": "",
+    "doi": "10.3390/su182211467",
+    "last_seen": "2026-11-10",
+    "emitted": true
+  },
+  "doi:10.68159/d012425876": {
+    "fingerprint": "d4f215a5fe8532dce15d",
+    "title_norm": "artificialintelligenceforagrifoodsupplychainresilienceasystematicreviewofforecastingtraceabilityriskdetectionanddecisionsupport",
+    "version": "",
+    "doi": "10.68159/d012425876",
+    "last_seen": "2026-11-10",
+    "emitted": true
+  },
+  "title:artificialintelligenceforagrifoodsupplychainresilienceasystematicreviewofforecastingtraceabilityriskdetectionanddecisionsupport": {
+    "fingerprint": "d4f215a5fe8532dce15d",
+    "title_norm": "artificialintelligenceforagrifoodsupplychainresilienceasystematicreviewofforecastingtraceabilityriskdetectionanddecisionsupport",
+    "version": "",
+    "doi": "10.68159/d012425876",
+    "last_seen": "2026-11-10",
+    "emitted": true
+  },
+  "doi:10.1108/aci-04-2026-0321": {
+    "fingerprint": "756468f43c0eb541179e",
+    "title_norm": "frugalmachinelearningforpharmaceuticalsmesupplychainresiliencearealempiricalcasestudy",
+    "version": "",
+    "doi": "10.1108/aci-04-2026-0321",
+    "last_seen": "2026-11-10",
+    "emitted": true
+  },
+  "title:frugalmachinelearningforpharmaceuticalsmesupplychainresiliencearealempiricalcasestudy": {
+    "fingerprint": "756468f43c0eb541179e",
+    "title_norm": "frugalmachinelearningforpharmaceuticalsmesupplychainresiliencearealempiricalcasestudy",
+    "version": "",
+    "doi": "10.1108/aci-04-2026-0321",
+    "last_seen": "2026-11-10",
+    "emitted": true
   }
 }

@@ -1011,5 +1011,37 @@
     "doi": "10.1108/aci-04-2026-0321",
     "last_seen": "2026-11-11",
     "emitted": true
+  },
+  "doi:10.3390/su182211492": {
+    "fingerprint": "971d8a585a89fdc39c6a",
+    "title_norm": "theimpactofpatientcapitaloncorporatesupplychainefficiencyevidencefromchineseasharelistedfirms",
+    "version": "",
+    "doi": "10.3390/su182211492",
+    "last_seen": "2026-11-11",
+    "emitted": true
+  },
+  "title:theimpactofpatientcapitaloncorporatesupplychainefficiencyevidencefromchineseasharelistedfirms": {
+    "fingerprint": "971d8a585a89fdc39c6a",
+    "title_norm": "theimpactofpatientcapitaloncorporatesupplychainefficiencyevidencefromchineseasharelistedfirms",
+    "version": "",
+    "doi": "10.3390/su182211492",
+    "last_seen": "2026-11-11",
+    "emitted": true
+  },
+  "doi:10.3390/systems14111448": {
+    "fingerprint": "6758c8ccba61f201524c",
+    "title_norm": "artificialintelligenceandsupplychainresilienceevidencefromchineselistedfirms",
+    "version": "",
+    "doi": "10.3390/systems14111448",
+    "last_seen": "2026-11-11",
+    "emitted": true
+  },
+  "title:artificialintelligenceandsupplychainresilienceevidencefromchineselistedfirms": {
+    "fingerprint": "6758c8ccba61f201524c",
+    "title_norm": "artificialintelligenceandsupplychainresilienceevidencefromchineselistedfirms",
+    "version": "",
+    "doi": "10.3390/systems14111448",
+    "last_seen": "2026-11-11",
+    "emitted": true
   }
 }

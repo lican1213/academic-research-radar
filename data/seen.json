@@ -1043,5 +1043,69 @@
     "doi": "10.3390/systems14111448",
     "last_seen": "2026-11-13",
     "emitted": true
+  },
+  "doi:10.2139/ssrn.7698158": {
+    "fingerprint": "c266501bc7e6e329a91d",
+    "title_norm": "alternativepathstosupplychainresilienceacontextualisedprocessualanalysisofsmesandlargeenterprisesfacingexternalshocksandgeopoliticaltensions",
+    "version": "",
+    "doi": "10.2139/ssrn.7698158",
+    "last_seen": "2026-11-13",
+    "emitted": true
+  },
+  "title:alternativepathstosupplychainresilienceacontextualisedprocessualanalysisofsmesandlargeenterprisesfacingexternalshocksandgeopoliticaltensions": {
+    "fingerprint": "c266501bc7e6e329a91d",
+    "title_norm": "alternativepathstosupplychainresilienceacontextualisedprocessualanalysisofsmesandlargeenterprisesfacingexternalshocksandgeopoliticaltensions",
+    "version": "",
+    "doi": "10.2139/ssrn.7698158",
+    "last_seen": "2026-11-13",
+    "emitted": true
+  },
+  "doi:10.1108/ijlm-01-2026-0017": {
+    "fingerprint": "2e34247ac7d82efa69dc",
+    "title_norm": "supplychainresilienceascoevolutionacomplexadaptivesystemsperspectiveonsmefoodsupplychains",
+    "version": "",
+    "doi": "10.1108/ijlm-01-2026-0017",
+    "last_seen": "2026-11-13",
+    "emitted": true
+  },
+  "title:supplychainresilienceascoevolutionacomplexadaptivesystemsperspectiveonsmefoodsupplychains": {
+    "fingerprint": "2e34247ac7d82efa69dc",
+    "title_norm": "supplychainresilienceascoevolutionacomplexadaptivesystemsperspectiveonsmefoodsupplychains",
+    "version": "",
+    "doi": "10.1108/ijlm-01-2026-0017",
+    "last_seen": "2026-11-13",
+    "emitted": true
+  },
+  "doi:10.64090/3105-0972.202611630": {
+    "fingerprint": "b3f50e7d5370170aaf17",
+    "title_norm": "生成式人工智能实质应用能否提升制造企业供应链韧性基于外生冲击下感知协调重构机制检验",
+    "version": "",
+    "doi": "10.64090/3105-0972.202611630",
+    "last_seen": "2026-11-13",
+    "emitted": true
+  },
+  "title:生成式人工智能实质应用能否提升制造企业供应链韧性基于外生冲击下感知协调重构机制检验": {
+    "fingerprint": "b3f50e7d5370170aaf17",
+    "title_norm": "生成式人工智能实质应用能否提升制造企业供应链韧性基于外生冲击下感知协调重构机制检验",
+    "version": "",
+    "doi": "10.64090/3105-0972.202611630",
+    "last_seen": "2026-11-13",
+    "emitted": true
+  },
+  "doi:10.21070/ijins.v28i1.2473": {
+    "fingerprint": "1aa2dbf086c27846a59a",
+    "title_norm": "towardinnovationintaxgovernancethroughinstitutionalownershipandmoderatecompanysize",
+    "version": "",
+    "doi": "10.21070/ijins.v28i1.2473",
+    "last_seen": "2026-11-13",
+    "emitted": true
+  },
+  "title:towardinnovationintaxgovernancethroughinstitutionalownershipandmoderatecompanysize": {
+    "fingerprint": "1aa2dbf086c27846a59a",
+    "title_norm": "towardinnovationintaxgovernancethroughinstitutionalownershipandmoderatecompanysize",
+    "version": "",
+    "doi": "10.21070/ijins.v28i1.2473",
+    "last_seen": "2026-11-13",
+    "emitted": true
   }
 }

@@ -1,20 +1,20 @@
 {
-  "generated_at": "2026-11-12T18:18:38.682305+00:00",
+  "generated_at": "2026-11-13T02:37:41.817173+00:00",
   "status": "degraded",
-  "since": "2026-11-09",
+  "since": "2026-11-10",
   "source_status": {
     "crossref": {
       "status": "ok",
       "queries_ok": 10,
       "queries_total": 10,
-      "records": 298,
+      "records": 297,
       "errors": []
     },
     "arxiv": {
       "status": "ok",
       "queries_ok": 4,
       "queries_total": 4,
-      "records": 31,
+      "records": 19,
       "errors": []
     },
     "chinese_journals": {
@@ -23,52 +23,52 @@
       "queries_total": 7,
       "records": 7,
       "errors": [
-        "经济研究: failed (TimeoutError: The read operation timed out)",
-        "中国工业经济: failed (TimeoutError: The read operation timed out)",
-        "管理世界: failed (TimeoutError: The read operation timed out)",
-        "数量经济技术经济研究: failed (TimeoutError: The read operation timed out)",
+        "经济研究: catalog_only (issue_visible_but_articles_not_verified)",
+        "中国工业经济: catalog_only (issue_visible_but_articles_not_verified)",
+        "管理世界: catalog_only (issue_visible_but_articles_not_verified)",
+        "数量经济技术经济研究: catalog_only (publisher_unavailable; issue_visible_but_articles_not_verified)",
         "财经研究: catalog_only (issue_visible_but_articles_not_verified)",
-        "金融研究: failed (TimeoutError: The read operation timed out)"
+        "金融研究: catalog_only (publisher_unavailable; issue_visible_but_articles_not_verified)"
       ],
       "journals": {
         "economic_research": {
           "journal": "经济研究",
           "source_kind": "catalog",
           "url": "https://www.ncpssd.org/journal/details?gch=95645X",
-          "checked_at": "2026-11-12T18:18:38.682305+00:00",
-          "status": "failed",
-          "issue": null,
+          "checked_at": "2026-11-13T02:37:41.817173+00:00",
+          "status": "catalog_only",
+          "issue": "2026-09",
           "issue_date": null,
           "article_count": 0,
-          "reason": "TimeoutError: The read operation timed out"
+          "reason": "issue_visible_but_articles_not_verified"
         },
         "china_industrial": {
           "journal": "中国工业经济",
           "source_kind": "catalog",
           "url": "https://ncpssd.org/journal/details.aspx?gch=93800A",
-          "checked_at": "2026-11-12T18:18:38.682305+00:00",
-          "status": "failed",
-          "issue": null,
+          "checked_at": "2026-11-13T02:37:41.817173+00:00",
+          "status": "catalog_only",
+          "issue": "2026-08",
           "issue_date": null,
           "article_count": 0,
-          "reason": "TimeoutError: The read operation timed out"
+          "reason": "issue_visible_but_articles_not_verified"
         },
         "management_world": {
           "journal": "管理世界",
           "source_kind": "catalog",
           "url": "https://m.ncpssd.cn/journal/details?gch=95499X&langType=1&nav=1",
-          "checked_at": "2026-11-12T18:18:38.682305+00:00",
-          "status": "failed",
-          "issue": null,
+          "checked_at": "2026-11-13T02:37:41.817173+00:00",
+          "status": "catalog_only",
+          "issue": "2026-10",
           "issue_date": null,
           "article_count": 0,
-          "reason": "TimeoutError: The read operation timed out"
+          "reason": "issue_visible_but_articles_not_verified"
         },
         "world_economy": {
           "journal": "世界经济",
           "source_kind": "publisher",
           "url": "https://sjjj.magtech.com.cn/CN/home",
-          "checked_at": "2026-11-12T18:18:38.682305+00:00",
+          "checked_at": "2026-11-13T02:37:41.817173+00:00",
           "status": "ok",
           "issue": "2026-11",
           "issue_date": "2026-11-10",
@@ -76,20 +76,22 @@
         },
         "quant_economics": {
           "journal": "数量经济技术经济研究",
-          "source_kind": "publisher",
-          "url": "https://www.jqte.net/sljjjsjjyj/ch/index.aspx",
-          "checked_at": "2026-11-12T18:18:38.682305+00:00",
-          "status": "failed",
-          "issue": null,
+          "source_kind": "catalog",
+          "url": "https://www.ncpssd.org/journal/details?gch=94503X",
+          "checked_at": "2026-11-13T02:37:41.817173+00:00",
+          "status": "catalog_only",
+          "issue": "2026-10",
           "issue_date": null,
           "article_count": 0,
-          "reason": "TimeoutError: The read operation timed out"
+          "primary_url": "https://www.jqte.net/sljjjsjjyj/ch/index.aspx",
+          "primary_failure": "HTTPError: HTTP Error 502: Bad Gateway",
+          "reason": "publisher_unavailable; issue_visible_but_articles_not_verified"
         },
         "finance_economics": {
           "journal": "财经研究",
           "source_kind": "publisher",
           "url": "https://qks.sufe.edu.cn/J/CJYJ/Article/CurrentIssue/CN",
-          "checked_at": "2026-11-12T18:18:38.682305+00:00",
+          "checked_at": "2026-11-13T02:37:41.817173+00:00",
           "status": "catalog_only",
           "issue": "2026-09",
           "issue_date": null,
@@ -98,20 +100,22 @@
         },
         "financial_research": {
           "journal": "金融研究",
-          "source_kind": "publisher",
-          "url": "https://www.jryj.org.cn/CN/1002-7246/current.shtml",
-          "checked_at": "2026-11-12T18:18:38.682305+00:00",
-          "status": "failed",
-          "issue": null,
+          "source_kind": "catalog",
+          "url": "https://m.ncpssd.cn/journal/details?gch=97926X&langType=1&nav=1",
+          "checked_at": "2026-11-13T02:37:41.817173+00:00",
+          "status": "catalog_only",
+          "issue": "2026-07",
           "issue_date": null,
           "article_count": 0,
-          "reason": "TimeoutError: The read operation timed out"
+          "primary_url": "https://www.jryj.org.cn/CN/1002-7246/current.shtml",
+          "primary_failure": "URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'www.jryj.org.cn'",
+          "reason": "publisher_unavailable; issue_visible_but_articles_not_verified"
         }
       }
     }
   },
-  "scanned_candidates": 293,
-  "prefilter_pass_count": 8,
+  "scanned_candidates": 268,
+  "prefilter_pass_count": 5,
   "prefilter_diagnostics": [
     {
       "title": "The Impact of Patient Capital on Corporate Supply Chain Efficiency: Evidence from Chinese A-Share Listed Firms",
@@ -130,14 +134,6 @@
       "url": "https://doi.org/10.3390/su182211467"
     },
     {
-      "title": "Artificial Intelligence and Agricultural Supply Chain Resilience: Empirical Evidence From China",
-      "project": "P1",
-      "score": 50,
-      "source": "crossref",
-      "event_at": "2026-11-09",
-      "url": "https://doi.org/10.1002/fes3.70334"
-    },
-    {
       "title": "Artificial Intelligence and Supply Chain Resilience: Evidence from Chinese Listed Firms",
       "project": "P1",
       "score": 50,
@@ -146,36 +142,20 @@
       "url": "https://doi.org/10.3390/systems14111448"
     },
     {
+      "title": "Artificial Intelligence for Agri-Food Supply Chain Resilience: A Systematic Review of Forecasting, Traceability, Risk Detection, and Decision Support",
+      "project": "P1",
+      "score": 50,
+      "source": "crossref",
+      "event_at": "2026-11-10",
+      "url": "https://doi.org/10.68159/d012425876"
+    },
+    {
       "title": "Frugal machine learning for pharmaceutical SME supply chain resilience: a real empirical case study",
       "project": "P1",
       "score": 50,
       "source": "crossref",
       "event_at": "2026-11-10",
       "url": "https://doi.org/10.1108/aci-04-2026-0321"
-    },
-    {
-      "title": "The Economics of Agri-Food Supply Chain Resilience: Pandemics, Climate Shocks and Global Disruptions",
-      "project": "P1",
-      "score": 50,
-      "source": "crossref",
-      "event_at": "2026-11-09",
-      "url": "https://doi.org/10.9734/acri/2026/v26i112274"
-    },
-    {
-      "title": "When resilience erodes itself: double machine learning evidence on extreme precipitation and supply chain resilience in the textile value chain",
-      "project": "P1",
-      "score": 50,
-      "source": "crossref",
-      "event_at": "2026-11-09",
-      "url": "https://doi.org/10.1080/00405000.2026.2757477"
-    },
-    {
-      "title": "Foreign Direct Investment and Nigeria’s Economic Growth (1981-2021)",
-      "project": "P1",
-      "score": 45,
-      "source": "crossref",
-      "event_at": "2026-11-09",
-      "url": "https://doi.org/10.4314/ngjsd.v13i2.20"
     }
   ],
   "new_candidates": [],
@@ -185,40 +165,40 @@
       "journal": "经济研究",
       "source_kind": "catalog",
       "url": "https://www.ncpssd.org/journal/details?gch=95645X",
-      "checked_at": "2026-11-12T18:18:38.682305+00:00",
-      "status": "failed",
-      "issue": null,
+      "checked_at": "2026-11-13T02:37:41.817173+00:00",
+      "status": "catalog_only",
+      "issue": "2026-09",
       "issue_date": null,
       "article_count": 0,
-      "reason": "TimeoutError: The read operation timed out"
+      "reason": "issue_visible_but_articles_not_verified"
     },
     "china_industrial": {
       "journal": "中国工业经济",
       "source_kind": "catalog",
       "url": "https://ncpssd.org/journal/details.aspx?gch=93800A",
-      "checked_at": "2026-11-12T18:18:38.682305+00:00",
-      "status": "failed",
-      "issue": null,
+      "checked_at": "2026-11-13T02:37:41.817173+00:00",
+      "status": "catalog_only",
+      "issue": "2026-08",
       "issue_date": null,
       "article_count": 0,
-      "reason": "TimeoutError: The read operation timed out"
+      "reason": "issue_visible_but_articles_not_verified"
     },
     "management_world": {
       "journal": "管理世界",
       "source_kind": "catalog",
       "url": "https://m.ncpssd.cn/journal/details?gch=95499X&langType=1&nav=1",
-      "checked_at": "2026-11-12T18:18:38.682305+00:00",
-      "status": "failed",
-      "issue": null,
+      "checked_at": "2026-11-13T02:37:41.817173+00:00",
+      "status": "catalog_only",
+      "issue": "2026-10",
       "issue_date": null,
       "article_count": 0,
-      "reason": "TimeoutError: The read operation timed out"
+      "reason": "issue_visible_but_articles_not_verified"
     },
     "world_economy": {
       "journal": "世界经济",
       "source_kind": "publisher",
       "url": "https://sjjj.magtech.com.cn/CN/home",
-      "checked_at": "2026-11-12T18:18:38.682305+00:00",
+      "checked_at": "2026-11-13T02:37:41.817173+00:00",
       "status": "ok",
       "issue": "2026-11",
       "issue_date": "2026-11-10",
@@ -226,20 +206,22 @@
     },
     "quant_economics": {
       "journal": "数量经济技术经济研究",
-      "source_kind": "publisher",
-      "url": "https://www.jqte.net/sljjjsjjyj/ch/index.aspx",
-      "checked_at": "2026-11-12T18:18:38.682305+00:00",
-      "status": "failed",
-      "issue": null,
+      "source_kind": "catalog",
+      "url": "https://www.ncpssd.org/journal/details?gch=94503X",
+      "checked_at": "2026-11-13T02:37:41.817173+00:00",
+      "status": "catalog_only",
+      "issue": "2026-10",
       "issue_date": null,
       "article_count": 0,
-      "reason": "TimeoutError: The read operation timed out"
+      "primary_url": "https://www.jqte.net/sljjjsjjyj/ch/index.aspx",
+      "primary_failure": "HTTPError: HTTP Error 502: Bad Gateway",
+      "reason": "publisher_unavailable; issue_visible_but_articles_not_verified"
     },
     "finance_economics": {
       "journal": "财经研究",
       "source_kind": "publisher",
       "url": "https://qks.sufe.edu.cn/J/CJYJ/Article/CurrentIssue/CN",
-      "checked_at": "2026-11-12T18:18:38.682305+00:00",
+      "checked_at": "2026-11-13T02:37:41.817173+00:00",
       "status": "catalog_only",
       "issue": "2026-09",
       "issue_date": null,
@@ -248,14 +230,16 @@
     },
     "financial_research": {
       "journal": "金融研究",
-      "source_kind": "publisher",
-      "url": "https://www.jryj.org.cn/CN/1002-7246/current.shtml",
-      "checked_at": "2026-11-12T18:18:38.682305+00:00",
-      "status": "failed",
-      "issue": null,
+      "source_kind": "catalog",
+      "url": "https://m.ncpssd.cn/journal/details?gch=97926X&langType=1&nav=1",
+      "checked_at": "2026-11-13T02:37:41.817173+00:00",
+      "status": "catalog_only",
+      "issue": "2026-07",
       "issue_date": null,
       "article_count": 0,
-      "reason": "TimeoutError: The read operation timed out"
+      "primary_url": "https://www.jryj.org.cn/CN/1002-7246/current.shtml",
+      "primary_failure": "URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'www.jryj.org.cn'",
+      "reason": "publisher_unavailable; issue_visible_but_articles_not_verified"
     }
   },
   "chinese_new_candidates": []

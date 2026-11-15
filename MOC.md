@@ -130,3 +130,11 @@
 - Gate：编译、全量CI、初版实网输出、主分支合并、调度配置均通过；合并后14条查询的真实新扫描回读及连续自然日生产观察单独核验，不以模拟跨日代替生产观察。中文目录缺口按原规则独立人工补检。
 
 - 人工实网候选复验：SSRN 2026-11-13 登记的 DOI `10.2139/ssrn.7698161` 与正式刊文 `10.1016/j.intman.2026.101340` 题名、四位作者完全相符；[出版方](https://www.sciencedirect.com/science/article/pii/S1075425326000141) 标为 2026-03 正式刊出，[大学存档原文](https://osuva.uwasa.fi/server/api/core/bitstreams/23d954f4-5821-4ad0-b83f-dded905e9ce6/content) 可检索文本注明 2026-01-23 online（PDF视觉截图受访问限制），[SSRN目录](https://papers.ssrn.com/searchresults.cfm?term=%28+++%22automotive+supplier+) 标注11-13上传及正式 DOI。该候选是旧论文重新登记，不能列为今日新增，不重复推荐；研究为土耳其7家汽车供应商定性研究，并非直接竞争性关系终止实证。此次验证候选发现与人工日期核验分离，不将登记日当发表日。
+
+
+## 2026-11-15 / 中文核心期刊覆盖升级
+
+- 真实基线 2026-11-15T01:53:14Z：中文目录仅1/7（《世界经济》7条）；《财经研究》官网改版，数量经济官网502，金融研究官网证书错配。其他目录只有期次。不能将目录存在视为文章覆盖。
+- 参考 [MartyYao/Chinese-Literature-Skill](https://github.com/MartyYao/Chinese-Literature-Skill) 的公开CNKI RSS普通匿名会话方案（MIT），新增九刊独立RSS通道；新增国际贸易问题、世界经济研究；修复财经研究新版主页及无/CN文章链接，保留旧入口。RSS事件日期不等于首次发表；空XML、错误期刊、非文章/外链、失败必须显式标识；与目录共享已见标题去重，旧期次恢复不批量重发。
+- CI [43683181885](https://github.com/lican1213/academic-research-radar/actions/runs/43683181885) 原始日志46项全部通过（6项新增）；[PR #3](https://github.com/lican1213/academic-research-radar/pull/3) 已合并 `8809f11c5d03274f8e1f5347cfd8fca91f2393d2`。合并后的真实RSS/目录扫描尚待产物回读；不宣称9刊均可用。
+- 每日09:30任务已更新：中文九刊逐刊官网、CNKI网络首发、权威索引补检优先于弱相关英文推荐；分别报告文章级覆盖、期次和来源缺口。不改日程、论文质量阈值或未公开稿件。RSS only并非完整目录/全文覆盖。

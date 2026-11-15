@@ -466,5 +466,54 @@ class ChineseJournalTests(unittest.TestCase):
             self.assertIn("经济研究", (folder / "latest.md").read_text())
 
 
+class ChineseRSSCoverageTests(unittest.TestCase):
+    def rss(self, title="邻近布局与跨境供应链关系稳定", journal="经济研究", date="Thu, 05 Nov 2026 12:00:00 GMT"):
+        return (f"<rss version='2.0'><channel><title>{journal}</title>"
+                f"<item><title>{title}</title>"
+                "<link>https://kns.cnki.net/kcms/detail/detail.aspx?filename=JJYJ202611001</link>"
+                f"<pubDate>{date}</pubDate><author>示例作者</author></item>"
+                "</channel></rss>").encode()
+
+    def test_rss_identity_and_date_are_independent(self):
+        rows = cj.parse_rss(self.rss(), "经济研究")
+        self.assertEqual(rows[0]["rss_event_at"], "2026-11-05")
+        self.assertNotIn("published_at", rows[0])
+        with self.assertRaises(ValueError):
+            cj.parse_rss(self.rss(journal="金融研究"), "经济研究")
+
+    def test_rss_html_empty_and_foreign_links_do_not_pass(self):
+        for payload in (b"", b"<html>captcha</html>", self.rss().replace(b"kns.cnki.net", b"evil.example")):
+            with self.subTest(payload=payload):
+                with self.assertRaises((ValueError, cj.ET.ParseError)):
+                    cj.parse_rss(payload, "经济研究")
+
+    def test_toc_failure_rss_recovers_and_deduplicates(self):
+        with tempfile.TemporaryDirectory() as temp:
+            folder = Path(temp)
+            journal = ("economic_research", "经济研究", "catalog", "https://ncpssd.org/example")
+            with patch.object(cj, "JOURNALS", (journal,)):
+                first = cj.scan_chinese_journals(folder, UTC_NOW, get=lambda _: "<h1>经济研究</h1><p>2026年 第9期</p>".encode(), rss_get=lambda _: self.rss())
+                self.assertEqual(first["source_status"]["journals"]["economic_research"]["status"], "rss_only")
+                self.assertEqual(first["source_status"]["queries_ok"], 1)
+                self.assertEqual(len(first["new_candidates"]), 1)
+                self.assertIsNone(first["new_candidates"][0]["published_at"])
+                self.assertFalse(first["new_candidates"][0]["date_verified"])
+                second = cj.scan_chinese_journals(folder, UTC_NOW, get=lambda _: "<h1>经济研究</h1><p>2026年 第9期</p>".encode(), rss_get=lambda _: self.rss())
+                self.assertEqual(second["new_candidates"], [])
+                self.assertTrue(json.loads((folder/"chinese_seen.json").read_text())["economic_research"]["rss_baselined"])
+
+    def test_sufe_new_detail_path_and_issue_format(self):
+        page = ("<h1>财经研究</h1><p>2026年第09期 共11篇</p>"
+                "<a href='/J/CJYJ/Article/Details/pgbFuTsz-vRzo-GypL-0h9O-AptmzpGperJG'>政府赋能企业出海与知识产权保护研究</a>"
+                "<a href='/J/CJYJ/Article/2026/09/CN'>财经研究第九期目录</a>").encode()
+        issue, _, rows = cj.parse_toc(page, journal="财经研究", kind="publisher", url="https://qks.sufe.edu.cn/J/CJYJ.html/CN")
+        self.assertEqual(issue, "2026-09")
+        self.assertEqual(len(rows), 1)
+
+    def test_nine_monitored_journals_have_rss_codes(self):
+        self.assertEqual(len(cj.JOURNALS), 9)
+        self.assertEqual(set(cj.RSS_CODES), {x[0] for x in cj.JOURNALS})
+
+
 if __name__ == "__main__":
     unittest.main()

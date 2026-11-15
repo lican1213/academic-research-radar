@@ -525,5 +525,57 @@ class ChineseRSSCoverageTests(unittest.TestCase):
         self.assertEqual(set(cj.RSS_CODES), {x[0] for x in cj.JOURNALS})
 
 
+class ChineseRecoveryTests(unittest.TestCase):
+    def test_mixed_sufe_rows_bind_individual_issue(self):
+        url = "https://qks.sufe.edu.cn/J/CJYJ/Article/Latest"
+        page = ("<h1>财经研究</h1><p>2026年第09期</p>"
+                "<a href='/J/CJYJ/Article/Details/A0D4FFPwQu-dBL4-uLdN-7nqu-nnsVUTr60cyJ/CN'>耐心资本支持与企业绿色创新质量</a>"
+                "<p>2026年第07期</p>"
+                "<a href='/J/CJYJ/Article/Details/A0pgbFuTsz-vRzo-GypL-0h9O-AptmzpGperJG/CN'>政府赋能企业出海与知识产权保护研究</a>"
+                "<p>2026年第09期</p>"
+                "<a href='/J/CJYJ/Article/Details/A0vM3daegN-oHdT-Onlc-LKQU-f0bPO5rwTyPZ/CN'>无明确期次的中文研究文章</a>").encode()
+        issue, _, rows = cj.parse_toc(page, journal="财经研究", kind="publisher", url=url)
+        self.assertEqual(issue, "2026-09")
+        self.assertEqual([x["issue"] for x in rows], ["2026-07", "2026-09", None])
+
+    def test_trade_portal_recovers_exact_counterexample(self):
+        url = "https://gjmw.cbpt.cnki.net/portal/journal/portal/client/index"
+        page = ("<h1>国际贸易问题</h1><h2>2026年10期</h2>"
+                "<a href='/portal/journal/portal/client/paper/7f6078a0cec828f7581a0bc4ff569adf'>专利出海、创新激励与内外贸一体化</a>"
+                "<p>2026 年 10 期 No.526 DOI:10.13510/j.cnki.jit.2026.10.007</p>"
+                "<a href='/portal/journal/portal/client/paper/'>期刊目录不是文章记录</a>"
+                "<p>2026年11期</p>").encode()
+        issue, _, rows = cj.parse_toc(page, journal="国际贸易问题", kind="publisher", url=url)
+        self.assertEqual(issue, "2026-10")
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["issue"], "2026-10")
+        self.assertEqual(rows[0]["doi"], "10.13510/j.cnki.jit.2026.10.007")
+
+    def test_structured_index_validates_exact_journal_and_link(self):
+        row = {"title": "<em>专利出海</em>、创新激励与内外贸一体化", "cbw_name":"国际贸易问题",
+               "doi":"10.13510/j.cnki.jit.2026.10.007", "years":"2026", "num":"10", "date":"2026-10-25"}
+        payload = json.dumps({"result": True, "data":{"rows":[row, dict(row, cbw_name="国际贸易"), dict(row, doi="", HtmlUrl="https://evil.example/article/fake")]}}).encode()
+        items = cj.parse_ncpssd(payload, {"国际贸易问题"})
+        self.assertEqual(len(items), 1)
+        self.assertEqual(items[0]["issue"], "2026-10")
+        self.assertNotIn("published_at", items[0])
+        with self.assertRaises(ValueError):
+            cj.parse_ncpssd(b'{"result":false}', {"国际贸易问题"})
+
+    def test_index_recovery_is_backfill_not_full_coverage_and_dedup(self):
+        row = {"title":"专利出海、创新激励与内外贸一体化","cbw_name":"国际贸易问题","doi":"10.13510/j.cnki.jit.2026.10.007","years":"2026","num":"10","date":"2026-10-25"}
+        payload = json.dumps({"result":True,"data":{"rows":[row]}}).encode()
+        with tempfile.TemporaryDirectory() as temp:
+            folder = Path(temp)
+            with patch.object(cj, "JOURNALS", (("international_trade","国际贸易问题","catalog","https://ncpssd.org/example"),)):
+                first = cj.scan_chinese_journals(folder, UTC_NOW, get=lambda _: "<h1>国际贸易问题</h1><p>2026年第9期</p>".encode(), ncpssd_get=lambda _:payload)
+                self.assertEqual(first["source_status"]["queries_ok"], 0)
+                self.assertEqual(len(first["new_candidates"]),1)
+                self.assertEqual(first["new_candidates"][0]["event_type"],"index_backfill")
+                self.assertIsNone(first["new_candidates"][0]["published_at"])
+                again = cj.scan_chinese_journals(folder, UTC_NOW, get=lambda _: "<h1>国际贸易问题</h1><p>2026年第9期</p>".encode(), ncpssd_get=lambda _:payload)
+                self.assertEqual(again["new_candidates"],[])
+
+
 if __name__ == "__main__":
     unittest.main()

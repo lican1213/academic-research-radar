@@ -29,13 +29,15 @@ JOURNALS = (
     ("management_world", "管理世界", "catalog", "https://m.ncpssd.cn/journal/details?gch=95499X&langType=1&nav=1"),
     ("world_economy", "世界经济", "publisher", "https://sjjj.magtech.com.cn/CN/home"),
     ("quant_economics", "数量经济技术经济研究", "publisher", "https://www.jqte.net/sljjjsjjyj/ch/index.aspx"),
-    ("finance_economics", "财经研究", "publisher", "https://qks.sufe.edu.cn/J/CJYJ.html/CN"),
+    ("finance_economics", "财经研究", "publisher", "https://qks.sufe.edu.cn/J/CJYJ/Article/Latest"),
     ("financial_research", "金融研究", "publisher", "https://www.jryj.org.cn/CN/1002-7246/current.shtml"),
-    ("international_trade", "国际贸易问题", "catalog", "https://ncpssd.org/journal/details?gch=96001X"),
-    ("world_economy_studies", "世界经济研究", "catalog", "https://ncpssd.org/journal/details?gch=91453X"),
+    ("international_trade", "国际贸易问题", "publisher", "https://gjmw.cbpt.cnki.net/portal/journal/portal/client/index"),
+    ("world_economy_studies", "世界经济研究", "publisher", "https://jing.cbpt.cnki.net/portal/journal/portal/client/index"),
 )
 
 FALLBACKS = {
+    "international_trade": ("catalog", "https://ncpssd.org/journal/details?gch=96001X"),
+    "world_economy_studies": ("catalog", "https://ncpssd.org/journal/details?gch=91453X"),
     "finance_economics": ("publisher", "https://qks.sufe.edu.cn/J/CJYJ/Article/CurrentIssue/CN"),
     "quant_economics": ("catalog", "https://www.ncpssd.org/journal/details?gch=94503X"),
     "financial_research": ("catalog", "https://m.ncpssd.cn/journal/details?gch=97926X&langType=1&nav=1"),
@@ -95,6 +97,8 @@ def fetch_html(url: str) -> bytes:
 
 def article_link(kind: str, url: str) -> bool:
     path = urllib.parse.urlparse(url).path
+    if re.fullmatch(r"/portal/journal/portal/client/paper/[a-f0-9]{32}/?", path, re.I):
+        return kind == "publisher"
     if kind == "catalog":
         # National catalog may expose an issue but not verifiable article pages.
         # Do not mistake download links, buttons or site navigation for papers.
@@ -116,6 +120,9 @@ def parse_toc(payload: bytes, *, journal: str, kind: str, url: str) -> tuple[str
     if journal not in text:
         return None, None, []
     issues = ISSUE_RE.findall(text)
+    if ".cbpt.cnki.net" in (urllib.parse.urlparse(url).hostname or ""):
+        first = ISSUE_RE.search(text)
+        issues = [first.groups()] if first else []
     if journal == "数量经济技术经济研究":
         issues.extend(QUANT_ISSUE_RE.findall(text))
     # Homepage content can contain prior issues; take the latest issue for
@@ -143,7 +150,7 @@ def parse_toc(payload: bytes, *, journal: str, kind: str, url: str) -> tuple[str
         links.append((title, absolute, part_index))
     links.sort(key=lambda x: x[2])
     for index, (title, absolute, position) in enumerate(links):
-        following = links[index + 1][2] if index + 1 < len(links) else len(text)
+        following = links[index + 1][2] if index + 1 < len(links) else len(parser.text_parts)
         section = "\n".join(parser.text_parts[position:min(following, position + 150)])
         published = None
         match = ONLINE_RE.search(section)
@@ -154,8 +161,28 @@ def parse_toc(payload: bytes, *, journal: str, kind: str, url: str) -> tuple[str
             except ValueError:
                 pass
         doi_match = DOI_RE.search(section) if kind == "publisher" else None
+        row_issue = None
+        host = urllib.parse.urlparse(url).hostname or ""
+        match_path = re.search(r"/CN/Y(20\d{2})/V\d+/I(\d{1,2})/", absolute, re.I)
+        if match_path:
+            row_issue = f"{match_path[1]}-{int(match_path[2]):02d}"
+        else:
+            local = ISSUE_RE.search(section.replace("\n", " "))
+            if local:
+                row_issue = f"{local[1]}-{int(local[2]):02d}"
+            elif journal == "数量经济技术经济研究":
+                local = QUANT_ISSUE_RE.search(section)
+                if local:
+                    row_issue = f"{local[1]}-{int(local[2]):02d}"
+        if row_issue is None and (".cbpt.cnki.net" in host or "/Article/Latest" in url):
+            published = None
+            doi_match = None
+        # Never inherit the maximum issue of a mixed homepage or latest-articles list.
+        if row_issue is None and re.search(r"/Article/(20\d{2})/(\d{1,2})/CN", url, re.I):
+            local = re.search(r"/Article/(20\d{2})/(\d{1,2})/CN", url, re.I)
+            row_issue = f"{local[1]}-{int(local[2]):02d}"
         articles.append({"title": title, "url": absolute, "toc_online_at": published,
-                         "doi": doi_match.group(0).rstrip(".,;") if doi_match else None})
+                         "issue": row_issue, "doi": doi_match.group(0).rstrip(".,;") if doi_match else None})
     return issue, issue_date, articles
 
 
@@ -215,10 +242,77 @@ def parse_rss(payload: bytes, journal: str) -> list[dict]:
     return result
 
 
-def scan_chinese_journals(out: Path, now: datetime, get=fetch_html, rss_get=None) -> dict:
+# Public structured search, adapted from the documented anonymous NCPSSD
+# search request in MartyYao/Chinese-Literature-Skill (MIT).
+NCPSSD_API = "https://www.ncpssd.cn/searchHandler/search"
+NCPSSD_TOPICS = ("耐心资本", "专利出海", "协同出海", "供应链韧性", "供应链关系", "对外直接投资", "专利文本", "人工智能")
+
+
+def fetch_ncpssd(query: str) -> bytes:
+    conditions = "(" + " OR ".join(f'{field}="{query}"' for field in ("IKTE", "IKST", "IKET")) + ")"
+    data = urllib.parse.urlencode({"search": conditions, "pageNum": "1", "pageSize": "50",
+        "sort": "synUpdateType|DESC,date|DESC,ik_subject|DESC,id|DESC", "sType": "0",
+        "ajaxKeys": "", "customShowCondition": query}).encode()
+    request = urllib.request.Request(NCPSSD_API, data=data, headers={
+        "User-Agent": "AcademicResearchRadar/0.4 (public metadata)",
+        "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+        "Accept": "application/json", "X-Requested-With": "XMLHttpRequest",
+        "Referer": "https://www.ncpssd.cn/"})
+    with urllib.request.urlopen(request, timeout=12) as response:
+        return response.read(2_000_001)
+
+
+def parse_ncpssd(payload: bytes, journals: set[str]) -> list[dict]:
+    doc = json.loads(payload)
+    if not isinstance(doc, dict) or doc.get("result") is not True or not isinstance(doc.get("data"), dict):
+        raise ValueError("NCPSSD response not successful")
+    rows = doc["data"].get("rows")
+    if not isinstance(rows, list):
+        raise ValueError("NCPSSD rows not verified")
+    result = []
+    for row in rows:
+        if not isinstance(row, dict):
+            continue
+        journal = str(row.get("cbw_name") or "").strip()
+        if journal not in journals:
+            continue
+        title = html.unescape(re.sub(r"<[^>]+>", "", str(row.get("title") or ""))).strip()
+        if not 8 <= len(title) <= 150 or not re.search(r"[\u3400-\u9fff]", title):
+            continue
+        if any(x in title for x in ("征稿启事", "订阅启事", "本刊启事", "封面", "编辑部公告", "目次")):
+            continue
+        doi = str(row.get("doi") or "").strip()
+        doi = doi if DOI_RE.fullmatch(doi) else None
+        url = None
+        if doi:
+            url = "https://doi.org/" + doi
+        else:
+            for name in ("HtmlUrl", "encryptedUrl"):
+                raw = str(row.get(name) or "").strip()
+                candidate = urllib.parse.urljoin("https://www.ncpssd.cn/", raw)
+                parts = urllib.parse.urlparse(candidate)
+                host = parts.hostname or ""
+                if raw and parts.scheme == "https" and (host in ("ncpssd.cn", "ncpssd.org") or host.endswith((".ncpssd.cn", ".ncpssd.org"))) and re.search(r"/(?:article|literature|paper|detail)", parts.path, re.I):
+                    url = candidate
+                    break
+        if not url:
+            continue
+        year, month = str(row.get("years") or ""), str(row.get("num") or "")
+        issue = f"{year}-{int(month):02d}" if re.fullmatch(r"20\d{2}", year) and re.fullmatch(r"0?[1-9]|1[0-2]", month) else None
+        event = str(row.get("date") or "")[:10]
+        event = event if re.fullmatch(r"20\d{2}-\d{2}-\d{2}", event) else None
+        result.append({"title": title, "journal": journal, "url": url, "doi": doi,
+            "authors": str(row.get("creator_first") or row.get("creator") or "").strip(),
+            "issue": issue, "index_date": event})
+    return result
+
+
+def scan_chinese_journals(out: Path, now: datetime, get=fetch_html, rss_get=None, ncpssd_get=None) -> dict:
     """Monitor each journal independently; never infer publication from first_seen."""
     if rss_get is None and get is fetch_html:
         rss_get = fetch_rss
+    if ncpssd_get is None and get is fetch_html:
+        ncpssd_get = fetch_ncpssd
     seen_path = out / "chinese_seen.json"
     seen = json.loads(seen_path.read_text(encoding="utf-8")) if seen_path.exists() else {}
     if not isinstance(seen, dict):
@@ -262,9 +356,12 @@ def scan_chinese_journals(out: Path, now: datetime, get=fetch_html, rss_get=None
                 current = set(previous_articles)
                 for article in articles:
                     title_key = re.sub(r"[^\w]", "", article["title"]).casefold()
-                    if title_key in current:
+                    doi_key = "doi:" + article["doi"].casefold() if article.get("doi") else None
+                    if title_key in current or (doi_key and doi_key in current):
                         continue
                     current.add(title_key)
+                    if doi_key:
+                        current.add(doi_key)
                     recent_listing = bool(article.get("toc_online_at") and
                                           now.date() - timedelta(days=14) <=
                                           datetime.fromisoformat(article["toc_online_at"]).date() <= now.date())
@@ -277,8 +374,8 @@ def scan_chinese_journals(out: Path, now: datetime, get=fetch_html, rss_get=None
                             "url": article["url"],
                             "source": "chinese_journal_toc",
                             "source_kind": kind,
-                            "issue": issue,
-                            "issue_date": issue_date,
+                            "issue": article.get("issue"),
+                            "issue_date": issue_date if article.get("issue") == issue else None,
                             "published_at": None,
                             "toc_online_at": article.get("toc_online_at"),
                             "doi": article.get("doi"),
@@ -331,10 +428,43 @@ def scan_chinese_journals(out: Path, now: datetime, get=fetch_html, rss_get=None
         if info["status"] != "ok" or info.get("rss", {}).get("status") == "failed":
             failures.append(f"{journal}: {info['status']} ({info.get('reason', '')}); RSS={info.get('rss', {}).get('status', 'not_run')}")
         journals[slug] = info
+    # Topic search adds verified-index leads but never counts as a complete issue scan.
+    index_status = {"status": "not_run", "queries_ok": 0, "queries_total": len(NCPSSD_TOPICS), "records": 0, "errors": []}
+    if ncpssd_get is not None:
+        name_to_slug = {name: slug for slug, name, _, _ in JOURNALS}
+        for query in NCPSSD_TOPICS:
+            try:
+                rows = parse_ncpssd(ncpssd_get(query), set(name_to_slug))
+                index_status["queries_ok"] += 1
+                index_status["records"] += len(rows)
+                for article in rows:
+                    slug = name_to_slug[article["journal"]]
+                    prior = updated.get(slug, {})
+                    current = set(prior.get("articles", []))
+                    key = re.sub(r"[^\\w]", "", article["title"]).casefold()
+                    doi_key = "doi:" + article["doi"].casefold() if article.get("doi") else None
+                    if key in current or (doi_key and doi_key in current):
+                        continue
+                    current.add(key)
+                    if doi_key:
+                        current.add(doi_key)
+                    updated[slug] = {**prior, "articles": sorted(current)}
+                    # Old recovered leads are explicitly backfill, not a new publication.
+                    event = article.get("index_date")
+                    issue = article.get("issue")
+                    if (event and (now.date() - timedelta(days=30)).isoformat() <= event <= checked) or (issue and issue >= (now.date() - timedelta(days=60)).strftime("%Y-%m") and issue <= now.strftime("%Y-%m")):
+                        ident = hashlib.sha256((slug + ":" + key).encode()).hexdigest()[:16]
+                        new_items.append({"id": "journal:" + slug + ":" + ident, **article,
+                            "source": "ncpssd_topic_index", "source_kind": "catalog_index",
+                            "published_at": None, "date_verified": False, "first_observed_at": checked,
+                            "event_type": "index_backfill", "note": "Indexed lead; verify original publication date and issue."})
+            except (OSError, ValueError, TypeError) as error:
+                index_status["errors"].append(f"{query}: {type(error).__name__}: {str(error)[:120]}")
+        index_status["status"] = "ok" if index_status["queries_ok"] == len(NCPSSD_TOPICS) else "degraded" if index_status["queries_ok"] else "failed"
     source_status = {"status": "ok" if full_ok == len(JOURNALS) and not failures else "degraded" if any(
         j["status"] in ("ok", "rss_only", "catalog_only", "stale_index") for j in journals.values()) else "failed",
         "queries_ok": full_ok, "queries_total": len(JOURNALS),
-        "records": records, "errors": failures, "journals": journals}
+        "records": records, "errors": failures, "journals": journals, "ncpssd_topic_index": index_status}
     out.mkdir(parents=True, exist_ok=True)
     seen_path.write_text(json.dumps(updated, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     return {"source_status": source_status, "new_candidates": new_items}

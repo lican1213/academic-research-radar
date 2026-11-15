@@ -510,6 +510,16 @@ class ChineseRSSCoverageTests(unittest.TestCase):
         self.assertEqual(issue, "2026-09")
         self.assertEqual(len(rows), 1)
 
+    def test_catalog_recovery_baselines_old_same_issue(self):
+        with tempfile.TemporaryDirectory() as temp:
+            folder = Path(temp)
+            url = "https://sjjj.magtech.com.cn/CN/home"
+            with patch.object(cj, "JOURNALS", (("world_economy", "世界经济", "publisher", url),)):
+                cj.scan_chinese_journals(folder, UTC_NOW, get=lambda _: "<h1>世界经济</h1><p>2026年 第9期</p>".encode())
+                result = cj.scan_chinese_journals(folder, UTC_NOW, get=lambda _: "<h1>世界经济</h1><p>2026年 第9期</p><a href='/CN/Y2026/V49/I9/12'>跨境供应链关系与企业出海</a>".encode())
+                self.assertEqual(result["new_candidates"], [])
+                self.assertEqual(result["source_status"]["queries_ok"], 1)
+
     def test_nine_monitored_journals_have_rss_codes(self):
         self.assertEqual(len(cj.JOURNALS), 9)
         self.assertEqual(set(cj.RSS_CODES), {x[0] for x in cj.JOURNALS})

@@ -158,3 +158,10 @@
 - 实际 `data/latest.json` 生成于 2026-11-15T07:33:20.207643Z：中文文章链接发现4/9、53条（世界经济7、财经研究20、国际贸易问题12、世界经济研究14），不是九刊完整目录；经济研究、中国工业经济、管理世界、数量经济技术经济研究、金融研究仍catalog_only。RSS 0/9 DNS失败；国哲社主题接口4/8成功、7条原始匹配，供应链关系、对外直接投资、专利文本、人工智能四组超时。整体degraded。
 - 真实反例未关闭：`data/chinese_seen.json` 的 international_trade 标记2026-10，但没有《专利出海、创新激励与内外贸一体化》标准化标题或 DOI `10.13510/j.cnki.jit.2026.10.007`；账本含多篇历史题名。首页推荐/热门文章混入，不能把该期标记及12个链接等同于当期完整目录。现有fixture正确但没有复现实网DOM。财经研究新候选实际出现2026-08期历史补漏，首发日仍未知，不应称今日新增。
 - 验收：CI 50/50通过、PR #4合并和真实扫描产物落盘通过；中文覆盖、期次目录准确性及直接反例召回 Gate FAIL。下一步优先获取期次专页、结构化期次列表或可复核文章索引的真实响应，按期次逐项对照；不得仅扩大首页链接匹配或将历史推荐当最新目录。此轮复验只更新MOC，不改代码或调度。
+
+### 2026-11-15 / PR #5：期次优先（借鉴现有开源项目）
+
+- 阅读 [cookjohn/cnki-skills](https://github.com/cookjohn/cnki-skills/blob/main/skills/cnki-journal-toc/SKILL.md) 的刊期选择、目录容器与逐行题录提取方案；参照 [Joovo/CNKI_SPD](https://github.com/Joovo/CNKI_SPD) 年份/期次检索策略和 [MartyYao/Chinese-Literature-Skill](https://github.com/MartyYao/Chinese-Literature-Skill) 多源降级。未复制登录凭据、不绕过验证码或TLS验证、不抓付费全文。
+- 两个贸易/世界经济期刊切换至 `paper_list/type_benqi` 本期目录，单篇必须有同一期次证据才进入候选，排除首页热门/历史链接；公开国哲社目录确有题名、作者、页码，支持 `toc_metadata`（只有目录定位，非直接文章链接）；独立输出 `article_link_count`、`issue_metadata_count` 和 `coverage_kind` 防止把混合页面计作整期覆盖。修正中文结构化索引路径的错误 `[^\\w]` 正则及历史空键，不清空去重账本。
+- 对照真实网页：[国际贸易问题当期目次](https://gjmw.cbpt.cnki.net/portal/journal/portal/client/paper_list/type_benqi)、[经济研究国哲社目录](https://ncpssd.org/journal/details.aspx?gch=95645X)。新增4项反例测试：同一期次才接受、目录元数据不编造文章URL、中文去重键非空、补漏与日期/链接范围状态正确。
+- [CI #43694052019](https://github.com/lican1213/academic-research-radar/actions/runs/43694052019) 原始日志：编译通过、54项测试全部通过；[PR #5](https://github.com/lican1213/academic-research-radar/pull/5) 已合并 main `82f3fbe7a3896b23ff20ace55c65e7faddc0594c`。继续回读生产产物；线上九刊覆盖与已知漏检反例尚未确认，不能宣布完整Gate PASS。不改日报频率或论文文件。

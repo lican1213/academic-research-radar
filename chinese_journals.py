@@ -164,7 +164,7 @@ def parse_toc(payload: bytes, *, journal: str, kind: str, url: str) -> tuple[str
 RSS_CODES = {
     "economic_research": "JJYJ", "china_industrial": "GGYY",
     "management_world": "GLSJ", "world_economy": "SJJJ",
-    "quant_economics": "SLJY", "finance_economics": "CZYJ",
+    "quant_economics": "SLJY", "finance_economics": "CJYJ",
     "financial_research": "JRYJ", "international_trade": "GJMW",
     "world_economy_studies": "JING",
 }
@@ -320,6 +320,7 @@ def scan_chinese_journals(out: Path, now: datetime, get=fetch_html, rss_get=None
                 updated[slug] = {**prior, "articles": sorted(current), "rss_baselined": True}
                 info["rss"].update(status="ok", article_count=len(rss_articles), latest_event=max((x["rss_event_at"] for x in rss_articles if x["rss_event_at"]), default=None))
                 if info["status"] != "ok":
+                    info["toc_status"] = info["status"]
                     info["status"] = "rss_only"
                     full_ok += 1
                     records += len(rss_articles)
@@ -327,7 +328,7 @@ def scan_chinese_journals(out: Path, now: datetime, get=fetch_html, rss_get=None
                 info["rss"].update(reason=f"{type(error).__name__}: {str(error)[:120]}")
                 if updated.get(slug) and previous.get("rss_baselined"):
                     updated[slug]["rss_baselined"] = True
-        if info["status"] != "ok":
+        if info["status"] != "ok" or info.get("rss", {}).get("status") == "failed":
             failures.append(f"{journal}: {info['status']} ({info.get('reason', '')})")
         journals[slug] = info
     source_status = {"status": "ok" if full_ok == len(JOURNALS) and not failures else "degraded" if any(

@@ -59,6 +59,42 @@ class ParsingTests(unittest.TestCase):
 
 
 class DedupTests(unittest.TestCase):
+    def test_p1a_recall_following_and_plural(self):
+        titles = [
+            "Customer-following FDI and relationship survival",
+            "Foreign subsidiaries and supplier relationship stability",
+            "Geographical proximity and buyer-supplier relationship duration",
+            "Institutional and relational underpinnings of vertical FDI spillovers in international buyer-supplier relationships",
+            "上下游企业抱团出海与供应链关系稳定",
+        ]
+        for i, title in enumerate(titles):
+            with self.subTest(title=title):
+                item = prefilter({**example_crossref(f"10.1000/p1a{i}"), "title": title, "abstract": ""})
+                self.assertEqual(item["project"], "P1A")
+                self.assertTrue(item["eligible"])
+                self.assertGreaterEqual(item["prefilter_score"], 40)
+
+    def test_p1a_reject_generic_domestic_logistics(self):
+        item = prefilter({"title": "Geographic proximity in local supply chain warehouse logistics", "abstract": ""})
+        self.assertFalse(item["eligible"])
+
+    def test_p1a_p0_precedence_and_cross_day_cap(self):
+        patent = prefilter({**example_crossref(), "title": "International patent families of foreign subsidiaries in buyer-supplier relationships"})
+        self.assertEqual(patent["project"], "P0")
+        items = [prefilter({**example_crossref(f"10.1000/a{i}"), "title": f"Buyer-supplier relationship survival and foreign subsidiaries {i}", "abstract": ""}) for i in range(7)]
+        first, state = select_new(items + [patent], {}, UTC_NOW)
+        self.assertEqual(first[0]["project"], "P0")
+        self.assertEqual(sum(x["project"] == "P1A" for x in first), 6)
+        from datetime import timedelta
+        second, state = select_new(items + [patent], state, UTC_NOW + timedelta(days=1))
+        self.assertEqual(len(second), 1)
+        self.assertEqual(second[0]["change"], "newly_selected")
+        third, _ = select_new(items + [patent], state, UTC_NOW + timedelta(days=2))
+        self.assertEqual(third, [])
+
+    def test_p1a_name_and_score_are_not_quality_claims(self):
+        self.assertIn("prefilter", markdown_report({"generated_at": UTC_NOW.isoformat(), "status": "ok", "new_candidates": [dict(prefilter({**example_crossref(), "title": "Buyer-supplier relationship survival and foreign subsidiaries"}), change="new")], "source_status": {}}))
+
     def test_collaborative_internationalization_track(self):
         for title in ('Buyer-supplier relationship termination and foreign subsidiary colocation', '产业链协同出海与供应链关系稳定'):
             item = prefilter({**example_crossref(), 'title': title, 'abstract': ''})

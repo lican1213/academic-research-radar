@@ -32,6 +32,7 @@ QUERIES = [
     "supplier customer relationship foreign subsidiary colocation",
     "buyer supplier relationship termination foreign affiliate",
     "产业链 协同出海 供应链关系",
+    "customer following FDI supplier relationship survival",
 ]
 
 ARXIV_QUERIES = [
@@ -60,7 +61,10 @@ PROJECT_TERMS = {
     "P1A": {
         "buyer-supplier": 20, "buyer supplier": 20, "supplier-customer": 20,
         "supply chain relationship": 25, "relationship termination": 24,
-        "foreign subsidiary": 22, "foreign affiliate": 20, "colocation": 24,
+        "foreign subsidiar": 22, "foreign affiliate": 20, "overseas subsidiar": 22,
+        "foreign direct investment": 18, "customer-following": 28, "customer following": 28,
+        "follow the customer": 28, "supplier relationship": 20, "relationship survival": 24,
+        "geographical proximity": 22, "colocation": 24,
         "co-location": 24, "geographic proximity": 22, "sales subsidiary": 25,
         "协同出海": 30, "抱团出海": 25, "邻近布局": 25, "供需关系": 23,
         "供应链关系": 25, "境外子公司": 22, "海外销售": 24,
@@ -224,13 +228,21 @@ def prefilter(item: dict) -> dict:
     supply = any_term("supply chain", "global value chain", "供应链", "产业链")
     shock = any_term("geopolitical", "trade war", "tariff", "geoeconomic", "地缘政治", "贸易摩擦")
     ai = any_term("artificial intelligence", "generative ai", "machine learning", "人工智能", "大模型")
+    relation = any_term("buyer-supplier", "buyer supplier", "supplier-customer", "customer-supplier",
+                        "supplier relationship", "customer relationship", "supply chain relationship",
+                        "供需关系", "供应链关系", "上下游")
+    follow = any_term("customer-following", "customer following", "follow the customer", "协同出海", "抱团出海")
+    overseas_node = any_term("foreign subsidiar", "foreign affiliate", "overseas subsidiar",
+                              "foreign direct investment", "境外子公司", "海外子公司", "海外布局") or bool(re.search(r"\b(?:o?fdi)\b", combined))
+    proximity = any_term("colocation", "co-location", "geographic proximity", "geographical proximity", "邻近布局")
+    relation_outcome = any_term("relationship survival", "relationship termination", "relationship stability", "relationship duration", "关系稳定", "关系中断", "关系持续")
     eligibility = {
         "P0": (patent and (crossborder or investor or long_capital or any_term("patent family", "专利族")))
               or (long_capital and innovation),
         "P1": (shock and (fdi or supply)) or (ai and (fdi or supply))
               or (supply and any_term("resilience", "韧性") and crossborder),
-        "P1A": (supply or any_term("buyer-supplier", "buyer supplier", "supplier-customer", "customer-supplier", "供需关系", "上下游"))
-               and any_term("foreign subsidiary", "foreign subsidiaries", "foreign affiliate", "overseas subsidiar", "foreign direct investment", "colocation", "co-location", "geographic proximity", "协同出海", "抱团出海", "邻近布局", "境外子公司", "海外子公司", "海外布局"),
+        "P1A": ((supply or relation) and (overseas_node or follow or (proximity and (crossborder or relation_outcome))))
+                or (follow and (overseas_node or crossborder)),
         "P2": (patent and any_term("embedding", "semantic", "text", "similarity", "prior art", "claim", "retrieval", "citation", "突破", "颠覆", "文本", "相似度"))
               or any_term("突破式创新", "breakthrough innovation", "disruptive innovation"),
         "P3": investor and innovation,

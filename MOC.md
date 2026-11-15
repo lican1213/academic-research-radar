@@ -145,3 +145,10 @@
 - 独立官方反例：扫描将《耐心资本支持与企业绿色创新质量》标为2026-09期；[出版方详情](https://qks.sufe.edu.cn/J/CJYJ/Article/Details/A0D4FFPwQu-dBL4-uLdN-7nqu-nnsVUTr60cyJ/CN) 实际为2026年第7期，DOI 10.16538/j.cnki.jfe.20260314.101。主页混合推荐/旧期文章，全局最大期次不能用于每篇文章；因此财经研究链接发现通过，但期次准确性未通过。
 - 漏检反例：[国际贸易问题官网2026年第10期](https://gjmw.cbpt.cnki.net/portal/journal/portal/client/index)，[刘博聪、李磊、李川川《专利出海、创新激励与内外贸一体化》](https://gjmw.cbpt.cnki.net/portal/journal/portal/client/paper/7f6078a0cec828f7581a0bc4ff569adf)，DOI 10.13510/j.cnki.jit.2026.10.007，2026-10-25；当前自动源只见9期，未捕捉该期。国哲社[世界经济研究目录](https://ncpssd.org/journal/details?gch=91453X) 已公开展示10期题名/作者/页码，但现有解析未提取可定位文章线索。
 - 下一轮：使用可访问的期刊自有公开平台/期次专页、权威目录文章级元数据和公开结构化接口；逐篇期次绑定、标题/DOI跨源去重、实际链接与日期核查；RSS保留可选渠道但不作为唯一恢复路线。验收以九刊真实文章级覆盖、上述反例修复及新CI为准。本次只记录审计证据，未修改抓取代码。
+
+### 2026-11-15 / 中文第二轮修复（PR #4）
+
+- 证据来源：[财经研究最新文章](https://qks.sufe.edu.cn/J/CJYJ/Article/Latest) 逐篇显示期次（09期结束后有08期），[国际贸易问题目录](https://gjmw.cbpt.cnki.net/portal/journal/portal/client/index) 与 [世界经济研究目录](https://jing.cbpt.cnki.net/portal/journal/portal/client/index) 均可独立网络核验2026年第10期；替换滞后目录为这两个首选公开出版平台，保留国哲社回退。
+- 混合期次文章改从文章URL、单篇邻近文本或显式期次专页取得期次，未知保留null；不将首页最大期次赋给每篇。新增国哲社公开主题检索8组查询（参考 Chinese-Literature-Skill MIT），精确九刊匹配、链接/DOI校验、标题和DOI去重、补漏事件，与正式出版日期分离。主题查询不是逐刊完整目录，不能计入TOC覆盖成功数。RSS仍为可选补充，不绕过TLS/DNS限制。
+- [CI #43690428431](https://github.com/lican1213/academic-research-radar/actions/runs/43690428431) 原始日志：编译成功、50项全量测试通过，新增4个真实反例fixture（财经研究7/9期混合、国际贸易问题专利出海链接/DOI、索引拒绝错误刊名和外域、补漏去重不伪造覆盖）。[PR #4](https://github.com/lican1213/academic-research-radar/pull/4) 已合并 main `62fd243bbdfc055bc015fc16fa157d44fcfb0bee`。
+- 本轮代码回归Gate PASS；生产网络覆盖仍需以合并后 latest.json 实际字段与来源状态回读验收，不能把网页独立访问或fixture当作GitHub runner真实成功。九刊未达文章级覆盖不得整体放行。

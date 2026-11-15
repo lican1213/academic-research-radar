@@ -8,6 +8,9 @@ catalog fallback, not the journal publisher. No login/paywall bypass.
 from __future__ import annotations
 
 import hashlib
+import http.cookiejar
+import xml.etree.ElementTree as ET
+from email.utils import parsedate_to_datetime
 import html
 import json
 import re
@@ -26,11 +29,14 @@ JOURNALS = (
     ("management_world", "管理世界", "catalog", "https://m.ncpssd.cn/journal/details?gch=95499X&langType=1&nav=1"),
     ("world_economy", "世界经济", "publisher", "https://sjjj.magtech.com.cn/CN/home"),
     ("quant_economics", "数量经济技术经济研究", "publisher", "https://www.jqte.net/sljjjsjjyj/ch/index.aspx"),
-    ("finance_economics", "财经研究", "publisher", "https://qks.sufe.edu.cn/J/CJYJ/Article/CurrentIssue/CN"),
+    ("finance_economics", "财经研究", "publisher", "https://qks.sufe.edu.cn/J/CJYJ.html/CN"),
     ("financial_research", "金融研究", "publisher", "https://www.jryj.org.cn/CN/1002-7246/current.shtml"),
+    ("international_trade", "国际贸易问题", "catalog", "https://ncpssd.org/journal/details?gch=96001X"),
+    ("world_economy_studies", "世界经济研究", "catalog", "https://ncpssd.org/journal/details?gch=91453X"),
 )
 
 FALLBACKS = {
+    "finance_economics": ("publisher", "https://qks.sufe.edu.cn/J/CJYJ/Article/CurrentIssue/CN"),
     "quant_economics": ("catalog", "https://www.ncpssd.org/journal/details?gch=94503X"),
     "financial_research": ("catalog", "https://m.ncpssd.cn/journal/details?gch=97926X&langType=1&nav=1"),
 }
@@ -38,7 +44,7 @@ FALLBACKS = {
 ONLINE_RE = re.compile(r"在线出版日期\s*[:：]\s*(20\d{2})年(\d{1,2})月(\d{1,2})日")
 DOI_RE = re.compile(r"10\.\d{4,9}/[A-Za-z0-9._;()/:+-]+", re.I)
 
-ISSUE_RE = re.compile(r"(20\d{2})\s*年[^\n]{0,40}?第\s*(0?[1-9]|1[0-2])\s*期")
+ISSUE_RE = re.compile(r"(20\d{2})\s*年[^\n]{0,40}?(?:第\s*)?(0?[1-9]|1[0-2])\s*期")
 QUANT_ISSUE_RE = re.compile(r"(20\d{2})\s*,\s*\((0?[1-9]|1[0-2])\)\s*:")
 DATE_RE = re.compile(r"(?:刊出日期|出版日期)\s*[:：]\s*(20\d{2}-\d{2}-\d{2})")
 BAD_TITLES = ("当期目录", "过刊浏览", "摘要点击", "全文下载", "期刊介绍", "下载全文",
@@ -96,10 +102,10 @@ def article_link(kind: str, url: str) -> bool:
     if "/sljjjsjjyj/ch/reader/view_abstract.aspx" in path.lower():
         query = urllib.parse.parse_qs(urllib.parse.urlparse(url).query)
         return bool(re.fullmatch(r"20\d{6}", (query.get("file_no") or [""])[0]))
-    if "/J/CJYJ/" in path:
+    if re.match(r"/J/(?:CJYJ|j00001)/", path, re.I):
         # SUFE issue links look like /Article/2026/09/CN and must NOT be
         # mistaken for articles. Real detail links use /Article/Details/<id>/CN.
-        return bool(re.fullmatch(r"/J/CJYJ/Article/Details/[A-Za-z0-9_-]{12,}/CN", path, re.I))
+        return bool(re.fullmatch(r"/J/(?:CJYJ|j00001)/Article/Details/[A-Za-z0-9_-]{12,}(?:/CN)?/?", path, re.I))
     return bool(re.search(r"/CN/Y20\d{2}/|/CN/10\.\d{4,9}/", path, re.I))
 
 
@@ -153,8 +159,66 @@ def parse_toc(payload: bytes, *, journal: str, kind: str, url: str) -> tuple[str
     return issue, issue_date, articles
 
 
-def scan_chinese_journals(out: Path, now: datetime, get=fetch_html) -> dict:
+# Public CNKI subscription feeds; ordinary anonymous session cookies only.
+# Design reference: MartyYao/Chinese-Literature-Skill (MIT), cnki-rss.py.
+RSS_CODES = {
+    "economic_research": "JJYJ", "china_industrial": "GGYY",
+    "management_world": "GLSJ", "world_economy": "SJJJ",
+    "quant_economics": "SLJY", "finance_economics": "CZYJ",
+    "financial_research": "JRYJ", "international_trade": "GJMW",
+    "world_economy_studies": "JING",
+}
+
+
+def fetch_rss(code: str) -> bytes:
+    opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(http.cookiejar.CookieJar()))
+    headers = {"User-Agent": "AcademicResearchRadar/0.3 (public RSS reader)",
+               "Accept": "application/rss+xml,application/xml,text/xml,text/html"}
+    for url in (f"https://navi.cnki.net/knavi/journals/{code}/detail?uniplatform=NZKPT",
+                f"https://navi.cnki.net/knavi/rss/{code}"):
+        with opener.open(urllib.request.Request(url, headers=headers), timeout=12) as response:
+            payload = response.read(2_000_001)
+    if len(payload) > 2_000_000:
+        raise ValueError("RSS payload too large")
+    return payload
+
+
+def parse_rss(payload: bytes, journal: str) -> list[dict]:
+    root = ET.fromstring(payload)
+    channel = root.find("channel")
+    if channel is None or journal not in (channel.findtext("title") or ""):
+        raise ValueError("RSS journal identity not verified")
+    result = []
+    for entry in channel.findall("item"):
+        title = " ".join((entry.findtext("title") or "").split())
+        url = (entry.findtext("link") or "").strip()
+        host = urllib.parse.urlparse(url).hostname or ""
+        path = urllib.parse.urlparse(url).path.lower()
+        if not (8 <= len(title) <= 150 and re.search(r"[\u3400-\u9fff]", title)):
+            continue
+        if any(word in title for word in ("征稿启事", "订阅启事", "本刊启事", "封面", "编辑部公告", "目次")):
+            continue
+        if urllib.parse.urlparse(url).scheme != "https" or not (host == "cnki.net" or host.endswith(".cnki.net")):
+            continue
+        if not any(part in path for part in ("detail", "article", "abstract")):
+            continue
+        feed_date = None
+        raw = entry.findtext("pubDate") or ""
+        try:
+            feed_date = parsedate_to_datetime(raw).date().isoformat()
+        except (ValueError, TypeError, OverflowError):
+            pass
+        result.append({"title": title, "url": url, "rss_event_at": feed_date,
+                       "authors": (entry.findtext("author") or "").strip(), "doi": None})
+    if not result:
+        raise ValueError("RSS returned no verifiable article entries")
+    return result
+
+
+def scan_chinese_journals(out: Path, now: datetime, get=fetch_html, rss_get=None) -> dict:
     """Monitor each journal independently; never infer publication from first_seen."""
+    if rss_get is None and get is fetch_html:
+        rss_get = fetch_rss
     seen_path = out / "chinese_seen.json"
     seen = json.loads(seen_path.read_text(encoding="utf-8")) if seen_path.exists() else {}
     if not isinstance(seen, dict):
@@ -224,17 +288,50 @@ def scan_chinese_journals(out: Path, now: datetime, get=fetch_html) -> dict:
                             "note": "TOC online date may differ from article detail publication date; verify both.",
                         })
                 updated[slug] = {"issue": issue, "articles": sorted(current), "baselined": True,
-                                 "last_success_at": now.isoformat()}
+                                 "last_success_at": now.isoformat(), "rss_baselined": previous.get("rss_baselined", False)}
                 if articles:
                     full_ok += 1
                     records += len(articles)
         except (OSError, ValueError, UnicodeError) as error:
             info.update(status="failed", reason=f"{type(error).__name__}: {str(error)[:120]}")
+        if rss_get is not None and slug in RSS_CODES:
+            code = RSS_CODES[slug]
+            info["rss"] = {"url": f"https://navi.cnki.net/knavi/rss/{code}", "status": "failed", "article_count": 0}
+            try:
+                rss_articles = parse_rss(rss_get(code), journal)
+                prior = updated.get(slug, previous)
+                current = set(prior.get("articles", []))
+                rss_baselined = previous.get("rss_baselined", False)
+                # A first successful feed establishes the historical baseline. Recent feed events are leads only.
+                for article in rss_articles:
+                    key = re.sub(r"[^\w]", "", article["title"]).casefold()
+                    if key in current:
+                        continue
+                    current.add(key)
+                    event = article["rss_event_at"]
+                    recent = bool(event and (now.date() - timedelta(days=14)).isoformat() <= event <= checked)
+                    if rss_baselined or recent:
+                        ident = hashlib.sha256((slug + ":" + key).encode()).hexdigest()[:16]
+                        new_items.append({"id": "journal:" + slug + ":" + ident, **article,
+                            "journal": journal, "source": "cnki_rss", "source_kind": "index_feed",
+                            "issue": None, "issue_date": None, "published_at": None, "toc_online_at": None,
+                            "first_observed_at": checked, "event_type": "rss_listing", "date_verified": False,
+                            "note": "RSS event date is not verified first publication date."})
+                updated[slug] = {**prior, "articles": sorted(current), "rss_baselined": True}
+                info["rss"].update(status="ok", article_count=len(rss_articles), latest_event=max((x["rss_event_at"] for x in rss_articles if x["rss_event_at"]), default=None))
+                if info["status"] != "ok":
+                    info["status"] = "rss_only"
+                    full_ok += 1
+                    records += len(rss_articles)
+            except (OSError, ValueError, ET.ParseError) as error:
+                info["rss"].update(reason=f"{type(error).__name__}: {str(error)[:120]}")
+                if updated.get(slug) and previous.get("rss_baselined"):
+                    updated[slug]["rss_baselined"] = True
         if info["status"] != "ok":
             failures.append(f"{journal}: {info['status']} ({info.get('reason', '')})")
         journals[slug] = info
-    source_status = {"status": "ok" if full_ok == len(JOURNALS) else "degraded" if any(
-        j["status"] in ("ok", "catalog_only", "stale_index") for j in journals.values()) else "failed",
+    source_status = {"status": "ok" if full_ok == len(JOURNALS) and not failures else "degraded" if any(
+        j["status"] in ("ok", "rss_only", "catalog_only", "stale_index") for j in journals.values()) else "failed",
         "queries_ok": full_ok, "queries_total": len(JOURNALS),
         "records": records, "errors": failures, "journals": journals}
     out.mkdir(parents=True, exist_ok=True)

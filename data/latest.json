@@ -1,13 +1,13 @@
 {
-  "generated_at": "2026-11-15T01:25:44.648101+00:00",
+  "generated_at": "2026-11-15T01:31:41.422816+00:00",
   "status": "degraded",
   "since": "2026-11-12",
   "source_status": {
     "crossref": {
       "status": "ok",
-      "queries_ok": 13,
-      "queries_total": 13,
-      "records": 388,
+      "queries_ok": 14,
+      "queries_total": 14,
+      "records": 418,
       "errors": []
     },
     "arxiv": {
@@ -35,7 +35,7 @@
           "journal": "经济研究",
           "source_kind": "catalog",
           "url": "https://www.ncpssd.org/journal/details?gch=95645X",
-          "checked_at": "2026-11-15T01:25:44.648101+00:00",
+          "checked_at": "2026-11-15T01:31:41.422816+00:00",
           "status": "catalog_only",
           "issue": "2026-09",
           "issue_date": null,
@@ -46,7 +46,7 @@
           "journal": "中国工业经济",
           "source_kind": "catalog",
           "url": "https://ncpssd.org/journal/details.aspx?gch=93800A",
-          "checked_at": "2026-11-15T01:25:44.648101+00:00",
+          "checked_at": "2026-11-15T01:31:41.422816+00:00",
           "status": "catalog_only",
           "issue": "2026-08",
           "issue_date": null,
@@ -57,7 +57,7 @@
           "journal": "管理世界",
           "source_kind": "catalog",
           "url": "https://m.ncpssd.cn/journal/details?gch=95499X&langType=1&nav=1",
-          "checked_at": "2026-11-15T01:25:44.648101+00:00",
+          "checked_at": "2026-11-15T01:31:41.422816+00:00",
           "status": "catalog_only",
           "issue": "2026-10",
           "issue_date": null,
@@ -68,7 +68,7 @@
           "journal": "世界经济",
           "source_kind": "publisher",
           "url": "https://sjjj.magtech.com.cn/CN/home",
-          "checked_at": "2026-11-15T01:25:44.648101+00:00",
+          "checked_at": "2026-11-15T01:31:41.422816+00:00",
           "status": "ok",
           "issue": "2026-11",
           "issue_date": "2026-11-10",
@@ -78,7 +78,7 @@
           "journal": "数量经济技术经济研究",
           "source_kind": "catalog",
           "url": "https://www.ncpssd.org/journal/details?gch=94503X",
-          "checked_at": "2026-11-15T01:25:44.648101+00:00",
+          "checked_at": "2026-11-15T01:31:41.422816+00:00",
           "status": "catalog_only",
           "issue": "2026-10",
           "issue_date": null,
@@ -91,7 +91,7 @@
           "journal": "财经研究",
           "source_kind": "publisher",
           "url": "https://qks.sufe.edu.cn/J/CJYJ/Article/CurrentIssue/CN",
-          "checked_at": "2026-11-15T01:25:44.648101+00:00",
+          "checked_at": "2026-11-15T01:31:41.422816+00:00",
           "status": "catalog_only",
           "issue": "2026-09",
           "issue_date": null,
@@ -102,7 +102,7 @@
           "journal": "金融研究",
           "source_kind": "catalog",
           "url": "https://m.ncpssd.cn/journal/details?gch=97926X&langType=1&nav=1",
-          "checked_at": "2026-11-15T01:25:44.648101+00:00",
+          "checked_at": "2026-11-15T01:31:41.422816+00:00",
           "status": "catalog_only",
           "issue": "2026-07",
           "issue_date": null,
@@ -114,17 +114,9 @@
       }
     }
   },
-  "scanned_candidates": 335,
-  "prefilter_pass_count": 8,
+  "scanned_candidates": 341,
+  "prefilter_pass_count": 7,
   "prefilter_diagnostics": [
-    {
-      "title": "Analysis of patent data and criteria for patentability in furniture design: focus on the CPC/IPC A47D classification for children’s furniture",
-      "project": "P0",
-      "score": 41,
-      "source": "crossref",
-      "event_at": "2026-11-14",
-      "url": "https://doi.org/10.33725/mamad.2011751"
-    },
     {
       "title": "AI adoption and supply chain resilience in MSMEs: Mediating role of employee adaptive behaviour",
       "project": "P1",
@@ -166,69 +158,14 @@
       "url": "https://doi.org/10.64090/3105-0972.202611630"
     }
   ],
-  "new_candidates": [
-    {
-      "id": "doi:10.33725/mamad.2011751",
-      "title": "Analysis of patent data and criteria for patentability in furniture design: focus on the CPC/IPC A47D classification for children’s furniture",
-      "authors": [
-        "Emine Banu Burkut"
-      ],
-      "url": "https://doi.org/10.33725/mamad.2011751",
-      "doi": "10.33725/mamad.2011751",
-      "source": "crossref",
-      "sources": [
-        "crossref"
-      ],
-      "venue": "Mobilya ve Ahşap Malzeme Araştırmaları Dergisi",
-      "type": "journal-article",
-      "published_at": "2026-11-14",
-      "metadata_created_at": "2026-11-14",
-      "event_at": "2026-11-14",
-      "event_type": "crossref_registration",
-      "version": "",
-      "project": "P0",
-      "eligible": true,
-      "prefilter_score": 41,
-      "change": "new"
-    },
-    {
-      "id": "doi:10.2139/ssrn.7698161",
-      "title": "Institutional And Relational Underpinnings Of Vertical FDI Spillovers In International Buyer-Supplier Relationships: Insights From Automotive Suppliers",
-      "authors": [
-        "TULAY ILHAN NAS",
-        "Fatih Sahin",
-        "Ismail Golgeci",
-        "Tarhan Okan"
-      ],
-      "url": "https://doi.org/10.2139/ssrn.7698161",
-      "doi": "10.2139/ssrn.7698161",
-      "source": "crossref",
-      "sources": [
-        "crossref"
-      ],
-      "venue": "",
-      "type": "posted-content",
-      "published_at": "2026-01-01",
-      "metadata_created_at": "2026-11-13",
-      "event_at": "2026-11-13",
-      "event_type": "crossref_registration",
-      "version": "",
-      "project": "P1A",
-      "eligible": true,
-      "prefilter_score": 42,
-      "alternate_ids": [
-        "doi:10.2139/ssrn.7698161"
-      ],
-      "change": "new"
-    }
-  ],
+  "new_candidates": [],
   "note": "Metadata candidates only; verify paper content and bibliographic dates at primary sources. Chinese catalog first_seen is NOT publication date; incomplete catalogs require manual checking.",
   "chinese_journals": {
     "economic_research": {
       "journal": "经济研究",
       "source_kind": "catalog",
       "url": "https://www.ncpssd.org/journal/details?gch=95645X",
-      "checked_at": "2026-11-15T01:25:44.648101+00:00",
+      "checked_at": "2026-11-15T01:31:41.422816+00:00",
       "status": "catalog_only",
       "issue": "2026-09",
       "issue_date": null,
@@ -239,7 +176,7 @@
       "journal": "中国工业经济",
       "source_kind": "catalog",
       "url": "https://ncpssd.org/journal/details.aspx?gch=93800A",
-      "checked_at": "2026-11-15T01:25:44.648101+00:00",
+      "checked_at": "2026-11-15T01:31:41.422816+00:00",
       "status": "catalog_only",
       "issue": "2026-08",
       "issue_date": null,
@@ -250,7 +187,7 @@
       "journal": "管理世界",
       "source_kind": "catalog",
       "url": "https://m.ncpssd.cn/journal/details?gch=95499X&langType=1&nav=1",
-      "checked_at": "2026-11-15T01:25:44.648101+00:00",
+      "checked_at": "2026-11-15T01:31:41.422816+00:00",
       "status": "catalog_only",
       "issue": "2026-10",
       "issue_date": null,
@@ -261,7 +198,7 @@
       "journal": "世界经济",
       "source_kind": "publisher",
       "url": "https://sjjj.magtech.com.cn/CN/home",
-      "checked_at": "2026-11-15T01:25:44.648101+00:00",
+      "checked_at": "2026-11-15T01:31:41.422816+00:00",
       "status": "ok",
       "issue": "2026-11",
       "issue_date": "2026-11-10",
@@ -271,7 +208,7 @@
       "journal": "数量经济技术经济研究",
       "source_kind": "catalog",
       "url": "https://www.ncpssd.org/journal/details?gch=94503X",
-      "checked_at": "2026-11-15T01:25:44.648101+00:00",
+      "checked_at": "2026-11-15T01:31:41.422816+00:00",
       "status": "catalog_only",
       "issue": "2026-10",
       "issue_date": null,
@@ -284,7 +221,7 @@
       "journal": "财经研究",
       "source_kind": "publisher",
       "url": "https://qks.sufe.edu.cn/J/CJYJ/Article/CurrentIssue/CN",
-      "checked_at": "2026-11-15T01:25:44.648101+00:00",
+      "checked_at": "2026-11-15T01:31:41.422816+00:00",
       "status": "catalog_only",
       "issue": "2026-09",
       "issue_date": null,
@@ -295,7 +232,7 @@
       "journal": "金融研究",
       "source_kind": "catalog",
       "url": "https://m.ncpssd.cn/journal/details?gch=97926X&langType=1&nav=1",
-      "checked_at": "2026-11-15T01:25:44.648101+00:00",
+      "checked_at": "2026-11-15T01:31:41.422816+00:00",
       "status": "catalog_only",
       "issue": "2026-07",
       "issue_date": null,

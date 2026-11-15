@@ -1,10 +1,10 @@
-# Academic Research Radar — 2026-11-15T01:25:44.648101+00:00
+# Academic Research Radar — 2026-11-15T01:31:41.422816+00:00
 
-**Status:** degraded; **New or changed candidates:** 2
+**Status:** degraded; **New or changed candidates:** 0
 
 This is metadata triage, not a verified reading or recommendation.
 
-- crossref: ok; 13/13 queries; 388 records
+- crossref: ok; 14/14 queries; 418 records
 - arxiv: ok; 4/4 queries; 9 records
 - chinese_journals: degraded; 1/7 queries; 7 records
   - Error: 经济研究: catalog_only (issue_visible_but_articles_not_verified)
@@ -30,5 +30,4 @@ This is metadata triage, not a verified reading or recommendation.
 
 ## New or revised candidates
 
-- [Analysis of patent data and criteria for patentability in furniture design: focus on the CPC/IPC A47D classification for children’s furniture](https://doi.org/10.33725/mamad.2011751) — P0, prefilter 41, crossref_registration 2026-11-14, new
-- [Institutional And Relational Underpinnings Of Vertical FDI Spillovers In International Buyer-Supplier Relationships: Insights From Automotive Suppliers](https://doi.org/10.2139/ssrn.7698161) — P1A, prefilter 42, crossref_registration 2026-11-13, new
+None passed the metadata prefilter. This does not imply no relevant papers exist.

@@ -7,7 +7,7 @@
 ## 工作流程
 
 ```
-Crossref + arXiv (英文/开放元数据) + 中文七刊 (出版方目录/权威目录索引)
+Crossref + arXiv (英文/开放元数据) + 中文九刊 (出版方目录/权威目录索引)
     -> 时间窗筛选 -> 主题打分 -> DOI/arXiv/标题去重
     -> data/latest.json / data/latest.md + data/seen.json + data/chinese_seen.json
     -> ChatGPT 每日核对原文并筛出高价值增量
@@ -25,12 +25,15 @@ Crossref + arXiv (英文/开放元数据) + 中文七刊 (出版方目录/权威
 |---|---|---|
 | Crossref REST | 带关键词的论文与工作论文元数据，包含中文词检索 | 入库/更新时间不等于发表日；摘要不一定存在 |
 | arXiv API | 创新、专利文本、AI/供应链相关新稿、版本更新 | 预印本；需要区别 v1 与 v2，不等于正式发表 |
-| 中文经济学七刊（逐刊目录状态监控） | `chinese_journals.py` 从《经济研究》《中国工业经济》《管理世界》《世界经济》《数量经济技术经济研究》《财经研究》《金融研究》的公开目录/国家哲社文献中心目录提取期次、可验证文章链接、逐刊状态 | 对无法取得可验证文章链接的目录标为 `catalog_only`，不会伪称全文覆盖。期次不是发表日期 |
-| 中文七刊深度核验、NBER、CEPR、RePEc、WIPO、USPTO、EPO | 每日 ChatGPT 对新候选和 `catalog_only/unverified/failed` 逐刊补查 | 官网更新滞后或抓取失败需要单独报告；搜索结果/元数据仅作候选 |
+| 中文经济学七刊（逐刊目录状态监控） | `chinese_journals.py` 从《经济研究》《中国工业经济》《管理世界》《世界经济》《数量经济技术经济研究》《财经研究》《金融研究》《国际贸易问题》《世界经济研究》的公开目录/国家哲社文献中心目录提取期次、可验证文章链接、逐刊状态 | 对无法取得可验证文章链接的目录标为 `catalog_only`，不会伪称全文覆盖。期次不是发表日期 |
+| 中文九刊深度核验、NBER、CEPR、RePEc、WIPO、USPTO、EPO | 每日 ChatGPT 对新候选和 `catalog_only/unverified/failed` 逐刊补查 | 官网更新滞后或抓取失败需要单独报告；搜索结果/元数据仅作候选 |
 
-### 中文七刊逐刊状态
+### 中文九刊逐刊状态
 
-每日 `data/latest.json` 新增 `chinese_journals`（七个刊名各一项）和 `chinese_new_candidates`，同时在 `source_status.chinese_journals` 报告整体健康。关键状态：
+2026-11-15：新增知网官方公开RSS（普通匿名会话，不登录或绕过访问控制），以及《国际贸易问题》《世界经济研究》。`status=rss_only` 表示RSS返回可核验文章线索但目录仍不完整；`rss.status`、`rss.article_count`、`rss.latest_event` 独立报告。RSS事件日期不是首发日期，`published_at` 仍为 null。参考 [Chinese-Literature-Skill](https://github.com/MartyYao/Chinese-Literature-Skill) 的订阅方式；若新通道访问失败，日报须逐刊独立检索官网、网络首发及权威索引。
+
+
+每日 `data/latest.json` 新增 `chinese_journals`（九个刊名各一项）和 `chinese_new_candidates`，同时在 `source_status.chinese_journals` 报告整体健康。关键状态：
 
 - `ok`：公开目录期次及文章详情链接均已解析。**不是全文阅读或发表日期验证**。
 - `catalog_only`：只确认期次，未取得可靠文章链接，ChatGPT 必须独立补查该刊。

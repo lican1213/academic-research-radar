@@ -415,18 +415,22 @@ def markdown_report(report: dict) -> str:
         for error in status["errors"]:
             result.append(f"  - Error: {error}")
     if "chinese_journals" in report:
-        result.extend(["", "## 中文七刊逐刊监测（仅公开目录，非文章审读）", ""])
+        result.extend(["", "## 中文重点期刊逐刊监测（公开目录和RSS，非文章审读）", ""])
         for journal in report["chinese_journals"].values():
             result.append(
                 f"- [{journal['journal']}]({journal['url']}): {journal['status']}; "
                 f"来源={journal['source_kind']}; 期次={journal.get('issue') or '未核验'}; "
-                f"可解析文章={journal['article_count']}; {journal.get('reason', '')}"
+                f"可解析目录文章={journal['article_count']}; {journal.get('reason', '')}; "
+                f"RSS={journal.get('rss', {}).get('status', 'not_run')}, "
+                f"RSS文章={journal.get('rss', {}).get('article_count', 0)}, "
+                f"RSS最新事件={journal.get('rss', {}).get('latest_event') or '未核验'}"
             )
-        result.extend(["", "### 本次首次观察到的中文目录文章（不等于今日发表）", ""])
+        result.extend(["", "### 本次首次观察到的中文文献（不等于今日发表）", ""])
         for item in report.get("chinese_new_candidates", []):
             result.append(f"- [{item['title']}]({item['url']}) — {item['journal']} "
                           f"{item['issue']}; 首次观察 {item['first_observed_at']}; "
-                          f"目录在线标记 {item.get('toc_online_at') or '无'}（非论文发表日期）; "
+                          f"目录在线标记 {item.get('toc_online_at') or '无'}; "
+                          f"RSS事件 {item.get('rss_event_at') or '无'}（均非论文发表日期）; "
                           "单篇论文发表日期待核验")
         if not report.get("chinese_new_candidates"):
             result.append("本次无新目录文章；若存在 catalog_only/unverified/failed，则不能宣称已覆盖全部中文论文。")

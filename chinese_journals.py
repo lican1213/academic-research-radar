@@ -29,13 +29,15 @@ JOURNALS = (
     ("management_world", "管理世界", "catalog", "https://m.ncpssd.cn/journal/details?gch=95499X&langType=1&nav=1"),
     ("world_economy", "世界经济", "publisher", "https://sjjj.magtech.com.cn/CN/home"),
     ("quant_economics", "数量经济技术经济研究", "publisher", "https://www.jqte.net/sljjjsjjyj/ch/index.aspx"),
-    ("finance_economics", "财经研究", "publisher", "https://qks.sufe.edu.cn/J/CJYJ.html/CN"),
+    ("finance_economics", "财经研究", "publisher", "https://qks.sufe.edu.cn/J/CJYJ/Article/Latest"),
     ("financial_research", "金融研究", "publisher", "https://www.jryj.org.cn/CN/1002-7246/current.shtml"),
-    ("international_trade", "国际贸易问题", "catalog", "https://ncpssd.org/journal/details?gch=96001X"),
-    ("world_economy_studies", "世界经济研究", "catalog", "https://ncpssd.org/journal/details?gch=91453X"),
+    ("international_trade", "国际贸易问题", "publisher", "https://gjmw.cbpt.cnki.net/portal/journal/portal/client/index"),
+    ("world_economy_studies", "世界经济研究", "publisher", "https://jing.cbpt.cnki.net/portal/journal/portal/client/index"),
 )
 
 FALLBACKS = {
+    "international_trade": ("catalog", "https://ncpssd.org/journal/details?gch=96001X"),
+    "world_economy_studies": ("catalog", "https://ncpssd.org/journal/details?gch=91453X"),
     "finance_economics": ("publisher", "https://qks.sufe.edu.cn/J/CJYJ/Article/CurrentIssue/CN"),
     "quant_economics": ("catalog", "https://www.ncpssd.org/journal/details?gch=94503X"),
     "financial_research": ("catalog", "https://m.ncpssd.cn/journal/details?gch=97926X&langType=1&nav=1"),
@@ -95,6 +97,8 @@ def fetch_html(url: str) -> bytes:
 
 def article_link(kind: str, url: str) -> bool:
     path = urllib.parse.urlparse(url).path
+    if re.fullmatch(r"/portal/journal/portal/client/paper/[a-f0-9]{32}/?", path, re.I):
+        return kind == "publisher"
     if kind == "catalog":
         # National catalog may expose an issue but not verifiable article pages.
         # Do not mistake download links, buttons or site navigation for papers.
@@ -116,6 +120,9 @@ def parse_toc(payload: bytes, *, journal: str, kind: str, url: str) -> tuple[str
     if journal not in text:
         return None, None, []
     issues = ISSUE_RE.findall(text)
+    if ".cbpt.cnki.net" in (urllib.parse.urlparse(url).hostname or ""):
+        first = ISSUE_RE.search(text)
+        issues = [first.groups()] if first else []
     if journal == "数量经济技术经济研究":
         issues.extend(QUANT_ISSUE_RE.findall(text))
     # Homepage content can contain prior issues; take the latest issue for
@@ -143,7 +150,7 @@ def parse_toc(payload: bytes, *, journal: str, kind: str, url: str) -> tuple[str
         links.append((title, absolute, part_index))
     links.sort(key=lambda x: x[2])
     for index, (title, absolute, position) in enumerate(links):
-        following = links[index + 1][2] if index + 1 < len(links) else len(text)
+        following = links[index + 1][2] if index + 1 < len(links) else len(parser.text_parts)
         section = "\n".join(parser.text_parts[position:min(following, position + 150)])
         published = None
         match = ONLINE_RE.search(section)
@@ -154,8 +161,25 @@ def parse_toc(payload: bytes, *, journal: str, kind: str, url: str) -> tuple[str
             except ValueError:
                 pass
         doi_match = DOI_RE.search(section) if kind == "publisher" else None
+        row_issue = None
+        host = urllib.parse.urlparse(url).hostname or ""
+        match_path = re.search(r"/CN/Y(20\d{2})/V\d+/I(\d{1,2})/", absolute, re.I)
+        if match_path:
+            row_issue = f"{match_path[1]}-{int(match_path[2]):02d}"
+        else:
+            local = ISSUE_RE.search(section.replace("\\n", " "))
+            if local:
+                row_issue = f"{local[1]}-{int(local[2]):02d}"
+            elif journal == "数量经济技术经济研究":
+                local = QUANT_ISSUE_RE.search(section)
+                if local:
+                    row_issue = f"{local[1]}-{int(local[2]):02d}"
+        # Never inherit the maximum issue of a mixed homepage or latest-articles list.
+        if row_issue is None and re.search(r"/Article/(20\d{2})/(\d{1,2})/CN", url, re.I):
+            local = re.search(r"/Article/(20\d{2})/(\d{1,2})/CN", url, re.I)
+            row_issue = f"{local[1]}-{int(local[2]):02d}"
         articles.append({"title": title, "url": absolute, "toc_online_at": published,
-                         "doi": doi_match.group(0).rstrip(".,;") if doi_match else None})
+                         "issue": row_issue, "doi": doi_match.group(0).rstrip(".,;") if doi_match else None})
     return issue, issue_date, articles
 
 
@@ -277,8 +301,8 @@ def scan_chinese_journals(out: Path, now: datetime, get=fetch_html, rss_get=None
                             "url": article["url"],
                             "source": "chinese_journal_toc",
                             "source_kind": kind,
-                            "issue": issue,
-                            "issue_date": issue_date,
+                            "issue": article.get("issue"),
+                            "issue_date": issue_date if article.get("issue") == issue else None,
                             "published_at": None,
                             "toc_online_at": article.get("toc_online_at"),
                             "doi": article.get("doi"),

@@ -128,3 +128,5 @@
 - [CI #43663467829](https://github.com/lican1213/academic-research-radar/actions/runs/43663467829) 原始日志：Python编译成功，40项测试均通过（含6项P1A专项）；覆盖真实类型题名、词形召回、负例、优先级、候选上限、模拟跨自然日去重及延期交付。PR [#2](https://github.com/lican1213/academic-research-radar/pull/2) 已 squash 合并至 main (`e36d7de36c3143d02da7c3c00e84ed794b5a1b9c`)，回读确认代码和测试存在。
 - 原每日09:30任务已增加P1A；原时间窗、学术质量阈值、只读约束不变。未上传未发表论文或数据。
 - Gate：编译、全量CI、初版实网输出、主分支合并、调度配置均通过；合并后14条查询的真实新扫描回读及连续自然日生产观察单独核验，不以模拟跨日代替生产观察。中文目录缺口按原规则独立人工补检。
+
+- 人工实网候选复验：SSRN 2026-11-13 登记的 DOI `10.2139/ssrn.7698161` 与正式刊文 `10.1016/j.intman.2026.101340` 题名、四位作者完全相符；[出版方](https://www.sciencedirect.com/science/article/pii/S1075425326000141) 标为 2026-03 正式刊出，[大学存档原文](https://osuva.uwasa.fi/server/api/core/bitstreams/23d954f4-5821-4ad0-b83f-dded905e9ce6/content) 可检索文本注明 2026-01-23 online（PDF视觉截图受访问限制），[SSRN目录](https://papers.ssrn.com/searchresults.cfm?term=%28+++%22automotive+supplier+) 标注11-13上传及正式 DOI。该候选是旧论文重新登记，不能列为今日新增，不重复推荐；研究为土耳其7家汽车供应商定性研究，并非直接竞争性关系终止实证。此次验证候选发现与人工日期核验分离，不将登记日当发表日。

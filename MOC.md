@@ -138,3 +138,10 @@
 - 参考 [MartyYao/Chinese-Literature-Skill](https://github.com/MartyYao/Chinese-Literature-Skill) 的公开CNKI RSS普通匿名会话方案（MIT），新增九刊独立RSS通道；新增国际贸易问题、世界经济研究；修复财经研究新版主页及无/CN文章链接，保留旧入口。RSS事件日期不等于首次发表；空XML、错误期刊、非文章/外链、失败必须显式标识；与目录共享已见标题去重，旧期次恢复不批量重发。
 - CI [43683181885](https://github.com/lican1213/academic-research-radar/actions/runs/43683181885) 原始日志46项全部通过（6项新增）；[PR #3](https://github.com/lican1213/academic-research-radar/pull/3) 已合并 `8809f11c5d03274f8e1f5347cfd8fca91f2393d2`。合并后的真实RSS/目录扫描尚待产物回读；不宣称9刊均可用。
 - 每日09:30任务已更新：中文九刊逐刊官网、CNKI网络首发、权威索引补检优先于弱相关英文推荐；分别报告文章级覆盖、期次和来源缺口。不改日程、论文质量阈值或未公开稿件。RSS only并非完整目录/全文覆盖。
+
+### 2026-11-15 / 中文实网复验：Gate FAIL
+
+- 回读 `data/latest.json generated_at=2026-11-15T05:56:39.711998+00:00`：中文2/9有文章链接，23条（世界经济7、财经研究16）；CNKI RSS 0/9，全部DNS解析 `Name or service not known`。Crossref14/14、arXiv4/4，整体仍degraded。CI46项通过不代表中文实网通过。
+- 独立官方反例：扫描将《耐心资本支持与企业绿色创新质量》标为2026-09期；[出版方详情](https://qks.sufe.edu.cn/J/CJYJ/Article/Details/A0D4FFPwQu-dBL4-uLdN-7nqu-nnsVUTr60cyJ/CN) 实际为2026年第7期，DOI 10.16538/j.cnki.jfe.20260314.101。主页混合推荐/旧期文章，全局最大期次不能用于每篇文章；因此财经研究链接发现通过，但期次准确性未通过。
+- 漏检反例：[国际贸易问题官网2026年第10期](https://gjmw.cbpt.cnki.net/portal/journal/portal/client/index)，[刘博聪、李磊、李川川《专利出海、创新激励与内外贸一体化》](https://gjmw.cbpt.cnki.net/portal/journal/portal/client/paper/7f6078a0cec828f7581a0bc4ff569adf)，DOI 10.13510/j.cnki.jit.2026.10.007，2026-10-25；当前自动源只见9期，未捕捉该期。国哲社[世界经济研究目录](https://ncpssd.org/journal/details?gch=91453X) 已公开展示10期题名/作者/页码，但现有解析未提取可定位文章线索。
+- 下一轮：使用可访问的期刊自有公开平台/期次专页、权威目录文章级元数据和公开结构化接口；逐篇期次绑定、标题/DOI跨源去重、实际链接与日期核查；RSS保留可选渠道但不作为唯一恢复路线。验收以九刊真实文章级覆盖、上述反例修复及新CI为准。本次只记录审计证据，未修改抓取代码。

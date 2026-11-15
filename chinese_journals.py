@@ -1,4 +1,4 @@
-"""Public table-of-contents monitor for seven Chinese economics journals.
+"""Public table-of-contents monitor for priority Chinese economics journals.
 
 This is a conservative discovery aid, NOT publication-date verification.
 Publisher pages are preferred where available; NCPS SD is an authoritative
@@ -268,7 +268,7 @@ def scan_chinese_journals(out: Path, now: datetime, get=fetch_html, rss_get=None
                     recent_listing = bool(article.get("toc_online_at") and
                                           now.date() - timedelta(days=14) <=
                                           datetime.fromisoformat(article["toc_online_at"]).date() <= now.date())
-                    if previous.get("baselined") or recent_listing:
+                    if (previous.get("baselined") and (previous_articles or (previous.get("issue") and issue > previous["issue"]))) or recent_listing:
                         ident = hashlib.sha256((slug + ":" + title_key).encode()).hexdigest()[:16]
                         new_items.append({
                             "id": "journal:" + slug + ":" + ident,
@@ -329,7 +329,7 @@ def scan_chinese_journals(out: Path, now: datetime, get=fetch_html, rss_get=None
                 if updated.get(slug) and previous.get("rss_baselined"):
                     updated[slug]["rss_baselined"] = True
         if info["status"] != "ok" or info.get("rss", {}).get("status") == "failed":
-            failures.append(f"{journal}: {info['status']} ({info.get('reason', '')})")
+            failures.append(f"{journal}: {info['status']} ({info.get('reason', '')}); RSS={info.get('rss', {}).get('status', 'not_run')}")
         journals[slug] = info
     source_status = {"status": "ok" if full_ok == len(JOURNALS) and not failures else "degraded" if any(
         j["status"] in ("ok", "rss_only", "catalog_only", "stale_index") for j in journals.values()) else "failed",

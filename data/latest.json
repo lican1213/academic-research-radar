@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-15T01:53:14.571249+00:00",
+  "generated_at": "2026-11-15T05:56:39.711998+00:00",
   "status": "degraded",
   "since": "2026-11-12",
   "source_status": {
@@ -19,112 +19,182 @@
     },
     "chinese_journals": {
       "status": "degraded",
-      "queries_ok": 1,
-      "queries_total": 7,
-      "records": 7,
+      "queries_ok": 2,
+      "queries_total": 9,
+      "records": 23,
       "errors": [
-        "经济研究: catalog_only (issue_visible_but_articles_not_verified)",
-        "中国工业经济: catalog_only (issue_visible_but_articles_not_verified)",
-        "管理世界: catalog_only (issue_visible_but_articles_not_verified)",
-        "数量经济技术经济研究: catalog_only (publisher_unavailable; issue_visible_but_articles_not_verified)",
-        "财经研究: catalog_only (issue_visible_but_articles_not_verified)",
-        "金融研究: catalog_only (publisher_unavailable; issue_visible_but_articles_not_verified)"
+        "经济研究: catalog_only (issue_visible_but_articles_not_verified); RSS=failed",
+        "中国工业经济: catalog_only (issue_visible_but_articles_not_verified); RSS=failed",
+        "管理世界: catalog_only (issue_visible_but_articles_not_verified); RSS=failed",
+        "世界经济: ok (); RSS=failed",
+        "数量经济技术经济研究: catalog_only (publisher_unavailable; issue_visible_but_articles_not_verified); RSS=failed",
+        "财经研究: ok (); RSS=failed",
+        "金融研究: catalog_only (publisher_unavailable; issue_visible_but_articles_not_verified); RSS=failed",
+        "国际贸易问题: catalog_only (issue_visible_but_articles_not_verified); RSS=failed",
+        "世界经济研究: catalog_only (issue_visible_but_articles_not_verified); RSS=failed"
       ],
       "journals": {
         "economic_research": {
           "journal": "经济研究",
           "source_kind": "catalog",
           "url": "https://www.ncpssd.org/journal/details?gch=95645X",
-          "checked_at": "2026-11-15T01:53:14.571249+00:00",
+          "checked_at": "2026-11-15T05:56:39.711998+00:00",
           "status": "catalog_only",
           "issue": "2026-09",
           "issue_date": null,
           "article_count": 0,
-          "reason": "issue_visible_but_articles_not_verified"
+          "reason": "issue_visible_but_articles_not_verified",
+          "rss": {
+            "url": "https://navi.cnki.net/knavi/rss/JJYJ",
+            "status": "failed",
+            "article_count": 0,
+            "reason": "URLError: <urlopen error [Errno -2] Name or service not known>"
+          }
         },
         "china_industrial": {
           "journal": "中国工业经济",
           "source_kind": "catalog",
           "url": "https://ncpssd.org/journal/details.aspx?gch=93800A",
-          "checked_at": "2026-11-15T01:53:14.571249+00:00",
+          "checked_at": "2026-11-15T05:56:39.711998+00:00",
           "status": "catalog_only",
           "issue": "2026-08",
           "issue_date": null,
           "article_count": 0,
-          "reason": "issue_visible_but_articles_not_verified"
+          "reason": "issue_visible_but_articles_not_verified",
+          "rss": {
+            "url": "https://navi.cnki.net/knavi/rss/GGYY",
+            "status": "failed",
+            "article_count": 0,
+            "reason": "URLError: <urlopen error [Errno -2] Name or service not known>"
+          }
         },
         "management_world": {
           "journal": "管理世界",
           "source_kind": "catalog",
           "url": "https://m.ncpssd.cn/journal/details?gch=95499X&langType=1&nav=1",
-          "checked_at": "2026-11-15T01:53:14.571249+00:00",
+          "checked_at": "2026-11-15T05:56:39.711998+00:00",
           "status": "catalog_only",
           "issue": "2026-10",
           "issue_date": null,
           "article_count": 0,
-          "reason": "issue_visible_but_articles_not_verified"
+          "reason": "issue_visible_but_articles_not_verified",
+          "rss": {
+            "url": "https://navi.cnki.net/knavi/rss/GLSJ",
+            "status": "failed",
+            "article_count": 0,
+            "reason": "URLError: <urlopen error [Errno -2] Name or service not known>"
+          }
         },
         "world_economy": {
           "journal": "世界经济",
           "source_kind": "publisher",
           "url": "https://sjjj.magtech.com.cn/CN/home",
-          "checked_at": "2026-11-15T01:53:14.571249+00:00",
+          "checked_at": "2026-11-15T05:56:39.711998+00:00",
           "status": "ok",
           "issue": "2026-11",
           "issue_date": "2026-11-10",
-          "article_count": 7
+          "article_count": 7,
+          "rss": {
+            "url": "https://navi.cnki.net/knavi/rss/SJJJ",
+            "status": "failed",
+            "article_count": 0,
+            "reason": "URLError: <urlopen error [Errno -2] Name or service not known>"
+          }
         },
         "quant_economics": {
           "journal": "数量经济技术经济研究",
           "source_kind": "catalog",
           "url": "https://www.ncpssd.org/journal/details?gch=94503X",
-          "checked_at": "2026-11-15T01:53:14.571249+00:00",
+          "checked_at": "2026-11-15T05:56:39.711998+00:00",
           "status": "catalog_only",
           "issue": "2026-10",
           "issue_date": null,
           "article_count": 0,
           "primary_url": "https://www.jqte.net/sljjjsjjyj/ch/index.aspx",
           "primary_failure": "HTTPError: HTTP Error 502: Bad Gateway",
-          "reason": "publisher_unavailable; issue_visible_but_articles_not_verified"
+          "reason": "publisher_unavailable; issue_visible_but_articles_not_verified",
+          "rss": {
+            "url": "https://navi.cnki.net/knavi/rss/SLJY",
+            "status": "failed",
+            "article_count": 0,
+            "reason": "URLError: <urlopen error [Errno -2] Name or service not known>"
+          }
         },
         "finance_economics": {
           "journal": "财经研究",
           "source_kind": "publisher",
-          "url": "https://qks.sufe.edu.cn/J/CJYJ/Article/CurrentIssue/CN",
-          "checked_at": "2026-11-15T01:53:14.571249+00:00",
-          "status": "catalog_only",
+          "url": "https://qks.sufe.edu.cn/J/CJYJ.html/CN",
+          "checked_at": "2026-11-15T05:56:39.711998+00:00",
+          "status": "ok",
           "issue": "2026-09",
           "issue_date": null,
-          "article_count": 0,
-          "reason": "issue_visible_but_articles_not_verified"
+          "article_count": 16,
+          "rss": {
+            "url": "https://navi.cnki.net/knavi/rss/CJYJ",
+            "status": "failed",
+            "article_count": 0,
+            "reason": "URLError: <urlopen error [Errno -2] Name or service not known>"
+          }
         },
         "financial_research": {
           "journal": "金融研究",
           "source_kind": "catalog",
           "url": "https://m.ncpssd.cn/journal/details?gch=97926X&langType=1&nav=1",
-          "checked_at": "2026-11-15T01:53:14.571249+00:00",
+          "checked_at": "2026-11-15T05:56:39.711998+00:00",
           "status": "catalog_only",
           "issue": "2026-07",
           "issue_date": null,
           "article_count": 0,
           "primary_url": "https://www.jryj.org.cn/CN/1002-7246/current.shtml",
           "primary_failure": "URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'www.jryj.org.cn'",
-          "reason": "publisher_unavailable; issue_visible_but_articles_not_verified"
+          "reason": "publisher_unavailable; issue_visible_but_articles_not_verified",
+          "rss": {
+            "url": "https://navi.cnki.net/knavi/rss/JRYJ",
+            "status": "failed",
+            "article_count": 0,
+            "reason": "URLError: <urlopen error [Errno -2] Name or service not known>"
+          }
+        },
+        "international_trade": {
+          "journal": "国际贸易问题",
+          "source_kind": "catalog",
+          "url": "https://ncpssd.org/journal/details?gch=96001X",
+          "checked_at": "2026-11-15T05:56:39.711998+00:00",
+          "status": "catalog_only",
+          "issue": "2026-09",
+          "issue_date": null,
+          "article_count": 0,
+          "reason": "issue_visible_but_articles_not_verified",
+          "rss": {
+            "url": "https://navi.cnki.net/knavi/rss/GJMW",
+            "status": "failed",
+            "article_count": 0,
+            "reason": "URLError: <urlopen error [Errno -2] Name or service not known>"
+          }
+        },
+        "world_economy_studies": {
+          "journal": "世界经济研究",
+          "source_kind": "catalog",
+          "url": "https://ncpssd.org/journal/details?gch=91453X",
+          "checked_at": "2026-11-15T05:56:39.711998+00:00",
+          "status": "catalog_only",
+          "issue": "2026-10",
+          "issue_date": null,
+          "article_count": 0,
+          "reason": "issue_visible_but_articles_not_verified",
+          "rss": {
+            "url": "https://navi.cnki.net/knavi/rss/JING",
+            "status": "failed",
+            "article_count": 0,
+            "reason": "URLError: <urlopen error [Errno -2] Name or service not known>"
+          }
         }
       }
     }
   },
   "scanned_candidates": 341,
-  "prefilter_pass_count": 8,
+  "prefilter_pass_count": 7,
   "prefilter_diagnostics": [
-    {
-      "title": "Analysis of patent data and criteria for patentability in furniture design: focus on the CPC/IPC A47D classification for children’s furniture",
-      "project": "P0",
-      "score": 41,
-      "source": "crossref",
-      "event_at": "2026-11-14",
-      "url": "https://doi.org/10.33725/mamad.2011751"
-    },
     {
       "title": "AI adoption and supply chain resilience in MSMEs: Mediating role of employee adaptive behaviour",
       "project": "P1",
@@ -173,82 +243,345 @@
       "journal": "经济研究",
       "source_kind": "catalog",
       "url": "https://www.ncpssd.org/journal/details?gch=95645X",
-      "checked_at": "2026-11-15T01:53:14.571249+00:00",
+      "checked_at": "2026-11-15T05:56:39.711998+00:00",
       "status": "catalog_only",
       "issue": "2026-09",
       "issue_date": null,
       "article_count": 0,
-      "reason": "issue_visible_but_articles_not_verified"
+      "reason": "issue_visible_but_articles_not_verified",
+      "rss": {
+        "url": "https://navi.cnki.net/knavi/rss/JJYJ",
+        "status": "failed",
+        "article_count": 0,
+        "reason": "URLError: <urlopen error [Errno -2] Name or service not known>"
+      }
     },
     "china_industrial": {
       "journal": "中国工业经济",
       "source_kind": "catalog",
       "url": "https://ncpssd.org/journal/details.aspx?gch=93800A",
-      "checked_at": "2026-11-15T01:53:14.571249+00:00",
+      "checked_at": "2026-11-15T05:56:39.711998+00:00",
       "status": "catalog_only",
       "issue": "2026-08",
       "issue_date": null,
       "article_count": 0,
-      "reason": "issue_visible_but_articles_not_verified"
+      "reason": "issue_visible_but_articles_not_verified",
+      "rss": {
+        "url": "https://navi.cnki.net/knavi/rss/GGYY",
+        "status": "failed",
+        "article_count": 0,
+        "reason": "URLError: <urlopen error [Errno -2] Name or service not known>"
+      }
     },
     "management_world": {
       "journal": "管理世界",
       "source_kind": "catalog",
       "url": "https://m.ncpssd.cn/journal/details?gch=95499X&langType=1&nav=1",
-      "checked_at": "2026-11-15T01:53:14.571249+00:00",
+      "checked_at": "2026-11-15T05:56:39.711998+00:00",
       "status": "catalog_only",
       "issue": "2026-10",
       "issue_date": null,
       "article_count": 0,
-      "reason": "issue_visible_but_articles_not_verified"
+      "reason": "issue_visible_but_articles_not_verified",
+      "rss": {
+        "url": "https://navi.cnki.net/knavi/rss/GLSJ",
+        "status": "failed",
+        "article_count": 0,
+        "reason": "URLError: <urlopen error [Errno -2] Name or service not known>"
+      }
     },
     "world_economy": {
       "journal": "世界经济",
       "source_kind": "publisher",
       "url": "https://sjjj.magtech.com.cn/CN/home",
-      "checked_at": "2026-11-15T01:53:14.571249+00:00",
+      "checked_at": "2026-11-15T05:56:39.711998+00:00",
       "status": "ok",
       "issue": "2026-11",
       "issue_date": "2026-11-10",
-      "article_count": 7
+      "article_count": 7,
+      "rss": {
+        "url": "https://navi.cnki.net/knavi/rss/SJJJ",
+        "status": "failed",
+        "article_count": 0,
+        "reason": "URLError: <urlopen error [Errno -2] Name or service not known>"
+      }
     },
     "quant_economics": {
       "journal": "数量经济技术经济研究",
       "source_kind": "catalog",
       "url": "https://www.ncpssd.org/journal/details?gch=94503X",
-      "checked_at": "2026-11-15T01:53:14.571249+00:00",
+      "checked_at": "2026-11-15T05:56:39.711998+00:00",
       "status": "catalog_only",
       "issue": "2026-10",
       "issue_date": null,
       "article_count": 0,
       "primary_url": "https://www.jqte.net/sljjjsjjyj/ch/index.aspx",
       "primary_failure": "HTTPError: HTTP Error 502: Bad Gateway",
-      "reason": "publisher_unavailable; issue_visible_but_articles_not_verified"
+      "reason": "publisher_unavailable; issue_visible_but_articles_not_verified",
+      "rss": {
+        "url": "https://navi.cnki.net/knavi/rss/SLJY",
+        "status": "failed",
+        "article_count": 0,
+        "reason": "URLError: <urlopen error [Errno -2] Name or service not known>"
+      }
     },
     "finance_economics": {
       "journal": "财经研究",
       "source_kind": "publisher",
-      "url": "https://qks.sufe.edu.cn/J/CJYJ/Article/CurrentIssue/CN",
-      "checked_at": "2026-11-15T01:53:14.571249+00:00",
-      "status": "catalog_only",
+      "url": "https://qks.sufe.edu.cn/J/CJYJ.html/CN",
+      "checked_at": "2026-11-15T05:56:39.711998+00:00",
+      "status": "ok",
       "issue": "2026-09",
       "issue_date": null,
-      "article_count": 0,
-      "reason": "issue_visible_but_articles_not_verified"
+      "article_count": 16,
+      "rss": {
+        "url": "https://navi.cnki.net/knavi/rss/CJYJ",
+        "status": "failed",
+        "article_count": 0,
+        "reason": "URLError: <urlopen error [Errno -2] Name or service not known>"
+      }
     },
     "financial_research": {
       "journal": "金融研究",
       "source_kind": "catalog",
       "url": "https://m.ncpssd.cn/journal/details?gch=97926X&langType=1&nav=1",
-      "checked_at": "2026-11-15T01:53:14.571249+00:00",
+      "checked_at": "2026-11-15T05:56:39.711998+00:00",
       "status": "catalog_only",
       "issue": "2026-07",
       "issue_date": null,
       "article_count": 0,
       "primary_url": "https://www.jryj.org.cn/CN/1002-7246/current.shtml",
       "primary_failure": "URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'www.jryj.org.cn'",
-      "reason": "publisher_unavailable; issue_visible_but_articles_not_verified"
+      "reason": "publisher_unavailable; issue_visible_but_articles_not_verified",
+      "rss": {
+        "url": "https://navi.cnki.net/knavi/rss/JRYJ",
+        "status": "failed",
+        "article_count": 0,
+        "reason": "URLError: <urlopen error [Errno -2] Name or service not known>"
+      }
+    },
+    "international_trade": {
+      "journal": "国际贸易问题",
+      "source_kind": "catalog",
+      "url": "https://ncpssd.org/journal/details?gch=96001X",
+      "checked_at": "2026-11-15T05:56:39.711998+00:00",
+      "status": "catalog_only",
+      "issue": "2026-09",
+      "issue_date": null,
+      "article_count": 0,
+      "reason": "issue_visible_but_articles_not_verified",
+      "rss": {
+        "url": "https://navi.cnki.net/knavi/rss/GJMW",
+        "status": "failed",
+        "article_count": 0,
+        "reason": "URLError: <urlopen error [Errno -2] Name or service not known>"
+      }
+    },
+    "world_economy_studies": {
+      "journal": "世界经济研究",
+      "source_kind": "catalog",
+      "url": "https://ncpssd.org/journal/details?gch=91453X",
+      "checked_at": "2026-11-15T05:56:39.711998+00:00",
+      "status": "catalog_only",
+      "issue": "2026-10",
+      "issue_date": null,
+      "article_count": 0,
+      "reason": "issue_visible_but_articles_not_verified",
+      "rss": {
+        "url": "https://navi.cnki.net/knavi/rss/JING",
+        "status": "failed",
+        "article_count": 0,
+        "reason": "URLError: <urlopen error [Errno -2] Name or service not known>"
+      }
     }
   },
-  "chinese_new_candidates": []
+  "chinese_new_candidates": [
+    {
+      "id": "journal:finance_economics:a5cab5ef7cbf57a0",
+      "title": "政府财会监督的网络溢出效应研究",
+      "journal": "财经研究",
+      "url": "https://qks.sufe.edu.cn/J/j00001/Article/Details/umQ7ZTUS-1QWj-vRMw-kHlZ-UG8wL0n7HA8V",
+      "source": "chinese_journal_toc",
+      "source_kind": "publisher",
+      "issue": "2026-09",
+      "issue_date": null,
+      "published_at": null,
+      "toc_online_at": null,
+      "doi": null,
+      "first_observed_at": "2026-11-15",
+      "event_type": "first_seen_in_toc",
+      "date_verified": false,
+      "note": "TOC online date may differ from article detail publication date; verify both."
+    },
+    {
+      "id": "journal:finance_economics:f1325cf235b84beb",
+      "title": "注册制改革与企业环境信息披露*",
+      "journal": "财经研究",
+      "url": "https://qks.sufe.edu.cn/J/j00001/Article/Details/oVjTo2MI-2ftV-doEn-noMA-FC6mIu6ZCKgb",
+      "source": "chinese_journal_toc",
+      "source_kind": "publisher",
+      "issue": "2026-09",
+      "issue_date": null,
+      "published_at": null,
+      "toc_online_at": null,
+      "doi": null,
+      "first_observed_at": "2026-11-15",
+      "event_type": "first_seen_in_toc",
+      "date_verified": false,
+      "note": "TOC online date may differ from article detail publication date; verify both."
+    },
+    {
+      "id": "journal:finance_economics:b0d65149e5bda42d",
+      "title": "基于金融风险防范视角的股份回购适用性研究",
+      "journal": "财经研究",
+      "url": "https://qks.sufe.edu.cn/J/j00001/Article/Details/uHIZ4sxM-ZVzV-8Py6-MJO4-GaMuOxfluJie",
+      "source": "chinese_journal_toc",
+      "source_kind": "publisher",
+      "issue": "2026-09",
+      "issue_date": null,
+      "published_at": null,
+      "toc_online_at": null,
+      "doi": null,
+      "first_observed_at": "2026-11-15",
+      "event_type": "first_seen_in_toc",
+      "date_verified": false,
+      "note": "TOC online date may differ from article detail publication date; verify both."
+    },
+    {
+      "id": "journal:finance_economics:4066c651825588fa",
+      "title": "产业用地弹性出让如何助推企业进入？",
+      "journal": "财经研究",
+      "url": "https://qks.sufe.edu.cn/J/j00001/Article/Details/xjGyehBl-jEZv-5KIx-iwzJ-d299MOhhnJGg",
+      "source": "chinese_journal_toc",
+      "source_kind": "publisher",
+      "issue": "2026-09",
+      "issue_date": null,
+      "published_at": null,
+      "toc_online_at": null,
+      "doi": null,
+      "first_observed_at": "2026-11-15",
+      "event_type": "first_seen_in_toc",
+      "date_verified": false,
+      "note": "TOC online date may differ from article detail publication date; verify both."
+    },
+    {
+      "id": "journal:finance_economics:9544f2afececf596",
+      "title": "同乡网络如何促进资本跨地区流动？",
+      "journal": "财经研究",
+      "url": "https://qks.sufe.edu.cn/J/j00001/Article/Details/f7Vogacg-uXyV-9mmG-Ecol-8La22qsCQvvt",
+      "source": "chinese_journal_toc",
+      "source_kind": "publisher",
+      "issue": "2026-09",
+      "issue_date": null,
+      "published_at": null,
+      "toc_online_at": null,
+      "doi": null,
+      "first_observed_at": "2026-11-15",
+      "event_type": "first_seen_in_toc",
+      "date_verified": false,
+      "note": "TOC online date may differ from article detail publication date; verify both."
+    },
+    {
+      "id": "journal:finance_economics:a52913138869f52b",
+      "title": "中国基础设施援助的女性赋权效应",
+      "journal": "财经研究",
+      "url": "https://qks.sufe.edu.cn/J/j00001/Article/Details/qwCf6nsu-h6ZW-G68A-XPx3-bWgK0OBcql88",
+      "source": "chinese_journal_toc",
+      "source_kind": "publisher",
+      "issue": "2026-09",
+      "issue_date": null,
+      "published_at": null,
+      "toc_online_at": null,
+      "doi": null,
+      "first_observed_at": "2026-11-15",
+      "event_type": "first_seen_in_toc",
+      "date_verified": false,
+      "note": "TOC online date may differ from article detail publication date; verify both."
+    },
+    {
+      "id": "journal:finance_economics:816f158f92084883",
+      "title": "“东数西算”工程如何赋能数据要素——基于要素化、市场化和服务化的分析框架",
+      "journal": "财经研究",
+      "url": "https://qks.sufe.edu.cn/J/j00001/Article/Details/A0vM3daegN-oHdT-Onlc-LKQU-f0bPO5rwTyPZ",
+      "source": "chinese_journal_toc",
+      "source_kind": "publisher",
+      "issue": "2026-09",
+      "issue_date": null,
+      "published_at": null,
+      "toc_online_at": null,
+      "doi": null,
+      "first_observed_at": "2026-11-15",
+      "event_type": "first_seen_in_toc",
+      "date_verified": false,
+      "note": "TOC online date may differ from article detail publication date; verify both."
+    },
+    {
+      "id": "journal:finance_economics:8311b8816faab2a7",
+      "title": "人机协作是否必然提升劳动收入：来自网络招聘数据的证据",
+      "journal": "财经研究",
+      "url": "https://qks.sufe.edu.cn/J/j00001/Article/Details/A0h4wXofVy-QDNe-xX7U-oSQH-HB5TFNB9hNoj",
+      "source": "chinese_journal_toc",
+      "source_kind": "publisher",
+      "issue": "2026-09",
+      "issue_date": null,
+      "published_at": null,
+      "toc_online_at": null,
+      "doi": null,
+      "first_observed_at": "2026-11-15",
+      "event_type": "first_seen_in_toc",
+      "date_verified": false,
+      "note": "TOC online date may differ from article detail publication date; verify both."
+    },
+    {
+      "id": "journal:finance_economics:a8fcf09884fdf60c",
+      "title": "耐心资本支持与企业绿色创新质量",
+      "journal": "财经研究",
+      "url": "https://qks.sufe.edu.cn/J/j00001/Article/Details/A0D4FFPwQu-dBL4-uLdN-7nqu-nnsVUTr60cyJ",
+      "source": "chinese_journal_toc",
+      "source_kind": "publisher",
+      "issue": "2026-09",
+      "issue_date": null,
+      "published_at": null,
+      "toc_online_at": null,
+      "doi": null,
+      "first_observed_at": "2026-11-15",
+      "event_type": "first_seen_in_toc",
+      "date_verified": false,
+      "note": "TOC online date may differ from article detail publication date; verify both."
+    },
+    {
+      "id": "journal:finance_economics:bd15c4ae5afefcf4",
+      "title": "碳市场建设在债券市场的溢出效应：债券信用利差的视角",
+      "journal": "财经研究",
+      "url": "https://qks.sufe.edu.cn/J/j00001/Article/Details/WOfaSla9-EtjG-Zklj-jTQ8-OLl8Nq4HBzok",
+      "source": "chinese_journal_toc",
+      "source_kind": "publisher",
+      "issue": "2026-09",
+      "issue_date": null,
+      "published_at": null,
+      "toc_online_at": null,
+      "doi": null,
+      "first_observed_at": "2026-11-15",
+      "event_type": "first_seen_in_toc",
+      "date_verified": false,
+      "note": "TOC online date may differ from article detail publication date; verify both."
+    },
+    {
+      "id": "journal:finance_economics:9ca44be0727515ce",
+      "title": "全球跨境数字并购：距离还重要吗？",
+      "journal": "财经研究",
+      "url": "https://qks.sufe.edu.cn/J/j00001/Article/Details/A0AZxQrWw7-WORg-HMHg-xVkf-fjiOyPzzBoLC",
+      "source": "chinese_journal_toc",
+      "source_kind": "publisher",
+      "issue": "2026-09",
+      "issue_date": null,
+      "published_at": null,
+      "toc_online_at": null,
+      "doi": null,
+      "first_observed_at": "2026-11-15",
+      "event_type": "first_seen_in_toc",
+      "date_verified": false,
+      "note": "TOC online date may differ from article detail publication date; verify both."
+    }
+  ]
 }

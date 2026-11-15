@@ -167,13 +167,16 @@ def parse_toc(payload: bytes, *, journal: str, kind: str, url: str) -> tuple[str
         if match_path:
             row_issue = f"{match_path[1]}-{int(match_path[2]):02d}"
         else:
-            local = ISSUE_RE.search(section.replace("\\n", " "))
+            local = ISSUE_RE.search(section.replace("\n", " "))
             if local:
                 row_issue = f"{local[1]}-{int(local[2]):02d}"
             elif journal == "数量经济技术经济研究":
                 local = QUANT_ISSUE_RE.search(section)
                 if local:
                     row_issue = f"{local[1]}-{int(local[2]):02d}"
+        if row_issue is None and (".cbpt.cnki.net" in host or "/Article/Latest" in url):
+            published = None
+            doi_match = None
         # Never inherit the maximum issue of a mixed homepage or latest-articles list.
         if row_issue is None and re.search(r"/Article/(20\d{2})/(\d{1,2})/CN", url, re.I):
             local = re.search(r"/Article/(20\d{2})/(\d{1,2})/CN", url, re.I)

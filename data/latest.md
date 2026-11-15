@@ -1,4 +1,4 @@
-# Academic Research Radar — 2026-11-15T01:31:41.422816+00:00
+# Academic Research Radar — 2026-11-15T01:53:14.571249+00:00
 
 **Status:** degraded; **New or changed candidates:** 0
 

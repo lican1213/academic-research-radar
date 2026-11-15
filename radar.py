@@ -420,7 +420,8 @@ def markdown_report(report: dict) -> str:
             result.append(
                 f"- [{journal['journal']}]({journal['url']}): {journal['status']}; "
                 f"来源={journal['source_kind']}; 期次={journal.get('issue') or '未核验'}; "
-                f"可解析目录文章={journal['article_count']}; {journal.get('reason', '')}; "
+                f"可解析记录={journal['article_count']}; 直接文章链接={journal.get('article_link_count', '未核验')}; "
+                f"期次归属有证据={journal.get('issue_metadata_count', '未核验')}; 覆盖类型={journal.get('coverage_kind', '未核验')}; {journal.get('reason', '')}; "
                 f"RSS={journal.get('rss', {}).get('status', 'not_run')}, "
                 f"RSS文章={journal.get('rss', {}).get('article_count', 0)}, "
                 f"RSS最新事件={journal.get('rss', {}).get('latest_event') or '未核验'}"
@@ -429,11 +430,12 @@ def markdown_report(report: dict) -> str:
         for item in report.get("chinese_new_candidates", []):
             result.append(f"- [{item['title']}]({item['url']}) — {item['journal']} "
                           f"{item['issue']}; 首次观察 {item['first_observed_at']}; "
+                          f"事件={item.get('event_type', '未知')}; 链接范围={item.get('url_scope', '未核验')}; "
                           f"目录在线标记 {item.get('toc_online_at') or '无'}; "
                           f"RSS事件 {item.get('rss_event_at') or '无'}（均非论文发表日期）; "
                           "单篇论文发表日期待核验")
         if not report.get("chinese_new_candidates"):
-            result.append("本次无新目录文章；若存在 catalog_only/unverified/failed，则不能宣称已覆盖全部中文论文。")
+            result.append("本次无新目录文章；若存在 catalog_only/toc_metadata/unverified/failed，则不能宣称已覆盖全部中文论文。")
     result.extend(["", "## New or revised candidates", ""])
     for item in report["new_candidates"]:
         safe_title = item["title"].replace("[", r"\[").replace("]", r"\]")

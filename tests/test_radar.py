@@ -577,5 +577,63 @@ class ChineseRecoveryTests(unittest.TestCase):
                 self.assertEqual(again["new_candidates"],[])
 
 
+
+class IssueFirstTests(unittest.TestCase):
+    def test_public_catalog_title_author_pages_no_guessed_url(self):
+        url = "https://ncpssd.org/journal/details.aspx?gch=95645X"
+        page = ("<h1>经济研究</h1><h2>2026年 第9期</h2>"
+                "<div><span>数据要素冲击、信息摩擦与供应链关系建立</span>"
+                "<span>施炳展[1,2];李启正[3];熊治[4]</span><span>(143-164)</span></div>"
+                "<div><span>机器人应用与制造业企业生产链延伸——基于稳链强链视角的考察</span>"
+                "<span>吴腊梅[1,2];彭水军[3];张亮[4,5];周上尧[4,5]</span><span>(25-48)</span></div>"
+                "<h2>2026年 第9期 整刊阅读</h2>"
+                "<div>不应混入当期目录的推荐文章</div><div>示例[1]</div><div>(10-20)</div>").encode()
+        issue, _, rows = cj.parse_toc(page, journal="经济研究", kind="catalog", url=url)
+        self.assertEqual(issue, "2026-09")
+        self.assertEqual(len(rows), 2)
+        self.assertEqual(rows[0]["title"], "数据要素冲击、信息摩擦与供应链关系建立")
+        self.assertEqual(rows[0]["pages"], "143-164")
+        self.assertEqual(rows[0]["url_scope"], "issue_catalog")
+        self.assertEqual(rows[0]["url"], url)
+        self.assertIsNone(rows[0]["doi"])
+
+    def test_current_issue_excludes_previous_issue_and_hot_links(self):
+        url = "https://gjmw.cbpt.cnki.net/portal/journal/portal/client/paper_list/type_benqi"
+        page = ("<h1>国际贸易问题</h1><h2>2026年 10期</h2>"
+                "<a href='/portal/journal/portal/client/paper/7f6078a0cec828f7581a0bc4ff569adf'>专利出海、创新激励与内外贸一体化</a>"
+                "<p>刘博聪;李磊;李川川;</p><p>2026 年 10 期 No.526 ;</p>"
+                "<a href='/portal/journal/portal/client/paper/12345678901234567890123456789012'>历史热门论文不能混入最新期</a>"
+                "<p>2025年 8期 No.512</p>"
+                "<a href='/portal/journal/portal/client/paper/abcdefabcdefabcdefabcdefabcdefab'>无期次证据的推荐文章不能纳入</a>").encode()
+        issue, _, rows = cj.parse_toc(page, journal="国际贸易问题", kind="publisher", url=url)
+        self.assertEqual(issue, "2026-10")
+        self.assertEqual([x["title"] for x in rows], ["专利出海、创新激励与内外贸一体化"])
+        self.assertEqual(rows[0]["issue"], "2026-10")
+
+    def test_chinese_index_keys_not_empty_or_collapsed(self):
+        self.assertEqual(cj.title_key("专利出海、创新激励与内外贸一体化"), "专利出海创新激励与内外贸一体化")
+        self.assertNotEqual(cj.title_key("专利出海"), cj.title_key("耐心资本"))
+
+    def test_catalog_metadata_status_does_not_claim_paper_links(self):
+        url = "https://ncpssd.org/journal/details.aspx?gch=95645X"
+        page = ("<h1>经济研究</h1><h2>2026年 第9期</h2>"
+                "<p>数据要素冲击、信息摩擦与供应链关系建立</p>"
+                "<p>施炳展[1,2];李启正[3];熊治[4]</p><p>(143-164)</p>").encode()
+        with tempfile.TemporaryDirectory() as tmp:
+            folder = Path(tmp)
+            (folder/"chinese_seen.json").write_text(json.dumps({"economic_research":{"issue":"2026-09","articles":[""],"baselined":True}}))
+            with patch.object(cj, "JOURNALS", (("economic_research","经济研究","catalog",url),)):
+                first = cj.scan_chinese_journals(folder, UTC_NOW, get=lambda _:page)
+                j = first["source_status"]["journals"]["economic_research"]
+                self.assertEqual(j["status"], "toc_metadata")
+                self.assertEqual(j["article_link_count"], 0)
+                self.assertEqual(j["issue_metadata_count"], 1)
+                self.assertEqual(first["source_status"]["status"], "degraded")
+                self.assertEqual(first["new_candidates"][0]["event_type"], "issue_backfill")
+                self.assertIsNone(first["new_candidates"][0]["published_at"])
+                self.assertEqual(cj.scan_chinese_journals(folder, UTC_NOW,get=lambda _:page)["new_candidates"],[])
+                self.assertNotIn("",json.loads((folder/"chinese_seen.json").read_text())["economic_research"]["articles"])
+
+
 if __name__ == "__main__":
     unittest.main()

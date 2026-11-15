@@ -120,3 +120,11 @@
 - 新增独立监控方向 P1A，与 P1 同级、P0 保持优先。研究范围：供应链伙伴所在地与海外经营节点区位匹配、销售服务与制造子公司职能、供需关系中断/持续/新建、控制权与当地经营经验、客户/供应商差异、FactSet Revere 测度及关系层面识别。
 - Crossref 新增三条中英文定向查询；词法门要求供应链关系与海外布局/邻近性两轴，P1A 独立候选上限6，总上限30不变；同篇优先归入 P0，其次专门 P1A，不重复推送。中文期刊和 NBER/CEPR/RePEc 仍由日报独立补检。关注《国际贸易问题》《世界经济研究》及 customer-following FDI、buyer-supplier relationship survival、foreign affiliate location 等术语。
 - 测试新增正反例与去重回归；CI 和真实扫描结果待核验，不预先标为通过。未上传未发表稿件或实证结果。
+
+### 2026-11-15 / P1A 对抗式验收
+
+- 初版真实扫描：`generated_at=2026-11-15T01:25:44.648101+00:00`，Crossref 13/13、388条，arXiv 4/4、9条，P1A实际捕获 DOI `10.2139/ssrn.7698161`（元数据登记候选，非已验证新论文）。中文目录1/7文章级，整体 `degraded`。
+- 初版反例：customer-following FDI、foreign subsidiaries 等常见表述可能漏检；纯国内物流仓储地理邻近可能误报。PR #2 增加第四条定向检索式、词形及关系结局词，收紧邻近布局门，保留P0优先、P1A上限6和总上限30。README同步。
+- [CI #43663467829](https://github.com/lican1213/academic-research-radar/actions/runs/43663467829) 原始日志：Python编译成功，40项测试均通过（含6项P1A专项）；覆盖真实类型题名、词形召回、负例、优先级、候选上限、模拟跨自然日去重及延期交付。PR [#2](https://github.com/lican1213/academic-research-radar/pull/2) 已 squash 合并至 main (`e36d7de36c3143d02da7c3c00e84ed794b5a1b9c`)，回读确认代码和测试存在。
+- 原每日09:30任务已增加P1A；原时间窗、学术质量阈值、只读约束不变。未上传未发表论文或数据。
+- Gate：编译、全量CI、初版实网输出、主分支合并、调度配置均通过；合并后14条查询的真实新扫描回读及连续自然日生产观察单独核验，不以模拟跨日代替生产观察。中文目录缺口按原规则独立人工补检。

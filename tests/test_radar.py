@@ -59,6 +59,19 @@ class ParsingTests(unittest.TestCase):
 
 
 class DedupTests(unittest.TestCase):
+    def test_collaborative_internationalization_track(self):
+        for title in ('Buyer-supplier relationship termination and foreign subsidiary colocation', '产业链协同出海与供应链关系稳定'):
+            item = prefilter({**example_crossref(), 'title': title, 'abstract': ''})
+            self.assertEqual(item['project'], 'P1A')
+            self.assertTrue(item['eligible'])
+            new, state = select_new([item], {}, UTC_NOW)
+            self.assertEqual(len(new), 1)
+            self.assertEqual(select_new([item], state, UTC_NOW)[0], [])
+
+    def test_local_proximity_without_supply_relationship_excluded(self):
+        item = prefilter({'title': 'Geographic proximity and urban housing', 'abstract': ''})
+        self.assertFalse(item['eligible'])
+
     def test_generic_fdi_paper_is_not_project_relevant(self):
         item = prefilter({"id": "doi:10.1/test", "title": "Foreign Direct Investment and Growth in Kenya",
                           "abstract": "Economic growth.", "project": "P1"})

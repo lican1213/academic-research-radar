@@ -29,6 +29,9 @@ QUERIES = [
     "耐心资本 创新",
     "国际专利 布局",
     "跨境供应链 韧性",
+    "supplier customer relationship foreign subsidiary colocation",
+    "buyer supplier relationship termination foreign affiliate",
+    "产业链 协同出海 供应链关系",
 ]
 
 ARXIV_QUERIES = [
@@ -54,6 +57,14 @@ PROJECT_TERMS = {
         "地缘政治": 23, "跨境布局": 24, "海外子公司": 25,
         "供应链韧性": 28, "对外直接投资": 23,
     },
+    "P1A": {
+        "buyer-supplier": 20, "buyer supplier": 20, "supplier-customer": 20,
+        "supply chain relationship": 25, "relationship termination": 24,
+        "foreign subsidiary": 22, "foreign affiliate": 20, "colocation": 24,
+        "co-location": 24, "geographic proximity": 22, "sales subsidiary": 25,
+        "协同出海": 30, "抱团出海": 25, "邻近布局": 25, "供需关系": 23,
+        "供应链关系": 25, "境外子公司": 22, "海外销售": 24,
+    },
     "P2": {
         "patent embedding": 27, "patent text": 23,
         "prior art retrieval": 24, "patent similarity": 25,
@@ -76,7 +87,7 @@ PROJECT_TERMS = {
 ATOM = "{http://www.w3.org/2005/Atom}"
 KEEP_DAYS = 180
 MAX_CANDIDATES = 30
-PROJECT_CAPS = {"P0": 12, "P1": 7, "P2": 7, "P3": 3, "P4": 3}
+PROJECT_CAPS = {"P0": 12, "P1": 7, "P1A": 6, "P2": 7, "P3": 3, "P4": 3}
 
 
 class _TextExtractor(HTMLParser):
@@ -218,6 +229,8 @@ def prefilter(item: dict) -> dict:
               or (long_capital and innovation),
         "P1": (shock and (fdi or supply)) or (ai and (fdi or supply))
               or (supply and any_term("resilience", "韧性") and crossborder),
+        "P1A": (supply or any_term("buyer-supplier", "buyer supplier", "supplier-customer", "customer-supplier", "供需关系", "上下游"))
+               and any_term("foreign subsidiary", "foreign subsidiaries", "foreign affiliate", "overseas subsidiar", "foreign direct investment", "colocation", "co-location", "geographic proximity", "协同出海", "抱团出海", "邻近布局", "境外子公司", "海外子公司", "海外布局"),
         "P2": (patent and any_term("embedding", "semantic", "text", "similarity", "prior art", "claim", "retrieval", "citation", "突破", "颠覆", "文本", "相似度"))
               or any_term("突破式创新", "breakthrough innovation", "disruptive innovation"),
         "P3": investor and innovation,
@@ -229,7 +242,7 @@ def prefilter(item: dict) -> dict:
         value += sum(weight // 3 for term, weight in terms.items() if term not in title and term in abstract)
         scored[project] = value
     eligible = [project for project in PROJECT_TERMS if eligibility[project]]
-    best = eligible[0] if eligible else max(scored, key=lambda p: scored[p])
+    best = "P1A" if "P1A" in eligible and "P0" not in eligible else eligible[0] if eligible else max(scored, key=lambda p: scored[p])
     item = dict(item)
     item["project"] = best
     item["eligible"] = bool(eligible)

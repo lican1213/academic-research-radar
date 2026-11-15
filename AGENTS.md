@@ -23,9 +23,10 @@ This repository gathers **public bibliographic metadata**. It does not make scho
 
 ## Chinese journal integrity gate
 
-- Always monitor the seven named journals and preserve each journal's source URL, source_kind, issue, article_count and status in `data/latest.json`.
-- Publisher `ok`, authoritative catalog `catalog_only`, `stale_index`, `unverified` and `failed` MUST remain distinct. Do not infer 'no new articles' from `catalog_only`.
+- Always monitor the nine named journals and preserve each journal's source URL, source_kind, issue, article_count and status in `data/latest.json`.
+- Publisher `ok`, authoritative catalog `catalog_only`, `rss_only`, `stale_index`, `unverified` and `failed` MUST remain distinct. Do not infer 'no new articles' from `catalog_only`.
 - `first_observed_at` is a website discovery event, NEVER an article publication date; leave `published_at=null` until individually verified.
+- RSS must validate journal identity and article links; RSS event date is never a verified first publication date. `rss_only` is not complete TOC coverage; separately record failure for either channel. Do not bypass login, CAPTCHA or TLS verification.
 - A page with only a journal name/issue must NOT be parsed as article-level coverage. A page with an unrelated external link must NOT generate a paper candidate.
 - Preserve last known good catalog state when a source times out or regresses. Initial scan seeds baseline rather than re-notifying all historical papers.
 - `data/chinese_seen.json` and `data/latest.json` must be committed together by the scan Action; editorial/HTML indexing gaps must be listed for daily independent research.

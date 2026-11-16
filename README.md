@@ -80,3 +80,8 @@ python3 radar.py --out data --lookback-days 7
 - 工作流：`.github/workflows/scan.yml`；测试：`.github/workflows/ci.yml`
 - 核心逻辑：`radar.py`、`chinese_journals.py`；对抗式测试：`tests/test_radar.py`
 - 不存储受版权保护的论文全文、个人研究原始数据或私有稿件。
+
+### 2026-11-16 三阶段数据契约
+- `mixed_links` 表示存在不能绑定到所报期次的链接，必须独立补查。逐刊 `article_snapshot` 保存本轮解析题录、期次证据和链接，`link_verified=false` 不表示已访问详情页。历史或无期次记录只供审计，不进入正常增量队列；专用当期页近期在线标记仍可作待核线索。
+- `last_issue_observed_at` 与文章级 `last_success_at` 分开。标题/DOI/规范化详情链接为身份别名，目录共用 URL 不作文章键。保留旧账本避免重发。
+- 每日任务须核对具体文章标题、作者、出版日期和 DOI，并对缺口独立补检。预筛通过数不是新增交付数；索引补漏不是今日发表。

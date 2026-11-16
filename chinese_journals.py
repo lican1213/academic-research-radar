@@ -137,6 +137,21 @@ def title_key(title: str) -> str:
     return re.sub(r"[^\w]", "", title).casefold()
 
 
+def article_keys(article: dict) -> set[str]:
+    """Persist aliases when a known item gains a DOI or stable detail URL."""
+    keys = {title_key(article["title"])}
+    if article.get("doi"):
+        keys.add("doi:" + article["doi"].casefold())
+    if article.get("url_scope") != "issue_catalog" and article.get("url"):
+        p = urllib.parse.urlsplit(article["url"])
+        if p.hostname and p.hostname.endswith("sufe.edu.cn") and "/Article/Details/" in p.path:
+            path = re.sub(r"/CN/?$", "", p.path, flags=re.I).rstrip("/")
+            keys.add("url:" + p.hostname + path)
+        elif p.hostname and (article.get("url_scope") == "article_detail" or ".cbpt.cnki.net" in p.hostname):
+            keys.add("url:" + p.hostname + p.path.rstrip("/") + ("?" + p.query if p.query else ""))
+    return keys - {""}
+
+
 def catalog_issue_rows(parser: TocHTML, *, journal: str, url: str) -> tuple[str | None, list[dict]]:
     """NCPSSD public issue text: title, affiliation-tagged authors, pages.
     No guessed article URLs: the actual issue-level source is retained.
@@ -268,6 +283,13 @@ def parse_toc(payload: bytes, *, journal: str, kind: str, url: str) -> tuple[str
         if row_issue is None and re.search(r"/Article/(20\d{2})/(\d{1,2})/CN", url, re.I):
             local = re.search(r"/Article/(20\d{2})/(\d{1,2})/CN", url, re.I)
             row_issue = f"{local[1]}-{int(local[2]):02d}"
+        if journal == "数量经济技术经济研究" and kind == "publisher":
+            # The publisher uses YYYYMMNN file identifiers. Require both
+            # explicit row issue and identifier agreement; reject hot/history links.
+            number = (urllib.parse.parse_qs(urllib.parse.urlparse(absolute).query).get("file_no") or [""])[0]
+            m = re.fullmatch(r"(20\d{2})(0[1-9]|1[0-2])\d{2}", number)
+            if not m or row_issue != issue or row_issue != f"{m[1]}-{m[2]}":
+                continue
         if cbpt_issue:
             # Match the explicit per-paper current issue. Historical/top-read links must not pass.
             row = ISSUE_ROW.search(section)
@@ -428,9 +450,13 @@ def scan_chinese_journals(out: Path, now: datetime, get=fetch_html, rss_get=None
         info = {"journal": journal, "source_kind": kind, "url": url, "checked_at": now.isoformat(),
                 "status": "not_run", "issue": None, "issue_date": None, "article_count": 0}
         previous = seen.get(slug, {})
+        info["article_snapshot"] = []
         try:
             try:
                 payload = get(url)
+                # A reachable homepage can still contain no usable current rows.
+                if slug == "quant_economics" and not parse_toc(payload, journal=journal, kind=kind, url=url)[2]:
+                    raise ValueError("no_verified_current_issue_rows")
             except (OSError, ValueError) as primary_error:
                 if slug not in FALLBACKS:
                     raise
@@ -448,27 +474,42 @@ def scan_chinese_journals(out: Path, now: datetime, get=fetch_html, rss_get=None
             else:
                 metadata_count = sum(a.get("url_scope") == "issue_catalog" for a in articles)
                 issue_matches = sum(a.get("issue") == issue for a in articles)
+                info["article_snapshot"] = [
+                    {**a, "published_at": None, "date_verified": False,
+                     "link_verified": False,
+                     "role": "current_issue" if a.get("issue") == issue else "historical_or_unbound"}
+                    for a in articles]
                 info.update(issue=issue, issue_date=issue_date, article_count=len(articles),
                             article_link_count=len(articles)-metadata_count, issue_metadata_count=issue_matches,
                             coverage_kind="issue_metadata" if metadata_count else "issue_bound_links" if articles and issue_matches == len(articles) else "mixed_or_unbound_links" if articles else "issue_only",
-                            status="toc_metadata" if metadata_count else "ok" if articles else "catalog_only")
+                            status="toc_metadata" if metadata_count else "ok" if articles and issue_matches == len(articles) else "mixed_links" if articles else "catalog_only")
                 if not articles:
                     info["reason"] = "issue_visible_but_articles_not_verified"
                 if info.get("primary_failure"):
                     info["reason"] = "publisher_unavailable; " + info.get("reason", "catalog_fallback")
+                if info["status"] == "mixed_links":
+                    info["reason"] = "; ".join(filter(None, (info.get("reason"), "mixed_or_unbound_links")))
                 previous_articles = set(previous.get("articles", []))
                 current = set(previous_articles)
                 for article in articles:
                     key = title_key(article["title"])
-                    doi_key = "doi:" + article["doi"].casefold() if article.get("doi") else None
-                    if key in current or (doi_key and doi_key in current):
-                        continue
-                    current.add(key)
-                    if doi_key:
-                        current.add(doi_key)
                     recent_listing = bool(article.get("toc_online_at") and
                                           now.date() - timedelta(days=14) <=
                                           datetime.fromisoformat(article["toc_online_at"]).date() <= now.date())
+                    # Mixed homepage links are retained as audit evidence, not
+                    # consumed in the normal seen ledger or incremental queue.
+                    # A dedicated current-issue page with a recent listing may
+                    # provide a lead even when the row omits a repeated issue.
+                    if article.get("issue") != issue and not (
+                            article.get("issue") is None and recent_listing and "/Article/CurrentIssue/" in url):
+                        continue
+                    keys = article_keys(article)
+                    if not keys:
+                        continue
+                    already_seen = bool(keys & current)
+                    current.update(keys)
+                    if already_seen:
+                        continue
                     if (previous.get("baselined") and (previous_articles or (previous.get("issue") and issue > previous["issue"]) or article.get("url_scope") == "issue_catalog")) or recent_listing:
                         ident = hashlib.sha256((slug + ":" + key).encode()).hexdigest()[:16]
                         new_items.append({
@@ -490,8 +531,12 @@ def scan_chinese_journals(out: Path, now: datetime, get=fetch_html, rss_get=None
                             "date_verified": False,
                             "note": "TOC online date may differ from article detail publication date; verify both.",
                         })
-                updated[slug] = {"issue": issue, "articles": sorted(current), "baselined": True,
-                                 "last_success_at": now.isoformat(), "rss_baselined": previous.get("rss_baselined", False)}
+                updated[slug] = {**previous, "issue": issue, "articles": sorted(current), "baselined": True,
+                                 "last_issue_observed_at": now.isoformat(),
+                                 "rss_baselined": previous.get("rss_baselined", False)}
+                if issue_matches:
+                    updated[slug]["last_success_at"] = now.isoformat()
+                    updated[slug]["last_article_issue"] = issue
                 if articles:
                     full_ok += 1
                     records += len(articles)
@@ -522,7 +567,7 @@ def scan_chinese_journals(out: Path, now: datetime, get=fetch_html, rss_get=None
                             "note": "RSS event date is not verified first publication date."})
                 updated[slug] = {**prior, "articles": sorted(current), "rss_baselined": True}
                 info["rss"].update(status="ok", article_count=len(rss_articles), latest_event=max((x["rss_event_at"] for x in rss_articles if x["rss_event_at"]), default=None))
-                if info["status"] not in ("ok", "toc_metadata"):
+                if info["status"] not in ("ok", "toc_metadata", "mixed_links"):
                     info["toc_status"] = info["status"]
                     info["status"] = "rss_only"
                     full_ok += 1
@@ -548,13 +593,14 @@ def scan_chinese_journals(out: Path, now: datetime, get=fetch_html, rss_get=None
                     prior = updated.get(slug, {})
                     current = set(prior.get("articles", []))
                     key = title_key(article["title"])
-                    doi_key = "doi:" + article["doi"].casefold() if article.get("doi") else None
-                    if key in current or (doi_key and doi_key in current):
+                    keys = article_keys(article)
+                    if not keys:
                         continue
-                    current.add(key)
-                    if doi_key:
-                        current.add(doi_key)
+                    already_seen = bool(keys & current)
+                    current.update(keys)
                     updated[slug] = {**prior, "articles": sorted(current)}
+                    if already_seen:
+                        continue
                     # Old recovered leads are explicitly backfill, not a new publication.
                     event = article.get("index_date")
                     issue = article.get("issue")
@@ -567,8 +613,10 @@ def scan_chinese_journals(out: Path, now: datetime, get=fetch_html, rss_get=None
             except (OSError, ValueError, TypeError) as error:
                 index_status["errors"].append(f"{query}: {type(error).__name__}: {str(error)[:120]}")
         index_status["status"] = "ok" if index_status["queries_ok"] == len(NCPSSD_TOPICS) else "degraded" if index_status["queries_ok"] else "failed"
+    if index_status["status"] not in ("ok", "not_run"):
+        failures.append(f"NCPSSD topic index: {index_status['status']} ({index_status['queries_ok']}/{index_status['queries_total']})")
     source_status = {"status": "ok" if full_ok == len(JOURNALS) and not failures else "degraded" if any(
-        j["status"] in ("ok", "toc_metadata", "rss_only", "catalog_only", "stale_index") for j in journals.values()) else "failed",
+        j["status"] in ("ok", "toc_metadata", "mixed_links", "rss_only", "catalog_only", "stale_index") for j in journals.values()) else "failed",
         "queries_ok": full_ok, "queries_total": len(JOURNALS),
         "records": records, "errors": failures, "journals": journals, "ncpssd_topic_index": index_status}
     out.mkdir(parents=True, exist_ok=True)

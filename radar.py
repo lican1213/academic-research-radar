@@ -408,11 +408,17 @@ def fetch_arxiv(since: str, get=get_url) -> tuple[list[dict], dict]:
 
 def markdown_report(report: dict) -> str:
     result = ["# Academic Research Radar — " + report["generated_at"], "",
-              f"**Status:** {report['status']}; **New or changed candidates:** {len(report['new_candidates'])}", "",
+              f"**Status:** {report['status']}; **New or changed candidates:** {len(report['new_candidates'])}; "
+              f"**Metadata prefilter passes:** {report.get('prefilter_pass_count', 'unknown')}", "",
               "This is metadata triage, not a verified reading or recommendation.", ""]
     for name, status in report["source_status"].items():
         result.append(f"- {name}: {status['status']}; {status['queries_ok']}/{status['queries_total']} queries; {status['records']} records")
         for error in status["errors"]:
+            result.append(f"  - Error: {error}")
+    index = report["source_status"].get("chinese_journals", {}).get("ncpssd_topic_index")
+    if index:
+        result.append(f"- NCPSSD topic index: {index['status']}; {index['queries_ok']}/{index['queries_total']} queries; {index['records']} records")
+        for error in index["errors"]:
             result.append(f"  - Error: {error}")
     if "chinese_journals" in report:
         result.extend(["", "## 中文重点期刊逐刊监测（公开目录和RSS，非文章审读）", ""])
@@ -435,13 +441,14 @@ def markdown_report(report: dict) -> str:
                           f"RSS事件 {item.get('rss_event_at') or '无'}（均非论文发表日期）; "
                           "单篇论文发表日期待核验")
         if not report.get("chinese_new_candidates"):
-            result.append("本次无新目录文章；若存在 catalog_only/toc_metadata/unverified/failed，则不能宣称已覆盖全部中文论文。")
+            result.append("本次无新增中文候选；不等于无新论文。目录、混合期次、索引倒退或网络失败均需独立补查。")
     result.extend(["", "## New or revised candidates", ""])
     for item in report["new_candidates"]:
         safe_title = item["title"].replace("[", r"\[").replace("]", r"\]")
         result.append(f"- [{safe_title}]({item['url']}) — {item['project']}, prefilter {item['prefilter_score']}, {item['event_type']} {item['event_at']}, {item['change']}")
     if not report["new_candidates"]:
-        result.append("None passed the metadata prefilter. This does not imply no relevant papers exist.")
+        result.append("No new or changed candidates selected for delivery. "
+                      "This does not imply zero prefilter passes or no relevant papers.")
     result.append("")
     return "\n".join(result)
 

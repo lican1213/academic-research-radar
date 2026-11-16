@@ -635,5 +635,63 @@ class IssueFirstTests(unittest.TestCase):
                 self.assertNotIn("",json.loads((folder/"chinese_seen.json").read_text())["economic_research"]["articles"])
 
 
+
+class ProductionGateTests(unittest.TestCase):
+    def test_quant_live_history_never_enters_increment(self):
+        url = "https://www.jqte.net/sljjjsjjyj/ch/index.aspx"
+        page = ("<h1>数量经济技术经济研究</h1><p>2026,(10):1-20</p>"
+                "<a href='/sljjjsjjyj/ch/reader/view_abstract.aspx?file_no=20261007&flag=1'>外部供应风险、技术结构与自主创新能力提升</a>"
+                "<p>2026,(10):166-191</p>"
+                "<a href='/sljjjsjjyj/ch/reader/view_abstract.aspx?file_no=20220909&flag=1'>交错双重差分：处理效应异质性与估计方法选择</a>"
+                "<p>2026,(10):20-30</p>"
+                "<a href='/sljjjsjjyj/ch/reader/view_abstract.aspx?file_no=20130301&flag=1'>企业出口对其工资影响的再分析</a>").encode()
+        with tempfile.TemporaryDirectory() as tmp:
+            folder = Path(tmp)
+            (folder/"chinese_seen.json").write_text(json.dumps({"quant_economics":{"issue":"2026-09","articles":["旧标题"],"baselined":True}}))
+            with patch.object(cj, "JOURNALS", (("quant_economics","数量经济技术经济研究","publisher",url),)):
+                result = cj.scan_chinese_journals(folder, UTC_NOW, get=lambda _:page)
+                self.assertEqual([x["title"] for x in result["new_candidates"]], ["外部供应风险、技术结构与自主创新能力提升"])
+                snap = result["source_status"]["journals"]["quant_economics"]["article_snapshot"]
+                self.assertEqual(len(snap), 1)
+                self.assertFalse(snap[0]["link_verified"])
+                self.assertEqual(cj.scan_chinese_journals(folder, UTC_NOW, get=lambda _:page)["new_candidates"], [])
+
+    def test_mixed_rows_not_consumed_and_recover_when_bound(self):
+        url = "https://qks.sufe.edu.cn/J/CJYJ/Article/Latest"
+        a = "/J/CJYJ/Article/Details/abcdefghijklm/CN"
+        b = "/J/CJYJ/Article/Details/abcdefghijkln/CN"
+        title = "供应链信息隐藏如何影响企业创新"
+        with tempfile.TemporaryDirectory() as tmp:
+            folder = Path(tmp)
+            (folder/"chinese_seen.json").write_text(json.dumps({"finance_economics":{"issue":"2026-09","articles":["旧标题"],"baselined":True}}))
+            mixed = (f"<h1>财经研究</h1><p>2026年第9期</p><a href='{a}'>政府赋能企业出海与知识产权保护研究</a><p>2026年第9期</p><a href='{b}'>{title}</a>").encode()
+            with patch.object(cj, "JOURNALS", (("finance_economics","财经研究","publisher",url),)):
+                result = cj.scan_chinese_journals(folder, UTC_NOW, get=lambda _:mixed)
+                j = result["source_status"]["journals"]["finance_economics"]
+                self.assertEqual(j["status"], "mixed_links")
+                self.assertEqual(len(j["article_snapshot"]), 2)
+                self.assertNotIn(cj.title_key(title),json.loads((folder/"chinese_seen.json").read_text())["finance_economics"]["articles"])
+                recovery = mixed + "<p>2026年第9期</p>".encode()
+                result = cj.scan_chinese_journals(folder, UTC_NOW, get=lambda _:recovery)
+                self.assertEqual([x["title"] for x in result["new_candidates"]], [title])
+
+    def test_catalog_only_does_not_refresh_article_success(self):
+        url = "https://ncpssd.org/example"
+        with tempfile.TemporaryDirectory() as tmp:
+            folder = Path(tmp)
+            (folder/"chinese_seen.json").write_text(json.dumps({"financial_research":{"issue":"2026-07","articles":[],"last_success_at":"2026-11-01","baselined":True}}))
+            with patch.object(cj, "JOURNALS", (("financial_research","金融研究","catalog",url),)):
+                cj.scan_chinese_journals(folder, UTC_NOW, get=lambda _:"<h1>金融研究</h1><p>2026年第7期</p>".encode())
+            state = json.loads((folder/"chinese_seen.json").read_text())["financial_research"]
+            self.assertEqual(state["last_success_at"],"2026-11-01")
+            self.assertIn("last_issue_observed_at", state)
+
+    def test_stable_detail_url_bridges_title_variants(self):
+        a = {"title":"同乡网络如何促进资本跨地区流动","url":"https://qks.sufe.edu.cn/J/CJYJ/Article/Details/abcdefghijklm/CN","url_scope":"article_detail"}
+        b = dict(a,title="同乡网络如何促进资本跨地区流动——基于异地新设企业的经验证据",url=a["url"].removesuffix("/CN"))
+        self.assertTrue(cj.article_keys(a) & cj.article_keys(b))
+        catalog = dict(a,url_scope="issue_catalog")
+        self.assertFalse(any(x.startswith("url:") for x in cj.article_keys(catalog)))
+
 if __name__ == "__main__":
     unittest.main()

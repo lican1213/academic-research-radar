@@ -1,10 +1,10 @@
-# Academic Research Radar — 2026-11-16T10:43:49.908156+00:00
+# Academic Research Radar — 2026-11-16T20:26:44.985520+00:00
 
-**Status:** degraded; **New or changed candidates:** 2; **Metadata prefilter passes:** 10
+**Status:** degraded; **New or changed candidates:** 0; **Metadata prefilter passes:** 10
 
 This is metadata triage, not a verified reading or recommendation.
 
-- crossref: ok; 14/14 queries; 415 records
+- crossref: ok; 14/14 queries; 417 records
 - arxiv: ok; 4/4 queries; 10 records
 - chinese_journals: degraded; 7/9 queries; 76 records
   - Error: 经济研究: toc_metadata (); RSS=failed
@@ -16,9 +16,7 @@ This is metadata triage, not a verified reading or recommendation.
   - Error: 金融研究: catalog_only (publisher_unavailable; issue_visible_but_articles_not_verified); RSS=failed
   - Error: 国际贸易问题: ok (); RSS=failed
   - Error: 世界经济研究: ok (); RSS=failed
-  - Error: NCPSSD topic index: degraded (7/8)
-- NCPSSD topic index: degraded; 7/8 queries; 14 records
-  - Error: 专利文本: TimeoutError: The read operation timed out
+- NCPSSD topic index: ok; 8/8 queries; 18 records
 
 ## 中文重点期刊逐刊监测（公开目录和RSS，非文章审读）
 
@@ -38,5 +36,4 @@ This is metadata triage, not a verified reading or recommendation.
 
 ## New or revised candidates
 
-- [Can artificial intelligence mitigate the adverse impact of climate shocks on supply chain resilience? Firm-level evidence from abnormal precipitation](https://doi.org/10.1080/00207543.2026.2762327) — P1, prefilter 50, crossref_registration 2026-11-16, new
-- [Global supply chain management in Thai ventures: Advancing traditional supply chain resilience](https://doi.org/10.34044/j.kjss.2026.47.4.34) — P1, prefilter 50, crossref_registration 2026-11-16, new
+No new or changed candidates selected for delivery. This does not imply zero prefilter passes or no relevant papers.

@@ -1171,5 +1171,37 @@
     "doi": "10.2139/ssrn.7698161",
     "last_seen": "2026-11-16",
     "emitted": true
+  },
+  "doi:10.1080/00207543.2026.2762327": {
+    "fingerprint": "b5ca2e28e6b70f7f2229",
+    "title_norm": "canartificialintelligencemitigatetheadverseimpactofclimateshocksonsupplychainresiliencefirmlevelevidencefromabnormalprecipitation",
+    "version": "",
+    "doi": "10.1080/00207543.2026.2762327",
+    "last_seen": "2026-11-16",
+    "emitted": true
+  },
+  "title:canartificialintelligencemitigatetheadverseimpactofclimateshocksonsupplychainresiliencefirmlevelevidencefromabnormalprecipitation": {
+    "fingerprint": "b5ca2e28e6b70f7f2229",
+    "title_norm": "canartificialintelligencemitigatetheadverseimpactofclimateshocksonsupplychainresiliencefirmlevelevidencefromabnormalprecipitation",
+    "version": "",
+    "doi": "10.1080/00207543.2026.2762327",
+    "last_seen": "2026-11-16",
+    "emitted": true
+  },
+  "doi:10.34044/j.kjss.2026.47.4.34": {
+    "fingerprint": "ac9103ed00987b84ae21",
+    "title_norm": "globalsupplychainmanagementinthaiventuresadvancingtraditionalsupplychainresilience",
+    "version": "",
+    "doi": "10.34044/j.kjss.2026.47.4.34",
+    "last_seen": "2026-11-16",
+    "emitted": true
+  },
+  "title:globalsupplychainmanagementinthaiventuresadvancingtraditionalsupplychainresilience": {
+    "fingerprint": "ac9103ed00987b84ae21",
+    "title_norm": "globalsupplychainmanagementinthaiventuresadvancingtraditionalsupplychainresilience",
+    "version": "",
+    "doi": "10.34044/j.kjss.2026.47.4.34",
+    "last_seen": "2026-11-16",
+    "emitted": true
   }
 }

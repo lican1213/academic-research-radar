@@ -15,8 +15,10 @@
       "自动化发展如何影响收入分配水平扩张和垂直进步的技术分解"
     ],
     "baselined": true,
-    "last_success_at": "2026-11-16T02:02:24.413024+00:00",
-    "rss_baselined": false
+    "last_success_at": "2026-11-16T10:43:49.908156+00:00",
+    "rss_baselined": false,
+    "last_issue_observed_at": "2026-11-16T10:43:49.908156+00:00",
+    "last_article_issue": "2026-09"
   },
   "china_industrial": {
     "issue": "2026-08",
@@ -32,8 +34,10 @@
       "金融科技创新如何赋能银行普惠金融来自小微企业创业的证据"
     ],
     "baselined": true,
-    "last_success_at": "2026-11-16T02:02:24.413024+00:00",
-    "rss_baselined": false
+    "last_success_at": "2026-11-16T10:43:49.908156+00:00",
+    "rss_baselined": false,
+    "last_issue_observed_at": "2026-11-16T10:43:49.908156+00:00",
+    "last_article_issue": "2026-08"
   },
   "management_world": {
     "issue": "2026-10",
@@ -45,6 +49,13 @@
   "world_economy": {
     "issue": "2026-11",
     "articles": [
+      "url:sjjj.magtech.com.cn/CN/Y2026/V49/I11/121",
+      "url:sjjj.magtech.com.cn/CN/Y2026/V49/I11/161",
+      "url:sjjj.magtech.com.cn/CN/Y2026/V49/I11/199",
+      "url:sjjj.magtech.com.cn/CN/Y2026/V49/I11/243",
+      "url:sjjj.magtech.com.cn/CN/Y2026/V49/I11/3",
+      "url:sjjj.magtech.com.cn/CN/Y2026/V49/I11/45",
+      "url:sjjj.magtech.com.cn/CN/Y2026/V49/I11/81",
       "中国国际进口博览会的溢出效应研究",
       "产业链政策与地方现代化产业体系建设基于链长制的研究",
       "人工智能专利首发竞赛中的逆境突破失败何以激励创新",
@@ -60,12 +71,25 @@
       "研发税收激励与企业数字资本深化"
     ],
     "baselined": true,
-    "last_success_at": "2026-11-16T02:02:24.413024+00:00",
-    "rss_baselined": false
+    "last_success_at": "2026-11-16T10:43:49.908156+00:00",
+    "rss_baselined": false,
+    "last_issue_observed_at": "2026-11-16T10:43:49.908156+00:00",
+    "last_article_issue": "2026-11"
   },
   "finance_economics": {
     "issue": "2026-09",
     "articles": [
+      "url:qks.sufe.edu.cn/J/j00001/Article/Details/f7Vogacg-uXyV-9mmG-Ecol-8La22qsCQvvt",
+      "url:qks.sufe.edu.cn/J/j00001/Article/Details/kDfzb7c2-4ryg-a7xd-qgJz-uev0WCc10WQa",
+      "url:qks.sufe.edu.cn/J/j00001/Article/Details/oVjTo2MI-2ftV-doEn-noMA-FC6mIu6ZCKgb",
+      "url:qks.sufe.edu.cn/J/j00001/Article/Details/pgbFuTsz-vRzo-GypL-0h9O-AptmzpGperJG",
+      "url:qks.sufe.edu.cn/J/j00001/Article/Details/qwCf6nsu-h6ZW-G68A-XPx3-bWgK0OBcql88",
+      "url:qks.sufe.edu.cn/J/j00001/Article/Details/uHIZ4sxM-ZVzV-8Py6-MJO4-GaMuOxfluJie",
+      "url:qks.sufe.edu.cn/J/j00001/Article/Details/uVi49ddu-lDG4-LyHN-88Ov-nEPA7GaqlxRX",
+      "url:qks.sufe.edu.cn/J/j00001/Article/Details/umQ7ZTUS-1QWj-vRMw-kHlZ-UG8wL0n7HA8V",
+      "url:qks.sufe.edu.cn/J/j00001/Article/Details/wIY0vZCo-1iKN-EqsP-9P1y-smzrjrT1jxbk",
+      "url:qks.sufe.edu.cn/J/j00001/Article/Details/xgu60HJ7-eIew-WqXJ-rLVN-fauCv5xKkcD6",
+      "url:qks.sufe.edu.cn/J/j00001/Article/Details/xjGyehBl-jEZv-5KIx-iwzJ-d299MOhhnJGg",
       "东数西算工程如何赋能数据要素基于要素化市场化和服务化的分析框架",
       "中国基础设施援助的女性赋权效应",
       "中国基础设施援助的女性赋权效应基于撒哈拉以南非洲的地理空间匹配数据",
@@ -101,8 +125,10 @@
       "面值退市制度对企业高送转行为的治理效应研究"
     ],
     "baselined": true,
-    "last_success_at": "2026-11-16T02:02:24.413024+00:00",
-    "rss_baselined": false
+    "last_success_at": "2026-11-16T10:43:49.908156+00:00",
+    "rss_baselined": false,
+    "last_issue_observed_at": "2026-11-16T10:43:49.908156+00:00",
+    "last_article_issue": "2026-09"
   },
   "quant_economics": {
     "issue": "2026-10",
@@ -110,6 +136,16 @@
       "doi:10.13653/j.cnki.jqte.20260204.008",
       "doi:10.13653/j.cnki.jqte.20260807.003",
       "esg评级能否促进企业绿色转型基于多时点双重差分法的验证",
+      "url:www.jqte.net/sljjjsjjyj/ch/reader/view_abstract.aspx?file_no=20261001&flag=1",
+      "url:www.jqte.net/sljjjsjjyj/ch/reader/view_abstract.aspx?file_no=20261002&flag=1",
+      "url:www.jqte.net/sljjjsjjyj/ch/reader/view_abstract.aspx?file_no=20261003&flag=1",
+      "url:www.jqte.net/sljjjsjjyj/ch/reader/view_abstract.aspx?file_no=20261004&flag=1",
+      "url:www.jqte.net/sljjjsjjyj/ch/reader/view_abstract.aspx?file_no=20261005&flag=1",
+      "url:www.jqte.net/sljjjsjjyj/ch/reader/view_abstract.aspx?file_no=20261006&flag=1",
+      "url:www.jqte.net/sljjjsjjyj/ch/reader/view_abstract.aspx?file_no=20261007&flag=1",
+      "url:www.jqte.net/sljjjsjjyj/ch/reader/view_abstract.aspx?file_no=20261008&flag=1",
+      "url:www.jqte.net/sljjjsjjyj/ch/reader/view_abstract.aspx?file_no=20261009&flag=1",
+      "url:www.jqte.net/sljjjsjjyj/ch/reader/view_abstract.aspx?file_no=20261010&flag=1",
       "专利保险与未来产业技术发展来自专利文本语义识别的微观证据",
       "中国城乡居民收入差距的分解分析",
       "中国增值税税收归宿测算基于多区域cge模型的分析",
@@ -152,15 +188,18 @@
       "需求引致增长三大结构效应的时空演化"
     ],
     "baselined": true,
-    "last_success_at": "2026-11-16T02:02:24.413024+00:00",
-    "rss_baselined": false
+    "last_success_at": "2026-11-16T10:43:49.908156+00:00",
+    "rss_baselined": false,
+    "last_issue_observed_at": "2026-11-16T10:43:49.908156+00:00",
+    "last_article_issue": "2026-10"
   },
   "financial_research": {
     "issue": "2026-07",
     "articles": [],
     "baselined": true,
     "last_success_at": "2026-11-16T02:02:24.413024+00:00",
-    "rss_baselined": false
+    "rss_baselined": false,
+    "last_issue_observed_at": "2026-11-16T10:43:49.908156+00:00"
   },
   "international_trade": {
     "issue": "2026-10",
@@ -176,8 +215,19 @@
       "doi:10.13510/j.cnki.jit.2026.09.008",
       "fdi对我国经济增长就业影响研究基于var模型",
       "fdi环境规制与中国工业绿色全要素生产率增长基于luenberger指数的实证研究",
+      "url:gjmw.cbpt.cnki.net/portal/journal/portal/client/paper/1caddc49a4d245a7589fbf4723835b45",
+      "url:gjmw.cbpt.cnki.net/portal/journal/portal/client/paper/3c1ca8474f52a1291e9c0d9d5111ecb9",
+      "url:gjmw.cbpt.cnki.net/portal/journal/portal/client/paper/3fe6b29ce29071da9e62cc204ab44f8a",
+      "url:gjmw.cbpt.cnki.net/portal/journal/portal/client/paper/6c9b942644406b3560072c5f082967f3",
+      "url:gjmw.cbpt.cnki.net/portal/journal/portal/client/paper/7f6078a0cec828f7581a0bc4ff569adf",
+      "url:gjmw.cbpt.cnki.net/portal/journal/portal/client/paper/c4e15da8636de256c7c917fc7e9a0fef",
+      "url:gjmw.cbpt.cnki.net/portal/journal/portal/client/paper/da10cc97418b9392435959b92b864fd9",
+      "url:gjmw.cbpt.cnki.net/portal/journal/portal/client/paper/e012374ef2f16285c7d9549776a654be",
+      "url:gjmw.cbpt.cnki.net/portal/journal/portal/client/paper/e36ac62ea00366be2104138141496be8",
+      "url:gjmw.cbpt.cnki.net/portal/journal/portal/client/paper/f20261dea9cebc26fe9efd5ea518f9ab",
       "一带一路国家的贸易便利化水平测算与贸易潜力研究",
       "一带一路投资便利化与中国对外直接投资选择基于跨国面板数据及投资引力模型的实证研究",
+      "专利出海与全球供应链转移",
       "专利出海创新激励与内外贸一体化",
       "人口结构中美贸易与美国政治极化",
       "从规模扩张到质量提升中国文化企业出海的现实考验与路径选择",
@@ -199,8 +249,10 @@
       "连接广度与通行深度贸易协定网络中心度对全球价值链参与韧性的影响"
     ],
     "baselined": true,
-    "last_success_at": "2026-11-16T02:02:24.413024+00:00",
-    "rss_baselined": false
+    "last_success_at": "2026-11-16T10:43:49.908156+00:00",
+    "rss_baselined": false,
+    "last_issue_observed_at": "2026-11-16T10:43:49.908156+00:00",
+    "last_article_issue": "2026-10"
   },
   "world_economy_studies": {
     "issue": "2026-10",
@@ -209,8 +261,19 @@
       "doi:10.13516/j.cnki.wes.2026.09.002",
       "doi:10.13516/j.cnki.wes.2026.09.006",
       "doi:10.13516/j.cnki.wes.2026.09.008",
+      "doi:10.13516/j.cnki.wes.2026.10.001",
       "doi:10.13516/j.cnki.wes.2026.10.007",
+      "doi:10.13516/j.cnki.wes.2026.10.009",
       "fdi促进了中国出口产品质量升级吗基于动态面板系统gmm方法的研究",
+      "url:jing.cbpt.cnki.net/portal/journal/portal/client/paper/13c7ccaed64722a68a5dfdb124a1ea0a",
+      "url:jing.cbpt.cnki.net/portal/journal/portal/client/paper/1b6dbcd6be00d8462fff4db39737eab2",
+      "url:jing.cbpt.cnki.net/portal/journal/portal/client/paper/4cb8968a74929fd9e871065bcabb9c8e",
+      "url:jing.cbpt.cnki.net/portal/journal/portal/client/paper/5799e2dd6bede018afa1700d5df78a4d",
+      "url:jing.cbpt.cnki.net/portal/journal/portal/client/paper/661696c14326cc384e10ff4ca4652feb",
+      "url:jing.cbpt.cnki.net/portal/journal/portal/client/paper/7fc24be380e089ee27243325f810fcde",
+      "url:jing.cbpt.cnki.net/portal/journal/portal/client/paper/96c3d1dd9ed0aab9211109b20dba40fc",
+      "url:jing.cbpt.cnki.net/portal/journal/portal/client/paper/996286ed2734d74f152a5fe405d3386e",
+      "url:jing.cbpt.cnki.net/portal/journal/portal/client/paper/ac2e39159f47be164a165b4b91c39b10",
       "东道国金融制裁与中国企业对外直接投资",
       "中国与一带一路沿线国家文化贸易潜力及影响因素基于随机前沿引力模型的实证研究",
       "中国与西亚地区贸易合作的竞争性和互补性研究以一带一路战略为背景",
@@ -234,7 +297,9 @@
       "逆向知识转移与企业出口韧性基于母子公司专利文本语义匹配的经验证据"
     ],
     "baselined": true,
-    "last_success_at": "2026-11-16T02:02:24.413024+00:00",
-    "rss_baselined": false
+    "last_success_at": "2026-11-16T10:43:49.908156+00:00",
+    "rss_baselined": false,
+    "last_issue_observed_at": "2026-11-16T10:43:49.908156+00:00",
+    "last_article_issue": "2026-10"
   }
 }

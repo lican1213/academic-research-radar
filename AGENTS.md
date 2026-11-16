@@ -30,3 +30,5 @@ This repository gathers **public bibliographic metadata**. It does not make scho
 - A page with only a journal name/issue must NOT be parsed as article-level coverage. A page with an unrelated external link must NOT generate a paper candidate.
 - Preserve last known good catalog state when a source times out or regresses. Initial scan seeds baseline rather than re-notifying all historical papers.
 - `data/chinese_seen.json` and `data/latest.json` must be committed together by the scan Action; editorial/HTML indexing gaps must be listed for daily independent research.
+
+- Treat mixed_links as partial; current-issue snapshots retain parsed metadata, not verified link reachability. Never promote historical/unbound audit rows to normal incremental candidates. Do not update article-success time for issue-only responses. Add DOI and canonical stable article URL aliases without clearing the prior ledger. Stage 3 differentiates prefilter passes, new delivery, historical backfill and incomplete coverage.

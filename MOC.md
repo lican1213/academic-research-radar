@@ -165,3 +165,11 @@
 - 两个贸易/世界经济期刊切换至 `paper_list/type_benqi` 本期目录，单篇必须有同一期次证据才进入候选，排除首页热门/历史链接；公开国哲社目录确有题名、作者、页码，支持 `toc_metadata`（只有目录定位，非直接文章链接）；独立输出 `article_link_count`、`issue_metadata_count` 和 `coverage_kind` 防止把混合页面计作整期覆盖。修正中文结构化索引路径的错误 `[^\\w]` 正则及历史空键，不清空去重账本。
 - 对照真实网页：[国际贸易问题当期目次](https://gjmw.cbpt.cnki.net/portal/journal/portal/client/paper_list/type_benqi)、[经济研究国哲社目录](https://ncpssd.org/journal/details.aspx?gch=95645X)。新增4项反例测试：同一期次才接受、目录元数据不编造文章URL、中文去重键非空、补漏与日期/链接范围状态正确。
 - [CI #43694052019](https://github.com/lican1213/academic-research-radar/actions/runs/43694052019) 原始日志：编译通过、54项测试全部通过；[PR #5](https://github.com/lican1213/academic-research-radar/pull/5) 已合并 main `82f3fbe7a3896b23ff20ace55c65e7faddc0594c`。继续回读生产产物；线上九刊覆盖与已知漏检反例尚未确认，不能宣布完整Gate PASS。不改日报频率或论文文件。
+
+
+## 2026-11-16 / 三阶段生产修复（待 CI 与 live readback）
+- 基线：run 43789706340，main d4d11ca，degraded；3/9 刊有期次绑定链接，财经研究混合期次，RSS 0/9，国哲社专题 3/8。前次 run 43739278658 数量经济技术经济研究产生29条无期次历史候选（含2022年交错DID）。
+- 采集：数量经济按逐篇显式期次和 YYYYMMNN 文件编号交叉校验，无有效当期行时回退目录；每刊保存本次解析题录/链接快照（link_verified=false，非详情页实访证明）。混合链接显式 mixed_links，保留审计线索但不进入增量账本。目录仅有期次不刷新文章成功时间。
+- 二阶段：保留原历史账本，已见标题补录 DOI/稳定文章链接别名；不要按相似标题盲合并。旧未知期次不会因网络恢复被推为新文；确有近期目录标记的专用当期页仍允许待核候选。日期语义不变。
+- 三阶段：MD 与 JSON 区分预筛通过和本次新增，明确 NCPSSD 专题失败。每日任务须独立核验 mixed_links/toc_metadata/failed/stale_index 等缺口、复核链接与出版日期、历史补漏和真实新增分开，按研究相关性决策而非机械推送。调度不变。
+- Gate: 本次修复提交不是生产放行。以 PR CI、合并后真实 run 及逐篇快照回读为准；九刊当期完整性、真实详情链接、连续七日跨日去重仍未验收。历史账本余留短标题/摘要键不直接清空或武断合并。

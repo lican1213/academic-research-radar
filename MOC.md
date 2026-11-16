@@ -173,3 +173,9 @@
 - 二阶段：保留原历史账本，已见标题补录 DOI/稳定文章链接别名；不要按相似标题盲合并。旧未知期次不会因网络恢复被推为新文；确有近期目录标记的专用当期页仍允许待核候选。日期语义不变。
 - 三阶段：MD 与 JSON 区分预筛通过和本次新增，明确 NCPSSD 专题失败。每日任务须独立核验 mixed_links/toc_metadata/failed/stale_index 等缺口、复核链接与出版日期、历史补漏和真实新增分开，按研究相关性决策而非机械推送。调度不变。
 - Gate: 本次修复提交不是生产放行。以 PR CI、合并后真实 run 及逐篇快照回读为准；九刊当期完整性、真实详情链接、连续七日跨日去重仍未验收。历史账本余留短标题/摘要键不直接清空或武断合并。
+
+### PR #6 代码验收及阶段三回读
+- PR [#6](https://github.com/lican1213/academic-research-radar/pull/6) 已合并至 main `f50246752d4288fe947d8896d89a5fef242d73a0`。PR [CI 43851372779](https://github.com/lican1213/academic-research-radar/actions/runs/43851372779) 原始日志：编译成功，58/58 测试通过（包括历史期次混入、混合行恢复、空期次成功时间、稳定 URL 别名四项）；主分支 CI [43851428035](https://github.com/lican1213/academic-research-radar/actions/runs/43851428035) 成功。
+- 每日雷达任务契约已更新并读回确认：继续北京时间 09:30、原 P0/P1/P1A/P2/P3/P4 与评分策略；按历史提交 SHA 合并过去48小时实际候选、核验单篇日期及跨日报身份；mixed_links 等降级独立补检。实际 GitHub commits?sha=main&path=data/latest.json 查询返回 d4d11ca、a2984ce、a53e53b 等生产历史，证实可读；不把定时任务配置回读当作下一次日报已经交付。
+- [合并后生产 run 43851428062](https://github.com/lican1213/academic-research-radar/actions/runs/43851428062) 当前检查状态：in_progress/pending；只有新数据实际写回、逐篇样本与官方信息一致后才可关闭相应生产门。原始中文源 DNS/TLS/HTTP 故障仍需生产证据，禁止重写历史产物或清空旧账本。
+- 独立补检：财经研究 [第9期目录](https://qks.sufe.edu.cn/J/j00001/Article/2026/09) 与 [最新文章](https://qks.sufe.edu.cn/J/CJYJ/Article/Latest) 的搜索索引分别显示11篇和混合期次，实际打开专刊页一度超时；管理世界 [国哲移动端](https://m.ncpssd.cn/journal/details?gch=95499X&langType=1&nav=1) 有10期题名（未见完整作者/页码），桌面索引9期；金融研究10期存在公开转载目录，但尚未确认稳定官方详情。保留为补检路径，不伪造文章级生产覆盖。

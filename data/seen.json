@@ -1203,5 +1203,37 @@
     "doi": "10.34044/j.kjss.2026.47.4.34",
     "last_seen": "2026-11-17",
     "emitted": true
+  },
+  "doi:10.1007/s44163-026-02751-6": {
+    "fingerprint": "09766451d5c84c801d69",
+    "title_norm": "theroleofartificialintelligenceinenhancingsupplychainresilienceastructurednarrativesynthesis",
+    "version": "",
+    "doi": "10.1007/s44163-026-02751-6",
+    "last_seen": "2026-11-17",
+    "emitted": true
+  },
+  "title:theroleofartificialintelligenceinenhancingsupplychainresilienceastructurednarrativesynthesis": {
+    "fingerprint": "09766451d5c84c801d69",
+    "title_norm": "theroleofartificialintelligenceinenhancingsupplychainresilienceastructurednarrativesynthesis",
+    "version": "",
+    "doi": "10.1007/s44163-026-02751-6",
+    "last_seen": "2026-11-17",
+    "emitted": true
+  },
+  "doi:10.1016/j.eap.2026.11.020": {
+    "fingerprint": "76d5da568c7a9d4c0b45",
+    "title_norm": "ecoenvironmentalintelligentmonitoringpilotandenterprisegreenincrementalinnovationlockbasedonmachinelearningpatenttextanalysis",
+    "version": "",
+    "doi": "10.1016/j.eap.2026.11.020",
+    "last_seen": "2026-11-17",
+    "emitted": true
+  },
+  "title:ecoenvironmentalintelligentmonitoringpilotandenterprisegreenincrementalinnovationlockbasedonmachinelearningpatenttextanalysis": {
+    "fingerprint": "76d5da568c7a9d4c0b45",
+    "title_norm": "ecoenvironmentalintelligentmonitoringpilotandenterprisegreenincrementalinnovationlockbasedonmachinelearningpatenttextanalysis",
+    "version": "",
+    "doi": "10.1016/j.eap.2026.11.020",
+    "last_seen": "2026-11-17",
+    "emitted": true
   }
 }

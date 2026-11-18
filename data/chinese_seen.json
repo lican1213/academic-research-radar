@@ -71,9 +71,9 @@
       "研发税收激励与企业数字资本深化"
     ],
     "baselined": true,
-    "last_success_at": "2026-11-18T03:42:18.119224+00:00",
+    "last_success_at": "2026-11-18T18:51:07.127043+00:00",
     "rss_baselined": false,
-    "last_issue_observed_at": "2026-11-18T03:42:18.119224+00:00",
+    "last_issue_observed_at": "2026-11-18T18:51:07.127043+00:00",
     "last_article_issue": "2026-11"
   },
   "finance_economics": {
@@ -126,9 +126,9 @@
       "面值退市制度对企业高送转行为的治理效应研究"
     ],
     "baselined": true,
-    "last_success_at": "2026-11-18T03:42:18.119224+00:00",
+    "last_success_at": "2026-11-18T18:51:07.127043+00:00",
     "rss_baselined": false,
-    "last_issue_observed_at": "2026-11-18T03:42:18.119224+00:00",
+    "last_issue_observed_at": "2026-11-18T18:51:07.127043+00:00",
     "last_article_issue": "2026-09"
   },
   "quant_economics": {
@@ -189,9 +189,9 @@
       "需求引致增长三大结构效应的时空演化"
     ],
     "baselined": true,
-    "last_success_at": "2026-11-18T03:42:18.119224+00:00",
+    "last_success_at": "2026-11-18T18:51:07.127043+00:00",
     "rss_baselined": false,
-    "last_issue_observed_at": "2026-11-18T03:42:18.119224+00:00",
+    "last_issue_observed_at": "2026-11-18T18:51:07.127043+00:00",
     "last_article_issue": "2026-10"
   },
   "financial_research": {
@@ -250,13 +250,13 @@
       "连接广度与通行深度贸易协定网络中心度对全球价值链参与韧性的影响"
     ],
     "baselined": true,
-    "last_success_at": "2026-11-18T03:42:18.119224+00:00",
+    "last_success_at": "2026-11-18T18:51:07.127043+00:00",
     "rss_baselined": false,
-    "last_issue_observed_at": "2026-11-18T03:42:18.119224+00:00",
+    "last_issue_observed_at": "2026-11-18T18:51:07.127043+00:00",
     "last_article_issue": "2026-10"
   },
   "world_economy_studies": {
-    "issue": "2026-10",
+    "issue": "2026-11",
     "articles": [
       "doi:10.13516/j.cnki.wes.2026.08.002",
       "doi:10.13516/j.cnki.wes.2026.09.002",
@@ -267,20 +267,30 @@
       "doi:10.13516/j.cnki.wes.2026.10.007",
       "doi:10.13516/j.cnki.wes.2026.10.009",
       "fdi促进了中国出口产品质量升级吗基于动态面板系统gmm方法的研究",
+      "url:jing.cbpt.cnki.net/portal/journal/portal/client/paper/026b4c13e1d9c8ed7d6693467cbdde4d",
+      "url:jing.cbpt.cnki.net/portal/journal/portal/client/paper/081f9490d956f71d3eece99d02b30a63",
       "url:jing.cbpt.cnki.net/portal/journal/portal/client/paper/13c7ccaed64722a68a5dfdb124a1ea0a",
       "url:jing.cbpt.cnki.net/portal/journal/portal/client/paper/1b6dbcd6be00d8462fff4db39737eab2",
+      "url:jing.cbpt.cnki.net/portal/journal/portal/client/paper/3a21d46a3db560ac03e708c1c7e1e08d",
       "url:jing.cbpt.cnki.net/portal/journal/portal/client/paper/4cb8968a74929fd9e871065bcabb9c8e",
       "url:jing.cbpt.cnki.net/portal/journal/portal/client/paper/5799e2dd6bede018afa1700d5df78a4d",
+      "url:jing.cbpt.cnki.net/portal/journal/portal/client/paper/658a7489402698caf368e30f134c1156",
       "url:jing.cbpt.cnki.net/portal/journal/portal/client/paper/661696c14326cc384e10ff4ca4652feb",
       "url:jing.cbpt.cnki.net/portal/journal/portal/client/paper/7fc24be380e089ee27243325f810fcde",
       "url:jing.cbpt.cnki.net/portal/journal/portal/client/paper/96c3d1dd9ed0aab9211109b20dba40fc",
       "url:jing.cbpt.cnki.net/portal/journal/portal/client/paper/996286ed2734d74f152a5fe405d3386e",
+      "url:jing.cbpt.cnki.net/portal/journal/portal/client/paper/a647f3988cf7199cb402968c8794fd5e",
       "url:jing.cbpt.cnki.net/portal/journal/portal/client/paper/ac2e39159f47be164a165b4b91c39b10",
+      "url:jing.cbpt.cnki.net/portal/journal/portal/client/paper/c27e84a6d1ed04f9a3216bd8664bc18f",
+      "url:jing.cbpt.cnki.net/portal/journal/portal/client/paper/d2dc0d410addf25196386814a48278c0",
+      "url:jing.cbpt.cnki.net/portal/journal/portal/client/paper/ea25a14aef4547e4e652de28ccdb4d03",
+      "url:jing.cbpt.cnki.net/portal/journal/portal/client/paper/f705032d7dcbdc2cb57e7c34ac271949",
       "东道国金融制裁与中国企业对外直接投资",
       "中国与一带一路沿线国家文化贸易潜力及影响因素基于随机前沿引力模型的实证研究",
       "中国与西亚地区贸易合作的竞争性和互补性研究以一带一路战略为背景",
       "中美贸易摩擦背景下关税冲击的贸易及福利效应基于企业所有权的量化分析",
       "人民币国际化能够缓解实体企业系统性风险吗基于系统重要性视角的分析",
+      "人民币增加值实际有效汇率弹性重估及解析",
       "全球供应链重构与跨境资本行业间再配置来自epfr跨境股票基金的证据",
       "全球供应链风险企业国际化经营与全要素生产率韧性溢价与供应链门槛假说",
       "创新失败对外投资地理多元化与企业海外经营表现",
@@ -288,20 +298,28 @@
       "制度差异文化距离与中国企业对外直接投资风险",
       "地缘政治风险与企业供应链韧性基于中国上市企业的实证考察",
       "外资企业产能转移本土承接与国内供应链韧性",
+      "寒蝉效应还是压力测试贸易政策冲击下企业供应链韧性的响应逻辑",
+      "对外直接投资如何影响企业出口来自中国上市公司的差异化证据",
       "对外直接投资的逆向技术溢出效应对中国全要素生产率影响的经验检验",
       "对外直接投资逆向技术溢出与国内创新能力基于中国省际面板数据的实证研究",
       "影响企业跨国并购绩效的制度因素分析基于20002012年中国上市企业数据的研究",
       "数字产业外循环参与程度对中国数字服务贸易网络地位的影响研究",
       "数字服务贸易限制措施影响服务出口了吗基于数字化服务行业的实证分析",
       "数字贸易规则分化与全球数字平台异质竞争策略选择",
+      "标准国际化与企业全球价值链前向参与来自中国制造业上市公司的证据",
+      "目的国地缘政治风险下中国企业跨国供应关系调整研究",
       "算力基础设施建设与企业对外直接投资基于国家超算中心的准自然实验",
+      "绿色标准升级能够提升中国制造业出口企业加成率吗基于能效标识制度的准自然实验",
+      "绿色算力供给如何赋能企业绿色转型基于双重机器学习的因果推断",
+      "贸易协定环境规则深化能否缓解全球碳转移不公平",
+      "跨境人民币结算改革与企业进出口供应链多元化基于货币结算类交易成本的视角",
       "跨境电商赋能企业供应链韧性提升来自中国上市公司的微观证据",
       "逆向知识转移与企业出口韧性基于母子公司专利文本语义匹配的经验证据"
     ],
     "baselined": true,
-    "last_success_at": "2026-11-18T03:42:18.119224+00:00",
+    "last_success_at": "2026-11-18T18:51:07.127043+00:00",
     "rss_baselined": false,
-    "last_issue_observed_at": "2026-11-18T03:42:18.119224+00:00",
-    "last_article_issue": "2026-10"
+    "last_issue_observed_at": "2026-11-18T18:51:07.127043+00:00",
+    "last_article_issue": "2026-11"
   }
 }

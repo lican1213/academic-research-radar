@@ -1235,5 +1235,117 @@
     "doi": "10.1016/j.eap.2026.11.020",
     "last_seen": "2026-11-18",
     "emitted": true
+  },
+  "doi:10.1016/j.wpi.2026.102520": {
+    "fingerprint": "724fda34916e6e59bb3c",
+    "title_norm": "nonunilateralpatentsacomplementarymeasureofinternationalpatentingactivity",
+    "version": "",
+    "doi": "10.1016/j.wpi.2026.102520",
+    "last_seen": "2026-11-18",
+    "emitted": true
+  },
+  "title:nonunilateralpatentsacomplementarymeasureofinternationalpatentingactivity": {
+    "fingerprint": "724fda34916e6e59bb3c",
+    "title_norm": "nonunilateralpatentsacomplementarymeasureofinternationalpatentingactivity",
+    "version": "",
+    "doi": "10.1016/j.wpi.2026.102520",
+    "last_seen": "2026-11-18",
+    "emitted": true
+  },
+  "doi:10.69968/ijisem.2026v5i4289-294": {
+    "fingerprint": "05bf606a16a06158b54b",
+    "title_norm": "aipoweredsupplychainresilienceandsustainability",
+    "version": "",
+    "doi": "10.69968/ijisem.2026v5i4289-294",
+    "last_seen": "2026-11-18",
+    "emitted": true
+  },
+  "title:aipoweredsupplychainresilienceandsustainability": {
+    "fingerprint": "05bf606a16a06158b54b",
+    "title_norm": "aipoweredsupplychainresilienceandsustainability",
+    "version": "",
+    "doi": "10.69968/ijisem.2026v5i4289-294",
+    "last_seen": "2026-11-18",
+    "emitted": true
+  },
+  "doi:10.1007/s43621-026-05370-4": {
+    "fingerprint": "ba494e92c2a21239b257",
+    "title_norm": "pandemiccrisisandtheraceforsupplychainresiliencethroughorganizationallearningandagility",
+    "version": "",
+    "doi": "10.1007/s43621-026-05370-4",
+    "last_seen": "2026-11-18",
+    "emitted": true
+  },
+  "title:pandemiccrisisandtheraceforsupplychainresiliencethroughorganizationallearningandagility": {
+    "fingerprint": "ba494e92c2a21239b257",
+    "title_norm": "pandemiccrisisandtheraceforsupplychainresiliencethroughorganizationallearningandagility",
+    "version": "",
+    "doi": "10.1007/s43621-026-05370-4",
+    "last_seen": "2026-11-18",
+    "emitted": true
+  },
+  "doi:10.36871/ek.up.p.r.2026.10.10.030": {
+    "fingerprint": "dbd489567313d6c7ea7d",
+    "title_norm": "supplychainresilienceamidstgeopoliticaluncertainty",
+    "version": "",
+    "doi": "10.36871/ek.up.p.r.2026.10.10.030",
+    "last_seen": "2026-11-18",
+    "emitted": true
+  },
+  "title:supplychainresilienceamidstgeopoliticaluncertainty": {
+    "fingerprint": "dbd489567313d6c7ea7d",
+    "title_norm": "supplychainresilienceamidstgeopoliticaluncertainty",
+    "version": "",
+    "doi": "10.36871/ek.up.p.r.2026.10.10.030",
+    "last_seen": "2026-11-18",
+    "emitted": true
+  },
+  "doi:10.25236/ajbm.2026.081006": {
+    "fingerprint": "f5bdafcb5a9b4c730e85",
+    "title_norm": "supplychainresilienceandenhancementpathsofcrossborderecommerceexportempoweredbyliaoningportsunderthercepframework",
+    "version": "",
+    "doi": "10.25236/ajbm.2026.081006",
+    "last_seen": "2026-11-18",
+    "emitted": true
+  },
+  "title:supplychainresilienceandenhancementpathsofcrossborderecommerceexportempoweredbyliaoningportsunderthercepframework": {
+    "fingerprint": "f5bdafcb5a9b4c730e85",
+    "title_norm": "supplychainresilienceandenhancementpathsofcrossborderecommerceexportempoweredbyliaoningportsunderthercepframework",
+    "version": "",
+    "doi": "10.25236/ajbm.2026.081006",
+    "last_seen": "2026-11-18",
+    "emitted": true
+  },
+  "doi:10.66838/ma.243": {
+    "fingerprint": "517a1dccd0884ad1267d",
+    "title_norm": "theroleofartificialintelligenceinsupplierriskpredictionandsupplychainresilience",
+    "version": "",
+    "doi": "10.66838/ma.243",
+    "last_seen": "2026-11-18",
+    "emitted": true
+  },
+  "title:theroleofartificialintelligenceinsupplierriskpredictionandsupplychainresilience": {
+    "fingerprint": "517a1dccd0884ad1267d",
+    "title_norm": "theroleofartificialintelligenceinsupplierriskpredictionandsupplychainresilience",
+    "version": "",
+    "doi": "10.66838/ma.243",
+    "last_seen": "2026-11-18",
+    "emitted": true
+  },
+  "doi:10.22271/allresearch.2026.v12.i11a.91201": {
+    "fingerprint": "501c4c95684be5e16054",
+    "title_norm": "foreigndirectinvestmentandsupplychaindiversificationinindia",
+    "version": "",
+    "doi": "10.22271/allresearch.2026.v12.i11a.91201",
+    "last_seen": "2026-11-18",
+    "emitted": true
+  },
+  "title:foreigndirectinvestmentandsupplychaindiversificationinindia": {
+    "fingerprint": "501c4c95684be5e16054",
+    "title_norm": "foreigndirectinvestmentandsupplychaindiversificationinindia",
+    "version": "",
+    "doi": "10.22271/allresearch.2026.v12.i11a.91201",
+    "last_seen": "2026-11-18",
+    "emitted": true
   }
 }

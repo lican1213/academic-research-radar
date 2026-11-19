@@ -615,6 +615,7 @@ def scan_chinese_journals(out: Path, now: datetime, get=fetch_html, rss_get=None
     seen = updated.copy()
     journals: dict[str, dict] = {}
     new_items: list[dict] = []
+    historical_backfill_leads: list[dict] = []
     full_ok = 0
     records = 0
     failures = []
@@ -725,7 +726,20 @@ def scan_chinese_journals(out: Path, now: datetime, get=fetch_html, rss_get=None
                         and previous.get("issue") == issue
                         and previous.get("last_article_issue") != issue
                         and article.get("url_scope") == "article_detail")
-                    if (previous.get("baselined") and (previous_articles or (previous.get("issue") and issue > previous["issue"]) or article.get("url_scope") == "issue_catalog" or recovered_first_article)) or recent_listing:
+                    if recovered_first_article:
+                        # Preserve the old contract: index-only recovery is NOT
+                        # a new-publication event. Surface separately for
+                        # human-reviewed historical bibliographic backfill.
+                        historical_backfill_leads.append({
+                            "title": article["title"], "url": article["url"],
+                            "journal": journal, "issue": article.get("issue"),
+                            "source": "chinese_journal_toc",
+                            "event_type": "issue_backfill",
+                            "first_observed_at": checked,
+                            "published_at": None, "date_verified": False,
+                            "url_scope": article.get("url_scope", "article_detail"),
+                        })
+                    elif (previous.get("baselined") and (previous_articles or (previous.get("issue") and issue > previous["issue"]) or article.get("url_scope") == "issue_catalog")) or recent_listing:
                         ident = hashlib.sha256((slug + ":" + key).encode()).hexdigest()[:16]
                         new_items.append({
                             "id": "journal:" + slug + ":" + ident,
@@ -838,4 +852,5 @@ def scan_chinese_journals(out: Path, now: datetime, get=fetch_html, rss_get=None
         "records": records, "errors": failures, "journals": journals, "ncpssd_topic_index": index_status}
     out.mkdir(parents=True, exist_ok=True)
     seen_path.write_text(json.dumps(updated, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    return {"source_status": source_status, "new_candidates": new_items}
+    return {"source_status": source_status, "new_candidates": new_items,
+            "historical_backfill_leads": historical_backfill_leads}

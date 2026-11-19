@@ -1,6 +1,6 @@
-# Academic Research Radar — 2026-11-19T03:23:45.317314+00:00
+# Academic Research Radar — 2026-11-19T12:55:02.158869+00:00
 
-**Status:** degraded; **New or changed candidates:** 0; **Metadata prefilter passes:** 10
+**Status:** degraded; **New or changed candidates:** 1; **Metadata prefilter passes:** 11
 
 This is metadata triage, not a verified reading or recommendation.
 
@@ -36,4 +36,4 @@ This is metadata triage, not a verified reading or recommendation.
 
 ## New or revised candidates
 
-No new or changed candidates selected for delivery. This does not imply zero prefilter passes or no relevant papers.
+- [Kuwait’s Innovation Pipeline in Cross-Country Perspective: University–Industry Collaboration and the Association Between Scientific Research and International Patent Applications](https://doi.org/10.3390/systems14111486) — P0, prefilter 54, crossref_registration 2026-11-19, new

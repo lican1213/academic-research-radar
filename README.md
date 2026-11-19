@@ -2,6 +2,8 @@
 
 给经济学论文使用的**文献候选发现器**。GitHub Actions 定时拉取公开元数据，保留跨次去重状态；ChatGPT 每日任务再核验官方页面、读摘要或正文，并判断是否值得进入现有论文。
 
+> **供同学 Fork 独立使用：** [同学 Fork / 激活扫描 / 配置自己研究方向的上手指南](docs/FORK_START_HERE.md) · [ChatGPT 每日研究雷达定时提示词（复制到同学自己的账号）](docs/CHATGPT_DAILY_TASK_TEMPLATE.md)。Fork 默认会复制上游的历史 data，第一次独立扫描会自动初始化自己的 `seen` 去重状态；`radar_profile.json` 是可选但建议设置的个人选题配置，不设置则仍按照本仓库作者原 P0—P4 方向工作。**GitHub Fork 本身不会创建同学的 ChatGPT 定时任务，也不会复制 Apps 授权。**
+
 这不是自动写文献综述的工具，也不替代中文期刊人工检索。它只输出**可核验的候选与来源健康状态**。
 
 ## 工作流程
@@ -125,3 +127,12 @@ Ponytail 最小验证：`.github/workflows/pdf-probe.yml` 只在 PDF 验收代�
 [最终生产验收 #44478691394](https://github.com/lican1213/academic-research-radar/actions/runs/44478691394) 在代码SHA `e70d4ebc924cd8609ebc4e369f5c765c67a3d06f` 上完成：不同于前次《金融研究》固定六篇，《财经研究》政府知识产权支持与OFDI、华东师大学报跨境电商韧性、《世界经济》金融科技与FactSet国际供应链三篇均取得**真实完整 PDF**，且通过文件格式、中文正文、标题、页数与SHA256检验，**3/3 PASS**。完整失败日志、改进依据与文件哈希见 `MOC.md`。
 
 适用边界：只是对3种真实出版方的测试，**没有证明九刊任何新文章都能下载**，也**没有审计任何回归表**。每日研究雷达仍按原频率和规则运行、只读独立判断；尚未自动把新候选传入该PDF试验。扩展到新期次须重新发现并验证文章PDF URL，不能用旧文章 ID 或凭DOI猜下载地址。
+
+
+### 2026-11-19 / 同学 Fork 与独立研究配置
+
+本项目已增加 [FORK_START_HERE](docs/FORK_START_HERE.md) 与 [ChatGPT 定时日报任务模板](docs/CHATGPT_DAILY_TASK_TEMPLATE.md)。上游仍保留原项目研究画像；同学只有在自己的 Fork 根目录提交 `radar_profile.json` 时，才切换其 Crossref/arXiv 关键词和 `RESEARCH` 粗筛配置。配置示例见 `radar_profile.example.json`。默认中文经济学九刊目录覆盖不变，选题个性化不自动新增其他中文期刊。
+
+`fork_bootstrap.py` 由现有 `scan.yml` 首次在非上游仓库运行时调用，清空 Fork 从上游继承的 `seen.json`、`chinese_seen.json` 及旧 `latest`，写入 `data/fork_initialized.json`；只执行一次，后续保留同学自己的去重账本。GitHub 公开 Fork 的 scheduled Actions 默认禁用，同学必须在**自己的 Fork**显式启用并先手动运行，检查 `data/latest.json`、`research_profile.name`、工作流真实状态和提交读回。原仓库两次 GitHub 扫描、每日 ChatGPT 研究任务和旧数据不受影响。
+
+此功能不代同学登录/授权 GitHub、创建 ChatGPT Tasks 或运行其私人账号。公开仓库中的研究画像、日志与题录对所有访问者可见，禁止存放私密稿件、个人 API 密钥或受版权保护的 PDF。仓库目前未指定开源许可证；公开 Fork 功能与正式版权许可不同。

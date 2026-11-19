@@ -521,6 +521,23 @@ def scan_chinese_journals(out: Path, now: datetime, get=fetch_html, rss_get=None
                 info["url"] = url = fallback_url
                 info["source_kind"] = kind = fallback_kind
             issue, issue_date, articles = parse_toc(payload, journal=journal, kind=kind, url=url)
+            # A reachable but regressed catalog is also a source failure.
+            # Probe the independent public fallback before labelling it stale.
+            if (issue and previous.get("issue") and issue < previous["issue"]
+                    and slug in FALLBACKS and url != FALLBACKS[slug][1]):
+                fallback_kind, fallback_url = FALLBACKS[slug]
+                try:
+                    fallback_payload = get(fallback_url)
+                    candidate_issue, candidate_date, candidate_articles = parse_toc(
+                        fallback_payload, journal=journal, kind=fallback_kind, url=fallback_url)
+                    if candidate_issue and candidate_issue >= previous["issue"]:
+                        info["primary_url"] = url
+                        info["primary_failure"] = "stale_primary_index: " + issue
+                        info["url"] = url = fallback_url
+                        info["source_kind"] = kind = fallback_kind
+                        issue, issue_date, articles = candidate_issue, candidate_date, candidate_articles
+                except (OSError, ValueError) as fallback_error:
+                    info["fallback_failure"] = f"{type(fallback_error).__name__}: {str(fallback_error)[:140]}"
             if not issue:
                 info.update(status="unverified", reason="journal_or_issue_not_recognized")
             elif previous.get("issue") and issue < previous["issue"]:
@@ -540,7 +557,10 @@ def scan_chinese_journals(out: Path, now: datetime, get=fetch_html, rss_get=None
                 if not articles:
                     info["reason"] = "issue_visible_but_articles_not_verified"
                 if info.get("primary_failure"):
-                    info["reason"] = "publisher_unavailable; " + info.get("reason", "catalog_fallback")
+                    failure_class = ("stale_primary_index" if info["primary_failure"].startswith("stale_primary_index:")
+                                     else "publisher_unavailable" if kind == "catalog" and slug in
+                                     ("quant_economics", "financial_research") else "primary_source_unavailable")
+                    info["reason"] = failure_class + "; " + info.get("reason", "catalog_fallback")
                 if info["status"] == "mixed_links":
                     info["reason"] = "; ".join(filter(None, (info.get("reason"), "mixed_or_unbound_links")))
                 previous_articles = set(previous.get("articles", []))

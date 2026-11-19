@@ -188,3 +188,9 @@
 - **阶段二（条件触发，未实施）**：如经真实GitHub Runner实测移动站也超时，再评估经允许使用的权威目录题录/可靠API按ISSN与单刊期次索引。采集快照保留源、期次、文章身份与精度等级；来源单独记录健康和最后成功时间，不能将搜索索引当刊期完整目录。
 - **阶段三（条件触发，未实施）**：在真实文章详情可访问后再扩展DOI/正式在线日期与期刊时间轴复验、逐篇链接验证和跨日精准去重；发布前继续以论文优先级和日报人工核验为门，任何`index_event_at/first_observed_at`不自动变成发表日期。
 - Gate：等待PR CI编译与对抗测试；合并后的生产run必须回读`head_sha`、`status`、逐刊`coverage_kind/article_snapshot/RSS`、失败主因与最新数据提交。即使运行缩短，也不等于9刊已恢复文章级采集。原定时任务、交易相关仓库、历史账本及用户稿件未修改。
+
+### 2026-11-19 / PR #7 live readback 与 catalog stale 后续修复
+
+- PR #7 squash 合并 `b2d84e0d8272ebfa82cfddff5443f98aab2957ee`；PR CI [44444217486](https://github.com/lican1213/academic-research-radar/actions/runs/44444217486) 与主分支 CI [44444303833](https://github.com/lican1213/academic-research-radar/actions/runs/44444303833) 均成功，62/62测试通过。
+- 实际生产 [run 44444303838](https://github.com/lican1213/academic-research-radar/actions/runs/44444303838) completed/success、head_sha=b2d84e0d，`generated_at=2026-11-19T02:26:20Z`，数据提交 `26a65e27e0665843d02cb09a8ab83144f0871e96`。总状态仍degraded（正确）：经济研究2026-09、工业经济2026-08恢复为toc_metadata；世界经济、数量经济、国际贸易问题、世界经济研究为当期绑定链接；财经研究mixed_links；金融研究官网TLS hostname mismatch后目录仅2026-07；管理世界原目录退回2026-09而账本已有10期。CNKI RSS首次DNS失败后同host余下调用均显示host_circuit_open，不误记成功；NCPSSD专题8/8本轮恢复，可能是外部服务暂时恢复，不归功于熔断。7/9有文章或题录记录，并非9刊完整覆盖。
+- 本轮追加的**目录倒退备用源**：当主目录成功响应但期次比历史成功期次旧时，尝试已配置的独立移动目录；只有备用页期次不早于历史才采纳，且继续按页实际证据保持catalog_only/toc_metadata，不将题名或刊期假报为文章详情、首发日或读到全文。备用页失败或更旧则保留stale_index，不覆盖账本。此修复独立PR/CI/生产门验收，未改调度和去重算法。

@@ -5,7 +5,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from fork_bootstrap import initialize_fork
-from radar import load_research_profile, profile_prefilter, run, prefilter
+from radar import load_research_profile, profile_prefilter, profile_revision, run
 
 
 class ForkSetupTests(unittest.TestCase):
@@ -35,6 +35,74 @@ class ForkSetupTests(unittest.TestCase):
             self.assertIn("NEW", (data/"seen.json").read_text())
             self.assertEqual(json.loads((data/"fork_initialized.json").read_text())["repository"],
                              "classmate/radar")
+
+    def test_invalid_or_wrong_fork_marker_fails_without_touching_ledger(self):
+        with tempfile.TemporaryDirectory() as root:
+            data=Path(root)
+            (data/"seen.json").write_text('{"KEEP":true}')
+            for repo in ("", "bad", "/repo", "owner/", "owner/repo/more"):
+                with self.assertRaisesRegex(ValueError,"OWNER/REPO"):
+                    initialize_fork(repo,data)
+            for value in ('{"repository":"other/fork"}', '{"repository":', '[]'):
+                (data/"fork_initialized.json").write_text(value)
+                with self.assertRaises((ValueError, json.JSONDecodeError)):
+                    initialize_fork("classmate/radar",data)
+                self.assertIn("KEEP", (data/"seen.json").read_text())
+            self.assertNotIn("new_fork", (data/"seen.json").read_text())
+
+    def test_second_phase_topic_revision_does_not_silence_or_repeat_old_leads(self):
+        profile={"name":"AI与工资","crossref_queries":["ai wages"],
+                 "arxiv_queries":[],"keywords":["artificial intelligence","wage"],
+                 "min_keyword_hits":2}
+        item={"id":"doi:10.1000/ai","title":"Artificial Intelligence and Wage Inequality",
+              "abstract":"AI wage inequality","event_at":"2026-11-18",
+              "event_type":"crossref_registration","source":"crossref","sources":["crossref"],
+              "doi":"10.1000/ai","version":"","url":"https://doi.org/10.1000/ai"}
+        queried_since=[]
+        def source(since, *, queries=None):
+            queried_since.append(since)
+            return [item],{"status":"ok","queries_ok":1,"queries_total":1,
+                           "records":1,"errors":[]}
+        when=datetime(2026,11,19,tzinfo=timezone.utc)
+        with tempfile.TemporaryDirectory() as root:
+            data=Path(root)
+            first=run(data,when,crossref=source,profile=profile)
+            self.assertEqual(len(first["new_candidates"]),1)
+            self.assertEqual(queried_since[-1],"2026-11-12")
+            second=run(data,when,crossref=source,profile=profile)
+            self.assertEqual(second["new_candidates"],[])
+            self.assertEqual(queried_since[-1],"2026-11-16")
+            # Cosmetic rename must not re-emit; real topic/query revision must.
+            rename={**profile,"name":"新论文名字"}
+            self.assertEqual(profile_revision(profile),profile_revision(rename))
+            self.assertEqual(run(data,when,crossref=source,profile=rename)["new_candidates"],[])
+            changed={**profile,"crossref_queries":["AI wage and corporate governance"]}
+            changed_run=run(data,when,crossref=source,profile=changed)
+            self.assertEqual(len(changed_run["new_candidates"]),1)
+            self.assertEqual(queried_since[-1],"2026-11-12")
+            self.assertNotEqual(first["research_profile"]["revision"],
+                                changed_run["research_profile"]["revision"])
+            # Reverting to the previous query must not duplicate the original article.
+            self.assertEqual(run(data,when,crossref=source,profile=profile)["new_candidates"],[])
+            seen=json.loads((data/"seen.json").read_text())
+            self.assertTrue(any(key.startswith(profile_revision(profile)+":") for key in seen))
+            self.assertTrue(any(key.startswith(profile_revision(changed)+":") for key in seen))
+
+    def test_profile_short_latin_tokens_do_not_match_inside_other_words(self):
+        profile={"name":"test","keywords":["ai","wage"],"min_keyword_hits":2}
+        assert profile_prefilter({"title":"Fair Wage Statistics","abstract":""},profile)["eligible"] is False
+        assert profile_prefilter({"title":"AI Wage Statistics","abstract":""},profile)["eligible"] is True
+        assert profile_prefilter({"title":"工资与人工智能发展","abstract":""},
+                                 {**profile,"keywords":["工资","人工智能"]})["eligible"] is True
+
+    def test_duplicate_keywords_cannot_satisfy_two_hit_threshold(self):
+        with tempfile.TemporaryDirectory() as root:
+            path=Path(root)/"radar_profile.json"
+            profile={"name":"wage","crossref_queries":["ai wages"],"arxiv_queries":[],
+                     "keywords":["AI","ai"],"min_keyword_hits":2}
+            path.write_text(json.dumps(profile),encoding="utf-8")
+            with self.assertRaisesRegex(ValueError,"duplicate_keywords"):
+                load_research_profile(path)
 
     def test_profile_opt_in_load_and_validation(self):
         with tempfile.TemporaryDirectory() as root:

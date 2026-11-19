@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import html as html_lib
 from html.parser import HTMLParser
 import json
 from pathlib import Path
@@ -73,19 +74,27 @@ def approved_url(url: str) -> bool:
 
 
 def pdf_link(page_url: str, html: bytes) -> str | None:
+    """Read a publisher-provided URL, including script attributes used by Magtech."""
     parser = Links()
     parser.feed(html.decode("utf-8", errors="replace"))
     host = urlsplit(page_url).hostname
-    for href, label in parser.links:
-        url = urljoin(page_url, href)
+    expected = re.search(r"/abstract/abstract(\d+)\.shtml$", urlsplit(page_url).path)
+    if not expected:
+        return None
+    # Some Magtech themes place the real URL in onclick/JS, not <a href>.
+    source = html_lib.unescape(html.decode("utf-8", errors="replace"))
+    embedded = re.findall(
+        r'(?:https?://www\.jryj\.org\.cn)?/CN/article/downloadArticleFile\.do\?[^"\'\s<>]+',
+        source)
+    for href in [h for h, _ in parser.links] + embedded:
+        url = urljoin(page_url, href.rstrip(");"))
         p = urlsplit(url)
         if p.hostname != host or p.scheme != urlsplit(page_url).scheme or not approved_url(url):
             continue
-        path = p.path.lower()
-        is_file = path.endswith(".pdf") or "downloadarticlefile" in path
-        is_pdf_query = any(x.upper() == "PDF" for x in parse_qs(p.query).get("attachType", []))
-        is_labeled = bool(re.search(r"PDF|正文|全文", label, re.I))
-        if is_file or is_pdf_query or (is_labeled and re.search(r"download|pdf", path, re.I)):
+        if p.path != "/CN/article/downloadArticleFile.do":
+            continue
+        qs = parse_qs(p.query)
+        if qs.get("attachType") == ["PDF"] and qs.get("id") == [expected.group(1)]:
             return url
     return None
 

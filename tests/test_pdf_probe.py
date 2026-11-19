@@ -59,6 +59,35 @@ class PdfProbeTests(unittest.TestCase):
         self.assertTrue(r["pdf_download_verified"])
         self.assertEqual(r["source_url"], PDF)
 
+    def test_publisher_http_url_is_tightly_allowlisted(self):
+        from pdf_probe import ARTICLES, approved_url
+        for article_id, _, _ in ARTICLES:
+            self.assertTrue(approved_url(
+                f"http://www.jryj.org.cn/CN/abstract/abstract{article_id}.shtml"))
+            self.assertTrue(approved_url(
+                f"http://www.jryj.org.cn/CN/article/downloadArticleFile.do?attachType=PDF&id={article_id}"))
+        for unsafe in (
+            "http://evil.example/CN/abstract/abstract1663.shtml",
+            "http://www.jryj.org.cn/CN/abstract/abstract1668.shtml",
+            "http://www.jryj.org.cn/CN/abstract/abstract1663.shtml/../../admin",
+            "http://www.jryj.org.cn/CN/article/downloadArticleFile.do?attachType=HTML&id=1663",
+            "http://www.jryj.org.cn/robots.txt",
+        ):
+            self.assertFalse(approved_url(unsafe))
+
+    def test_real_style_official_http_link_parsed_without_guess(self):
+        page = "http://www.jryj.org.cn/CN/abstract/abstract1663.shtml"
+        blob = (b'<a href="http://www.jryj.org.cn/CN/article/downloadArticleFile.do?'
+                b'attachType=PDF&amp;id=1663">PDF (622KB)</a>')
+        result = pdf_link(page, blob)
+        self.assertEqual(result,
+                         "http://www.jryj.org.cn/CN/article/downloadArticleFile.do?attachType=PDF&id=1663")
+
+    def test_http_link_cannot_be_redirected_to_unrelated_transport(self):
+        page = "http://www.jryj.org.cn/CN/abstract/abstract1663.shtml"
+        blob = b'<a href="https://www.jryj.org.cn/CN/article/downloadArticleFile.do?attachType=PDF&id=1663">PDF</a>'
+        self.assertIsNone(pdf_link(page, blob))
+
     def test_text_extraction_rejects_corrupt_fixture(self):
         from pdf_probe import inspect_pdf
         result = inspect_pdf(BLOB)

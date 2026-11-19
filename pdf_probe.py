@@ -115,15 +115,20 @@ def fetch(url: str, size: int) -> bytes:
         raise ValueError("unapproved_transport_or_path")
     req = Request(url, headers={"User-Agent": "AcademicResearchRadar/0.2 (public PDF availability probe)",
                                 "Accept": "application/pdf,text/html;q=0.8,*/*;q=0.2"})
-    with urlopen(req, timeout=12) as res:
-        # Any redirect must stay on the explicitly approved publisher host.
-        final = urlsplit(res.geturl())
-        if final.hostname != urlsplit(url).hostname or final.scheme != urlsplit(url).scheme or not approved_url(res.geturl()):
-            raise ValueError("cross_origin_redirect_rejected")
-        blob = res.read(size + 1)
-        if len(blob) > size:
-            raise ValueError("payload_over_size_limit")
-        return blob
+    for attempt in range(3):
+        try:
+            with urlopen(req, timeout=20) as res:
+                # No cross-origin redirect and no TLS verification override.
+                final = urlsplit(res.geturl())
+                if final.hostname != urlsplit(url).hostname or final.scheme != urlsplit(url).scheme or not approved_url(res.geturl()):
+                    raise ValueError("cross_origin_redirect_rejected")
+                blob = res.read(size + 1)
+                if len(blob) > size:
+                    raise ValueError("payload_over_size_limit")
+                return blob
+        except TimeoutError:
+            if attempt == 2:
+                raise
 
 
 def valid_pdf(blob: bytes) -> bool:
@@ -234,7 +239,7 @@ def main() -> int:
         targets.append(result)
     report = {"gate": "six_official_jryj_pdfs", "targets": targets,
               "target": targets[1],
-              "control": probe("independent_publisher_pdf_control", CONTROL, direct=True)}
+              "control": None if args.zip_out else probe("independent_publisher_pdf_control", CONTROL, direct=True)}
     report["passed"] = all(x["verified_for_analysis"] for x in targets)
     if report["passed"] and args.zip_out:
         write_delivery_zip(args.zip_out, saved_pdfs)

@@ -116,3 +116,12 @@ Ponytail 最小验证：`.github/workflows/pdf-probe.yml` 只在 PDF 验收代�
 用户明确要求原始 PDF 而非验收日志，因此 [PR #16](https://github.com/lican1213/academic-research-radar/pull/16) / [PR #17](https://github.com/lican1213/academic-research-radar/pull/17) 为独立 PDF 验收任务加入 **`--zip-out` 单次交付模式**：Runner 下载六篇官网原始文件，与已验证的每篇 SHA-256 对比，通过才临时生成 ZIP 并以 **1日过期的 GitHub Actions Artifact** 交付；会话端取回后可单独提供6份 PDF 或 ZIP。最终成功 [run #44474347819](https://github.com/lican1213/academic-research-radar/actions/runs/44474347819)，Artifact `14505487442`，6/6 校验通过、合计112页，**已实际完成对话交付**；此前 [run #44473449505](https://github.com/lican1213/academic-research-radar/actions/runs/44473449505) 在第6篇临时超时且4分钟上限触发取消，不能当作通过。完整失败-修复-再验收过程见 MOC。
 
 注意：以上只是固定的《金融研究》2026年第10期前6篇样例，**不是九刊通用自动全文获取**。日常研究雷达仍优先发现元数据，随后对高相关、公开可取得的原文按需核对。研究报告要将“题录/摘要”“原文已取得”“回归表与页码已逐项核验”分开；PDF 提取文字成功不能冒充学术证据验证。PDF 和提取全文绝不提交到 Git，允许时仅在用户明确要求交付的独立临时 Artifact 里短时传递原文，不建永久公众下载仓库。原有定时扫描、去重账本与候选筛选规则不变。
+
+
+### 2026-11-19 / 新文章多出版方 PDF 真实验收
+
+新文件 `pdf_candidate.py` + `tests/pdf_pilot_manifest.json` 是**审核后输入真实文章页与期刊、标题、可选确证 PDF URL** 的跨平台全文读取试验；复用此前 PDF 下载和 PyMuPDF 解析能力，不重新发明爬虫框架。官方站点支持普通 PDF 链接、玛格泰克 `citation_pdf_url`、经实网确认的期刊站内路径；上海财经大学期刊社案例还验证了文章页与静态 PDF 位于两个已核官方域名的情况。默认**不保存原始 PDF**，只产出文献证据状态 JSON，并且不增加任何周期任务。
+
+[最终生产验收 #44478691394](https://github.com/lican1213/academic-research-radar/actions/runs/44478691394) 在代码SHA `e70d4ebc924cd8609ebc4e369f5c765c67a3d06f` 上完成：不同于前次《金融研究》固定六篇，《财经研究》政府知识产权支持与OFDI、华东师大学报跨境电商韧性、《世界经济》金融科技与FactSet国际供应链三篇均取得**真实完整 PDF**，且通过文件格式、中文正文、标题、页数与SHA256检验，**3/3 PASS**。完整失败日志、改进依据与文件哈希见 `MOC.md`。
+
+适用边界：只是对3种真实出版方的测试，**没有证明九刊任何新文章都能下载**，也**没有审计任何回归表**。每日研究雷达仍按原频率和规则运行、只读独立判断；尚未自动把新候选传入该PDF试验。扩展到新期次须重新发现并验证文章PDF URL，不能用旧文章 ID 或凭DOI猜下载地址。

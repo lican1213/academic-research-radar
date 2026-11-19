@@ -31,8 +31,8 @@ JOURNALS = (
     ("management_world", "管理世界", "catalog", "https://ncpssd.org/journal/details?gch=95499X&langType=1"),
     ("world_economy", "世界经济", "publisher", "https://sjjj.magtech.com.cn/CN/home"),
     ("quant_economics", "数量经济技术经济研究", "publisher", "https://www.jqte.net/sljjjsjjyj/ch/index.aspx"),
-    ("finance_economics", "财经研究", "publisher", "https://qks.sufe.edu.cn/J/CJYJ/Article/Latest"),
-    ("financial_research", "金融研究", "publisher", "https://www.jryj.org.cn/CN/1002-7246/current.shtml"),
+    ("finance_economics", "财经研究", "publisher", "https://qks.sufe.edu.cn/J/CJYJ/Article/CurrentIssue/CN"),
+    ("financial_research", "金融研究", "publisher", "http://www.jryj.org.cn/CN/1002-7246/current.shtml"),
     ("international_trade", "国际贸易问题", "publisher", "https://gjmw.cbpt.cnki.net/portal/journal/portal/client/paper_list/type_benqi"),
     ("world_economy_studies", "世界经济研究", "publisher", "https://jing.cbpt.cnki.net/portal/journal/portal/client/paper_list/type_benqi"),
 )
@@ -45,7 +45,7 @@ FALLBACKS = {
     "management_world": ("catalog", "https://m.ncpssd.cn/journal/details?gch=95499X&langType=1&nav=1"),
     "international_trade": ("catalog", "https://ncpssd.org/journal/details?gch=96001X"),
     "world_economy_studies": ("catalog", "https://ncpssd.org/journal/details?gch=91453X"),
-    "finance_economics": ("publisher", "https://qks.sufe.edu.cn/J/CJYJ/Article/CurrentIssue/CN"),
+    "finance_economics": ("publisher", "https://qks.sufe.edu.cn/J/CJYJ/Article/Latest"),
     "quant_economics": ("catalog", "https://www.ncpssd.org/journal/details?gch=94503X"),
     "financial_research": ("catalog", "https://m.ncpssd.cn/journal/details?gch=97926X&langType=1&nav=1"),
 }
@@ -122,6 +122,9 @@ def article_link(kind: str, url: str) -> bool:
         # National catalog may expose an issue but not verifiable article pages.
         # Do not mistake download links, buttons or site navigation for papers.
         return bool(re.search(r"/(?:article|literature|paper)/[A-Za-z0-9_-]{8,}", path, re.I))
+    if (kind == "publisher" and urllib.parse.urlsplit(url).hostname == "www.jryj.org.cn"
+            and re.fullmatch(r"/CN/abstract/abstract\d+\.shtml", path, re.I)):
+        return True
     if "/sljjjsjjyj/ch/reader/view_abstract.aspx" in path.lower():
         query = urllib.parse.parse_qs(urllib.parse.urlparse(url).query)
         return bool(re.fullmatch(r"20\d{6}", (query.get("file_no") or [""])[0]))
@@ -287,6 +290,13 @@ def parse_toc(payload: bytes, *, journal: str, kind: str, url: str) -> tuple[str
             published = None
             doi_match = None
         # Never inherit the maximum issue of a mixed homepage or latest-articles list.
+        # JRYJ has a dedicated publisher current-issue page with official
+        # article identifiers; link IDs do not encode the year and issue.
+        if (row_issue is None and journal == "金融研究"
+                and url == "http://www.jryj.org.cn/CN/1002-7246/current.shtml"
+                and re.fullmatch(r"/CN/abstract/abstract\d+\.shtml",
+                                 urllib.parse.urlsplit(absolute).path, re.I)):
+            row_issue = issue
         if row_issue is None and re.search(r"/Article/(20\d{2})/(\d{1,2})/CN", url, re.I):
             local = re.search(r"/Article/(20\d{2})/(\d{1,2})/CN", url, re.I)
             row_issue = f"{local[1]}-{int(local[2]):02d}"
@@ -475,6 +485,7 @@ PRIORITY_SOURCES = {
         ("catalog", "https://m.ncpssd.cn/journal/details?gch=95499X&langType=1&nav=1"),
     ),
     "financial_research": (
+        ("publisher", "http://www.jryj.org.cn/CN/1002-7246/home.shtml"),
         ("publisher", "https://jryj.org.cn/CN/1002-7246/current.shtml"),
         ("publisher", "https://www.jryj.org.cn/CN/1002-7246/home.shtml"),
         ("catalog_index", "https://www.cqvip.com/journal/97926X/97926X"),
@@ -616,7 +627,7 @@ def scan_chinese_journals(out: Path, now: datetime, get=fetch_html, rss_get=None
     journals: dict[str, dict] = {}
     new_items: list[dict] = []
     historical_backfill_leads: list[dict] = []
-    full_ok = 0
+    full_ok = 0  # response with usable rows, not verified article-link coverage
     records = 0
     failures = []
     checked = now.date().isoformat()
@@ -807,7 +818,7 @@ def scan_chinese_journals(out: Path, now: datetime, get=fetch_html, rss_get=None
                 info["rss"].update(reason=f"{type(error).__name__}: {str(error)[:120]}")
                 if updated.get(slug) and previous.get("rss_baselined"):
                     updated[slug]["rss_baselined"] = True
-        if info["status"] != "ok" or info.get("rss", {}).get("status") == "failed":
+        if info["status"] != "ok":
             failures.append(f"{journal}: {info['status']} ({info.get('reason', '')}); RSS={info.get('rss', {}).get('status', 'not_run')}")
         journals[slug] = info
     # Topic search adds verified-index leads but never counts as a complete issue scan.
@@ -846,9 +857,18 @@ def scan_chinese_journals(out: Path, now: datetime, get=fetch_html, rss_get=None
         index_status["status"] = "ok" if index_status["queries_ok"] == len(NCPSSD_TOPICS) else "degraded" if index_status["queries_ok"] else "failed"
     if index_status["status"] not in ("ok", "not_run"):
         failures.append(f"NCPSSD topic index: {index_status['status']} ({index_status['queries_ok']}/{index_status['queries_total']})")
-    source_status = {"status": "ok" if full_ok == len(JOURNALS) and not failures else "degraded" if any(
+    article_level_ok = sum(j["status"] == "ok" for j in journals.values())
+    rss_failed = [j["journal"] for j in journals.values()
+                  if j.get("rss", {}).get("status") == "failed"]
+    # A broken *optional* CNKI RSS must not erase independently verified
+    # publisher article links; its health stays visible as a separate field.
+    source_status = {"status": "ok" if article_level_ok == len(JOURNALS) and not failures else "degraded" if any(
         j["status"] in ("ok", "toc_metadata", "mixed_links", "rss_only", "catalog_only", "stale_index") for j in journals.values()) else "failed",
         "queries_ok": full_ok, "queries_total": len(JOURNALS),
+        "article_level_ok": article_level_ok,
+        "article_level_total": len(JOURNALS),
+        "rss_health": "degraded" if rss_failed else "ok" if rss_get is not None else "not_run",
+        "rss_failed_journals": rss_failed,
         "records": records, "errors": failures, "journals": journals, "ncpssd_topic_index": index_status}
     out.mkdir(parents=True, exist_ok=True)
     seen_path.write_text(json.dumps(updated, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

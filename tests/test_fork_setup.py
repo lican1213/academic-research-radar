@@ -36,6 +36,19 @@ class ForkSetupTests(unittest.TestCase):
             self.assertEqual(json.loads((data/"fork_initialized.json").read_text())["repository"],
                              "classmate/radar")
 
+    def test_existing_scan_cron_and_fork_permission_contract(self):
+        root=Path(__file__).resolve().parents[1]
+        scan=(root/".github/workflows/scan.yml").read_text(encoding="utf-8")
+        self.assertIn("cron: '17 10,22 * * *'",scan)
+        self.assertIn("contents: write",scan)
+        self.assertIn("cancel-in-progress: false",scan)
+        self.assertEqual(scan.count("python fork_bootstrap.py --repository"),1)
+        self.assertIn("run: python radar.py --out data",scan)
+        self.assertIn("git add data/latest.json data/latest.md data/seen.json data/chinese_seen.json",scan)
+        for path in ("pdf-probe.yml","pdf-candidate-acceptance.yml"):
+            source=(root/".github/workflows"/path).read_text(encoding="utf-8")
+            self.assertNotIn("  schedule:",source)
+
     def test_invalid_or_wrong_fork_marker_fails_without_touching_ledger(self):
         with tempfile.TemporaryDirectory() as root:
             data=Path(root)

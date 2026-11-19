@@ -1363,5 +1363,21 @@
     "doi": "10.3390/systems14111486",
     "last_seen": "2026-11-19",
     "emitted": true
+  },
+  "doi:10.3390/economies14110562": {
+    "fingerprint": "e45483aac0ca0a476f09",
+    "title_norm": "geopoliticalriskandrenewableenergyinvestmentinegyptatechnoeconomicassessmentamidgeopoliticaluncertainty",
+    "version": "",
+    "doi": "10.3390/economies14110562",
+    "last_seen": "2026-11-19",
+    "emitted": true
+  },
+  "title:geopoliticalriskandrenewableenergyinvestmentinegyptatechnoeconomicassessmentamidgeopoliticaluncertainty": {
+    "fingerprint": "e45483aac0ca0a476f09",
+    "title_norm": "geopoliticalriskandrenewableenergyinvestmentinegyptatechnoeconomicassessmentamidgeopoliticaluncertainty",
+    "version": "",
+    "doi": "10.3390/economies14110562",
+    "last_seen": "2026-11-19",
+    "emitted": true
   }
 }

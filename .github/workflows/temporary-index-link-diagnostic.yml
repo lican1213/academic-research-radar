@@ -56,6 +56,27 @@ jobs:
                   at=source.find(target) if target else -1
                   anchor_snip=re.sub(r"\\s+"," ",source[max(0,at-250):at+400])[:650] if at>=0 else ""
                   links=[{"name":a,"href":b} for a,b in p.items if re.search(r"(?:article|detail|paper|secure|literature|机器人|供应链|世界大变局|href)",str(a)+" "+str(b),re.I)]
+                  if name in ("management_mobile","economic_catalog","industrial_catalog"):
+                      tags=re.findall(r'<a\\b[^>]*onclick=["\\\']openDetail\\([^>]+>[^<]{0,150}</a>',source,flags=re.I|re.S)
+                      print("ARTICLE_TAGS",json.dumps({"id":name,"count":len(tags),
+                          "samples":[re.sub(r'\\s+',' ',t)[:500] for t in tags[:4]]},ensure_ascii=False))
+                      ids={"management_mobile":"GLSJ2026011001","economic_catalog":"JJYJ2026009002",
+                           "industrial_catalog":"ZGGYJJ2026008002"}
+                      for tag in tags:
+                          if ids[name] not in tag:continue
+                          match=re.search(r"openDetail\\(\\s*['\\\']([^'\\\']+)['\\\']",tag)
+                          if match:
+                              detail=urljoin(url,match.group(1))
+                              try:
+                                  with urllib.request.urlopen(urllib.request.Request(detail,headers={"User-Agent":"Mozilla/5.0"}),timeout=7) as res2:
+                                      b2=res2.read(100000)
+                                      print("DETAIL",json.dumps({"id":name,"url":detail,"status":res2.status,
+                                           "bytes":len(b2),"content_type":res2.headers.get("Content-Type"),
+                                           "id_present":ids[name] in b2.decode("utf-8","replace")},ensure_ascii=False))
+                              except Exception as e:
+                                  print("DETAIL",json.dumps({"id":name,"url":detail,"error":type(e).__name__,
+                                       "message":str(e)[:120]},ensure_ascii=False))
+                          break
                   print("INDEX",json.dumps({"id":name,"status":200,"final":dest,"content_type":ctype,
                       "bytes":len(body),"total_anchors":len(p.items),
                       "relevant_anchors":links[:12],"needle_found":at>=0,

@@ -88,6 +88,26 @@ class PdfProbeTests(unittest.TestCase):
         blob = b'<a href="https://www.jryj.org.cn/CN/article/downloadArticleFile.do?attachType=PDF&id=1663">PDF</a>'
         self.assertIsNone(pdf_link(page, blob))
 
+    def test_pdf_url_recovered_from_magtech_script_not_anchor(self):
+        page = "http://www.jryj.org.cn/CN/abstract/abstract1663.shtml"
+        html = ('<script>window.pdfUrl="http://www.jryj.org.cn/CN/article/'
+                'downloadArticleFile.do?attachType=PDF&amp;id=1663"</script>').encode()
+        self.assertEqual(pdf_link(page, html),
+                         "http://www.jryj.org.cn/CN/article/downloadArticleFile.do?attachType=PDF&id=1663")
+
+    def test_magtech_url_rejects_mismatched_id_even_in_script(self):
+        page = "http://www.jryj.org.cn/CN/abstract/abstract1663.shtml"
+        html = ('<script>var pdf="http://www.jryj.org.cn/CN/article/'
+                'downloadArticleFile.do?attachType=PDF&amp;id=1662";</script>').encode()
+        self.assertIsNone(pdf_link(page, html))
+
+    def test_magtech_parser_prefers_exact_article_over_older_script_link(self):
+        page = "http://www.jryj.org.cn/CN/abstract/abstract1663.shtml"
+        html = (b'<a href="/CN/article/downloadArticleFile.do?attachType=PDF&amp;id=1662">PDF</a>'
+                b'<script>var a="http://www.jryj.org.cn/CN/article/'
+                b'downloadArticleFile.do?attachType=PDF&id=1663";</script>')
+        self.assertIn("id=1663", pdf_link(page, html))
+
     def test_text_extraction_rejects_corrupt_fixture(self):
         from pdf_probe import inspect_pdf
         result = inspect_pdf(BLOB)

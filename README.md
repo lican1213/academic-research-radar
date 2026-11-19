@@ -93,3 +93,5 @@ DNS解析失败的CNKI RSS在**本次扫描内**停止同域名重复请求；�
 ### 2026-11-19 逐刊独立公开目录回退（Stage 2）
 
 《金融研究》和《管理世界》新增固定且经过期刊名/ISSN校验的维普公开期次索引兜底（非正式出版者）；《金融研究》先尝试原官方链接和规范无 www 站点。维普只有`目录/期次/声称篇数`，所以`index_claimed_paper_count`不等于抓到文章链接或已验证论文；扫描标记`catalog_only`，不生产新论文日期。诊断见各刊`source_attempts`，记录来源失败与采用来源。即使CI绿色，仍需通过生产run+最新JSON同SHA回读验收，并由ChatGPT独立查该刊的实际当期文章。
+
+**Stage-3兼容：** 若某刊首次只有期次、没有文章，后续同一期首次取得可验证文章链接，写入独立的 `chinese_historical_backfill_leads`（`event_type=issue_backfill`），发表日期保持 `null`；不把旧刊文章称为当天新论文。全部备用来源失败时，`source_attempts` 逐条记录真实错误供日报人工补检。

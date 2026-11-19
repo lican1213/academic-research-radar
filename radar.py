@@ -442,6 +442,12 @@ def markdown_report(report: dict) -> str:
                           "单篇论文发表日期待核验")
         if not report.get("chinese_new_candidates"):
             result.append("本次无新增中文候选；不等于无新论文。目录、混合期次、索引倒退或网络失败均需独立补查。")
+    if report.get("chinese_historical_backfill_leads"):
+        result.extend(["", "### 历史期次补回的文章线索（不计入新发表）", ""])
+        for item in report["chinese_historical_backfill_leads"]:
+            result.append(f"- [{item['title']}]({item['url']}) — {item['journal']} "
+                          f"{item['issue']}; 首次观察 {item['first_observed_at']}; "
+                          "历史补漏，发表日期待逐篇核验")
     result.extend(["", "## New or revised candidates", ""])
     for item in report["new_candidates"]:
         safe_title = item["title"].replace("[", r"\[").replace("]", r"\]")
@@ -497,6 +503,7 @@ def run(out: Path, now: datetime, lookback_days: int | None = None,
     if chinese_result is not None:
         report["chinese_journals"] = chinese_result["source_status"]["journals"]
         report["chinese_new_candidates"] = chinese_result["new_candidates"]
+        report["chinese_historical_backfill_leads"] = chinese_result.get("historical_backfill_leads", [])
         report["note"] += " Chinese catalog first_seen is NOT publication date; incomplete catalogs require manual checking."
     (out / "latest.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     (out / "latest.md").write_text(markdown_report(report), encoding="utf-8")

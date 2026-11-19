@@ -15,6 +15,7 @@ import re
 import sys
 from urllib.parse import urljoin, urlsplit, parse_qs
 from urllib.request import Request, urlopen
+from zipfile import ZIP_DEFLATED, ZipFile
 
 # The journal itself advertises HTTP. Its HTTPS certificate does not match
 # www.jryj.org.cn; restrict plaintext access to these publisher paths only.
@@ -31,6 +32,16 @@ TARGET = "http://www.jryj.org.cn/CN/abstract/abstract1663.shtml"
 CONTROL = "https://xbzs.ecnu.edu.cn/CN/article/downloadArticleFile.do?attachType=PDF&id=13261"
 MAX_HTML = 1_000_000
 MAX_PDF = 10_000_000
+
+# Verified originals from production run 44470870725.
+REFERENCE_SHA256 = {
+    1662: "65d3f9e1a861e769793b21994d53a5a3fcca23fe367b5531724235fae68eb8ca",
+    1663: "7d9123636ba35530ac71e64e047b774febecd1dba5e9d2384cf98e9d1f81b188",
+    1664: "d98f0dc2cd3afac71928807a020d8b44270646350cba78cc722c63f6bc9decc2",
+    1665: "f4f9dd7749f29452c7a45284116049760335a5d22983d1d01de8b03a98429422",
+    1666: "c5f3a104eacbdeeeb316555b76d2a54d561f8bdc524c134bba9d5a333176cd8e",
+    1667: "306495e4354cd6e0b6b6235f425da1ba22699268b9268eb84615fb7fa1033b42",
+}
 
 
 class Links(HTMLParser):
@@ -179,26 +190,56 @@ def probe(name: str, url: str, *, direct: bool = False, reader=fetch, inspector=
     return out
 
 
+def write_delivery_zip(path: Path, files: dict[int, bytes],
+                       reference: dict[int, str] = REFERENCE_SHA256) -> None:
+    """Only write a complete set of known, previously verified PDF originals."""
+    if set(files) != {item[0] for item in ARTICLES}:
+        raise ValueError("incomplete_six_paper_set")
+    for article_id, blob in files.items():
+        if not valid_pdf(blob) or hashlib.sha256(blob).hexdigest() != reference[article_id]:
+            raise ValueError(f"pdf_identity_mismatch_{article_id}")
+    with ZipFile(path, "w", compression=ZIP_DEFLATED) as bundle:
+        for article_id, title, _ in ARTICLES:
+            bundle.writestr(f"{article_id}_{title}.pdf", files[article_id])
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", type=Path, default=Path("pdf-probe-result.json"))
+    ap.add_argument("--zip-out", type=Path, default=None,
+                    help="Temporarily deliver the six verified originals; no Git commit")
     args = ap.parse_args()
     targets = []
+    saved_pdfs: dict[int, bytes] = {}
+
+    def capture_pdf(blob: bytes, article_id: int, title: str) -> dict:
+        metrics = inspect_pdf(blob, title)
+        saved_pdfs[article_id] = blob
+        return metrics
+
     for article_id, title, expected_pages in ARTICLES:
         url = f"http://{PUBLISHER}/CN/abstract/abstract{article_id}.shtml"
         result = probe("financial_research_" + str(article_id), url,
-                       inspector=lambda blob, title=title: inspect_pdf(blob, title))
+                       inspector=lambda blob, article_id=article_id, title=title:
+                       capture_pdf(blob, article_id, title))
         result["expected_title"] = title
         result["expected_page_count"] = expected_pages
         result["page_count_matches"] = result.get("page_count") == expected_pages
+        result["sha256_matches_previous_run"] = (
+            result.get("pdf_sha256") == REFERENCE_SHA256[article_id])
         result["verified_for_analysis"] = bool(
             result["pdf_download_verified"] and result.get("text_extraction") == "ok"
-            and result.get("title_match") and result["page_count_matches"])
+            and result.get("title_match") and result["page_count_matches"]
+            and result["sha256_matches_previous_run"])
         targets.append(result)
     report = {"gate": "six_official_jryj_pdfs", "targets": targets,
               "target": targets[1],
               "control": probe("independent_publisher_pdf_control", CONTROL, direct=True)}
     report["passed"] = all(x["verified_for_analysis"] for x in targets)
+    if report["passed"] and args.zip_out:
+        write_delivery_zip(args.zip_out, saved_pdfs)
+        report["delivery_zip_name"] = args.zip_out.name
+        report["delivery_zip_bytes"] = args.zip_out.stat().st_size
     args.out.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(report, ensure_ascii=False))
     return 0 if report["passed"] else 1

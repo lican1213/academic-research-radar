@@ -108,6 +108,45 @@ class PdfProbeTests(unittest.TestCase):
                 b'downloadArticleFile.do?attachType=PDF&id=1663";</script>')
         self.assertIn("id=1663", pdf_link(page, html))
 
+
+    def test_delivery_zip_contains_exact_six_pdfs(self):
+        import hashlib
+        from pathlib import Path
+        from tempfile import TemporaryDirectory
+        from zipfile import ZipFile
+        from pdf_probe import ARTICLES, write_delivery_zip
+        fixture = {article_id: BLOB + str(article_id).encode()
+                   for article_id, _, _ in ARTICLES}
+        expected = {key: hashlib.sha256(blob).hexdigest()
+                    for key, blob in fixture.items()}
+        with TemporaryDirectory() as tmp:
+            path = Path(tmp) / "six.zip"
+            write_delivery_zip(path, fixture, expected)
+            with ZipFile(path) as archive:
+                self.assertEqual(len(archive.namelist()), 6)
+                for article_id, title, _ in ARTICLES:
+                    self.assertEqual(archive.read(f"{article_id}_{title}.pdf"),
+                                     fixture[article_id])
+
+    def test_delivery_zip_fails_closed_on_wrong_hash_or_missing_pdf(self):
+        import hashlib
+        from pathlib import Path
+        from tempfile import TemporaryDirectory
+        from pdf_probe import ARTICLES, write_delivery_zip
+        fixture = {article_id: BLOB + str(article_id).encode()
+                   for article_id, _, _ in ARTICLES}
+        expected = {key: hashlib.sha256(blob).hexdigest()
+                    for key, blob in fixture.items()}
+        with TemporaryDirectory() as tmp:
+            path = Path(tmp) / "six.zip"
+            with self.assertRaisesRegex(ValueError, "incomplete_six_paper_set"):
+                write_delivery_zip(path, dict(list(fixture.items())[:5]), expected)
+            self.assertFalse(path.exists())
+            expected[1663] = "0" * 64
+            with self.assertRaisesRegex(ValueError, "pdf_identity_mismatch_1663"):
+                write_delivery_zip(path, fixture, expected)
+            self.assertFalse(path.exists())
+
     def test_text_extraction_rejects_corrupt_fixture(self):
         from pdf_probe import inspect_pdf
         result = inspect_pdf(BLOB)

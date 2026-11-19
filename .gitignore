@@ -2,3 +2,6 @@ __pycache__/
 *.py[cod]
 .venv/
 .pytest_cache/
+
+# One-off temporary original-PDF delivery; never commit publisher files.
+JRYJ_2026_10_Six_Papers.zip

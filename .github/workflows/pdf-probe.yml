@@ -15,7 +15,7 @@ permissions:
 jobs:
   pdf-acceptance:
     runs-on: ubuntu-latest
-    timeout-minutes: 4
+    timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5

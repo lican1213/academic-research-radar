@@ -503,12 +503,12 @@ def parse_cqvip_issue(payload: bytes, *, journal: str, url: str):
     parser = TocHTML()
     parser.feed(payload.decode("utf-8-sig", errors="replace"))
     text = " ".join(" ".join(parser.text_parts).split())
-    if journal not in text or not re.search(r"ISSN\\s*" + re.escape(identity[1]), text, re.I):
+    if journal not in text or not re.search(r"ISSN\s*" + re.escape(identity[1]), text, re.I):
         raise ValueError("index_journal_identity_not_verified")
     # "目录 ... 2026年10期 共：12篇" is distinct from an issue
     # navigation list or a headline stating an issue was released.
     matches = re.findall(
-        r"目录\\s*(?:封面\\s*)?(20\\d{2})\\s*年\\s*(0?[1-9]|1[0-2])\\s*期\\s*共\\s*[:：]\\s*(\\d{1,3})\\s*篇",
+        r"目录\s*(?:封面\s*)?(20\d{2})\s*年\s*(0?[1-9]|1[0-2])\s*期\s*共\s*[:：]\s*(\d{1,3})\s*篇",
         text,
     )
     valid = [(f"{y}-{int(m):02d}", int(n)) for y, m, n in matches if 0 < int(n) <= 100]

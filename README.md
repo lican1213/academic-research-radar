@@ -141,3 +141,10 @@ Ponytail 最小验证：`.github/workflows/pdf-probe.yml` 只在 PDF 验收代�
 ### 2026-11-19 / Ponytail Fork 对抗式审计修复
 
 独立 Fork 的自定义profile现在用稳定的 `research_profile.revision` 隔离关键词/查询版本的已见去重键。修改研究范围可恢复7天候选观察，恢复旧范围不重复推荐；不改变原 `P0—P4` 未配profile行为。复制来的异主仓库初始化标记、缺失仓库标识会让初始化失败而不是默默继承错误账本。英文关键词使用单词边界，拒绝重复关键词。只新增少量代码和对抗测试，更多细节见 `MOC.md`；这不意味着多用户共享账户系统已建成。同学仍须自行 Fork、启用 GitHub Actions 并创建自己的 ChatGPT 研究日报。
+
+
+### 2026-11-19 / 九刊目录覆盖已恢复：文章级9/9，PDF仍按需核对
+
+Ponytail 修复 [PR #26](https://github.com/lican1213/academic-research-radar/pull/26)、[#27](https://github.com/lican1213/academic-research-radar/pull/27)、[#28](https://github.com/lican1213/academic-research-radar/pull/28)、[#29](https://github.com/lican1213/academic-research-radar/pull/29)、[#30](https://github.com/lican1213/academic-research-radar/pull/30) 根治了官方 HTTP/HTTPS 入口错位、混合Latest页期次归属、以及国家哲社文献中心 `onclick=openDetail` 单篇链接未解析的问题。**正式 GitHub Runner 验收 [#44541276114](https://github.com/lican1213/academic-research-radar/actions/runs/44541276114) 成功**：9刊各自本次可见期次的文章级链接9/9，合计108篇；合并版本 CI 127项全通过，历史去重不重发。`data/latest.md` 独立显示 `article-level TOC` 和 `nonempty sources` 与可选RSS状态。
+
+**重要：目录链接成功 ≠ 详情页内容已独立审核、PDF可下载、论文首发日期已核验，亦不保证九刊都是2026-11最新期。** 仍需检查期次的新鲜度：`经济研究`源见2026-09、`中国工业经济`源见2026-08、`管理世界`源见2026-11。三个NCPSSD直达详情链接HTTP200，但原始HTML无明文论文标题，`link_verified=false` 有意保留。CNKI RSS `degraded` 单独报告、不让备用源DNS故障伪装成9刊主目录失败。下轮研究报告如果要引用系数/机制必须真正查看 PDF 对应页和表；这个门与目录发现完全独立。MOC保留所有失败与成功 run、例外处理、对抗测试和数据契约。

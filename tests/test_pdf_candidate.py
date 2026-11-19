@@ -51,7 +51,7 @@ class GenericPdfEvidenceTests(unittest.TestCase):
         spec={"key":"a","journal":"J","title":"跨境供应链韧性研究",
               "article_url":P,"verified_pdf_url":F}
         def reader(url,size):
-            return (b"<p>跨境供应链韧性研究</p>" if url==P else
+            return ("<p>跨境供应链韧性研究</p>".encode("utf-8") if url==P else
                     b"%PDF-1.7"+b"z"*1200+b"%%EOF")
         r=verify_candidate(spec,reader=reader,inspector=lambda b,title:{
           "title_match":False,"text_extraction":"ok","page_count":15})
@@ -63,7 +63,7 @@ class GenericPdfEvidenceTests(unittest.TestCase):
               "article_url":P,"verified_pdf_url":F,"required":True}
         v=spec|{"key":"b"}
         d=evaluate([spec,v],reader=lambda url,size:(
-          b'<p>供应链</p>' if url==P else b"%PDF-1.7"+b"z"*1200+b"%%EOF"),
+          "<p>供应链</p>".encode("utf-8") if url==P else b"%PDF-1.7"+b"z"*1200+b"%%EOF"),
           inspector=lambda b,t:{"title_match":True,"text_extraction":"ok","page_count":15})
         self.assertFalse(d["passed"])
 
@@ -74,7 +74,7 @@ class GenericPdfEvidenceTests(unittest.TestCase):
            "article_url":"https://xbzs.ecnu.edu.cn/CN/10.1",
            "required":True}
         d=evaluate([a,b],reader=lambda url,size:(
-          b'<p>供应链</p>' if url==P else
+          "<p>供应链</p>".encode("utf-8") if url==P else
           b"%PDF-1.7"+b"z"*1200+b"%%EOF" if url==F else b"<p>none</p>"),
           inspector=lambda blob,title:{"title_match":True,"text_extraction":"ok","page_count":15})
         self.assertFalse(d["passed"])

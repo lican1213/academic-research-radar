@@ -15,7 +15,18 @@ import sys
 from urllib.parse import urljoin, urlsplit, parse_qs
 from urllib.request import Request, urlopen
 
-TARGET = "https://www.jryj.org.cn/CN/abstract/abstract1663.shtml"
+# The journal itself advertises HTTP. Its HTTPS certificate does not match
+# www.jryj.org.cn; restrict plaintext access to these publisher paths only.
+PUBLISHER = "www.jryj.org.cn"
+ARTICLES = (
+    (1662, "银行资产负债结构、放贷能力与货币政策传导效果", 19),
+    (1663, "地缘政治风险、跨境供应链与中国企业债券信用利差", 19),
+    (1664, "中国企业价格加成和劳动收入份额", 19),
+    (1665, "贸易冲突下企业提前布局战略性新兴产业的韧性效应", 19),
+    (1666, "外贸下乡：自贸试验区农村劳动力增收效应", 18),
+    (1667, "股权结构的流动性冲击敞口如何影响债券信用利差", 18),
+)
+TARGET = "http://www.jryj.org.cn/CN/abstract/abstract1663.shtml"
 CONTROL = "https://xbzs.ecnu.edu.cn/CN/article/downloadArticleFile.do?attachType=PDF&id=13261"
 MAX_HTML = 1_000_000
 MAX_PDF = 10_000_000
@@ -47,6 +58,20 @@ class Links(HTMLParser):
             self.label = []
 
 
+def approved_url(url: str) -> bool:
+    p = urlsplit(url)
+    if p.scheme == "https":
+        return True
+    if p.scheme != "http" or p.hostname != PUBLISHER:
+        return False
+    if re.fullmatch(r"/CN/abstract/abstract166[2-7]\\.shtml", p.path):
+        return True
+    return (p.path == "/CN/article/downloadArticleFile.do" and
+            parse_qs(p.query).get("attachType") == ["PDF"] and
+            parse_qs(p.query).get("id", [""])[0] in
+            {str(i) for i, _, _ in ARTICLES})
+
+
 def pdf_link(page_url: str, html: bytes) -> str | None:
     parser = Links()
     parser.feed(html.decode("utf-8", errors="replace"))
@@ -54,7 +79,7 @@ def pdf_link(page_url: str, html: bytes) -> str | None:
     for href, label in parser.links:
         url = urljoin(page_url, href)
         p = urlsplit(url)
-        if p.scheme != "https" or p.hostname != host:
+        if p.hostname != host or p.scheme != urlsplit(page_url).scheme or not approved_url(url):
             continue
         path = p.path.lower()
         is_file = path.endswith(".pdf") or "downloadarticlefile" in path
@@ -66,12 +91,14 @@ def pdf_link(page_url: str, html: bytes) -> str | None:
 
 
 def fetch(url: str, size: int) -> bytes:
+    if not approved_url(url):
+        raise ValueError("unapproved_transport_or_path")
     req = Request(url, headers={"User-Agent": "AcademicResearchRadar/0.2 (public PDF availability probe)",
                                 "Accept": "application/pdf,text/html;q=0.8,*/*;q=0.2"})
     with urlopen(req, timeout=12) as res:
         # Any redirect must stay on the explicitly approved publisher host.
         final = urlsplit(res.geturl())
-        if final.scheme != "https" or final.hostname != urlsplit(url).hostname:
+        if final.hostname != urlsplit(url).hostname or final.scheme != urlsplit(url).scheme or not approved_url(res.geturl()):
             raise ValueError("cross_origin_redirect_rejected")
         blob = res.read(size + 1)
         if len(blob) > size:
@@ -84,7 +111,7 @@ def valid_pdf(blob: bytes) -> bool:
             and b"%%EOF" in blob[-2048:])
 
 
-def inspect_pdf(blob: bytes) -> dict:
+def inspect_pdf(blob: bytes, expected_title: str | None = None) -> dict:
     """Inspect in memory; retain metrics only, not article text or PDF."""
     result = {"pdf_sha256": hashlib.sha256(blob).hexdigest(),
               "pdf_bytes": len(blob), "text_extraction": "unavailable"}
@@ -106,6 +133,10 @@ def inspect_pdf(blob: bytes) -> dict:
         result["text_pages"] = sum(bool(page.strip()) for page in pages)
         result["table_label_hits"] = len(re.findall(r"表\s*[一二三四五六七八九十\d]+", text))
         result["text_extraction"] = "ok" if chinese_chars >= 100 and len(text) >= 500 else "low_confidence"
+        if expected_title:
+            normalize = lambda value: re.sub(r"[^\\u4e00-\\u9fffA-Za-z0-9]", "", value)
+            result["title_match"] = normalize(expected_title)[:12] in normalize(text)
+
     except Exception as exc:
         result["text_extraction"] = "failed"
         result["text_error_kind"] = type(exc).__name__
@@ -143,12 +174,22 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", type=Path, default=Path("pdf-probe-result.json"))
     args = ap.parse_args()
-    report = {"gate": "official_pdf_download",
-              "target": probe("financial_research_p1a", TARGET),
-              "control": probe("unrelated_publisher_open_pdf", CONTROL, direct=True)}
-    # The control can show the downloader works, but can never pass the
-    # user-requested Financial Research full-text gate.
-    report["passed"] = report["target"]["pdf_download_verified"]
+    targets = []
+    for article_id, title, expected_pages in ARTICLES:
+        url = f"http://{PUBLISHER}/CN/abstract/abstract{article_id}.shtml"
+        result = probe("financial_research_" + str(article_id), url,
+                       inspector=lambda blob, title=title: inspect_pdf(blob, title))
+        result["expected_title"] = title
+        result["expected_page_count"] = expected_pages
+        result["page_count_matches"] = result.get("page_count") == expected_pages
+        result["verified_for_analysis"] = bool(
+            result["pdf_download_verified"] and result.get("text_extraction") == "ok"
+            and result.get("title_match") and result["page_count_matches"])
+        targets.append(result)
+    report = {"gate": "six_official_jryj_pdfs", "targets": targets,
+              "target": targets[1],
+              "control": probe("independent_publisher_pdf_control", CONTROL, direct=True)}
+    report["passed"] = all(x["verified_for_analysis"] for x in targets)
     args.out.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(report, ensure_ascii=False))
     return 0 if report["passed"] else 1

@@ -77,7 +77,17 @@ class TocHTML(HTMLParser):
         if self.hidden_depth:
             return
         if tag == "a":
-            self.href = dict(attrs).get("href")
+            fields = dict(attrs)
+            href = fields.get("href")
+            # NCPSSD exposes real article URLs in a public openDetail action.
+            # Only decode the literal relative URL; never execute page scripts.
+            if href and href.strip().lower().startswith("javascript"):
+                match = re.match(
+                    r"""^\s*openDetail\(\s*(['"])(/Literature/articleinfo\?[^'"]+)\1""",
+                    fields.get("onclick") or "")
+                if match:
+                    href = match.group(2)
+            self.href = href
             self.anchor_parts = []
             self.anchor_index = len(self.text_parts)
 
@@ -118,6 +128,11 @@ def article_link(kind: str, url: str) -> bool:
     path = urllib.parse.urlparse(url).path
     if re.fullmatch(r"/portal/(?:journal/)?portal/client/paper/[a-f0-9]{32}/?", path, re.I):
         return kind == "publisher"
+    if kind == "catalog" and path.lower() == "/literature/articleinfo":
+        params = urllib.parse.parse_qs(urllib.parse.urlsplit(url).query)
+        article_id = (params.get("id") or [""])[0]
+        return (params.get("type") == ["journalArticle"]
+                and bool(re.fullmatch(r"[A-Z]{4,6}20\d{8}", article_id)))
     if kind == "catalog":
         # National catalog may expose an issue but not verifiable article pages.
         # Do not mistake download links, buttons or site navigation for papers.
@@ -258,6 +273,13 @@ def parse_toc(payload: bytes, *, journal: str, kind: str, url: str) -> tuple[str
             continue
         # Anchor may contain <sup> or other markup; use DOM text-part offsets,
         # not an exact title string search (which drops such legitimate titles).
+        if kind == "catalog" and urllib.parse.urlsplit(absolute).path.lower() == "/literature/articleinfo":
+            prefixes = {"经济研究": "JJYJ", "中国工业经济": "ZGGYJJ", "管理世界": "GLSJ"}
+            prefix = prefixes.get(journal)
+            params = urllib.parse.parse_qs(urllib.parse.urlsplit(absolute).query)
+            identifier = (params.get("id") or [""])[0]
+            if not prefix or not re.fullmatch(re.escape(prefix) + r"20\d{8}", identifier):
+                continue
         seen_urls.add(absolute)
         links.append((title, absolute, part_index))
     links.sort(key=lambda x: x[2])
@@ -275,10 +297,18 @@ def parse_toc(payload: bytes, *, journal: str, kind: str, url: str) -> tuple[str
         doi_match = DOI_RE.search(section) if kind == "publisher" else None
         row_issue = None
         host = urllib.parse.urlparse(url).hostname or ""
+        catalog_id = None
+        if kind == "catalog" and urllib.parse.urlsplit(absolute).path.lower() == "/literature/articleinfo":
+            catalog_id = urllib.parse.parse_qs(urllib.parse.urlsplit(absolute).query)["id"][0]
+            prefix = {"经济研究": "JJYJ", "中国工业经济": "ZGGYJJ", "管理世界": "GLSJ"}[journal]
+            id_parts = re.fullmatch(re.escape(prefix) + r"(20\d{2})(\d{3})(\d{3})", catalog_id)
+            if not id_parts or not 1 <= int(id_parts[2]) <= 12:
+                continue
+            row_issue = f"{id_parts[1]}-{int(id_parts[2]):02d}"
         match_path = re.search(r"/CN/Y(20\d{2})/V\d+/I(\d{1,2})/", absolute, re.I)
         if match_path:
             row_issue = f"{match_path[1]}-{int(match_path[2]):02d}"
-        else:
+        elif row_issue is None:
             local = ISSUE_RE.search(section.replace("\n", " "))
             if local:
                 row_issue = f"{local[1]}-{int(local[2]):02d}"
@@ -324,10 +354,24 @@ def parse_toc(payload: bytes, *, journal: str, kind: str, url: str) -> tuple[str
         articles.append({"title": title, "url": absolute, "toc_online_at": published,
                          "issue": row_issue, "url_scope": "article_detail",
                          "doi": doi_match.group(0).rstrip(".,;") if doi_match else None})
-    if kind == "catalog" and not articles:
+    if kind == "catalog":
         catalog_issue, rows = catalog_issue_rows(parser, journal=journal, url=url)
         if rows and (issue is None or catalog_issue >= issue):
-            return catalog_issue, None, rows
+            # Keep authoritative title/author/page rows; upgrade to a direct
+            # link only when that exact title and article-encoded issue agree.
+            by_title = {title_key(item["title"]): item for item in articles
+                        if item["issue"] == catalog_issue}
+            verified = []
+            for row in rows:
+                match = by_title.get(title_key(row["title"]))
+                verified.append({**row, "url": match["url"], "url_scope": "article_detail"}
+                                if match else row)
+            return catalog_issue, None, verified
+        # The mobile Management World page lacks author+page rows, but its
+        # public per-paper IDs directly encode the actual issue. Older IDs
+        # are not a claim of current issue coverage.
+        if issue:
+            articles = [item for item in articles if item["issue"] == issue]
     return issue, issue_date, articles
 
 

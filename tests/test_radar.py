@@ -1022,6 +1022,123 @@ class CoverageRootCauseTests(unittest.TestCase):
 
 
 
+class NCPSSDPublicDetailActionTests(unittest.TestCase):
+    """Live-HTML fixtures: official NCPSSD uses href=javascript and openDetail()."""
+
+    def article(self, ident, title, *, onclick=None, authors="", pages=""):
+        if onclick is None:
+            onclick = ("openDetail('/Literature/articleinfo?id=" + ident
+                       + "&amp;type=journalArticle&amp;typename=中文期刊文章"
+                       + "&amp;nav=1&amp;langType=1','中文期刊文章')")
+        return (f'<a href="javascript:void (0)" onclick="{onclick}">{title}</a>'
+                f'<span class="writer">{authors}</span> '
+                f'<span class="pages">({pages})</span>')
+
+    def test_economic_catalog_real_onclick_upgrade_preserves_author_pages(self):
+        url="https://ncpssd.org/journal/details.aspx?gch=95645X"
+        title="机器人应用与制造业企业生产链延伸——基于稳链强链视角的考察"
+        html=("<h1>经济研究</h1><h2>2026年 第9期</h2>"
+              +self.article("JJYJ2026009002",title,authors="吴腊梅[1,2];彭水军[3]",pages="25-48")).encode()
+        issue,_,rows=cj.parse_toc(html,journal="经济研究",kind="catalog",url=url)
+        self.assertEqual(issue,"2026-09")
+        self.assertEqual(len(rows),1)
+        self.assertEqual(rows[0]["url_scope"],"article_detail")
+        self.assertIn("JJYJ2026009002",rows[0]["url"])
+        self.assertTrue(rows[0]["url"].startswith("https://ncpssd.org/Literature/articleinfo?id="))
+        self.assertEqual(rows[0]["pages"],"25-48")
+        self.assertIn("吴腊梅",rows[0]["authors"])
+
+    def test_industrial_catalog_real_onclick_and_issue_identity(self):
+        url="https://ncpssd.org/journal/details.aspx?gch=93800A"
+        title="世界大变局下的中国产业链韧性"
+        html=("<h1>中国工业经济</h1><h2>2026年 第8期</h2>"
+              +self.article("ZGGYJJ2026008002",title,authors="张辉[1];王桂军[2]",pages="5-26")).encode()
+        issue,_,rows=cj.parse_toc(html,journal="中国工业经济",kind="catalog",url=url)
+        self.assertEqual(issue,"2026-08")
+        self.assertEqual(rows[0]["issue"],issue)
+        self.assertEqual(rows[0]["url_scope"],"article_detail")
+        self.assertIn("ZGGYJJ2026008002",rows[0]["url"])
+
+    def test_a_catalog_without_explicit_url_remains_title_only(self):
+        url="https://ncpssd.org/journal/details.aspx?gch=95645X"
+        text=("<h1>经济研究</h1><h2>2026年 第9期</h2>"
+              +'<a href="javascript:void(0)">机器人应用与制造业企业生产链延伸——基于稳链强链视角的考察</a>'
+              +"吴腊梅[1,2];彭水军[3] (25-48)").encode()
+        issue,_,rows=cj.parse_toc(text,journal="经济研究",kind="catalog",url=url)
+        self.assertEqual(issue,"2026-09")
+        self.assertEqual(len(rows),1)
+        self.assertEqual(rows[0]["url_scope"],"issue_catalog")
+        self.assertEqual(rows[0]["url"],url)
+
+    def test_incomplete_issue_links_not_mislabelled_as_full(self):
+        url="https://ncpssd.org/journal/details.aspx?gch=95645X"
+        t1="机器人应用与制造业企业生产链延伸——基于稳链强链视角的考察"
+        t2="中国对外基础设施投资的经济效应与微观作用机制"
+        html=("<h1>经济研究</h1><h2>2026年 第9期</h2>"
+              +self.article("JJYJ2026009002",t1,authors="吴腊梅[1,2]",pages="25-48")
+              +self.article("JJYJ2026009006",t2,
+                            onclick="void(0)",authors="李涵[1];周倩[2]",pages="120-142")).encode()
+        with tempfile.TemporaryDirectory() as tmp:
+            with patch.object(cj,"JOURNALS",(("economic_research","经济研究","catalog",url),)):
+                output=cj.scan_chinese_journals(Path(tmp),UTC_NOW,get=lambda _:html)
+        rec=output["source_status"]["journals"]["economic_research"]
+        self.assertEqual(rec["article_link_count"],1)
+        self.assertEqual(rec["article_count"],2)
+        self.assertEqual(rec["status"],"toc_metadata")
+        self.assertEqual(output["source_status"]["article_level_ok"],0)
+
+    def test_management_mobile_current_year_issue_from_explicit_id(self):
+        url="https://m.ncpssd.cn/journal/details?gch=95499X&langType=1&nav=1"
+        title="面向国家重大战略需求的有组织科研管理经验探索"
+        older="前一期经济管理理论与制度研究"
+        html=("<h1>管理世界</h1><h2>2026年 第11期</h2>"
+              +self.article("GLSJ2026011001",title)
+              +self.article("GLSJ2026010008",older)).encode()
+        issue,_,rows=cj.parse_toc(html,journal="管理世界",kind="catalog",url=url)
+        self.assertEqual(issue,"2026-11")
+        self.assertEqual(len(rows),1)
+        self.assertEqual(rows[0]["issue"],issue)
+        self.assertEqual(rows[0]["title"],title)
+        self.assertIn("GLSJ2026011001",rows[0]["url"])
+
+    def test_wrong_journal_bad_type_cross_host_or_spoofed_id_never_passes(self):
+        url="https://ncpssd.org/journal/details.aspx?gch=95645X"
+        title="机器人应用与制造业企业生产链延伸——基于稳链强链视角的考察"
+        bad=[
+            ("GLSJ2026011001",None),
+            ("JJYJ2026013001",None),  # impossible issue 13
+            ("JJYJ2026009002","openDetail('https://evil.example/Literature/articleinfo?id=JJYJ2026009002&type=journalArticle')"),
+            ("JJYJ2026009002","openDetail('/Literature/articleinfo?id=JJYJ2026009002&type=HTML')"),
+            ("JJYJ2026009002","window.open('/Literature/articleinfo?id=JJYJ2026009002&type=journalArticle')"),
+        ]
+        for ident,onclick in bad:
+            with self.subTest(ident=ident,onclick=onclick):
+                html=("<h1>经济研究</h1><h2>2026年 第9期</h2>"
+                      +self.article(ident,title,onclick=onclick,
+                                    authors="吴腊梅[1,2]",pages="25-48")).encode()
+                _,_,rows=cj.parse_toc(html,journal="经济研究",kind="catalog",url=url)
+                self.assertEqual(len(rows),1)
+                self.assertEqual(rows[0]["url_scope"],"issue_catalog")
+
+    def test_management_article_recovery_is_historical_once(self):
+        url="https://m.ncpssd.cn/journal/details?gch=95499X&langType=1&nav=1"
+        title="面向国家重大战略需求的有组织科研管理经验探索"
+        body=("<h1>管理世界</h1><h2>2026年 第11期</h2>"
+              +self.article("GLSJ2026011001",title)).encode()
+        with tempfile.TemporaryDirectory() as tmp:
+            path=Path(tmp)
+            (path/"chinese_seen.json").write_text(json.dumps({
+                "management_world":{"issue":"2026-11","articles":[],"baselined":True}}))
+            with patch.object(cj,"JOURNALS",(("management_world","管理世界","catalog",url),)):
+                first=cj.scan_chinese_journals(path,UTC_NOW,get=lambda _:body,priority_sources={})
+                journal=first["source_status"]["journals"]["management_world"]
+                self.assertEqual(journal["status"],"ok")
+                self.assertEqual(len(first["historical_backfill_leads"]),1)
+                self.assertEqual(first["new_candidates"],[])
+                second=cj.scan_chinese_journals(path,UTC_NOW,get=lambda _:body,priority_sources={})
+                self.assertEqual(second["historical_backfill_leads"],[])
+
+
 class IssueOnlyRecoveryTests(unittest.TestCase):
     def test_index_only_then_article_details_same_issue_deliver_backfill_once(self):
         import chinese_journals as cj

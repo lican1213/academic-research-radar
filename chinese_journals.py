@@ -45,7 +45,7 @@ FALLBACKS = {
     "management_world": ("catalog", "https://m.ncpssd.cn/journal/details?gch=95499X&langType=1&nav=1"),
     "international_trade": ("catalog", "https://ncpssd.org/journal/details?gch=96001X"),
     "world_economy_studies": ("catalog", "https://ncpssd.org/journal/details?gch=91453X"),
-    "finance_economics": ("publisher", "https://qks.sufe.edu.cn/J/CJYJ/Article/CurrentIssue/CN"),
+    "finance_economics": ("publisher", "https://qks.sufe.edu.cn/J/CJYJ/Article/Latest"),
     "quant_economics": ("catalog", "https://www.ncpssd.org/journal/details?gch=94503X"),
     "financial_research": ("catalog", "https://m.ncpssd.cn/journal/details?gch=97926X&langType=1&nav=1"),
 }

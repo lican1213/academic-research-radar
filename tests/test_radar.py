@@ -1045,6 +1045,9 @@ class NCPSSDPublicDetailActionTests(unittest.TestCase):
         self.assertEqual(rows[0]["url_scope"],"article_detail")
         self.assertIn("JJYJ2026009002",rows[0]["url"])
         self.assertTrue(rows[0]["url"].startswith("https://ncpssd.org/Literature/articleinfo?id="))
+        # The exact published onclick URL must be consumable by Python clients.
+        self.assertTrue(rows[0]["url"].isascii())
+        self.assertIn("typename=%E4%B8%AD", rows[0]["url"])
         self.assertEqual(rows[0]["pages"],"25-48")
         self.assertIn("吴腊梅",rows[0]["authors"])
 
@@ -1119,6 +1122,10 @@ class NCPSSDPublicDetailActionTests(unittest.TestCase):
                 _,_,rows=cj.parse_toc(html,journal="经济研究",kind="catalog",url=url)
                 self.assertEqual(len(rows),1)
                 self.assertEqual(rows[0]["url_scope"],"issue_catalog")
+
+    def test_duplicate_id_cannot_smuggle_a_second_article_into_index_url(self):
+        url="https://ncpssd.org/Literature/articleinfo?id=JJYJ2026009002&id=GLSJ2026011001&type=journalArticle"
+        self.assertFalse(cj.article_link("catalog",url))
 
     def test_management_article_recovery_is_historical_once(self):
         url="https://m.ncpssd.cn/journal/details?gch=95499X&langType=1&nav=1"

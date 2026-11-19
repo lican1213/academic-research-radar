@@ -99,3 +99,8 @@ DNS解析失败的CNKI RSS在**本次扫描内**停止同域名重复请求；�
 ### 2026-11-19 PDF 真实下载验收（可选、与定时扫描隔离）
 
 Ponytail 最小验证：`.github/workflows/pdf-probe.yml` 只在 PDF 验收代码变动或手工触发时执行，**不修改现有每日两次元数据扫描**。通过已有金融研究正式详情页发现正文 PDF 的真实 `href`，然后 HTTPS 读取（保持证书和域名校验），核验 PDF 头/EOF、字节数、SHA256；如 Runner 配有 `pdftotext`，只记录文本可提取性和表格标识数，不保存版权全文。结果作为仅元数据的 Action artifact，可用真实 run SHA 回读。若官网 DNS/TLS 失败，则该 PDF 验收门 **FAIL**，不得凭官方页面上存在“正文”图标放行。另有华东师范大学公开的跨境电商供应链韧性论文 PDF 作工具链对照；对照 PDF 下载成功不能替代目标刊验收。首次全文实证分析仍由 ChatGPT 基于可获得的原文逐页核验，不自动生成论文事实。
+
+
+### 2026-11-19 《金融研究》2026年第10期：官方 HTTP PDF 获取修正
+
+真实 Runner [诊断 44469550771](https://github.com/lican1213/academic-research-radar/actions/runs/44469550771) 证明该期刊公开使用的 `http://www.jryj.org.cn/CN/abstract/abstract1663.shtml` 返回200、含正确论文题名和出版方给出的 PDF href；同域 `/CN/article/downloadArticleFile.do?attachType=PDF&id=1663` 亦返回200及真实 `%PDF-` 头。**不是验证码或浏览器自动化问题，原下载器把所有 HTTP 排除导致假阴性。** 官方 HTTPS 证书仍错配，不能禁用证书校验；仅为官方公开的6篇文章 `1662..1667` 开放严格同域、同协议和固定路径的 HTTP 访问。HTTP 不具备传输完整性/服务端身份加密认证，后续证书修复时应优先恢复 HTTPS；当前必须另外核对 PDF 正文题名、期次页数、字节大小、SHA256和可提取文本。PDF 和版权正文仍只在内存中处理，不提交到仓库/Artifact。独立 `PDF Acceptance` 实际验收6篇均需下载和正文对应核验通过；主研究雷达及调度不变。

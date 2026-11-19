@@ -11,10 +11,7 @@ from html.parser import HTMLParser
 import json
 from pathlib import Path
 import re
-import shutil
-import subprocess
 import sys
-from tempfile import TemporaryDirectory
 from urllib.parse import urljoin, urlsplit, parse_qs
 from urllib.request import Request, urlopen
 
@@ -88,27 +85,31 @@ def valid_pdf(blob: bytes) -> bool:
 
 
 def inspect_pdf(blob: bytes) -> dict:
-    """Read in temp storage; return metrics only, never text or document bytes."""
-    with TemporaryDirectory() as tmp:
-        path = Path(tmp) / "paper.pdf"
-        path.write_bytes(blob)
-        result = {"pdf_sha256": hashlib.sha256(blob).hexdigest(),
-                  "pdf_bytes": len(blob), "text_extraction": "unavailable"}
-        exe = shutil.which("pdftotext")
-        if exe:
-            try:
-                proc = subprocess.run([exe, "-layout", str(path), "-"], capture_output=True,
-                                      timeout=20, check=False)
-                content = proc.stdout.decode("utf-8", errors="replace")
-                if proc.returncode == 0 and len(content.strip()) >= 100:
-                    result["text_extraction"] = "ok"
-                    result["text_characters"] = len(content)
-                    result["table_label_hits"] = len(re.findall(r"表\\s*[一二三四五六七八九十\\d]+", content))
-                else:
-                    result["text_extraction"] = "failed_or_scanned"
-            except (OSError, subprocess.TimeoutExpired):
-                result["text_extraction"] = "failed_or_scanned"
+    """Inspect in memory; retain metrics only, not article text or PDF."""
+    result = {"pdf_sha256": hashlib.sha256(blob).hexdigest(),
+              "pdf_bytes": len(blob), "text_extraction": "unavailable"}
+    try:
+        import pymupdf
+    except ImportError:
         return result
+    try:
+        with pymupdf.open(stream=blob, filetype="pdf") as doc:
+            result["page_count"] = len(doc)
+            if doc.needs_pass:
+                result["text_extraction"] = "encrypted"
+                return result
+            pages = [page.get_text(sort=True) for page in doc]
+        text = "\n".join(pages)
+        chinese_chars = len(re.findall(r"[\u4e00-\u9fff]", text))
+        result["text_characters"] = len(text)
+        result["chinese_characters"] = chinese_chars
+        result["text_pages"] = sum(bool(page.strip()) for page in pages)
+        result["table_label_hits"] = len(re.findall(r"表\s*[一二三四五六七八九十\d]+", text))
+        result["text_extraction"] = "ok" if chinese_chars >= 100 and len(text) >= 500 else "low_confidence"
+    except Exception as exc:
+        result["text_extraction"] = "failed"
+        result["text_error_kind"] = type(exc).__name__
+    return result
 
 
 def probe(name: str, url: str, *, direct: bool = False, reader=fetch, inspector=inspect_pdf) -> dict:
@@ -131,7 +132,7 @@ def probe(name: str, url: str, *, direct: bool = False, reader=fetch, inspector=
         out.update(inspector(blob))
         out["pdf_download_verified"] = True
         out["status"] = "downloaded"
-    except (OSError, ValueError, subprocess.TimeoutExpired) as exc:
+    except (OSError, ValueError) as exc:
         out["status"] = "failed"
         out["error_kind"] = type(exc).__name__
         out["error"] = str(exc)[:200]

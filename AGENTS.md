@@ -47,3 +47,10 @@ This repository gathers **public bibliographic metadata**. It does not make scho
 - PDF success requires **actual bytes from an approved publisher**, valid PDF header and EOF, byte size and SHA256; an article abstract page, a mocked test, or mere link is not acceptance. Do not weaken TLS/cross-origin controls.
 - PDF acceptance is a separate read-only, unscheduled workflow; metadata or metrics may be retained as an artifact, **no publisher PDF or extracted text in repository/artifact**. A successful unrelated control PDF cannot pass the targeted journal gate.
 - Do not introduce text mining/RAG/LLM evaluation pipelines until one real relevant PDF is retrieved and the extraction is proven useful; link and metadata discovery must continue independently when PDFs fail.
+
+
+## Publisher-HTTP exception (2026-11-19)
+
+- The journal itself publicly advertises `http://www.jryj.org.cn`; an actual Runner confirmed HTTP200 article HTML and an explicit official PDF URL. Its HTTPS endpoint has a mismatched cert. Therefore the isolated PDF acceptance probe MAY use **only** the exact 2026-10 approved article IDs1662–1667 on that official HTTP host, with the article and PDF download paths strictly checked. No TLS validation bypass, proxy, user auth, or generic HTTP fallback.
+- This HTTP exception sacrifices authenticated transport integrity. Do not describe the download as cryptographically authenticated. Check independent article bibliographic metadata, extracted title, PDF page count, SHA256 and text before recommending scholarly claims; prefer HTTPS when genuinely fixed.
+- Never commit or upload copyrighted PDF bytes or recovered full text. Metadata-only artifact and fail-closed six-article acceptance are mandatory.

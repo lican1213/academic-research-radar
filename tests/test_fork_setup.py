@@ -58,6 +58,7 @@ class ForkSetupTests(unittest.TestCase):
                  "min_keyword_hits":2}
         candidate={"id":"doi:10.1000/ai","title":"Artificial Intelligence and Wage Inequality",
                    "abstract":"A study of firm pay","event_at":"2026-11-18",
+                   "event_type":"crossref_registration",
                    "source":"crossref","sources":["crossref"],"doi":"10.1000/ai",
                    "version":"","url":"https://doi.org/10.1000/ai"}
         self.assertEqual(profile_prefilter(candidate,profile)["project"],"RESEARCH")

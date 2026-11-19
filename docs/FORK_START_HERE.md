@@ -34,3 +34,10 @@
 **使用授权：** 当前上游仓库尚未声明明确的开源许可证；GitHub 平台内 Fork 与一般性的代码再分发授权是不同问题。请勿在未经确认时宣称本项目采用 MIT/GPL 许可。后续作者可按需要独立决定许可证。
 
 参考：[GitHub Fork 工作流启用说明](https://docs.github.com/en/actions/how-tos/manage-workflow-runs/disable-and-enable-workflows)，[OpenAI Scheduled tasks 官方说明](https://help.openai.com/en/articles/10291617-scheduled-tasks-in-chatgpt)。
+
+
+## 改选题和更换 Fork 的特殊规则（第二／第三阶段）
+
+- 修改 `radar_profile.json` 的检索词、关键词或最低命中数，会自动创建新的 `research_profile.revision` 去重命名空间，重新观察最近7天的元数据；之前的研究题录不会被清空，切回原配置不应反复发送。**只修改研究名称**不会重发。超过7天的历史论文需要按独立“历史补检”处理，不能伪称今日新发表。
+- `data/fork_initialized.json` 记录的是首次启动的真实仓库 `OWNER/REPO`。如果将完整 Fork 连同标记一起复制、转移或改名为另一仓库，工作流会停止并报告身份不匹配，以避免误删旧账本。遇到这个错误时请先备份自己的 `data/seen.json`、`data/chinese_seen.json`，确认你要保留还是重新初始化，再处理标记，**不要盲目删除现有账本**。
+- 一个 Fork 同时只启用一个自定义研究配置；想同时监控完全不同的主题，可分成独立 Fork/独立仓库与各自的 ChatGPT 日报。项目不创建中央多用户数据库、不共享 GPT 授权，也不替其他账号开启周期任务。

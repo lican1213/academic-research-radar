@@ -357,3 +357,19 @@
 - [PR #24](https://github.com/lican1213/academic-research-radar/pull/24) merged source commit `5612185e4255293fbafb512b3a04830381fdb921`. [CI run 44528325729](https://github.com/lican1213/academic-research-radar/actions/runs/44528325729) at exact source SHA `completed/success`, **106/106 unit tests**. Added tests cover opt-in personalized topic matching, invalid profile rejection, original upstream retained, fork's inherited ledgers cleared exactly once, marker persisted and subsequent fork scans idempotent; pre-existing tests all passed.
 - **Actual upstream production readback**: [Scan 44528325771](https://github.com/lican1213/academic-research-radar/actions/runs/44528325771) at exact source SHA `completed/success`. Step `Initialize independent fork state once` actually printed `upstream_unchanged`; no `data/fork_initialized.json` was created in upstream. Published `data/latest.json` has `generated_at=2026-11-19T12:55:02.158869+00:00`, `status=degraded` (pre-existing partial journal source coverage, not a fork-bootstrap failure), original `crossref/arxiv/chinese_journals` source keys and **no custom `research_profile`**, as designed. Main advanced to data commit `f1924c3df7827fc93383d0da0af3105677af9805`. Existing metadata workflow retained cron `17 10,22 * * *` and write behavior; `data/seen.json` / `data/chinese_seen.json` continued updating normally, not reset to empty.
 - **Remaining external gate**: Cannot claim an actual classmate's *separate* Fork/ChatGPT scheduled task has been activated or received a report; no classmate account or authorization was provided. The source-repo CI verified simulated fork behavior in isolated temp dirs, but real acceptance belongs to each student: enable Actions in own fork, add `radar_profile.json`, read back `data/fork_initialized.json`/fresh `latest.json`, grant ChatGPT GitHub app access, run a manual report, then schedule. Sharing/forking this public GitHub code does not transfer ChatGPT tasks, app permissions, or histories.
+
+
+### 2026-11-19 / Ponytail 对抗式审计：Fork 用户第二/第三阶段数据边界
+
+**基准问题与攻击样例：** 现有同学 Fork 功能已 CI 106/106 + 原仓库生产扫描通过，但仍有3个真实可复现风险：
+1. `select_new()` 对所有自定义研究方向仍写通用 `doi:/title:` 已见键；同学从“AI工资”改研究为“AI公司治理”后即使新文命中，旧主题已发送的同一文章会被误认“已发过”，不进入新论文日报；切回又可能产生混乱。这一缺陷影响第二阶段改选题与第三阶段复用。
+2. `fork_bootstrap.py` 过去仅凭 `data/fork_initialized.json` **存在**放行；学生复制别人的Fork(带marker)后会漏掉首次清除上游历史数据的安全门；缺失 `GITHUB_REPOSITORY` 还会静默返回 `upstream_unchanged`。此处须失败封闭，不能删除已有用户数据来掩盖迁移问题。
+3. 自定义英文短语如 `ai` 用原始 substring 匹配，会从 `fair`、`training` 误认 AI；关键词重复 `["AI","ai"]` 可凭一次真实命中满足“两关键词”门槛，形成噪音日报。
+
+**Ponytail 最小补丁：** 只动原有 `radar.py`、`fork_bootstrap.py` 与其一份现有单测；不引入 DB/服务、abstract 适配器、重复逻辑或新的周期任务。以 `crossref_queries/arxiv_queries/keywords/min_keyword_hits` 规范化内容计算短 SHA256 `research_profile.revision`；`select_new` 在**自定义profile**时用 revision 前缀隔离 `seen.json` 的 DOI/标题去重键；原作者未配置 profile 仍使用之前的原始键和默认 P0–P4 评分。修改 profile 真实检索参数会形成独立的7天观察窗口、切回旧版本不会误报，纯改显示名称不会重发。英文关键词匹配采用ASCII单词边界、中文原子词保持 substring；重复词/检索式拒绝。若 `fork_initialized.json` 身份与当前真实 `OWNER/REPO` 不符或仓库环境缺失/损坏，直接 FAIL 且不得修改任何 ledger。
+
+**针对阶段2/3的边界：** 阶段2支持一个 Fork 逐步调整/切回选题而保留历史可复核性，阶段3支持多同学**各自独立的 Fork** 和 ChatGPT 账户；当前不增加同仓库同时运行N个 profile 的调度器、中心化多租户数据库、共享用户研究记忆、PDF永久存储或自动创建他人的 ChatGPT Task。这些不在已证实需求内，而且会增加维护面。切换研究主题只触发7天元数据发现补窗，不会恢复超过观察窗的全部历史论文；旧文须通过历史补检处理，不能把补窗称为真实新发表。
+
+**对抗 gate：** 原有测试 + 错误/复制的 Fork marker、缺失 env、保留原 ledger、同主题二次不重发、更换检索词能重新报告、纯改名称不重发、切回旧检索不重发、AI/fair 假命中、重复关键词失败、同一主分支 SHA 的真实 CI 与原主仓库 Action 扫描读回。**生产新 Fork / 同学 ChatGPT Task 仍需要同学本人授权并首次实际运行，源仓库不可代验。**
+
+**初始状态：** PR #25 完成新补丁与离线测试，最终主分支生产复核随后记录；不可把 PR CI 绿色冒充原主仓库生产扫描完成。

@@ -79,3 +79,11 @@ This repository gathers **public bibliographic metadata**. It does not make scho
 - The existing `scan.yml` runs `fork_bootstrap.py` once per independent GitHub repo, clearing inherited seen ledgers and stale latest output, then committing `data/fork_initialized.json`. It must never reset the upstream `lican1213/academic-research-radar` or a fork already initialized. Verify idempotency before touching dedup/schedules.
 - Public forks have scheduled workflows disabled by default and may lack write permissions. Tell classmates to enable Actions on their fork, grant GITHUB_TOKEN write access where allowed, manually run and **read back produced latest.json**; CI is not a production scan.
 - Keep research reviews read-only and separate from metadata crawling. Do not expand PDF artifact storage/scheduling or change the source author's ChatGPT daily Task as part of classmate onboarding.
+
+
+## Ponytail fork-state adversarial gate
+
+- In custom research profiles, dedup keys must be scoped to `research_profile.revision`; *changing* searches/keywords creates an independent discoverable history and first-window scan; *renaming* the project or reverting the same profile must not reissue previously seen papers. Default upstream P0–P4 behavior without `radar_profile.json` must keep the previous unprefixed seen ledger.
+- `fork_bootstrap.py` must reject missing `GITHUB_REPOSITORY` and mismatched/malformed `data/fork_initialized.json` **before touching files**; a copied marker from a different repo must never bypass first-run reset or silently wipe a genuine user's data.
+- English short-token prefilter avoids substring false positives (e.g. 'AI' in 'fair'); Chinese keywords still substring. Duplicate normalized keywords/queries are invalid. Preserve transparent source failure and lexical prefilter (not scholarly quality) semantics.
+- Stage 2 supports successive profile revisions in one fork and independent ledgers; stage 3 scales to different students' separate forks. Do not invent centralized multi-tenant infrastructure, N simultaneous profiles, new cron schedules, PDF repositories, or automated GPT task provisioning until a real need is shown. Simulated CI cannot certify real external student ChatGPT authorization.

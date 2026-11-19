@@ -136,3 +136,8 @@ Ponytail 最小验证：`.github/workflows/pdf-probe.yml` 只在 PDF 验收代�
 `fork_bootstrap.py` 由现有 `scan.yml` 首次在非上游仓库运行时调用，清空 Fork 从上游继承的 `seen.json`、`chinese_seen.json` 及旧 `latest`，写入 `data/fork_initialized.json`；只执行一次，后续保留同学自己的去重账本。GitHub 公开 Fork 的 scheduled Actions 默认禁用，同学必须在**自己的 Fork**显式启用并先手动运行，检查 `data/latest.json`、`research_profile.name`、工作流真实状态和提交读回。原仓库两次 GitHub 扫描、每日 ChatGPT 研究任务和旧数据不受影响。
 
 此功能不代同学登录/授权 GitHub、创建 ChatGPT Tasks 或运行其私人账号。公开仓库中的研究画像、日志与题录对所有访问者可见，禁止存放私密稿件、个人 API 密钥或受版权保护的 PDF。仓库目前未指定开源许可证；公开 Fork 功能与正式版权许可不同。
+
+
+### 2026-11-19 / Ponytail Fork 对抗式审计修复
+
+独立 Fork 的自定义profile现在用稳定的 `research_profile.revision` 隔离关键词/查询版本的已见去重键。修改研究范围可恢复7天候选观察，恢复旧范围不重复推荐；不改变原 `P0—P4` 未配profile行为。复制来的异主仓库初始化标记、缺失仓库标识会让初始化失败而不是默默继承错误账本。英文关键词使用单词边界，拒绝重复关键词。只新增少量代码和对抗测试，更多细节见 `MOC.md`；这不意味着多用户共享账户系统已建成。同学仍须自行 Fork、启用 GitHub Actions 并创建自己的 ChatGPT 研究日报。

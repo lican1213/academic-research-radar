@@ -13,10 +13,17 @@ UPSTREAM = "lican1213/academic-research-radar"
 
 
 def initialize_fork(repository: str, data: Path) -> str:
-    if not repository or repository == UPSTREAM:
+    if repository == UPSTREAM:
         return "upstream_unchanged"
+    if not repository or repository.count("/") != 1 or any(
+        not part or part in (".", "..") for part in repository.split("/")
+    ):
+        raise ValueError("GITHUB_REPOSITORY must be OWNER/REPO")
     marker = data / "fork_initialized.json"
     if marker.exists():
+        state = json.loads(marker.read_text(encoding="utf-8"))
+        if not isinstance(state, dict) or state.get("repository") != repository:
+            raise ValueError("fork_initialized.json belongs to another repository")
         return "already_initialized"
     data.mkdir(parents=True, exist_ok=True)
     for name in ("seen.json", "chinese_seen.json"):

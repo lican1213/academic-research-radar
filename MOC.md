@@ -179,3 +179,12 @@
 - 每日雷达任务契约已更新并读回确认：继续北京时间 09:30、原 P0/P1/P1A/P2/P3/P4 与评分策略；按历史提交 SHA 合并过去48小时实际候选、核验单篇日期及跨日报身份；mixed_links 等降级独立补检。实际 GitHub commits?sha=main&path=data/latest.json 查询返回 d4d11ca、a2984ce、a53e53b 等生产历史，证实可读；不把定时任务配置回读当作下一次日报已经交付。
 - [合并后生产 run 43851428062](https://github.com/lican1213/academic-research-radar/actions/runs/43851428062) 当前检查状态：in_progress/pending；只有新数据实际写回、逐篇样本与官方信息一致后才可关闭相应生产门。原始中文源 DNS/TLS/HTTP 故障仍需生产证据，禁止重写历史产物或清空旧账本。
 - 独立补检：财经研究 [第9期目录](https://qks.sufe.edu.cn/J/j00001/Article/2026/09) 与 [最新文章](https://qks.sufe.edu.cn/J/CJYJ/Article/Latest) 的搜索索引分别显示11篇和混合期次，实际打开专刊页一度超时；管理世界 [国哲移动端](https://m.ncpssd.cn/journal/details?gch=95499X&langType=1&nav=1) 有10期题名（未见完整作者/页码），桌面索引9期；金融研究10期存在公开转载目录，但尚未确认稳定官方详情。保留为补检路径，不伪造文章级生产覆盖。
+
+## 2026-11-19 / 公开目录与RSS源超时修复：分阶段 Gate
+
+- 生产基线：run [44374149332](https://github.com/lican1213/academic-research-radar/actions/runs/44374149332) completed/success，但数据 `generated_at=2026-11-18T18:51:07Z`、`status=degraded`；经济研究、中国工业经济、管理世界等国哲社目录超时，金融研究官网超时，国哲社8/8专题查询超时；九刊CNKI RSS均DNS解析失败。扫描成功不代表文章级覆盖恢复。
+- 对照 [MartyYao/Chinese-Literature-Skill](https://github.com/MartyYao/Chinese-Literature-Skill)、[cookjohn/cnki-skills](https://github.com/cookjohn/cnki-skills)、[sthsci/litfeed-bot](https://github.com/sthsci/litfeed-bot)、[gitronald/citefinder](https://github.com/gitronald/citefinder) 的公开源独立状态、主备检索、有限重试与保留缓存语义；仅借鉴设计，不复制认证绕行或付费全文抓取。
+- **阶段一（本PR）**：仅针对真实网络适配器增加每次扫描作用域的host级故障熔断：DNS失败后本次不对同一host重复尝试；同一host连续2次超时后本次剩余请求以`host_circuit_open`标为失败，下次Action重新探测，不产生假成功。经济研究、中国工业经济、管理世界添加已公开可访问的国哲社移动端备用目录；若仅期次/题名仍维持`catalog_only/toc_metadata`，不编造文章URL、首发日期或完整覆盖。故障时新增`last_known_issue`只作历史辅助，不当作今天成功。
+- **阶段二（条件触发，未实施）**：如经真实GitHub Runner实测移动站也超时，再评估经允许使用的权威目录题录/可靠API按ISSN与单刊期次索引。采集快照保留源、期次、文章身份与精度等级；来源单独记录健康和最后成功时间，不能将搜索索引当刊期完整目录。
+- **阶段三（条件触发，未实施）**：在真实文章详情可访问后再扩展DOI/正式在线日期与期刊时间轴复验、逐篇链接验证和跨日精准去重；发布前继续以论文优先级和日报人工核验为门，任何`index_event_at/first_observed_at`不自动变成发表日期。
+- Gate：等待PR CI编译与对抗测试；合并后的生产run必须回读`head_sha`、`status`、逐刊`coverage_kind/article_snapshot/RSS`、失败主因与最新数据提交。即使运行缩短，也不等于9刊已恢复文章级采集。原定时任务、交易相关仓库、历史账本及用户稿件未修改。

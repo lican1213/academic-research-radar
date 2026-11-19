@@ -794,3 +794,109 @@ class CatalogFallbackOnRegressionTests(unittest.TestCase):
             self.assertEqual(info["status"], "stale_index")
             self.assertEqual(info["issue"], "2026-09")
             self.assertEqual(json.loads((folder / "chinese_seen.json").read_text())["management_world"]["issue"], "2026-10")
+
+
+class IndependentIndexAdapterTests(unittest.TestCase):
+    def test_cqvip_issue_evidence_is_issue_only(self):
+        import chinese_journals as cj
+        html = """<html><body>金融研究 ISSN 1002-7246
+            <div>2026 10 9 8 7</div><div>目录 封面 2026年10期 共：12篇</div>
+            <a href="/article/12345">错误跳转</a></body></html>""".encode()
+        issue, date, rows, count = cj.parse_cqvip_issue(
+            html, journal="金融研究", url="https://www.cqvip.com/journal/97926X/97926X")
+        self.assertEqual((issue, date, rows, count), ("2026-10", None, [], 12))
+
+    def test_cqvip_wrong_identity_or_navigation_rejected(self):
+        import chinese_journals as cj
+        good = "https://www.cqvip.com/journal/97926X/97926X"
+        for text in ("金融研究 ISSN 1002-5502 目录 2026年10期 共：12篇",
+                     "金融研究 ISSN 1002-7246 2026年10期 2026 9 8",
+                     "管理世界 ISSN 1002-7246 目录 2026年10期 共：12篇",
+                     "金融研究 ISSN 1002-7246 目录 2026年10期 共：0篇"):
+            with self.subTest(text=text), self.assertRaises(ValueError):
+                cj.parse_cqvip_issue(text.encode(), journal="金融研究", url=good)
+
+    def test_financial_index_recovery_does_not_fake_articles(self):
+        import chinese_journals as cj
+        from unittest.mock import patch
+        primary = "https://www.jryj.org.cn/CN/1002-7246/current.shtml"
+        alternate = "https://www.cqvip.com/journal/97926X/97926X"
+        def getter(url):
+            if url == primary: raise OSError("TLS hostname mismatch")
+            if url == alternate:
+                return "金融研究 ISSN 1002-7246 目录 封面 2026年10期 共：12篇".encode()
+            raise AssertionError(url)
+        with tempfile.TemporaryDirectory() as tmp:
+            folder=Path(tmp)
+            (folder/"chinese_seen.json").write_text(json.dumps({
+                "financial_research":{"issue":"2026-07","articles":[],"baselined":True}
+            }),encoding="utf-8")
+            with patch.object(cj,"JOURNALS",(("financial_research","金融研究","publisher",primary),)):
+                r=cj.scan_chinese_journals(folder,UTC_NOW,get=getter,
+                    priority_sources={"financial_research":(("catalog_index",alternate),)})
+            j=r["source_status"]["journals"]["financial_research"]
+            self.assertEqual(j["issue"],"2026-10")
+            self.assertEqual(j["status"],"catalog_only")
+            self.assertEqual(j["article_count"],0)
+            self.assertEqual(j["article_snapshot"],[])
+            self.assertEqual(j["index_claimed_paper_count"],12)
+            self.assertEqual(r["new_candidates"],[])
+            self.assertEqual(r["source_status"]["records"],0)
+
+    def test_management_regression_independent_source_preserves_ledger(self):
+        import chinese_journals as cj
+        from unittest.mock import patch
+        primary="https://ncpssd.org/journal/details?gch=95499X&langType=1"
+        alternate="https://www.cqvip.com/journal/95499X/95499X"
+        def getter(url):
+            if url==primary:return "管理世界 2026年 第9期".encode()
+            if url==alternate:return "管理世界 ISSN 1002-5502 目录 封面 2026年10期 共：18篇".encode()
+            raise AssertionError(url)
+        with tempfile.TemporaryDirectory() as tmp:
+            folder=Path(tmp)
+            (folder/"chinese_seen.json").write_text(json.dumps({
+                "management_world":{"issue":"2026-10","articles":["old-identity"],"baselined":True}
+            }),encoding="utf-8")
+            with patch.object(cj,"JOURNALS",(("management_world","管理世界","catalog",primary),)):
+                r=cj.scan_chinese_journals(folder,UTC_NOW,get=getter,
+                    priority_sources={"management_world":(("catalog_index",alternate),)})
+            j=r["source_status"]["journals"]["management_world"]
+            self.assertEqual((j["issue"],j["status"]),("2026-10","catalog_only"))
+            self.assertEqual(j["article_count"],0)
+            self.assertEqual(r["new_candidates"],[])
+            previous=json.loads((folder/"chinese_seen.json").read_text())["management_world"]
+            self.assertIn("old-identity",previous["articles"])
+
+    def test_priority_all_outages_keep_previous_and_expose_failure(self):
+        import chinese_journals as cj
+        from unittest.mock import patch
+        primary="https://www.jryj.org.cn/CN/1002-7246/current.shtml"
+        alternate="https://www.cqvip.com/journal/97926X/97926X"
+        with tempfile.TemporaryDirectory() as tmp:
+            folder=Path(tmp)
+            (folder/"chinese_seen.json").write_text(json.dumps({
+                "financial_research":{"issue":"2026-10","articles":["old"],"baselined":True}
+            }),encoding="utf-8")
+            with patch.object(cj,"JOURNALS",(("financial_research","金融研究","publisher",primary),)):
+                r=cj.scan_chinese_journals(folder,UTC_NOW,get=lambda url: (_ for _ in ()).throw(TimeoutError(url)),
+                    priority_sources={"financial_research":(("catalog_index",alternate),)})
+            j=r["source_status"]["journals"]["financial_research"]
+            self.assertEqual(j["status"],"failed")
+            self.assertEqual(r["new_candidates"],[])
+            self.assertEqual(json.loads((folder/"chinese_seen.json").read_text())["financial_research"]["issue"],"2026-10")
+
+    def test_live_official_articles_beat_older_catalog(self):
+        import chinese_journals as cj
+        primary="https://www.jryj.org.cn/CN/1002-7246/current.shtml"
+        alternate="https://www.cqvip.com/journal/97926X/97926X"
+        def getter(url):
+            if url==primary:
+                return ('<html>金融研究 2026年 第10期 '
+                        '<a href="/CN/Y2026/V1/I10/11">企业供应链融资与国际专利布局研究</a>'
+                        '</html>').encode()
+            raise AssertionError("fallback should not be queried")
+        kind,url,issue,date,rows,metadata=cj.resolve_priority_sources(
+            "financial_research","金融研究","publisher",primary,"2026-09",getter,
+            (("catalog_index",alternate),))
+        self.assertEqual((kind,url,issue,len(rows)),("publisher",primary,"2026-10",1))
+        self.assertNotIn("index_claimed_paper_count",metadata)

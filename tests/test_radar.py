@@ -695,3 +695,56 @@ class ProductionGateTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class SourceTransportBudgetTests(unittest.TestCase):
+    def test_dns_failure_short_circuits_one_host_only(self):
+        import socket
+        import urllib.error
+        from chinese_journals import ScanHostBudget
+        gate = ScanHostBudget()
+        called = []
+        def broken(_):
+            called.append(1)
+            raise urllib.error.URLError(socket.gaierror(-2, "Name or service not known"))
+        url = "https://navi.cnki.net/knavi/rss/JJYJ"
+        with self.assertRaises(urllib.error.URLError):
+            gate.fetch(url, broken, "JJYJ")
+        with self.assertRaisesRegex(OSError, "host_circuit_open.*dns_resolution_failed"):
+            gate.fetch(url, broken, "GGYY")
+        self.assertEqual(len(called), 1)
+        self.assertEqual(gate.fetch("https://different.example.org/", lambda x: x, 17), 17)
+
+    def test_timeouts_short_circuit_after_two_independent_attempts(self):
+        from chinese_journals import ScanHostBudget
+        gate = ScanHostBudget()
+        called = []
+        def timeout(_):
+            called.append(1)
+            raise TimeoutError("The read operation timed out")
+        url = "https://www.ncpssd.cn/searchHandler/search"
+        for _ in range(2):
+            with self.assertRaises(TimeoutError):
+                gate.fetch(url, timeout, "耐心资本")
+        with self.assertRaisesRegex(OSError, "host_circuit_open.*repeated_timeout"):
+            gate.fetch(url, timeout, "协同出海")
+        self.assertEqual(len(called), 2)
+        # The next scan gets a fresh circuit and still tests the host.
+        self.assertEqual(ScanHostBudget().fetch(url, lambda x: x, "probe"), "probe")
+
+    def test_semantic_failure_does_not_open_network_circuit(self):
+        from chinese_journals import ScanHostBudget
+        gate = ScanHostBudget()
+        def malformed(_):
+            raise ValueError("journal_or_issue_not_recognized")
+        for _ in range(3):
+            with self.assertRaises(ValueError):
+                gate.fetch("https://www.ncpssd.cn/journal/details", malformed, None)
+        self.assertEqual(gate.blocked, {})
+
+    def test_mobile_fallback_is_catalog_not_publisher(self):
+        from chinese_journals import FALLBACKS
+        for slug in ("economic_research", "china_industrial", "management_world"):
+            kind, url = FALLBACKS[slug]
+            self.assertEqual(kind, "catalog")
+            self.assertIn("m.ncpssd.cn/journal/details", url)

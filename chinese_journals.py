@@ -518,6 +518,15 @@ def parse_cqvip_issue(payload: bytes, *, journal: str, url: str):
     return issue, None, [], count
 
 
+class PrioritySourceUnavailable(OSError):
+    """Retain each attempted source's true failure when all routes fail."""
+
+    def __init__(self, attempts):
+        self.attempts = attempts
+        super().__init__("priority_sources_unavailable: " + "; ".join(
+            f"{x['status']}:{x['url']}" for x in attempts))
+
+
 def resolve_priority_sources(slug: str, journal: str, kind: str, url: str,
                              previous_issue: str | None, get, sources):
     """Select evidence across fixed trusted sources, never a date inferred from crawl.
@@ -563,8 +572,7 @@ def resolve_priority_sources(slug: str, journal: str, kind: str, url: str,
                              "error": f"{type(error).__name__}: {str(error)[:140]}"})
     if best is None:
         if stale is None:
-            raise OSError("priority_sources_unavailable: " + "; ".join(
-                x["status"] + ":" + x["url"] for x in attempts))
+            raise PrioritySourceUnavailable(attempts)
         best = stale
     output_kind, output_url, issue, date, papers, indexed_count = best
     metadata = {"source_attempts": attempts, "primary_url": original_url}
@@ -708,7 +716,16 @@ def scan_chinese_journals(out: Path, now: datetime, get=fetch_html, rss_get=None
                     current.update(keys)
                     if already_seen:
                         continue
-                    if (previous.get("baselined") and (previous_articles or (previous.get("issue") and issue > previous["issue"]) or article.get("url_scope") == "issue_catalog")) or recent_listing:
+                    # An issue-only index can seed the *issue* without having
+                    # ever observed a single article. When a genuine issue-
+                    # bound detail page becomes available later, deliver it
+                    # once as a historical backfill, never as a dated new paper.
+                    recovered_first_article = bool(
+                        previous.get("baselined") and not previous_articles
+                        and previous.get("issue") == issue
+                        and previous.get("last_article_issue") != issue
+                        and article.get("url_scope") == "article_detail")
+                    if (previous.get("baselined") and (previous_articles or (previous.get("issue") and issue > previous["issue"]) or article.get("url_scope") == "issue_catalog" or recovered_first_article)) or recent_listing:
                         ident = hashlib.sha256((slug + ":" + key).encode()).hexdigest()[:16]
                         new_items.append({
                             "id": "journal:" + slug + ":" + ident,
@@ -740,6 +757,8 @@ def scan_chinese_journals(out: Path, now: datetime, get=fetch_html, rss_get=None
                     records += len(articles)
         except (OSError, ValueError, UnicodeError) as error:
             info.update(status="failed", reason=f"{type(error).__name__}: {str(error)[:120]}")
+            if isinstance(error, PrioritySourceUnavailable):
+                info["source_attempts"] = error.attempts
         if rss_get is not None and slug in RSS_CODES:
             code = RSS_CODES[slug]
             info["rss"] = {"url": f"https://navi.cnki.net/knavi/rss/{code}", "status": "failed", "article_count": 0}

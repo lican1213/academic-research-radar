@@ -23,10 +23,16 @@ jobs:
           python-version: '3.12'
       - name: Unit tests (offline)
         run: python -m unittest discover -s tests -p 'test_pdf_probe.py' -v
+      - name: Install PDF text parser (only for isolated acceptance)
+        run: python -m pip install 'PyMuPDF>=1.24,<2'
       - name: Real publisher PDF readback
         id: pdf
         continue-on-error: true
         run: python pdf_probe.py --out pdf-probe-result.json
+      - name: Diagnose publisher TLS certificate (no page content)
+        if: steps.pdf.outcome != 'success'
+        run: |
+          echo | openssl s_client -connect www.jryj.org.cn:443 -servername www.jryj.org.cn 2>/dev/null | openssl x509 -noout -subject -ext subjectAltName || true
       - name: Retain metadata only (no PDFs or extracted text)
         if: always()
         uses: actions/upload-artifact@v4

@@ -290,6 +290,14 @@ def parse_toc(payload: bytes, *, journal: str, kind: str, url: str) -> tuple[str
             published = None
             doi_match = None
         # Never inherit the maximum issue of a mixed homepage or latest-articles list.
+        # SUFE's explicit current-issue page has real article detail links,
+        # but the cards omit a repeated year/issue label. Never do this on
+        # its mixed "Latest" feed or when a row explicitly names another issue.
+        if (row_issue is None and journal == "财经研究" and
+                url == "https://qks.sufe.edu.cn/J/CJYJ/Article/CurrentIssue/CN" and
+                re.fullmatch(r"/J/(?:CJYJ|j00001)/Article/Details/[A-Za-z0-9_-]{12,}(?:/CN)?/?",
+                             urllib.parse.urlsplit(absolute).path, re.I)):
+            row_issue = issue
         # JRYJ has a dedicated publisher current-issue page with official
         # article identifiers; link IDs do not encode the year and issue.
         if (row_issue is None and journal == "金融研究"

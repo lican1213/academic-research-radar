@@ -748,3 +748,49 @@ class SourceTransportBudgetTests(unittest.TestCase):
             kind, url = FALLBACKS[slug]
             self.assertEqual(kind, "catalog")
             self.assertIn("m.ncpssd.cn/journal/details", url)
+
+
+class CatalogFallbackOnRegressionTests(unittest.TestCase):
+    def test_mobile_catalog_used_for_regressed_desktop_issue_without_fake_articles(self):
+        from unittest.mock import patch
+        import chinese_journals as cj
+        desktop = "https://ncpssd.org/journal/details?gch=95499X"
+        mobile = "https://m.ncpssd.cn/journal/details?gch=95499X&langType=1&nav=1"
+        pages = {
+            desktop: b"<html><body>\xe7\xae\xa1\xe7\x90\x86\xe4\xb8\x96\xe7\x95\x8c 2026\xe5\xb9\xb4 \xe7\xac\xac9\xe6\x9c\x9f</body></html>",
+            mobile: b"<html><body>\xe7\xae\xa1\xe7\x90\x86\xe4\xb8\x96\xe7\x95\x8c 2026\xe5\xb9\xb4 \xe7\xac\xac11\xe6\x9c\x9f</body></html>",
+        }
+        with tempfile.TemporaryDirectory() as temp:
+            folder = Path(temp)
+            (folder / "chinese_seen.json").write_text(json.dumps({
+                "management_world": {"issue": "2026-10", "articles": [], "baselined": True}
+            }), encoding="utf-8")
+            with patch.object(cj, "JOURNALS", (("management_world", "管理世界", "catalog", desktop),)), \
+                 patch.object(cj, "FALLBACKS", {"management_world": ("catalog", mobile)}):
+                result = cj.scan_chinese_journals(folder, UTC_NOW, get=lambda url: pages[url])
+            info = result["source_status"]["journals"]["management_world"]
+            self.assertEqual(info["issue"], "2026-11")
+            self.assertEqual(info["status"], "catalog_only")
+            self.assertEqual(info["article_count"], 0)
+            self.assertEqual(info["primary_failure"], "stale_primary_index: 2026-09")
+            self.assertFalse(result["new_candidates"])
+            self.assertEqual(json.loads((folder / "chinese_seen.json").read_text())["management_world"]["issue"], "2026-11")
+
+    def test_fallback_cannot_overwrite_newer_history_with_stale_catalog(self):
+        from unittest.mock import patch
+        import chinese_journals as cj
+        desktop, mobile = "https://ncpssd.org/journal/details?gch=95499X", "https://m.ncpssd.cn/journal/details?gch=95499X"
+        pages = {desktop: "<html>管理世界 2026年 第9期</html>".encode(),
+                 mobile: "<html>管理世界 2026年 第8期</html>".encode()}
+        with tempfile.TemporaryDirectory() as temp:
+            folder = Path(temp)
+            (folder / "chinese_seen.json").write_text(json.dumps({
+                "management_world": {"issue": "2026-10", "articles": [], "baselined": True}
+            }), encoding="utf-8")
+            with patch.object(cj, "JOURNALS", (("management_world", "管理世界", "catalog", desktop),)), \
+                 patch.object(cj, "FALLBACKS", {"management_world": ("catalog", mobile)}):
+                result = cj.scan_chinese_journals(folder, UTC_NOW, get=lambda url: pages[url])
+            info = result["source_status"]["journals"]["management_world"]
+            self.assertEqual(info["status"], "stale_index")
+            self.assertEqual(info["issue"], "2026-09")
+            self.assertEqual(json.loads((folder / "chinese_seen.json").read_text())["management_world"]["issue"], "2026-10")

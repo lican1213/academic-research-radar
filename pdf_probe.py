@@ -64,7 +64,7 @@ def approved_url(url: str) -> bool:
         return True
     if p.scheme != "http" or p.hostname != PUBLISHER:
         return False
-    if re.fullmatch(r"/CN/abstract/abstract166[2-7]\\.shtml", p.path):
+    if re.fullmatch(r"/CN/abstract/abstract166[2-7]\.shtml", p.path):
         return True
     return (p.path == "/CN/article/downloadArticleFile.do" and
             parse_qs(p.query).get("attachType") == ["PDF"] and
@@ -134,7 +134,7 @@ def inspect_pdf(blob: bytes, expected_title: str | None = None) -> dict:
         result["table_label_hits"] = len(re.findall(r"表\s*[一二三四五六七八九十\d]+", text))
         result["text_extraction"] = "ok" if chinese_chars >= 100 and len(text) >= 500 else "low_confidence"
         if expected_title:
-            normalize = lambda value: re.sub(r"[^\\u4e00-\\u9fffA-Za-z0-9]", "", value)
+            normalize = lambda value: re.sub(r"[^\u4e00-\u9fffA-Za-z0-9]", "", value)
             result["title_match"] = normalize(expected_title)[:12] in normalize(text)
 
     except Exception as exc:

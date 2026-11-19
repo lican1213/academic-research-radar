@@ -20,6 +20,7 @@ from pdf_probe import fetch, inspect_pdf, valid_pdf, MAX_HTML, MAX_PDF
 APPROVED_PUBLISHERS = frozenset({
     "qks.sufe.edu.cn",
     "qks.shufe.edu.cn",
+    "wjgl.sufe.edu.cn",
     "sjjj.magtech.com.cn",
     "xbzs.ecnu.edu.cn",
 })
@@ -35,6 +36,9 @@ class PublicLinks(HTMLParser):
 
     def handle_starttag(self, tag, attrs):
         fields = dict(attrs)
+        if tag == "meta" and fields.get("name", "").lower() == "citation_pdf_url":
+            if fields.get("content"):
+                self.urls.append((fields["content"], "citation_pdf_url"))
         for attr in ("href", "src", "data", "data-pdf", "data-url"):
             if fields.get(attr):
                 self.urls.append((fields[attr], ""))
@@ -69,7 +73,7 @@ def pdf_url(url: str, publisher: str) -> bool:
         return False
     p = urlsplit(url)
     path = p.path.lower()
-    if path.endswith(".pdf") or "/pdffulldown/" in path:
+    if path.endswith(".pdf") or "/pdffulldown/" in path or re.fullmatch(r"/cn/pdf/\d+", path):
         return True
     if path.endswith("/downloadarticlefile.do"):
         return parse_qs(p.query).get("attachType") == ["PDF"]
@@ -104,6 +108,10 @@ def verify_candidate(spec: dict, reader=fetch, inspector=inspect_pdf) -> dict:
               "table_verified": False, "status": "not_run"}
     page_url = spec["article_url"]
     host = urlsplit(page_url).hostname
+    permitted_hosts = {host} | set(spec.get("approved_pdf_hosts", []))
+    if not permitted_hosts.issubset(APPROVED_PUBLISHERS):
+        result["status"] = "unapproved_pdf_publisher"
+        return result
     if not approved_url(page_url, host):
         result["status"] = "unapproved_article_url"
         return result
@@ -129,7 +137,8 @@ def verify_candidate(spec: dict, reader=fetch, inspector=inspect_pdf) -> dict:
     if not actual:
         result["status"] = "pdf_url_not_found"
         return result
-    if not pdf_url(actual, host):
+    pdf_host = urlsplit(actual).hostname
+    if pdf_host not in permitted_hosts or not pdf_url(actual, pdf_host):
         result["status"] = "unapproved_pdf_url"
         return result
     result["pdf_url"] = actual

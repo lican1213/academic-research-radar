@@ -14,6 +14,8 @@ from email.utils import parsedate_to_datetime
 import html
 import json
 import re
+import socket
+import urllib.error
 import urllib.parse
 import urllib.request
 from datetime import datetime, timedelta
@@ -36,6 +38,11 @@ JOURNALS = (
 )
 
 FALLBACKS = {
+    # Mobile NCPSSD issue catalog pages are independent public entry points.
+    # They may expose title-only TOC: never infer article-detail coverage.
+    "economic_research": ("catalog", "https://m.ncpssd.cn/journal/details?gch=95645X&langType=1&nav=1"),
+    "china_industrial": ("catalog", "https://m.ncpssd.cn/journal/details?gch=93800A&langType=1&nav=1"),
+    "management_world": ("catalog", "https://m.ncpssd.cn/journal/details?gch=95499X&langType=1&nav=1"),
     "international_trade": ("catalog", "https://ncpssd.org/journal/details?gch=96001X"),
     "world_economy_studies": ("catalog", "https://ncpssd.org/journal/details?gch=91453X"),
     "finance_economics": ("publisher", "https://qks.sufe.edu.cn/J/CJYJ/Article/CurrentIssue/CN"),
@@ -427,12 +434,56 @@ def parse_ncpssd(payload: bytes, journals: set[str]) -> list[dict]:
     return result
 
 
+
+class ScanHostBudget:
+    """One-scan host circuit: do not retry a known DNS outage nine times.
+
+    A TCP/read timeout may be transient, so only two failures open the
+    circuit. The gate is scoped to a scan, never persisted across runs.
+    A skipped request raises an OSError and is visible as a failed source.
+    """
+
+    def __init__(self) -> None:
+        self.timeouts: dict[str, int] = {}
+        self.blocked: dict[str, str] = {}
+
+    def fetch(self, url: str, getter, argument):
+        host = urllib.parse.urlsplit(url).hostname or ""
+        if host in self.blocked:
+            raise OSError(f"host_circuit_open: {host}: {self.blocked[host]}")
+        try:
+            return getter(argument)
+        except OSError as error:
+            reason = error.reason if isinstance(error, urllib.error.URLError) else error
+            if isinstance(reason, socket.gaierror):
+                self.blocked[host] = "dns_resolution_failed"
+            elif isinstance(reason, TimeoutError):
+                self.timeouts[host] = self.timeouts.get(host, 0) + 1
+                if self.timeouts[host] >= 2:
+                    self.blocked[host] = "repeated_timeout"
+            raise
+
+
 def scan_chinese_journals(out: Path, now: datetime, get=fetch_html, rss_get=None, ncpssd_get=None) -> dict:
     """Monitor each journal independently; never infer publication from first_seen."""
     if rss_get is None and get is fetch_html:
         rss_get = fetch_rss
     if ncpssd_get is None and get is fetch_html:
         ncpssd_get = fetch_ncpssd
+    # Only wrap real network adapters. Injected fixture adapters remain exact,
+    # deterministic and untouched; each scheduled process probes anew.
+    if get is fetch_html:
+        budget = ScanHostBudget()
+        real_get = get
+        get = lambda url: budget.fetch(url, real_get, url)
+        if rss_get is fetch_rss:
+            real_rss_get = rss_get
+            rss_get = lambda code: budget.fetch(
+                f"https://navi.cnki.net/knavi/rss/{code}", real_rss_get, code)
+        if ncpssd_get is fetch_ncpssd:
+            real_ncpssd_get = ncpssd_get
+            ncpssd_get = lambda query: budget.fetch(
+                NCPSSD_API, real_ncpssd_get, query)
     seen_path = out / "chinese_seen.json"
     seen = json.loads(seen_path.read_text(encoding="utf-8")) if seen_path.exists() else {}
     if not isinstance(seen, dict):
@@ -450,6 +501,9 @@ def scan_chinese_journals(out: Path, now: datetime, get=fetch_html, rss_get=None
         info = {"journal": journal, "source_kind": kind, "url": url, "checked_at": now.isoformat(),
                 "status": "not_run", "issue": None, "issue_date": None, "article_count": 0}
         previous = seen.get(slug, {})
+        # Last known good issue is only a diagnostic, not a claim about
+        # today's live coverage or publication date.
+        info["last_known_issue"] = previous.get("issue")
         info["article_snapshot"] = []
         try:
             try:

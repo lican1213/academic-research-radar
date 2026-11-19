@@ -45,7 +45,7 @@ This repository gathers **public bibliographic metadata**. It does not make scho
 ## PDF readback gate
 
 - PDF success requires **actual bytes from an approved publisher**, valid PDF header and EOF, byte size and SHA256; an article abstract page, a mocked test, or mere link is not acceptance. Do not weaken TLS/cross-origin controls.
-- PDF acceptance is a separate read-only, unscheduled workflow; metadata or metrics may be retained as an artifact, **no publisher PDF or extracted text in repository/artifact**. A successful unrelated control PDF cannot pass the targeted journal gate.
+- PDF acceptance is a separate, unscheduled workflow; default output is metadata-only. **Never commit article PDFs or extracted full text into the repository.** If the user explicitly asks to receive the original documents and access is lawful, a tightly scoped, one-day ZIP artifact may temporarily contain *verified original PDFs only* for handoff via GitHub `download_workflow_artifact`. No standing public PDF archive and no bulk article text artifact. An unrelated control PDF cannot pass a journal-specific gate.
 - Do not introduce text mining/RAG/LLM evaluation pipelines until one real relevant PDF is retrieved and the extraction is proven useful; link and metadata discovery must continue independently when PDFs fail.
 
 
@@ -53,4 +53,12 @@ This repository gathers **public bibliographic metadata**. It does not make scho
 
 - The journal itself publicly advertises `http://www.jryj.org.cn`; an actual Runner confirmed HTTP200 article HTML and an explicit official PDF URL. Its HTTPS endpoint has a mismatched cert. Therefore the isolated PDF acceptance probe MAY use **only** the exact 2026-10 approved article IDs1662–1667 on that official HTTP host, with the article and PDF download paths strictly checked. No TLS validation bypass, proxy, user auth, or generic HTTP fallback.
 - This HTTP exception sacrifices authenticated transport integrity. Do not describe the download as cryptographically authenticated. Check independent article bibliographic metadata, extracted title, PDF page count, SHA256 and text before recommending scholarly claims; prefer HTTPS when genuinely fixed.
-- Never commit or upload copyrighted PDF bytes or recovered full text. Metadata-only artifact and fail-closed six-article acceptance are mandatory.
+- Never commit copyrighted PDF bytes or recovered full text. Default artifact is metadata-only; the user-authorized short-lived original-PDF ZIP delivery exception above requires exact six-article checksums, a one-day artifact, and actual retrieval before stating handoff success.
+
+
+## Research-radar daily PDF evidence contract (2026-11-19)
+
+- Follow the final `MOC.md` section for PR #16/#17 and actual delivered run 44474347819; earlier notes declaring PDF delivery impossible or artifacts forbidden describe **superseded historical state**.
+- Current `pdf_probe.py` is a **hard-coded six-paper acceptance sample**, not a reusable journal PDF importer. Do not promise that arbitrary papers or all nine journals are download-ready. Source identity/date checks and an independent live run are required for each new paper.
+- Keep daily report at 0–3 priority leads / 0–2 watch leads. For high-value P0/P1A/P1 papers, add evidence state: `metadata/abstract only`, `verified full PDF`, or `specific PDF page/table examined`. Only the last state supports claims about coefficient/identification-table details. Link the paper and cite actual page/table; do not infer causal evidence from an abstract.
+- Normal daily radar is **read-only** and must not trigger GitHub code changes, new scheduled workflows, or batch-PDF uploads. A user-requested handoff can use a short-lived, authenticated GitHub artifact workflow; verify the artifact is actually retrievable and contains the expected originals. An expiring artifact cannot serve as a permanent literature source.

@@ -109,3 +109,10 @@ Ponytail 最小验证：`.github/workflows/pdf-probe.yml` 只在 PDF 验收代�
 ### 2026-11-19 PDF 验收已通过（不是摘要链接）
 
 实网 [Actions #44470870725](https://github.com/lican1213/academic-research-radar/actions/runs/44470870725) 已完整下载并在 Runner 内存中解析《金融研究》2026年第10期前6篇，全部 `pdf_download_verified=true`、`text_extraction=ok`、`title_match=true`、`page_count_matches=true`（共112页、约536万字节 PDF 二进制文件）。这是与每日雷达独立的按需验收脚本，不是全期12篇的生产覆盖，也没有审读回归表。正式PDF入口是期刊公开 `http://www.jryj.org.cn/CN/article/downloadArticleFile.do?attachType=PDF&id=1662..1667`（逐个实际页面发现并下载）。官网HTTPS证书仍错配，HTTP有传输完整性风险；不关闭TLS验证或使用代理/登录。原始PDF和全文不存 GitHub，只保存SHA、页数、可提取性等元数据。将来证书正确时优先恢复HTTPS；正文分析仍要人工/模型根据可核页码和表号独立证据进行。
+
+
+### 2026-11-19 / 六篇 PDF 文件实际交付（覆盖此前只保存元数据的历史描述）
+
+用户明确要求原始 PDF 而非验收日志，因此 [PR #16](https://github.com/lican1213/academic-research-radar/pull/16) / [PR #17](https://github.com/lican1213/academic-research-radar/pull/17) 为独立 PDF 验收任务加入 **`--zip-out` 单次交付模式**：Runner 下载六篇官网原始文件，与已验证的每篇 SHA-256 对比，通过才临时生成 ZIP 并以 **1日过期的 GitHub Actions Artifact** 交付；会话端取回后可单独提供6份 PDF 或 ZIP。最终成功 [run #44474347819](https://github.com/lican1213/academic-research-radar/actions/runs/44474347819)，Artifact `14505487442`，6/6 校验通过、合计112页，**已实际完成对话交付**；此前 [run #44473449505](https://github.com/lican1213/academic-research-radar/actions/runs/44473449505) 在第6篇临时超时且4分钟上限触发取消，不能当作通过。完整失败-修复-再验收过程见 MOC。
+
+注意：以上只是固定的《金融研究》2026年第10期前6篇样例，**不是九刊通用自动全文获取**。日常研究雷达仍优先发现元数据，随后对高相关、公开可取得的原文按需核对。研究报告要将“题录/摘要”“原文已取得”“回归表与页码已逐项核验”分开；PDF 提取文字成功不能冒充学术证据验证。PDF 和提取全文绝不提交到 Git，允许时仅在用户明确要求交付的独立临时 Artifact 里短时传递原文，不建永久公众下载仓库。原有定时扫描、去重账本与候选筛选规则不变。

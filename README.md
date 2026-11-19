@@ -95,3 +95,7 @@ DNS解析失败的CNKI RSS在**本次扫描内**停止同域名重复请求；�
 《金融研究》和《管理世界》新增固定且经过期刊名/ISSN校验的维普公开期次索引兜底（非正式出版者）；《金融研究》先尝试原官方链接和规范无 www 站点。维普只有`目录/期次/声称篇数`，所以`index_claimed_paper_count`不等于抓到文章链接或已验证论文；扫描标记`catalog_only`，不生产新论文日期。诊断见各刊`source_attempts`，记录来源失败与采用来源。即使CI绿色，仍需通过生产run+最新JSON同SHA回读验收，并由ChatGPT独立查该刊的实际当期文章。
 
 **Stage-3兼容：** 若某刊首次只有期次、没有文章，后续同一期首次取得可验证文章链接，写入独立的 `chinese_historical_backfill_leads`（`event_type=issue_backfill`），发表日期保持 `null`；不把旧刊文章称为当天新论文。全部备用来源失败时，`source_attempts` 逐条记录真实错误供日报人工补检。
+
+### 2026-11-19 PDF 真实下载验收（可选、与定时扫描隔离）
+
+Ponytail 最小验证：`.github/workflows/pdf-probe.yml` 只在 PDF 验收代码变动或手工触发时执行，**不修改现有每日两次元数据扫描**。通过已有金融研究正式详情页发现正文 PDF 的真实 `href`，然后 HTTPS 读取（保持证书和域名校验），核验 PDF 头/EOF、字节数、SHA256；如 Runner 配有 `pdftotext`，只记录文本可提取性和表格标识数，不保存版权全文。结果作为仅元数据的 Action artifact，可用真实 run SHA 回读。若官网 DNS/TLS 失败，则该 PDF 验收门 **FAIL**，不得凭官方页面上存在“正文”图标放行。另有华东师范大学公开的跨境电商供应链韧性论文 PDF 作工具链对照；对照 PDF 下载成功不能替代目标刊验收。首次全文实证分析仍由 ChatGPT 基于可获得的原文逐页核验，不自动生成论文事实。

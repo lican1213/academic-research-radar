@@ -1,0 +1,40 @@
+name: Academic Radar PDF Acceptance (read-only)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'pdf_probe.py'
+      - 'tests/test_pdf_probe.py'
+      - '.github/workflows/pdf-probe.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  pdf-acceptance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Unit tests (offline)
+        run: python -m unittest discover -s tests -p 'test_pdf_probe.py' -v
+      - name: Real publisher PDF readback
+        id: pdf
+        continue-on-error: true
+        run: python pdf_probe.py --out pdf-probe-result.json
+      - name: Retain metadata only (no PDFs or extracted text)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pdf-acceptance-${{ github.run_id }}
+          path: pdf-probe-result.json
+          if-no-files-found: warn
+          retention-days: 14
+      - name: Enforce real PDF gate
+        if: steps.pdf.outcome != 'success'
+        run: exit 1

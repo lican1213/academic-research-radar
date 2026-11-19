@@ -130,9 +130,9 @@ def article_link(kind: str, url: str) -> bool:
         return kind == "publisher"
     if kind == "catalog" and path.lower() == "/literature/articleinfo":
         params = urllib.parse.parse_qs(urllib.parse.urlsplit(url).query)
-        article_id = (params.get("id") or [""])[0]
-        return (params.get("type") == ["journalArticle"]
-                and bool(re.fullmatch(r"[A-Z]{4,6}20\d{8}", article_id)))
+        ids = params.get("id") or []
+        return (params.get("type") == ["journalArticle"] and len(ids) == 1
+                and bool(re.fullmatch(r"[A-Z]{4,6}20\d{8}", ids[0])))
     if kind == "catalog":
         # National catalog may expose an issue but not verifiable article pages.
         # Do not mistake download links, buttons or site navigation for papers.
@@ -262,6 +262,12 @@ def parse_toc(payload: bytes, *, journal: str, kind: str, url: str) -> tuple[str
     seen_urls: set[str] = set()
     for title, href, part_index in parser.links:
         absolute = urllib.parse.urljoin(url, html.unescape(href))
+        if kind == "catalog" and urllib.parse.urlsplit(absolute).path.lower() == "/literature/articleinfo":
+            # A browser URL may contain a literal Chinese query value. Encode
+            # it once so GitHub Runner/Python agents can actually open it.
+            parts = urllib.parse.urlsplit(absolute)
+            absolute = urllib.parse.urlunsplit(parts._replace(
+                query=urllib.parse.urlencode(urllib.parse.parse_qsl(parts.query))))
         if urllib.parse.urlparse(absolute).hostname != urllib.parse.urlparse(url).hostname:
             continue
         if not article_link(kind, absolute):

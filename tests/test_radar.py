@@ -902,6 +902,87 @@ class IndependentIndexAdapterTests(unittest.TestCase):
         self.assertNotIn("index_claimed_paper_count",metadata)
 
 
+class CoverageRootCauseTests(unittest.TestCase):
+    """Ponytail: reproduce failures in the actual 2026-11-19 production state."""
+
+    def test_financial_official_http_current_issue_has_real_article_links(self):
+        url="http://www.jryj.org.cn/CN/1002-7246/current.shtml"
+        page=('<h1>金融研究</h1><div>2026年, 第10期, 总第556期</div>'
+              '<a href="/CN/abstract/abstract1662.shtml">银行资产负债结构、放贷能力与货币政策传导效果——基于政府债券增持的视角</a>'
+              '<a href="/CN/abstract/abstract1663.shtml">地缘政治风险、跨境供应链与中国企业债券信用利差</a>'
+              '<a href="https://evil.example/CN/abstract/abstract9999.shtml">外部注入文章</a>'
+              '<a href="/CN/abstract/abstract1661.shtml">下一期其他文章</a>').encode()
+        issue, _, rows=cj.parse_toc(page,journal="金融研究",kind="publisher",url=url)
+        self.assertEqual(issue,"2026-10")
+        self.assertEqual([r["issue"] for r in rows],["2026-10","2026-10"])
+        self.assertTrue(all(r["url_scope"]=="article_detail" for r in rows))
+        self.assertTrue(all(r["url"].startswith("http://www.jryj.org.cn/") for r in rows))
+
+    def test_financial_official_current_recovers_article_level_without_republishing(self):
+        url="http://www.jryj.org.cn/CN/1002-7246/current.shtml"
+        page=('<h1>金融研究</h1><p>2026年 第10期</p>'
+              '<a href="/CN/abstract/abstract1663.shtml">地缘政治风险、跨境供应链与中国企业债券信用利差</a>').encode()
+        with tempfile.TemporaryDirectory() as tmp:
+            out=Path(tmp)
+            (out/"chinese_seen.json").write_text(json.dumps({
+                "financial_research":{"issue":"2026-10","articles":[],"baselined":True}
+            }))
+            with patch.object(cj,"JOURNALS",(("financial_research","金融研究","publisher",url),)):
+                r=cj.scan_chinese_journals(out,UTC_NOW,get=lambda _:page,
+                                            priority_sources={"financial_research":()})
+                journal=r["source_status"]["journals"]["financial_research"]
+                self.assertEqual(journal["status"],"ok")
+                self.assertEqual(journal["article_link_count"],1)
+                self.assertEqual(r["source_status"]["article_level_ok"],1)
+                self.assertEqual(len(r["historical_backfill_leads"]),1)
+                again=cj.scan_chinese_journals(out,UTC_NOW,get=lambda _:page,
+                                                priority_sources={"financial_research":()})
+                self.assertEqual(again["historical_backfill_leads"],[])
+
+    def test_current_issue_sufe_does_not_use_mixed_latest_feed(self):
+        config={slug:url for slug,_,_,url in cj.JOURNALS}
+        self.assertEqual(config["finance_economics"],
+                         "https://qks.sufe.edu.cn/J/CJYJ/Article/CurrentIssue/CN")
+        # The Latest page includes old issues; never treat every link as current.
+        latest=("<h1>财经研究</h1>2026年第09期"
+                "<a href='/J/CJYJ/Article/Details/pgbFuTsz-vRzo-GypL-0h9O-AptmzpGperJG'>企业国际知识产权布局与出海</a>"
+                "<p>2026年第07期</p>"
+                "<a href='/J/CJYJ/Article/Details/aaaa-bbbb-cccc-dddd-eeeeffff0000'>耐心资本与融资约束</a>"
+                "<p>2026年第09期</p>").encode()
+        _,_,rows=cj.parse_toc(latest,journal="财经研究",kind="publisher",
+                              url="https://qks.sufe.edu.cn/J/CJYJ/Article/Latest")
+        self.assertEqual(rows[0]["issue"],"2026-07")
+
+    def test_rss_dns_failure_is_visible_but_not_credited_as_missing_official_toc(self):
+        url="https://sjjj.magtech.com.cn/CN/home"
+        page=('<h1>世界经济</h1><p>2026年,49卷,第11期</p>'
+              '<a href="/CN/Y2026/V49/I11/3">政企协同与绿色创新：链长制的硬约束与强牵引</a>').encode()
+        with tempfile.TemporaryDirectory() as tmp:
+            with patch.object(cj,"JOURNALS",(("world_economy","世界经济","publisher",url),)):
+                r=cj.scan_chinese_journals(Path(tmp),UTC_NOW,get=lambda _:page,
+                             rss_get=lambda _: (_ for _ in ()).throw(OSError("CNKI RSS DNS failed")))
+            st=r["source_status"]
+            self.assertEqual(st["status"],"ok")
+            self.assertEqual(st["article_level_ok"],1)
+            self.assertEqual(st["rss_health"],"degraded")
+            self.assertEqual(st["rss_failed_journals"],["世界经济"])
+            self.assertEqual(st["journals"]["world_economy"]["rss"]["status"],"failed")
+
+    def test_catalog_rows_and_mixed_links_are_not_article_level_ok(self):
+        catalog="https://ncpssd.org/journal/details.aspx?gch=95645X"
+        title_page=('<h1>经济研究</h1><h2>2026年 第9期</h2>'
+                    '机器人应用与制造业企业生产链延伸——基于稳链强链视角的考察 '
+                    '吴腊梅[1,2];彭水军[3] (25-48)').encode()
+        with tempfile.TemporaryDirectory() as tmp:
+            with patch.object(cj,"JOURNALS",(("economic_research","经济研究","catalog",catalog),)):
+                r=cj.scan_chinese_journals(Path(tmp),UTC_NOW,get=lambda _:title_page)
+            st=r["source_status"]
+            self.assertEqual(st["article_level_ok"],0)
+            self.assertEqual(st["queries_ok"],1)  # source responded with title rows
+            self.assertEqual(st["status"],"degraded")
+
+
+
 class IssueOnlyRecoveryTests(unittest.TestCase):
     def test_index_only_then_article_details_same_issue_deliver_backfill_once(self):
         import chinese_journals as cj

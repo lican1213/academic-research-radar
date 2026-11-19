@@ -480,7 +480,13 @@ def markdown_report(report: dict) -> str:
               f"**Metadata prefilter passes:** {report.get('prefilter_pass_count', 'unknown')}", "",
               "This is metadata triage, not a verified reading or recommendation.", ""]
     for name, status in report["source_status"].items():
-        result.append(f"- {name}: {status['status']}; {status['queries_ok']}/{status['queries_total']} queries; {status['records']} records")
+        if name == "chinese_journals" and "article_level_ok" in status:
+            result.append(f"- {name}: {status['status']}; article-level TOC "
+                          f"{status['article_level_ok']}/{status['article_level_total']} journals; "
+                          f"nonempty sources {status['queries_ok']}/{status['queries_total']}; "
+                          f"optional RSS={status['rss_health']}; {status['records']} metadata rows")
+        else:
+            result.append(f"- {name}: {status['status']}; {status['queries_ok']}/{status['queries_total']} queries; {status['records']} records")
         for error in status["errors"]:
             result.append(f"  - Error: {error}")
     index = report["source_status"].get("chinese_journals", {}).get("ncpssd_topic_index")

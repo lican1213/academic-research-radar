@@ -979,6 +979,19 @@ class CoverageRootCauseTests(unittest.TestCase):
                               url="https://qks.sufe.edu.cn/J/CJYJ/Article/Latest")
         self.assertEqual(rows[0]["issue"],"2026-07")
 
+    def test_readable_report_separates_titles_from_verified_current_article_links(self):
+        report={"generated_at":"2026-11-19T13:46:31+00:00","status":"degraded",
+                "new_candidates":[],"source_status":{
+                 "chinese_journals":{"status":"degraded","queries_ok":8,
+                    "queries_total":9,"article_level_ok":6,"article_level_total":9,
+                    "rss_health":"degraded","records":87,
+                    "errors":["经济研究: toc_metadata"]}}}
+        summary=markdown_report(report)
+        self.assertIn("article-level TOC 6/9 journals",summary)
+        self.assertIn("nonempty sources 8/9",summary)
+        self.assertIn("optional RSS=degraded",summary)
+        self.assertNotIn("8/9 queries",summary)
+
     def test_rss_dns_failure_is_visible_but_not_credited_as_missing_official_toc(self):
         url="https://sjjj.magtech.com.cn/CN/home"
         page=('<h1>世界经济</h1><p>2026年,49卷,第11期</p>'

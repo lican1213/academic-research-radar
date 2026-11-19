@@ -464,8 +464,122 @@ class ScanHostBudget:
             raise
 
 
-def scan_chinese_journals(out: Path, now: datetime, get=fetch_html, rss_get=None, ncpssd_get=None) -> dict:
+
+# Stage-2 independent index discovery. Each entry is public and separately
+# identified; an index issue is NOT a validated paper list.
+# Official finance site is also probed at its canonical apex host, without
+# disabling HTTPS certificate or hostname verification.
+PRIORITY_SOURCES = {
+    "management_world": (
+        ("catalog_index", "https://www.cqvip.com/journal/95499X/95499X"),
+        ("catalog", "https://m.ncpssd.cn/journal/details?gch=95499X&langType=1&nav=1"),
+    ),
+    "financial_research": (
+        ("publisher", "https://jryj.org.cn/CN/1002-7246/current.shtml"),
+        ("publisher", "https://www.jryj.org.cn/CN/1002-7246/home.shtml"),
+        ("catalog_index", "https://www.cqvip.com/journal/97926X/97926X"),
+        ("catalog", "https://m.ncpssd.cn/journal/details?gch=97926X&langType=1&nav=1"),
+    ),
+}
+
+CQVIP_IDENTITY = {
+    "管理世界": ("95499X", "1002-5502"),
+    "金融研究": ("97926X", "1002-7246"),
+}
+
+
+def parse_cqvip_issue(payload: bytes, *, journal: str, url: str):
+    """Return only a *verified index issue*; never invent article identities.
+
+    Reject unrelated journal pages, an ISSN mismatch, stale year-navigation
+    labels and a bare issue number lacking a TOC/issue-item count.
+    """
+    identity = CQVIP_IDENTITY.get(journal)
+    parts = urllib.parse.urlsplit(url)
+    if not identity or parts.scheme != "https" or parts.hostname != "www.cqvip.com":
+        raise ValueError("untrusted_catalog_index")
+    if parts.path != f"/journal/{identity[0]}/{identity[0]}":
+        raise ValueError("index_journal_id_mismatch")
+    parser = TocHTML()
+    parser.feed(payload.decode("utf-8-sig", errors="replace"))
+    text = " ".join(" ".join(parser.text_parts).split())
+    if journal not in text or not re.search(r"ISSN\\s*" + re.escape(identity[1]), text, re.I):
+        raise ValueError("index_journal_identity_not_verified")
+    # "目录 ... 2026年10期 共：12篇" is distinct from an issue
+    # navigation list or a headline stating an issue was released.
+    matches = re.findall(
+        r"目录\\s*(?:封面\\s*)?(20\\d{2})\\s*年\\s*(0?[1-9]|1[0-2])\\s*期\\s*共\\s*[:：]\\s*(\\d{1,3})\\s*篇",
+        text,
+    )
+    valid = [(f"{y}-{int(m):02d}", int(n)) for y, m, n in matches if 0 < int(n) <= 100]
+    if not valid:
+        raise ValueError("index_current_issue_not_verified")
+    issue, count = max(valid, key=lambda x: x[0])
+    return issue, None, [], count
+
+
+def resolve_priority_sources(slug: str, journal: str, kind: str, url: str,
+                             previous_issue: str | None, get, sources):
+    """Select evidence across fixed trusted sources, never a date inferred from crawl.
+
+    Keep the primary stale response as negative evidence if no viable
+    alternative exists. Alternative failures are visible in the snapshot.
+    """
+    original_url = url
+    best = None
+    stale = None
+    attempts = []
+    for source_kind, source_url in ((kind, url), *sources):
+        try:
+            payload = get(source_url)
+            if source_kind == "catalog_index":
+                issue, date, papers, indexed_count = parse_cqvip_issue(
+                    payload, journal=journal, url=source_url)
+                source_kind_output = "catalog"
+            else:
+                issue, date, papers = parse_toc(
+                    payload, journal=journal, kind=source_kind, url=source_url)
+                indexed_count = None
+                source_kind_output = source_kind
+            if not issue:
+                raise ValueError("journal_or_issue_not_recognized")
+            if previous_issue and issue < previous_issue:
+                attempts.append({"url": source_url, "status": "stale_index", "issue": issue})
+                if stale is None:
+                    stale = (source_kind_output, source_url, issue, date, papers, indexed_count)
+                continue
+            attempts.append({"url": source_url, "status": "verified_issue_only" if not papers else "parsed_rows",
+                             "issue": issue, "row_count": len(papers)})
+            candidate = (source_kind_output, source_url, issue, date, papers, indexed_count)
+            if (best is None or issue > best[2]
+                    or (issue == best[2] and len(papers) > len(best[4]))):
+                best = candidate
+            # Current publisher articles are a stronger source than an index
+            # with the same/older issue; avoid unnecessary additional requests.
+            if source_kind == "publisher" and papers:
+                break
+        except (OSError, ValueError, UnicodeError) as error:
+            attempts.append({"url": source_url, "status": "failed",
+                             "error": f"{type(error).__name__}: {str(error)[:140]}"})
+    if best is None:
+        if stale is None:
+            raise OSError("priority_sources_unavailable: " + "; ".join(
+                x["status"] + ":" + x["url"] for x in attempts))
+        best = stale
+    output_kind, output_url, issue, date, papers, indexed_count = best
+    metadata = {"source_attempts": attempts, "primary_url": original_url}
+    if indexed_count is not None:
+        metadata["index_claimed_paper_count"] = indexed_count
+    if output_url != original_url:
+        metadata["recovered_via_alternate"] = True
+    return output_kind, output_url, issue, date, papers, metadata
+
+
+def scan_chinese_journals(out: Path, now: datetime, get=fetch_html, rss_get=None, ncpssd_get=None, priority_sources=None) -> dict:
     """Monitor each journal independently; never infer publication from first_seen."""
+    live_mode = get is fetch_html
+    if priority_sources is None:
+        priority_sources = PRIORITY_SOURCES if live_mode else {}
     if rss_get is None and get is fetch_html:
         rss_get = fetch_rss
     if ncpssd_get is None and get is fetch_html:
@@ -506,38 +620,46 @@ def scan_chinese_journals(out: Path, now: datetime, get=fetch_html, rss_get=None
         info["last_known_issue"] = previous.get("issue")
         info["article_snapshot"] = []
         try:
-            try:
-                payload = get(url)
-                # A reachable homepage can still contain no usable current rows.
-                if slug == "quant_economics" and not parse_toc(payload, journal=journal, kind=kind, url=url)[2]:
-                    raise ValueError("no_verified_current_issue_rows")
-            except (OSError, ValueError) as primary_error:
-                if slug not in FALLBACKS:
-                    raise
-                fallback_kind, fallback_url = FALLBACKS[slug]
-                payload = get(fallback_url)
-                info["primary_url"] = url
-                info["primary_failure"] = f"{type(primary_error).__name__}: {str(primary_error)[:140]}"
-                info["url"] = url = fallback_url
-                info["source_kind"] = kind = fallback_kind
-            issue, issue_date, articles = parse_toc(payload, journal=journal, kind=kind, url=url)
-            # A reachable but regressed catalog is also a source failure.
-            # Probe the independent public fallback before labelling it stale.
-            if (issue and previous.get("issue") and issue < previous["issue"]
-                    and slug in FALLBACKS and url != FALLBACKS[slug][1]):
-                fallback_kind, fallback_url = FALLBACKS[slug]
+            if slug in priority_sources:
+                kind, url, issue, issue_date, articles, provenance = resolve_priority_sources(
+                    slug, journal, kind, url, previous.get("issue"), get, priority_sources[slug])
+                info.update(provenance)
+                info["url"] = url
+                info["source_kind"] = kind
+            else:
                 try:
-                    fallback_payload = get(fallback_url)
-                    candidate_issue, candidate_date, candidate_articles = parse_toc(
-                        fallback_payload, journal=journal, kind=fallback_kind, url=fallback_url)
-                    if candidate_issue and candidate_issue >= previous["issue"]:
-                        info["primary_url"] = url
-                        info["primary_failure"] = "stale_primary_index: " + issue
-                        info["url"] = url = fallback_url
-                        info["source_kind"] = kind = fallback_kind
-                        issue, issue_date, articles = candidate_issue, candidate_date, candidate_articles
-                except (OSError, ValueError) as fallback_error:
-                    info["fallback_failure"] = f"{type(fallback_error).__name__}: {str(fallback_error)[:140]}"
+                    payload = get(url)
+                    # A reachable homepage can still contain no usable current rows.
+                    if slug == "quant_economics" and not parse_toc(payload, journal=journal, kind=kind, url=url)[2]:
+                        raise ValueError("no_verified_current_issue_rows")
+                except (OSError, ValueError) as primary_error:
+                    if slug not in FALLBACKS:
+                        raise
+                    fallback_kind, fallback_url = FALLBACKS[slug]
+                    payload = get(fallback_url)
+                    info["primary_url"] = url
+                    info["primary_failure"] = f"{type(primary_error).__name__}: {str(primary_error)[:140]}"
+                    info["url"] = url = fallback_url
+                    info["source_kind"] = kind = fallback_kind
+                issue, issue_date, articles = parse_toc(payload, journal=journal, kind=kind, url=url)
+                # A reachable but regressed catalog is also a source failure.
+                # Probe the independent public fallback before labelling it stale.
+                if (issue and previous.get("issue") and issue < previous["issue"]
+                        and slug in FALLBACKS and url != FALLBACKS[slug][1]):
+                    fallback_kind, fallback_url = FALLBACKS[slug]
+                    try:
+                        fallback_payload = get(fallback_url)
+                        candidate_issue, candidate_date, candidate_articles = parse_toc(
+                            fallback_payload, journal=journal, kind=fallback_kind, url=fallback_url)
+                        if candidate_issue and candidate_issue >= previous["issue"]:
+                            info["primary_url"] = url
+                            info["primary_failure"] = "stale_primary_index: " + issue
+                            info["url"] = url = fallback_url
+                            info["source_kind"] = kind = fallback_kind
+                            issue, issue_date, articles = candidate_issue, candidate_date, candidate_articles
+                    except (OSError, ValueError) as fallback_error:
+                        info["fallback_failure"] = f"{type(fallback_error).__name__}: {str(fallback_error)[:140]}"
+    
             if not issue:
                 info.update(status="unverified", reason="journal_or_issue_not_recognized")
             elif previous.get("issue") and issue < previous["issue"]:
@@ -561,6 +683,8 @@ def scan_chinese_journals(out: Path, now: datetime, get=fetch_html, rss_get=None
                                      else "publisher_unavailable" if kind == "catalog" and slug in
                                      ("quant_economics", "financial_research") else "primary_source_unavailable")
                     info["reason"] = failure_class + "; " + info.get("reason", "catalog_fallback")
+                if info.get("source_attempts") and any(a["status"] != "parsed_rows" for a in info["source_attempts"]):
+                    info["source_quality_note"] = "alternate_source_used_or_primary_degraded"
                 if info["status"] == "mixed_links":
                     info["reason"] = "; ".join(filter(None, (info.get("reason"), "mixed_or_unbound_links")))
                 previous_articles = set(previous.get("articles", []))

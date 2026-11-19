@@ -312,3 +312,26 @@
 
 
 **已同步 ChatGPT 周期任务提示词（2026-11-19）**：现有自动化 `6a62e1a21e1c8191be0fdd3893473bd2`（Can Li学术研究每日雷达）在原提示词末添加“PDF 原文证据与研究报告格式”优先条款：仅高相关 P0/P1A/P1 按需补全合法公开原文；研究结论证据标为 `题录/摘要` / `完整PDF已核验` / `对应页码和回归表已核验`；区分 PDF 技术提取成功与学术表格证据；不把旧论文后补当今日新增；不自动打包所有九刊 PDF，不重建仓库，明确用户要求时才通过短期 ZIP Artifact 交付。**已实读确认任务仍启用，频率未改变**：原 `Asia/Taipei 09:30` 每日计划和北京时间 09:30 日报均保留，GitHub metadata Action 原两次/日 cron 保持不动。任务只改变日报证据字段/阅读优先级，不自动运行新的 PDF 定时采集。
+
+
+### 2026-11-19 / 新期刊新文章 PDF 候选适配，三出版方生产验收 PASS
+
+**目标与限界：** 依照 Ponytail 最小可行开发思路，将原 `pdf_probe.py` 仅支持《金融研究》2026(10)六篇、预置 ID+SHA256 的交付样例，与新刊新文研究用的**名单驱动 PDF 候选校验器**拆开。新建 `pdf_candidate.py`、`tests/pdf_pilot_manifest.json`、`tests/test_pdf_candidate.py`、独立 `.github/workflows/pdf-candidate-acceptance.yml`。候选输入：真实论文详情 URL、标题、期刊、预计页数、经审查的官方 PDF URL（可选）、经审核的出版机构跨域允许名单（可选）。通过详情 HTML 的锚点/iframe/data 属性、官方 `citation_pdf_url` 元数据发现 PDF；没有则只能采用已独立验证的真实官方 PDF URL，**不猜 PDF 文章 ID**；仅允许已核过的 HTTPS 官方域名，不允许任意域名跳转、TLS 关闭、登录/验证码绕行。PDF 验证签名/EOF、字节数与 SHA256、PyMuPDF 中文正文、归一化标题前12字符及合理页数/已知页数；仅写 JSON 元数据，不留 PDF/全文。当前不集成每日元数据扫描、不触发定时全文抓取，不改变研究排序与增量去重。
+
+**真实生产 loop 与失败说明（所有失败均保留，不把 GitHub CI 视作 PDF 实网成功）：**
+- [PR #19](https://github.com/lican1213/academic-research-radar/pull/19) 合并 `c95f4b4971efb3737dee041b552e318a76480001`，真实 run [44477366496](https://github.com/lican1213/academic-research-radar/actions/runs/44477366496) **FAIL**：华东师范大学学报 PDF 全文与页数验收成功；《财经研究》初始 qks.sufe.edu.cn 动态地址 404；《世界经济》正文页可读但解析器未提取 PDF URL。
+- [PR #20](https://github.com/lican1213/academic-research-radar/pull/20) 合并 `64aa731195ca02a21ea67cc6239044e0e898be15`，run [44477852849](https://github.com/lican1213/academic-research-radar/actions/runs/44477852849) **FAIL**：另一个公开 `qks.shufe.edu.cn/J/PDFFullDown/A20260909?lang=cn` 路径亦404；不可据搜索索引显示的“PDF”二字推断 Runner 可取回字节。
+- [PR #21](https://github.com/lican1213/academic-research-radar/pull/21) 只读诊断 run [44478230335](https://github.com/lican1213/academic-research-radar/actions/runs/44478230335) 仍 **FAIL** 门槛，但证明 `https://qks.sufe.edu.cn/J/PDFFull/pgbFuTsz-vRzo-GypL-0h9O-AptmzpGperJG.pdf` 实时返回200+PDF文件头；`https://wjgl.sufe.edu.cn/J/CJYJ/Article/Details/pgbFuTsz-vRzo-GypL-0h9O-AptmzpGperJG` 返回200；《世界经济》官方正文 HTML 有明确 `<meta name="citation_pdf_url" content="https://sjjj.magtech.com.cn/CN/PDF/1232">`，可直接解析，不需要虚构 PDF ID。
+- [PR #22](https://github.com/lican1213/academic-research-radar/pull/22) 合并 `e70d4ebc924cd8609ebc4e369f5c765c67a3d06f`：精确允许 `wjgl.sufe.edu.cn` 文章页与 `qks.sufe.edu.cn` 官方静态 PDF 的明示跨域组合；支持标准 `citation_pdf_url` 与 `/CN/PDF/数字` 路径；新增对跨站允许名单、假论文及无 PDF 入口的对抗测试；移除临时调试步骤。
+
+**FINAL 三个独立官方出版方完整 PDF 生产验收 PASS：** [Cross-Publisher Acceptance run 44478691394](https://github.com/lican1213/academic-research-radar/actions/runs/44478691394)，与该代码 head SHA `e70d4ebc924cd8609ebc4e369f5c765c67a3d06f` 完全对应，`completed/success`、`passed=true`、`verified_count=3/3`、两个必要来源分别来自不同出版者、12项 PDF 专项单元测试通过；同 SHA [main CI 44478691456](https://github.com/lican1213/academic-research-radar/actions/runs/44478691456) **PASS，仓库共102项测试通过**。
+
+| 本次与原《金融研究》六篇不同的文献 | 官方 PDF URL（Runner 实时使用） | PDF 字节 | 页数 | SHA256 |
+|---|---|---:|---:|---|
+| 《财经研究》2026(09)，李四海、王瑞麒《政府赋能企业“出海”：国家海外知识产权纠纷应对指导中心与企业对外直接投资》 | `https://wjgl.sufe.edu.cn/J/PDFFull/pgbFuTsz-vRzo-GypL-0h9O-AptmzpGperJG.pdf` | 776307 | 15 | `aad03748665dab5fe43d660e45bab9b343dcdffc9396d70e2e9957f5cc247bd5` |
+| 《华东师范大学学报(哲学社会科学版)》2026(04)，韩剑等《制度型开放视角下跨境电商制度创新对企业供应链韧性的影响研究》 | `https://xbzs.ecnu.edu.cn/CN/article/downloadArticleFile.do?attachType=PDF&id=13261` | 1286268 | 17 | `6cf653c43e455dfc620f1e358c426e08eecc8770e33ef40f9d6fe02de76b970a` |
+| 《世界经济》2026(08)，李震等《金融科技创新与企业跨国供应链拓展》 | `https://sjjj.magtech.com.cn/CN/PDF/1232` | 1365182 | 34 | `d8ad98ff3c7a6924fd6783d702b95ac3d935f89767baad72953ceb8a2e791714` |
+
+**Gate 结果和学术证据层级：** 3/3 `pdf_verified=true`、`text_verified=true`、`title_match=true`、`page_count_match=true`、中文文字可抽取；**3/3 `table_verified=false`**：表格标识命中数量不等于系数、识别策略或经济学结论已逐页核验。若 ChatGPT 研究日报要引用原文表格，需单独复核 PDF 实际页码、表号与数字；不能因本次技术验收而推断 P0/P1A 实证结论。
+
+**阶段限制与下轮入口：** 此为“两个不同期刊平台+第三个真实独立官网”的跨源验证（共三种出版者），不是九刊/所有文章 100% 自动获取；目前受审查的官方主机名单仍有限，Manifest 是人工抽样，原研究雷达的 `chinese_new_candidates` 尚**未**自动驱动 PDF 任务。未来只对高相关、真实新发现候选先核书目信息与 URL，再按需扩展官方域名适配及单篇实际下载验收；不得从这三篇成功推出全期PDF自动化。现有 `.github/workflows/scan.yml` SHA `d5e4d1e82c7a18fa2fbd8657a98a7a6a4ea17602`、每日两次 cron `17 10,22 * * *`、去重账本及 ChatGPT 每日09:30任务**未更改**。独立 PDF workflow 无 cron，仅代码变动/手动触发；不建立PDF仓库，不自动上传原文。

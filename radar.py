@@ -111,6 +111,10 @@ def load_research_profile(path: Path) -> dict | None:
         if (not isinstance(items, list) or not minimum <= len(items) <= maximum
                 or any(not isinstance(x, str) or not 2 <= len(x.strip()) <= 100 for x in items)):
             raise ValueError(f"{key} requires {minimum}..{maximum} nonempty strings")
+    for key in ("crossref_queries", "arxiv_queries", "keywords"):
+        items = [x.strip().casefold() for x in profile[key]]
+        if len(set(items)) != len(items):
+            raise ValueError(f"duplicate_{key}")
     hits = profile.get("min_keyword_hits", 2)
     if not isinstance(hits, int) or isinstance(hits, bool) or not 1 <= hits <= len(profile["keywords"]):
         raise ValueError("min_keyword_hits out of bounds")
@@ -121,12 +125,29 @@ def load_research_profile(path: Path) -> dict | None:
             "min_keyword_hits": hits}
 
 
+def profile_revision(profile: dict) -> str:
+    """Content-addressed seen namespace. Changing a topic never masks new leads."""
+    scope = {key: sorted(profile[key]) if key != "min_keyword_hits" else profile[key]
+             for key in ("crossref_queries", "arxiv_queries", "keywords", "min_keyword_hits")}
+    payload = json.dumps(scope, sort_keys=True, ensure_ascii=False)
+    return hashlib.sha256(payload.encode("utf-8")).hexdigest()[:16]
+
+
+def keyword_hit(text: str, keyword: str) -> bool:
+    # English short tokens such as 'AI' must not match 'fair' or 'training'.
+    if keyword.isascii() and keyword[0].isalnum() and keyword[-1].isalnum():
+        return re.search(r"(?<![a-z0-9])" + re.escape(keyword)
+                         + r"(?![a-z0-9])", text) is not None
+    return keyword in text
+
+
 def profile_prefilter(item: dict, profile: dict) -> dict:
     """Term-based candidate prefilter, not a scholarly relevance/quality score."""
     title = item["title"].casefold()
     abstract = (item.get("abstract") or "").casefold()
-    title_hits = sum(term in title for term in profile["keywords"])
-    abstract_only = sum(term not in title and term in abstract for term in profile["keywords"])
+    title_hits = sum(keyword_hit(title, term) for term in profile["keywords"])
+    abstract_only = sum(not keyword_hit(title, term) and keyword_hit(abstract, term)
+                        for term in profile["keywords"])
     result = dict(item)
     result["project"] = "RESEARCH"
     result["eligible"] = title_hits + abstract_only >= profile["min_keyword_hits"]
@@ -344,7 +365,8 @@ def consolidate(items: list[dict]) -> list[dict]:
 
 
 def select_new(items: list[dict], seen: dict, now: datetime, *, limit: int = MAX_CANDIDATES,
-               caps: dict[str, int] | None = None) -> tuple[list[dict], dict]:
+               caps: dict[str, int] | None = None,
+               namespace: str = "") -> tuple[list[dict], dict]:
     caps = caps if caps is not None else PROJECT_CAPS
     state = dict(seen)
     new = []
@@ -353,6 +375,8 @@ def select_new(items: list[dict], seen: dict, now: datetime, *, limit: int = MAX
         if not item.get("eligible") or item["prefilter_score"] < 40:
             continue
         keys = identity_keys(item) + item.get("alternate_ids", [])
+        if namespace:
+            keys = [namespace + ":" + key for key in keys]
         old = next((state[k] for k in keys if k in state), None)
         emitted_before = bool(old and old.get("emitted", False))
         title_norm = normalize_title(item["title"])
@@ -514,7 +538,10 @@ def run(out: Path, now: datetime, lookback_days: int | None = None,
             raise ValueError("seen.json is not an object")
     else:
         seen = {}
-    days = lookback_days if lookback_days is not None else (3 if seen else 7)
+    revision = profile_revision(profile) if profile else ""
+    # A new topic gets a fresh discovery window even when an old topic has seen rows.
+    known_topic = any(key.startswith(revision + ":") for key in seen) if revision else bool(seen)
+    days = lookback_days if lookback_days is not None else (3 if known_topic else 7)
     since = (now.date() - timedelta(days=days)).isoformat()
     if profile is None:
         cross_items, cross_status = crossref(since)
@@ -544,7 +571,7 @@ def run(out: Path, now: datetime, lookback_days: int | None = None,
     candidates = [item for item in candidates if item.get("event_at") and since <= item["event_at"] <= now.date().isoformat()]
     ranked = sorted((item for item in candidates if item.get("eligible")),
                     key=lambda p: (list(caps).index(p["project"]), -p["prefilter_score"], p["title"]))
-    new, state = select_new(candidates, seen, now, caps=caps)
+    new, state = select_new(candidates, seen, now, caps=caps, namespace=revision)
     report = {
         "generated_at": now.isoformat(), "status": status, "since": since,
         "source_status": sources, "scanned_candidates": len(candidates),
@@ -557,7 +584,7 @@ def run(out: Path, now: datetime, lookback_days: int | None = None,
         "new_candidates": new, "note": "Metadata candidates only; verify paper content and bibliographic dates at primary sources."
     }
     if profile is not None:
-        report["research_profile"] = {"name": profile["name"], "mode": "fork_keywords"}
+        report["research_profile"] = {"name": profile["name"], "mode": "fork_keywords", "revision": revision}
     if chinese_result is not None:
         report["chinese_journals"] = chinese_result["source_status"]["journals"]
         report["chinese_new_candidates"] = chinese_result["new_candidates"]

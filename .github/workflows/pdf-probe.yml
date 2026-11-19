@@ -1,4 +1,4 @@
-name: Academic Radar PDF Acceptance (read-only)
+name: Academic Radar Six-PDF Acceptance (read-only)
 
 on:
   workflow_dispatch:
@@ -25,51 +25,10 @@ jobs:
         run: python -m unittest discover -s tests -p 'test_pdf_probe.py' -v
       - name: Install PDF text parser (only for isolated acceptance)
         run: python -m pip install 'PyMuPDF>=1.24,<2'
-      - name: Official transport matrix (read-only; no certificate bypass)
-        run: |
-          python - <<'PY'
-          import http.client, json, urllib.parse
-          from html.parser import HTMLParser
-          targets = [
-              ("publisher_http", "http://www.jryj.org.cn/CN/abstract/abstract1663.shtml"),
-              ("publisher_apex_http", "http://jryj.org.cn/CN/abstract/abstract1663.shtml"),
-              ("publisher_issue_http", "http://www.jryj.org.cn/CN/volumn/volumn_148.shtml"),
-              ("magtech_org", "https://jryj.magtech.org.cn/CN/abstract/abstract1663.shtml"),
-              ("magtech_com", "https://jryj.magtech.com.cn/CN/abstract/abstract1663.shtml"),
-              ("publisher_pdf_http_candidate", "http://www.jryj.org.cn/CN/article/downloadArticleFile.do?attachType=PDF&id=1663"),
-          ]
-          for label, url in targets:
-              u = urllib.parse.urlsplit(url)
-              try:
-                  cls = http.client.HTTPSConnection if u.scheme == "https" else http.client.HTTPConnection
-                  conn = cls(u.hostname, timeout=7)
-                  conn.request("GET", u.path + ("?" + u.query if u.query else ""),
-                               headers={"User-Agent": "Mozilla/5.0 (Research verification; no login)"})
-                  res = conn.getresponse()
-                  body = res.read(120000)
-                  print(json.dumps({"test": label, "status": res.status,
-                                    "content_type": res.getheader("Content-Type"),
-                                    "location": res.getheader("Location"),
-                                    "bytes_seen": len(body),
-                                    "pdf_magic": body[:20].find(b"%PDF-") >= 0,
-                                    "title_present": "地缘政治风险" in body.decode("utf-8", "replace"),
-                                    "download_references": [x[:180] for x in
-                                        __import__("re").findall(r'[^"\\s<>]{0,60}(?:downloadArticleFile|\\.pdf|attachType=PDF)[^"\\s<>]{0,100}',
-                                        body.decode("utf-8", "replace"), flags=2)[:8]]},
-                                   ensure_ascii=False))
-                  conn.close()
-              except Exception as exc:
-                  print(json.dumps({"test": label, "error_kind": type(exc).__name__,
-                                    "error": str(exc)[:210]}, ensure_ascii=False))
-          PY
       - name: Real publisher PDF readback
         id: pdf
         continue-on-error: true
         run: python pdf_probe.py --out pdf-probe-result.json
-      - name: Diagnose publisher TLS certificate (no page content)
-        if: steps.pdf.outcome != 'success'
-        run: |
-          echo | openssl s_client -connect www.jryj.org.cn:443 -servername www.jryj.org.cn 2>/dev/null | openssl x509 -noout -subject -ext subjectAltName || true
       - name: Retain metadata only (no PDFs or extracted text)
         if: always()
         uses: actions/upload-artifact@v4

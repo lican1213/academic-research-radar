@@ -1,4 +1,4 @@
-# Academic Research Radar — 2026-11-19T02:26:20.814003+00:00
+# Academic Research Radar — 2026-11-19T02:32:33.928317+00:00
 
 **Status:** degraded; **New or changed candidates:** 0; **Metadata prefilter passes:** 10
 
@@ -13,10 +13,17 @@ This is metadata triage, not a verified reading or recommendation.
   - Error: 世界经济: ok (); RSS=failed
   - Error: 数量经济技术经济研究: ok (); RSS=failed
   - Error: 财经研究: mixed_links (mixed_or_unbound_links); RSS=failed
-  - Error: 金融研究: catalog_only (publisher_unavailable; issue_visible_but_articles_not_verified); RSS=failed
+  - Error: 金融研究: failed (TimeoutError: The read operation timed out); RSS=failed
   - Error: 国际贸易问题: ok (); RSS=failed
   - Error: 世界经济研究: ok (); RSS=failed
-- NCPSSD topic index: ok; 8/8 queries; 19 records
+  - Error: NCPSSD topic index: degraded (2/8)
+- NCPSSD topic index: degraded; 2/8 queries; 3 records
+  - Error: 耐心资本: TimeoutError: The read operation timed out
+  - Error: 供应链韧性: TimeoutError: The read operation timed out
+  - Error: 供应链关系: OSError: host_circuit_open: www.ncpssd.cn: repeated_timeout
+  - Error: 对外直接投资: OSError: host_circuit_open: www.ncpssd.cn: repeated_timeout
+  - Error: 专利文本: OSError: host_circuit_open: www.ncpssd.cn: repeated_timeout
+  - Error: 人工智能: OSError: host_circuit_open: www.ncpssd.cn: repeated_timeout
 
 ## 中文重点期刊逐刊监测（公开目录和RSS，非文章审读）
 
@@ -26,7 +33,7 @@ This is metadata triage, not a verified reading or recommendation.
 - [世界经济](https://sjjj.magtech.com.cn/CN/home): ok; 来源=publisher; 期次=2026-11; 可解析记录=7; 直接文章链接=7; 期次归属有证据=7; 覆盖类型=issue_bound_links; ; RSS=failed, RSS文章=0, RSS最新事件=未核验
 - [数量经济技术经济研究](https://www.jqte.net/sljjjsjjyj/ch/index.aspx): ok; 来源=publisher; 期次=2026-10; 可解析记录=10; 直接文章链接=10; 期次归属有证据=10; 覆盖类型=issue_bound_links; ; RSS=failed, RSS文章=0, RSS最新事件=未核验
 - [财经研究](https://qks.sufe.edu.cn/J/CJYJ/Article/Latest): mixed_links; 来源=publisher; 期次=2026-09; 可解析记录=20; 直接文章链接=20; 期次归属有证据=11; 覆盖类型=mixed_or_unbound_links; mixed_or_unbound_links; RSS=failed, RSS文章=0, RSS最新事件=未核验
-- [金融研究](https://m.ncpssd.cn/journal/details?gch=97926X&langType=1&nav=1): catalog_only; 来源=catalog; 期次=2026-07; 可解析记录=0; 直接文章链接=0; 期次归属有证据=0; 覆盖类型=issue_only; publisher_unavailable; issue_visible_but_articles_not_verified; RSS=failed, RSS文章=0, RSS最新事件=未核验
+- [金融研究](https://www.jryj.org.cn/CN/1002-7246/current.shtml): failed; 来源=publisher; 期次=未核验; 可解析记录=0; 直接文章链接=未核验; 期次归属有证据=未核验; 覆盖类型=未核验; TimeoutError: The read operation timed out; RSS=failed, RSS文章=0, RSS最新事件=未核验
 - [国际贸易问题](https://gjmw.cbpt.cnki.net/portal/journal/portal/client/paper_list/type_benqi): ok; 来源=publisher; 期次=2026-10; 可解析记录=10; 直接文章链接=10; 期次归属有证据=10; 覆盖类型=issue_bound_links; ; RSS=failed, RSS文章=0, RSS最新事件=未核验
 - [世界经济研究](https://jing.cbpt.cnki.net/portal/journal/portal/client/paper_list/type_benqi): ok; 来源=publisher; 期次=2026-11; 可解析记录=9; 直接文章链接=9; 期次归属有证据=9; 覆盖类型=issue_bound_links; ; RSS=failed, RSS文章=0, RSS最新事件=未核验
 

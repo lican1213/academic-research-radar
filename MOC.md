@@ -194,3 +194,12 @@
 - PR #7 squash 合并 `b2d84e0d8272ebfa82cfddff5443f98aab2957ee`；PR CI [44444217486](https://github.com/lican1213/academic-research-radar/actions/runs/44444217486) 与主分支 CI [44444303833](https://github.com/lican1213/academic-research-radar/actions/runs/44444303833) 均成功，62/62测试通过。
 - 实际生产 [run 44444303838](https://github.com/lican1213/academic-research-radar/actions/runs/44444303838) completed/success、head_sha=b2d84e0d，`generated_at=2026-11-19T02:26:20Z`，数据提交 `26a65e27e0665843d02cb09a8ab83144f0871e96`。总状态仍degraded（正确）：经济研究2026-09、工业经济2026-08恢复为toc_metadata；世界经济、数量经济、国际贸易问题、世界经济研究为当期绑定链接；财经研究mixed_links；金融研究官网TLS hostname mismatch后目录仅2026-07；管理世界原目录退回2026-09而账本已有10期。CNKI RSS首次DNS失败后同host余下调用均显示host_circuit_open，不误记成功；NCPSSD专题8/8本轮恢复，可能是外部服务暂时恢复，不归功于熔断。7/9有文章或题录记录，并非9刊完整覆盖。
 - 本轮追加的**目录倒退备用源**：当主目录成功响应但期次比历史成功期次旧时，尝试已配置的独立移动目录；只有备用页期次不早于历史才采纳，且继续按页实际证据保持catalog_only/toc_metadata，不将题名或刊期假报为文章详情、首发日或读到全文。备用页失败或更旧则保留stale_index，不覆盖账本。此修复独立PR/CI/生产门验收，未改调度和去重算法。
+
+### 2026-11-19 / PR #8 生产验收结论（已实访，部分未通过）
+
+- PR [#8](https://github.com/lican1213/academic-research-radar/pull/8) squash 合并 main `6f79baccf7b5482cae8f8ea0f4fc62398a483042`；PR [CI 44445018397](https://github.com/lican1213/academic-research-radar/actions/runs/44445018397) 与合并主分支 [CI 44445061407](https://github.com/lican1213/academic-research-radar/actions/runs/44445061407) 成功；对抗测试64/64通过。
+- 真实 [生产扫描 44445061346](https://github.com/lican1213/academic-research-radar/actions/runs/44445061346) = completed/success，`head_sha=6f79bacc...`，`data/latest.json generated_at=2026-11-19T02:32:33.928317Z`，实际数据提交 `572add3b55cd8152ac5b688373b8ef57b0c710d1`。生产数据状态仍 `degraded`：四刊有当期期次绑定文章链接，经济研究11条/中国工业经济9条为 `toc_metadata`，财经研究20条混合链接，管理世界 `stale_index`（主源09期低于历史10期，移动备用源也超时），金融研究 `failed`（官网超时，上一轮官网曾TLS域名错配，备用目录仅到07期）。CNKI RSS仍全部DNS失败。
+- 同次国哲社专题索引 `2/8`成功、3条匹配；2次超时后其余4项显式 `host_circuit_open`，下一次扫描会重新探测。前次PR #7生产 `8/8`成功，表明上游存在不稳定现象，不应将一次恢复归功于抓取代码，也不能保证后续必成功。
+- **已通过的Gate**：代码编译、64项回归、PR与main CI、相同SHA生产Action、数据持久提交、失败状态显式暴露、历史去重账本保持。不通过的Gate：金融研究/管理世界最新文章级覆盖、CNKI RSS DNS、9刊完整当期详情链接核验、连续7日不漏不重观察。运行绿色不等于内容质量全绿。
+- **阶段二计划门槛**：按刊评估另一合法权威出版/索引入口（与失效NCPSSD主域独立），每刊设置仅经实网证明可用的适配器、刊期绑定题录+作者页码、独立URL可达测试；不能拿转载目录、索引事件日期当真实发表，也不能用轮换代理、禁用TLS或抓登录/付费全文的方式伪修。
+- **阶段三计划门槛**：当实际文章详情页稳定后才实现跨源canonical identity(doi+期刊文章URL+核验标题/作者)、published_online/issue/first_observed时间分离、逐篇链接回读、每日增量与48小时历史快照核验；至少7日跨次生产复验达标后再评估整体提升。保持 P0>P1A≈P1 的研究筛选阈值，ChatGPT每日独立补检不变。

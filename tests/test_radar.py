@@ -939,6 +939,32 @@ class CoverageRootCauseTests(unittest.TestCase):
                                                 priority_sources={"financial_research":()})
                 self.assertEqual(again["historical_backfill_leads"],[])
 
+    def test_sufe_current_issue_cards_inherit_only_dedicated_page_issue(self):
+        url="https://qks.sufe.edu.cn/J/CJYJ/Article/CurrentIssue/CN"
+        page=('<h1>财经研究</h1><p>2026年第09期 共11篇</p>'
+              '<a href="/J/CJYJ/Article/Details/pgbFuTsz-vRzo-GypL-0h9O-AptmzpGperJG">政府赋能企业出海与国际知识产权布局研究</a>'
+              '<a href="/J/CJYJ/Article/Details/kDfzb7c2-4ryg-a7xd-qgJz-uev0WCc10WQa">供应链信息隐藏如何影响企业创新：基于专有化成本的解释</a>').encode()
+        issue,_,rows=cj.parse_toc(page,journal="财经研究",kind="publisher",url=url)
+        self.assertEqual(issue,"2026-09")
+        self.assertEqual([a["issue"] for a in rows],["2026-09","2026-09"])
+        with tempfile.TemporaryDirectory() as tmp:
+            with patch.object(cj,"JOURNALS",(("finance_economics","财经研究","publisher",url),)):
+                result=cj.scan_chinese_journals(Path(tmp),UTC_NOW,get=lambda _:page)
+            info=result["source_status"]["journals"]["finance_economics"]
+            self.assertEqual(info["status"],"ok")
+            self.assertEqual(info["article_link_count"],2)
+
+    def test_sufe_explicit_other_issue_in_card_not_relabelled_current(self):
+        url="https://qks.sufe.edu.cn/J/CJYJ/Article/CurrentIssue/CN"
+        page=('<h1>财经研究</h1><p>2026年第09期 共11篇</p>'
+              '<a href="/J/CJYJ/Article/Details/kDfzb7c2-4ryg-a7xd-qgJz-uev0WCc10WQa">供应链信息隐藏如何影响企业创新：基于专有化成本的解释</a>'
+              '<p>2026年第07期</p>'
+              '<a href="/J/CJYJ/Article/Details/pgbFuTsz-vRzo-GypL-0h9O-AptmzpGperJG">政府赋能企业出海与国际知识产权布局研究</a>'
+              '<p>2026年第09期</p>').encode()
+        issue,_,rows=cj.parse_toc(page,journal="财经研究",kind="publisher",url=url)
+        self.assertEqual(issue,"2026-09")
+        self.assertEqual([a["issue"] for a in rows],["2026-07","2026-09"])
+
     def test_current_issue_sufe_does_not_use_mixed_latest_feed(self):
         config={slug:url for slug,_,_,url in cj.JOURNALS}
         self.assertEqual(config["finance_economics"],

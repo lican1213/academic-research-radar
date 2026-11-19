@@ -373,3 +373,12 @@
 **对抗 gate：** 原有测试 + 错误/复制的 Fork marker、缺失 env、保留原 ledger、同主题二次不重发、更换检索词能重新报告、纯改名称不重发、切回旧检索不重发、AI/fair 假命中、重复关键词失败、同一主分支 SHA 的真实 CI 与原主仓库 Action 扫描读回。**生产新 Fork / 同学 ChatGPT Task 仍需要同学本人授权并首次实际运行，源仓库不可代验。**
 
 **初始状态：** PR #25 完成新补丁与离线测试，最终主分支生产复核随后记录；不可把 PR CI 绿色冒充原主仓库生产扫描完成。
+
+
+### 2026-11-19 / PR #25 Ponytail 对抗式审计 FINAL GATE PASS（不可把外部学生授权当成本仓库已完成）
+
+- **Merged source**: [PR #25](https://github.com/lican1213/academic-research-radar/pull/25), `9079349e8c189db13c2f53b5177b4c36c33c802e`. [同 SHA 的真实 main CI #44530987163](https://github.com/lican1213/academic-research-radar/actions/runs/44530987163) `completed/success`, **111/111 tests**，包含之前106项和新增对抗用例；变更集中在 `radar.py`、`fork_bootstrap.py`、`tests/test_fork_setup.py` 与必须更新的 MOC/AGENTS/README/FORK 指南，没有触碰 `chinese_journals.py`、PDF工作流、交易/其他GitHub项目。
+- **真实源仓库生产读回**: [Scan #44530987141](https://github.com/lican1213/academic-research-radar/actions/runs/44530987141) head SHA 与本 PR 合并 SHA 一致，`completed/success`。`fork_bootstrap.py` 运行明确打印 `upstream_unchanged`；原源仓库无 `data/fork_initialized.json`，没有激活个人 Fork profile。实际 `data/latest.json.generated_at=2026-11-19T13:11:31.567328+00:00`、`status=degraded`（原有中文期刊公开数据源覆盖缺口，与本轮 Fork 修复无关），包含 `crossref`、`arxiv`、`chinese_journals` 三源，未出现 `research_profile`。本次正常写入数据后的 `main` 为 `15aafadb1eea7ebceee7f04f20f5f595c21b34e9`；`seen.json` 183个已见键、`chinese_seen.json` 9刊状态，均未初始化清空。扫描 `cron: '17 10,22 * * *'` 保留，代码源文件和原工作流内容 SHA 未被周期任务额外修改。
+- **对抗用例实际在 Runner 执行**: 自定义profile的正常新增、同profile第二轮不重发、仅改名称不重发、真正改查询有新7天窗口与独立去重命名空间、恢复旧查询不重发；上游初始化永远 no-op、Fork仅第一次清账本、错误/异仓库标记与空仓库名均在写文件前阻断；短英文关键词 `AI` 不再误命中 `fair`，重复关键词不能伪造两个命中；静态契约门检查 cron、写入权限、fork bootstrap 和两个独立PDF工作流不增加 schedule。离线模拟与真实上游生产结果一致。
+- **阶段2/3放行边界**: 此次修的是“一Fork一个活跃自定义profile，可改变/恢复研究范围”“不同同学各自GitHub仓库+各自ChatGPT task”的稳定地基；**没有**创建一个Fork内同时运行多个profile的排程器，也没有将GPT授权从一位同学传给另一位。同学首次实际 Fork 的 Actions 启用、GitHub权限、`data/latest.json` 回读及 ChatGPT Scheduled 报告**必须由该同学在自己的账号完成**；缺少此独立外部端到端授权，不虚构为已验收。对同学而言上手说明是 `docs/FORK_START_HERE.md` 与 `docs/CHATGPT_DAILY_TASK_TEMPLATE.md`。
+- **Ponytail 精简结论**: 对实际缺陷做根因补丁、标准库、单份现有测试入口、使用原状态文件；没有引入库、队列、数据库、管理平台、额外cron或全量PDF下载任务。剩余风险：公开 Fork 只能保存非敏感关键词；本项目当前未指定开源许可证；GitHub schedule可能延迟/公开Fork初始禁用；`degraded` 源需要日报继续独立检索，不能误认没有新论文。

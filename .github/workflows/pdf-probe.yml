@@ -28,7 +28,7 @@ jobs:
       - name: Real publisher PDF readback
         id: pdf
         continue-on-error: true
-        run: python pdf_probe.py --out pdf-probe-result.json
+        run: python pdf_probe.py --out pdf-probe-result.json --zip-out JRYJ_2026_10_Six_Papers.zip
       - name: Retain metadata only (no PDFs or extracted text)
         if: always()
         uses: actions/upload-artifact@v4
@@ -37,6 +37,14 @@ jobs:
           path: pdf-probe-result.json
           if-no-files-found: warn
           retention-days: 14
+      - name: Deliver verified original PDFs (ephemeral, one-day retention)
+        if: steps.pdf.outcome == 'success'
+        uses: actions/upload-artifact@v4
+        with:
+          name: JRYJ_2026_10_Six_Papers
+          path: JRYJ_2026_10_Six_Papers.zip
+          if-no-files-found: error
+          retention-days: 1
       - name: Enforce real PDF gate
         if: steps.pdf.outcome != 'success'
         run: exit 1

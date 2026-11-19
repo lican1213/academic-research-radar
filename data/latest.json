@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-11-18T18:51:07.127043+00:00",
+  "generated_at": "2026-11-19T02:26:20.814003+00:00",
   "status": "degraded",
-  "since": "2026-11-15",
+  "since": "2026-11-16",
   "source_status": {
     "crossref": {
       "status": "ok",
@@ -19,33 +19,190 @@
     },
     "chinese_journals": {
       "status": "degraded",
-      "queries_ok": 5,
+      "queries_ok": 7,
       "queries_total": 9,
-      "records": 56,
+      "records": 76,
       "errors": [
-        "经济研究: failed (TimeoutError: The read operation timed out); RSS=failed",
-        "中国工业经济: failed (TimeoutError: The read operation timed out); RSS=failed",
-        "管理世界: failed (TimeoutError: The read operation timed out); RSS=failed",
+        "经济研究: toc_metadata (); RSS=failed",
+        "中国工业经济: toc_metadata (); RSS=failed",
+        "管理世界: stale_index (catalog_regressed); RSS=failed",
         "世界经济: ok (); RSS=failed",
         "数量经济技术经济研究: ok (); RSS=failed",
         "财经研究: mixed_links (mixed_or_unbound_links); RSS=failed",
-        "金融研究: failed (TimeoutError: The read operation timed out); RSS=failed",
+        "金融研究: catalog_only (publisher_unavailable; issue_visible_but_articles_not_verified); RSS=failed",
         "国际贸易问题: ok (); RSS=failed",
-        "世界经济研究: ok (); RSS=failed",
-        "NCPSSD topic index: failed (0/8)"
+        "世界经济研究: ok (); RSS=failed"
       ],
       "journals": {
         "economic_research": {
           "journal": "经济研究",
           "source_kind": "catalog",
           "url": "https://ncpssd.org/journal/details.aspx?gch=95645X",
-          "checked_at": "2026-11-18T18:51:07.127043+00:00",
-          "status": "failed",
-          "issue": null,
+          "checked_at": "2026-11-19T02:26:20.814003+00:00",
+          "status": "toc_metadata",
+          "issue": "2026-09",
           "issue_date": null,
-          "article_count": 0,
-          "article_snapshot": [],
-          "reason": "TimeoutError: The read operation timed out",
+          "article_count": 11,
+          "last_known_issue": "2026-09",
+          "article_snapshot": [
+            {
+              "title": "加快构建中国特色社会主义政治经济学自主知识体系",
+              "url": "https://ncpssd.org/journal/details.aspx?gch=95645X",
+              "url_scope": "issue_catalog",
+              "issue": "2026-09",
+              "authors": "李建平[1,2];叶琪[1,2]",
+              "pages": "5-24",
+              "toc_online_at": null,
+              "doi": null,
+              "published_at": null,
+              "date_verified": false,
+              "link_verified": false,
+              "role": "current_issue"
+            },
+            {
+              "title": "机器人应用与制造业企业生产链延伸——基于稳链强链视角的考察",
+              "url": "https://ncpssd.org/journal/details.aspx?gch=95645X",
+              "url_scope": "issue_catalog",
+              "issue": "2026-09",
+              "authors": "吴腊梅[1,2];彭水军[3];张亮[4,5];周上尧[4,5]",
+              "pages": "25-48",
+              "toc_online_at": null,
+              "doi": null,
+              "published_at": null,
+              "date_verified": false,
+              "link_verified": false,
+              "role": "current_issue"
+            },
+            {
+              "title": "制造企业数字技术提升过程中补贴退坡与市场需求的均衡分析",
+              "url": "https://ncpssd.org/journal/details.aspx?gch=95645X",
+              "url_scope": "issue_catalog",
+              "issue": "2026-09",
+              "authors": "王玉燕[1];林飞[2];申亮[2]",
+              "pages": "49-71",
+              "toc_online_at": null,
+              "doi": null,
+              "published_at": null,
+              "date_verified": false,
+              "link_verified": false,
+              "role": "current_issue"
+            },
+            {
+              "title": "个人情绪传播与平台信息治理",
+              "url": "https://ncpssd.org/journal/details.aspx?gch=95645X",
+              "url_scope": "issue_catalog",
+              "issue": "2026-09",
+              "authors": "柯荣住[1];黄佳琦[1]",
+              "pages": "72-96",
+              "toc_online_at": null,
+              "doi": null,
+              "published_at": null,
+              "date_verified": false,
+              "link_verified": false,
+              "role": "current_issue"
+            },
+            {
+              "title": "供给侧结构性改革的扩内需效应——基于信息消费示范城市建设的分析",
+              "url": "https://ncpssd.org/journal/details.aspx?gch=95645X",
+              "url_scope": "issue_catalog",
+              "issue": "2026-09",
+              "authors": "彭冲[1,2];孙伟增[3];易行健[4]",
+              "pages": "97-119",
+              "toc_online_at": null,
+              "doi": null,
+              "published_at": null,
+              "date_verified": false,
+              "link_verified": false,
+              "role": "current_issue"
+            },
+            {
+              "title": "中国对外基础设施投资的经济效应与微观作用机制——来自非洲发展走廊项目的证据",
+              "url": "https://ncpssd.org/journal/details.aspx?gch=95645X",
+              "url_scope": "issue_catalog",
+              "issue": "2026-09",
+              "authors": "李涵[1];周倩[2];李超[3]",
+              "pages": "120-142",
+              "toc_online_at": null,
+              "doi": null,
+              "published_at": null,
+              "date_verified": false,
+              "link_verified": false,
+              "role": "current_issue"
+            },
+            {
+              "title": "数据要素冲击、信息摩擦与供应链关系建立",
+              "url": "https://ncpssd.org/journal/details.aspx?gch=95645X",
+              "url_scope": "issue_catalog",
+              "issue": "2026-09",
+              "authors": "施炳展[1,2];李启正[3];熊治[4]",
+              "pages": "143-164",
+              "toc_online_at": null,
+              "doi": null,
+              "published_at": null,
+              "date_verified": false,
+              "link_verified": false,
+              "role": "current_issue"
+            },
+            {
+              "title": "中国微观增值税税负测度与结构特征",
+              "url": "https://ncpssd.org/journal/details.aspx?gch=95645X",
+              "url_scope": "issue_catalog",
+              "issue": "2026-09",
+              "authors": "刘志阔[1];汪殊逸[1]",
+              "pages": "165-188",
+              "toc_online_at": null,
+              "doi": null,
+              "published_at": null,
+              "date_verified": false,
+              "link_verified": false,
+              "role": "current_issue"
+            },
+            {
+              "title": "地方政府股权资产测算与财政可持续性评估——基于复杂股权网络的穿透识别",
+              "url": "https://ncpssd.org/journal/details.aspx?gch=95645X",
+              "url_scope": "issue_catalog",
+              "issue": "2026-09",
+              "authors": "李戎[1,2];蔡彦皞[1];刘岩[3]",
+              "pages": "189-212",
+              "toc_online_at": null,
+              "doi": null,
+              "published_at": null,
+              "date_verified": false,
+              "link_verified": false,
+              "role": "current_issue"
+            },
+            {
+              "title": "自动化发展如何影响收入分配：水平扩张和垂直进步的技术分解",
+              "url": "https://ncpssd.org/journal/details.aspx?gch=95645X",
+              "url_scope": "issue_catalog",
+              "issue": "2026-09",
+              "authors": "叶智程[1];李鹏飞[1,2];刘思远[1]",
+              "pages": "213-236",
+              "toc_online_at": null,
+              "doi": null,
+              "published_at": null,
+              "date_verified": false,
+              "link_verified": false,
+              "role": "current_issue"
+            },
+            {
+              "title": "新型农业经营主体与共同富裕",
+              "url": "https://ncpssd.org/journal/details.aspx?gch=95645X",
+              "url_scope": "issue_catalog",
+              "issue": "2026-09",
+              "authors": "王悦静[1];张红[1];杨宇超[1]",
+              "pages": "237-260",
+              "toc_online_at": null,
+              "doi": null,
+              "published_at": null,
+              "date_verified": false,
+              "link_verified": false,
+              "role": "current_issue"
+            }
+          ],
+          "article_link_count": 0,
+          "issue_metadata_count": 11,
+          "coverage_kind": "issue_metadata",
           "rss": {
             "url": "https://navi.cnki.net/knavi/rss/JJYJ",
             "status": "failed",
@@ -57,47 +214,179 @@
           "journal": "中国工业经济",
           "source_kind": "catalog",
           "url": "https://ncpssd.org/journal/details.aspx?gch=93800A",
-          "checked_at": "2026-11-18T18:51:07.127043+00:00",
-          "status": "failed",
-          "issue": null,
+          "checked_at": "2026-11-19T02:26:20.814003+00:00",
+          "status": "toc_metadata",
+          "issue": "2026-08",
           "issue_date": null,
-          "article_count": 0,
-          "article_snapshot": [],
-          "reason": "TimeoutError: The read operation timed out",
+          "article_count": 9,
+          "last_known_issue": "2026-08",
+          "article_snapshot": [
+            {
+              "title": "世界大变局下的中国产业链韧性",
+              "url": "https://ncpssd.org/journal/details.aspx?gch=93800A",
+              "url_scope": "issue_catalog",
+              "issue": "2026-08",
+              "authors": "张辉[1];王桂军[2]",
+              "pages": "5-26",
+              "toc_online_at": null,
+              "doi": null,
+              "published_at": null,
+              "date_verified": false,
+              "link_verified": false,
+              "role": "current_issue"
+            },
+            {
+              "title": "中国经济数字化的广度、深度测算及其增长效应",
+              "url": "https://ncpssd.org/journal/details.aspx?gch=93800A",
+              "url_scope": "issue_catalog",
+              "issue": "2026-08",
+              "authors": "关会娟[1];许宪春[2];徐丽笑[3]",
+              "pages": "27-50",
+              "toc_online_at": null,
+              "doi": null,
+              "published_at": null,
+              "date_verified": false,
+              "link_verified": false,
+              "role": "current_issue"
+            },
+            {
+              "title": "人工智能技术创新与贸易比较优势跃迁",
+              "url": "https://ncpssd.org/journal/details.aspx?gch=93800A",
+              "url_scope": "issue_catalog",
+              "issue": "2026-08",
+              "authors": "刘啟仁[1];蓝慧霞[1];冯桂媚[1];梁婷[1]",
+              "pages": "51-74",
+              "toc_online_at": null,
+              "doi": null,
+              "published_at": null,
+              "date_verified": false,
+              "link_verified": false,
+              "role": "current_issue"
+            },
+            {
+              "title": "服务业开放与企业进口供应链结构调整——基于核心与非核心中间品分层采购的证据",
+              "url": "https://ncpssd.org/journal/details.aspx?gch=93800A",
+              "url_scope": "issue_catalog",
+              "issue": "2026-08",
+              "authors": "顾乃华[1];邓石军[2]",
+              "pages": "75-98",
+              "toc_online_at": null,
+              "doi": null,
+              "published_at": null,
+              "date_verified": false,
+              "link_verified": false,
+              "role": "current_issue"
+            },
+            {
+              "title": "劳动者增收与企业出口调整——基于用工成本群聚效应的证据",
+              "url": "https://ncpssd.org/journal/details.aspx?gch=93800A",
+              "url_scope": "issue_catalog",
+              "issue": "2026-08",
+              "authors": "包群[1];樊军锋[1]",
+              "pages": "99-121",
+              "toc_online_at": null,
+              "doi": null,
+              "published_at": null,
+              "date_verified": false,
+              "link_verified": false,
+              "role": "current_issue"
+            },
+            {
+              "title": "金融科技创新如何赋能银行普惠金融——来自小微企业创业的证据",
+              "url": "https://ncpssd.org/journal/details.aspx?gch=93800A",
+              "url_scope": "issue_catalog",
+              "issue": "2026-08",
+              "authors": "张博[1];崔世豪[1];张景静[2]",
+              "pages": "122-145",
+              "toc_online_at": null,
+              "doi": null,
+              "published_at": null,
+              "date_verified": false,
+              "link_verified": false,
+              "role": "current_issue"
+            },
+            {
+              "title": "政府采购全流程电子化与企业跨区域竞争",
+              "url": "https://ncpssd.org/journal/details.aspx?gch=93800A",
+              "url_scope": "issue_catalog",
+              "issue": "2026-08",
+              "authors": "王伟同[1];席胜杰[1];刘冲[2];李秀华[3]",
+              "pages": "146-169",
+              "toc_online_at": null,
+              "doi": null,
+              "published_at": null,
+              "date_verified": false,
+              "link_verified": false,
+              "role": "current_issue"
+            },
+            {
+              "title": "人工智能如何影响管理层角色演变",
+              "url": "https://ncpssd.org/journal/details.aspx?gch=93800A",
+              "url_scope": "issue_catalog",
+              "issue": "2026-08",
+              "authors": "杨继东[1];王菲[1];魏冉[2]",
+              "pages": "170-192",
+              "toc_online_at": null,
+              "doi": null,
+              "published_at": null,
+              "date_verified": false,
+              "link_verified": false,
+              "role": "current_issue"
+            },
+            {
+              "title": "数智链主驱动产业链韧性提升的路径解构：从节点突破到韧性生态",
+              "url": "https://ncpssd.org/journal/details.aspx?gch=93800A",
+              "url_scope": "issue_catalog",
+              "issue": "2026-08",
+              "authors": "刘友金[1];姜海锋[1];程伟华[2]",
+              "pages": "193-216",
+              "toc_online_at": null,
+              "doi": null,
+              "published_at": null,
+              "date_verified": false,
+              "link_verified": false,
+              "role": "current_issue"
+            }
+          ],
+          "article_link_count": 0,
+          "issue_metadata_count": 9,
+          "coverage_kind": "issue_metadata",
           "rss": {
             "url": "https://navi.cnki.net/knavi/rss/GGYY",
             "status": "failed",
             "article_count": 0,
-            "reason": "URLError: <urlopen error [Errno -2] Name or service not known>"
+            "reason": "OSError: host_circuit_open: navi.cnki.net: dns_resolution_failed"
           }
         },
         "management_world": {
           "journal": "管理世界",
           "source_kind": "catalog",
           "url": "https://ncpssd.org/journal/details?gch=95499X&langType=1",
-          "checked_at": "2026-11-18T18:51:07.127043+00:00",
-          "status": "failed",
-          "issue": null,
+          "checked_at": "2026-11-19T02:26:20.814003+00:00",
+          "status": "stale_index",
+          "issue": "2026-09",
           "issue_date": null,
           "article_count": 0,
+          "last_known_issue": "2026-10",
           "article_snapshot": [],
-          "reason": "TimeoutError: The read operation timed out",
+          "reason": "catalog_regressed",
           "rss": {
             "url": "https://navi.cnki.net/knavi/rss/GLSJ",
             "status": "failed",
             "article_count": 0,
-            "reason": "URLError: <urlopen error [Errno -2] Name or service not known>"
+            "reason": "OSError: host_circuit_open: navi.cnki.net: dns_resolution_failed"
           }
         },
         "world_economy": {
           "journal": "世界经济",
           "source_kind": "publisher",
           "url": "https://sjjj.magtech.com.cn/CN/home",
-          "checked_at": "2026-11-18T18:51:07.127043+00:00",
+          "checked_at": "2026-11-19T02:26:20.814003+00:00",
           "status": "ok",
           "issue": "2026-11",
           "issue_date": "2026-11-10",
           "article_count": 7,
+          "last_known_issue": "2026-11",
           "article_snapshot": [
             {
               "title": "政企协同与绿色创新：链长制的硬约束与强牵引",
@@ -191,18 +480,19 @@
             "url": "https://navi.cnki.net/knavi/rss/SJJJ",
             "status": "failed",
             "article_count": 0,
-            "reason": "URLError: <urlopen error [Errno -2] Name or service not known>"
+            "reason": "OSError: host_circuit_open: navi.cnki.net: dns_resolution_failed"
           }
         },
         "quant_economics": {
           "journal": "数量经济技术经济研究",
           "source_kind": "publisher",
           "url": "https://www.jqte.net/sljjjsjjyj/ch/index.aspx",
-          "checked_at": "2026-11-18T18:51:07.127043+00:00",
+          "checked_at": "2026-11-19T02:26:20.814003+00:00",
           "status": "ok",
           "issue": "2026-10",
           "issue_date": null,
           "article_count": 10,
+          "last_known_issue": "2026-10",
           "article_snapshot": [
             {
               "title": "因地制宜发展新质生产力的理论逻辑与路径范式",
@@ -332,18 +622,19 @@
             "url": "https://navi.cnki.net/knavi/rss/SLJY",
             "status": "failed",
             "article_count": 0,
-            "reason": "URLError: <urlopen error [Errno -2] Name or service not known>"
+            "reason": "OSError: host_circuit_open: navi.cnki.net: dns_resolution_failed"
           }
         },
         "finance_economics": {
           "journal": "财经研究",
           "source_kind": "publisher",
           "url": "https://qks.sufe.edu.cn/J/CJYJ/Article/Latest",
-          "checked_at": "2026-11-18T18:51:07.127043+00:00",
+          "checked_at": "2026-11-19T02:26:20.814003+00:00",
           "status": "mixed_links",
           "issue": "2026-09",
           "issue_date": null,
           "article_count": 20,
+          "last_known_issue": "2026-09",
           "article_snapshot": [
             {
               "title": "供应链信息隐藏如何影响企业创新：基于专有化成本的解释",
@@ -594,36 +885,43 @@
             "url": "https://navi.cnki.net/knavi/rss/CJYJ",
             "status": "failed",
             "article_count": 0,
-            "reason": "URLError: <urlopen error [Errno -2] Name or service not known>"
+            "reason": "OSError: host_circuit_open: navi.cnki.net: dns_resolution_failed"
           }
         },
         "financial_research": {
           "journal": "金融研究",
-          "source_kind": "publisher",
-          "url": "https://www.jryj.org.cn/CN/1002-7246/current.shtml",
-          "checked_at": "2026-11-18T18:51:07.127043+00:00",
-          "status": "failed",
-          "issue": null,
+          "source_kind": "catalog",
+          "url": "https://m.ncpssd.cn/journal/details?gch=97926X&langType=1&nav=1",
+          "checked_at": "2026-11-19T02:26:20.814003+00:00",
+          "status": "catalog_only",
+          "issue": "2026-07",
           "issue_date": null,
           "article_count": 0,
+          "last_known_issue": "2026-07",
           "article_snapshot": [],
-          "reason": "TimeoutError: The read operation timed out",
+          "primary_url": "https://www.jryj.org.cn/CN/1002-7246/current.shtml",
+          "primary_failure": "URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'www.jryj.org.cn'",
+          "article_link_count": 0,
+          "issue_metadata_count": 0,
+          "coverage_kind": "issue_only",
+          "reason": "publisher_unavailable; issue_visible_but_articles_not_verified",
           "rss": {
             "url": "https://navi.cnki.net/knavi/rss/JRYJ",
             "status": "failed",
             "article_count": 0,
-            "reason": "URLError: <urlopen error [Errno -2] Name or service not known>"
+            "reason": "OSError: host_circuit_open: navi.cnki.net: dns_resolution_failed"
           }
         },
         "international_trade": {
           "journal": "国际贸易问题",
           "source_kind": "publisher",
           "url": "https://gjmw.cbpt.cnki.net/portal/journal/portal/client/paper_list/type_benqi",
-          "checked_at": "2026-11-18T18:51:07.127043+00:00",
+          "checked_at": "2026-11-19T02:26:20.814003+00:00",
           "status": "ok",
           "issue": "2026-10",
           "issue_date": null,
           "article_count": 10,
+          "last_known_issue": "2026-10",
           "article_snapshot": [
             {
               "title": "从规模扩张到质量提升:中国文化企业出海的现实考验与路径选择",
@@ -753,18 +1051,19 @@
             "url": "https://navi.cnki.net/knavi/rss/GJMW",
             "status": "failed",
             "article_count": 0,
-            "reason": "URLError: <urlopen error [Errno -2] Name or service not known>"
+            "reason": "OSError: host_circuit_open: navi.cnki.net: dns_resolution_failed"
           }
         },
         "world_economy_studies": {
           "journal": "世界经济研究",
           "source_kind": "publisher",
           "url": "https://jing.cbpt.cnki.net/portal/journal/portal/client/paper_list/type_benqi",
-          "checked_at": "2026-11-18T18:51:07.127043+00:00",
+          "checked_at": "2026-11-19T02:26:20.814003+00:00",
           "status": "ok",
           "issue": "2026-11",
           "issue_date": null,
           "article_count": 9,
+          "last_known_issue": "2026-11",
           "article_snapshot": [
             {
               "title": "对外直接投资如何影响企业出口：来自中国上市公司的差异化证据",
@@ -882,29 +1181,20 @@
             "url": "https://navi.cnki.net/knavi/rss/JING",
             "status": "failed",
             "article_count": 0,
-            "reason": "URLError: <urlopen error [Errno -2] Name or service not known>"
+            "reason": "OSError: host_circuit_open: navi.cnki.net: dns_resolution_failed"
           }
         }
       },
       "ncpssd_topic_index": {
-        "status": "failed",
-        "queries_ok": 0,
+        "status": "ok",
+        "queries_ok": 8,
         "queries_total": 8,
-        "records": 0,
-        "errors": [
-          "耐心资本: TimeoutError: The read operation timed out",
-          "专利出海: TimeoutError: The read operation timed out",
-          "协同出海: TimeoutError: The read operation timed out",
-          "供应链韧性: TimeoutError: The read operation timed out",
-          "供应链关系: TimeoutError: The read operation timed out",
-          "对外直接投资: TimeoutError: The read operation timed out",
-          "专利文本: TimeoutError: The read operation timed out",
-          "人工智能: TimeoutError: The read operation timed out"
-        ]
+        "records": 19,
+        "errors": []
       }
     }
   },
-  "scanned_candidates": 374,
+  "scanned_candidates": 370,
   "prefilter_pass_count": 10,
   "prefilter_diagnostics": [
     {
@@ -962,202 +1252,188 @@
       "source": "crossref",
       "event_at": "2026-11-18",
       "url": "https://doi.org/10.66838/ma.243"
+    },
+    {
+      "title": "The role of artificial intelligence in enhancing supply chain resilience: a structured narrative synthesis",
+      "project": "P1",
+      "score": 50,
+      "source": "crossref",
+      "event_at": "2026-11-17",
+      "url": "https://doi.org/10.1007/s44163-026-02751-6"
     }
   ],
-  "new_candidates": [
-    {
-      "id": "doi:10.1016/j.wpi.2026.102520",
-      "title": "Non-unilateral patents: A complementary measure of international patenting activity",
-      "authors": [
-        "Ying Huang",
-        "Yifei Yu",
-        "Dongmei Ye",
-        "Bart Van Looy",
-        "Lin Zhang"
-      ],
-      "url": "https://doi.org/10.1016/j.wpi.2026.102520",
-      "doi": "10.1016/j.wpi.2026.102520",
-      "source": "crossref",
-      "sources": [
-        "crossref"
-      ],
-      "venue": "World Patent Information",
-      "type": "journal-article",
-      "published_at": "2026-12-01",
-      "metadata_created_at": "2026-11-18",
-      "event_at": "2026-11-18",
-      "event_type": "crossref_registration",
-      "version": "",
-      "project": "P0",
-      "eligible": true,
-      "prefilter_score": 54,
-      "alternate_ids": [
-        "doi:10.1016/j.wpi.2026.102520"
-      ],
-      "change": "new"
-    },
-    {
-      "id": "doi:10.69968/ijisem.2026v5i4289-294",
-      "title": "AI-Powered Supply Chain Resilience and Sustainability",
-      "authors": [
-        "Harrish Raja",
-        "Binod Prasad Dhakal",
-        "Ramayanam Venkataramana Rao"
-      ],
-      "url": "https://doi.org/10.69968/ijisem.2026v5i4289-294",
-      "doi": "10.69968/ijisem.2026v5i4289-294",
-      "source": "crossref",
-      "sources": [
-        "crossref"
-      ],
-      "venue": "International Journal of Innovations in Science Engineering And Management",
-      "type": "journal-article",
-      "published_at": "2026-11-17",
-      "metadata_created_at": "2026-11-18",
-      "event_at": "2026-11-18",
-      "event_type": "crossref_registration",
-      "version": "",
-      "project": "P1",
-      "eligible": true,
-      "prefilter_score": 50,
-      "change": "new"
-    },
-    {
-      "id": "doi:10.1007/s43621-026-05370-4",
-      "title": "Pandemic crisis and the race for supply chain resilience through organizational learning and agility",
-      "authors": [
-        "Nils-Ole Hohenstein",
-        "David M. Herold"
-      ],
-      "url": "https://doi.org/10.1007/s43621-026-05370-4",
-      "doi": "10.1007/s43621-026-05370-4",
-      "source": "crossref",
-      "sources": [
-        "crossref"
-      ],
-      "venue": "Discover Sustainability",
-      "type": "journal-article",
-      "published_at": "2026-11-18",
-      "metadata_created_at": "2026-11-18",
-      "event_at": "2026-11-18",
-      "event_type": "crossref_registration",
-      "version": "",
-      "project": "P1",
-      "eligible": true,
-      "prefilter_score": 50,
-      "change": "new"
-    },
-    {
-      "id": "doi:10.36871/ek.up.p.r.2026.10.10.030",
-      "title": "SUPPLY CHAIN RESILIENCE AMIDST GEOPOLITICAL UNCERTAINTY",
-      "authors": [
-        "Arina S. Astrakhantseva"
-      ],
-      "url": "https://doi.org/10.36871/ek.up.p.r.2026.10.10.030",
-      "doi": "10.36871/ek.up.p.r.2026.10.10.030",
-      "source": "crossref",
-      "sources": [
-        "crossref"
-      ],
-      "venue": "EKONOMIKA I UPRAVLENIE: PROBLEMY, RESHENIYA",
-      "type": "journal-article",
-      "published_at": "2026-01-01",
-      "metadata_created_at": "2026-11-18",
-      "event_at": "2026-11-18",
-      "event_type": "crossref_registration",
-      "version": "",
-      "project": "P1",
-      "eligible": true,
-      "prefilter_score": 50,
-      "change": "new"
-    },
-    {
-      "id": "doi:10.25236/ajbm.2026.081006",
-      "title": "Supply Chain Resilience and Enhancement Paths of Cross-border E-commerce Export Empowered by Liaoning Ports under the RCEP Framework",
-      "authors": [],
-      "url": "https://doi.org/10.25236/ajbm.2026.081006",
-      "doi": "10.25236/ajbm.2026.081006",
-      "source": "crossref",
-      "sources": [
-        "crossref"
-      ],
-      "venue": "Academic Journal of Business &amp; Management",
-      "type": "journal-article",
-      "published_at": "2026-01-01",
-      "metadata_created_at": "2026-11-18",
-      "event_at": "2026-11-18",
-      "event_type": "crossref_registration",
-      "version": "",
-      "project": "P1",
-      "eligible": true,
-      "prefilter_score": 50,
-      "change": "new"
-    },
-    {
-      "id": "doi:10.66838/ma.243",
-      "title": "The Role of Artificial Intelligence in Supplier Risk Prediction and Supply Chain Resilience",
-      "authors": [
-        "Kesava abisek Rengaraju Senthamil selvi"
-      ],
-      "url": "https://doi.org/10.66838/ma.243",
-      "doi": "10.66838/ma.243",
-      "source": "crossref",
-      "sources": [
-        "crossref"
-      ],
-      "venue": "Mathematics for Applications",
-      "type": "journal-article",
-      "published_at": "2026-11-18",
-      "metadata_created_at": "2026-11-18",
-      "event_at": "2026-11-18",
-      "event_type": "crossref_registration",
-      "version": "",
-      "project": "P1",
-      "eligible": true,
-      "prefilter_score": 50,
-      "alternate_ids": [
-        "doi:10.66838/ma.243"
-      ],
-      "change": "new"
-    },
-    {
-      "id": "doi:10.22271/allresearch.2026.v12.i11a.91201",
-      "title": "Foreign direct investment and supply chain diversification in India",
-      "authors": [
-        "Karan Kumar"
-      ],
-      "url": "https://doi.org/10.22271/allresearch.2026.v12.i11a.91201",
-      "doi": "10.22271/allresearch.2026.v12.i11a.91201",
-      "source": "crossref",
-      "sources": [
-        "crossref"
-      ],
-      "venue": "International Journal of Applied Research",
-      "type": "journal-article",
-      "published_at": "2026-11-01",
-      "metadata_created_at": "2026-11-18",
-      "event_at": "2026-11-18",
-      "event_type": "crossref_registration",
-      "version": "",
-      "project": "P1A",
-      "eligible": true,
-      "prefilter_score": 40,
-      "change": "new"
-    }
-  ],
+  "new_candidates": [],
   "note": "Metadata candidates only; verify paper content and bibliographic dates at primary sources. Chinese catalog first_seen is NOT publication date; incomplete catalogs require manual checking.",
   "chinese_journals": {
     "economic_research": {
       "journal": "经济研究",
       "source_kind": "catalog",
       "url": "https://ncpssd.org/journal/details.aspx?gch=95645X",
-      "checked_at": "2026-11-18T18:51:07.127043+00:00",
-      "status": "failed",
-      "issue": null,
+      "checked_at": "2026-11-19T02:26:20.814003+00:00",
+      "status": "toc_metadata",
+      "issue": "2026-09",
       "issue_date": null,
-      "article_count": 0,
-      "article_snapshot": [],
-      "reason": "TimeoutError: The read operation timed out",
+      "article_count": 11,
+      "last_known_issue": "2026-09",
+      "article_snapshot": [
+        {
+          "title": "加快构建中国特色社会主义政治经济学自主知识体系",
+          "url": "https://ncpssd.org/journal/details.aspx?gch=95645X",
+          "url_scope": "issue_catalog",
+          "issue": "2026-09",
+          "authors": "李建平[1,2];叶琪[1,2]",
+          "pages": "5-24",
+          "toc_online_at": null,
+          "doi": null,
+          "published_at": null,
+          "date_verified": false,
+          "link_verified": false,
+          "role": "current_issue"
+        },
+        {
+          "title": "机器人应用与制造业企业生产链延伸——基于稳链强链视角的考察",
+          "url": "https://ncpssd.org/journal/details.aspx?gch=95645X",
+          "url_scope": "issue_catalog",
+          "issue": "2026-09",
+          "authors": "吴腊梅[1,2];彭水军[3];张亮[4,5];周上尧[4,5]",
+          "pages": "25-48",
+          "toc_online_at": null,
+          "doi": null,
+          "published_at": null,
+          "date_verified": false,
+          "link_verified": false,
+          "role": "current_issue"
+        },
+        {
+          "title": "制造企业数字技术提升过程中补贴退坡与市场需求的均衡分析",
+          "url": "https://ncpssd.org/journal/details.aspx?gch=95645X",
+          "url_scope": "issue_catalog",
+          "issue": "2026-09",
+          "authors": "王玉燕[1];林飞[2];申亮[2]",
+          "pages": "49-71",
+          "toc_online_at": null,
+          "doi": null,
+          "published_at": null,
+          "date_verified": false,
+          "link_verified": false,
+          "role": "current_issue"
+        },
+        {
+          "title": "个人情绪传播与平台信息治理",
+          "url": "https://ncpssd.org/journal/details.aspx?gch=95645X",
+          "url_scope": "issue_catalog",
+          "issue": "2026-09",
+          "authors": "柯荣住[1];黄佳琦[1]",
+          "pages": "72-96",
+          "toc_online_at": null,
+          "doi": null,
+          "published_at": null,
+          "date_verified": false,
+          "link_verified": false,
+          "role": "current_issue"
+        },
+        {
+          "title": "供给侧结构性改革的扩内需效应——基于信息消费示范城市建设的分析",
+          "url": "https://ncpssd.org/journal/details.aspx?gch=95645X",
+          "url_scope": "issue_catalog",
+          "issue": "2026-09",
+          "authors": "彭冲[1,2];孙伟增[3];易行健[4]",
+          "pages": "97-119",
+          "toc_online_at": null,
+          "doi": null,
+          "published_at": null,
+          "date_verified": false,
+          "link_verified": false,
+          "role": "current_issue"
+        },
+        {
+          "title": "中国对外基础设施投资的经济效应与微观作用机制——来自非洲发展走廊项目的证据",
+          "url": "https://ncpssd.org/journal/details.aspx?gch=95645X",
+          "url_scope": "issue_catalog",
+          "issue": "2026-09",
+          "authors": "李涵[1];周倩[2];李超[3]",
+          "pages": "120-142",
+          "toc_online_at": null,
+          "doi": null,
+          "published_at": null,
+          "date_verified": false,
+          "link_verified": false,
+          "role": "current_issue"
+        },
+        {
+          "title": "数据要素冲击、信息摩擦与供应链关系建立",
+          "url": "https://ncpssd.org/journal/details.aspx?gch=95645X",
+          "url_scope": "issue_catalog",
+          "issue": "2026-09",
+          "authors": "施炳展[1,2];李启正[3];熊治[4]",
+          "pages": "143-164",
+          "toc_online_at": null,
+          "doi": null,
+          "published_at": null,
+          "date_verified": false,
+          "link_verified": false,
+          "role": "current_issue"
+        },
+        {
+          "title": "中国微观增值税税负测度与结构特征",
+          "url": "https://ncpssd.org/journal/details.aspx?gch=95645X",
+          "url_scope": "issue_catalog",
+          "issue": "2026-09",
+          "authors": "刘志阔[1];汪殊逸[1]",
+          "pages": "165-188",
+          "toc_online_at": null,
+          "doi": null,
+          "published_at": null,
+          "date_verified": false,
+          "link_verified": false,
+          "role": "current_issue"
+        },
+        {
+          "title": "地方政府股权资产测算与财政可持续性评估——基于复杂股权网络的穿透识别",
+          "url": "https://ncpssd.org/journal/details.aspx?gch=95645X",
+          "url_scope": "issue_catalog",
+          "issue": "2026-09",
+          "authors": "李戎[1,2];蔡彦皞[1];刘岩[3]",
+          "pages": "189-212",
+          "toc_online_at": null,
+          "doi": null,
+          "published_at": null,
+          "date_verified": false,
+          "link_verified": false,
+          "role": "current_issue"
+        },
+        {
+          "title": "自动化发展如何影响收入分配：水平扩张和垂直进步的技术分解",
+          "url": "https://ncpssd.org/journal/details.aspx?gch=95645X",
+          "url_scope": "issue_catalog",
+          "issue": "2026-09",
+          "authors": "叶智程[1];李鹏飞[1,2];刘思远[1]",
+          "pages": "213-236",
+          "toc_online_at": null,
+          "doi": null,
+          "published_at": null,
+          "date_verified": false,
+          "link_verified": false,
+          "role": "current_issue"
+        },
+        {
+          "title": "新型农业经营主体与共同富裕",
+          "url": "https://ncpssd.org/journal/details.aspx?gch=95645X",
+          "url_scope": "issue_catalog",
+          "issue": "2026-09",
+          "authors": "王悦静[1];张红[1];杨宇超[1]",
+          "pages": "237-260",
+          "toc_online_at": null,
+          "doi": null,
+          "published_at": null,
+          "date_verified": false,
+          "link_verified": false,
+          "role": "current_issue"
+        }
+      ],
+      "article_link_count": 0,
+      "issue_metadata_count": 11,
+      "coverage_kind": "issue_metadata",
       "rss": {
         "url": "https://navi.cnki.net/knavi/rss/JJYJ",
         "status": "failed",
@@ -1169,47 +1445,179 @@
       "journal": "中国工业经济",
       "source_kind": "catalog",
       "url": "https://ncpssd.org/journal/details.aspx?gch=93800A",
-      "checked_at": "2026-11-18T18:51:07.127043+00:00",
-      "status": "failed",
-      "issue": null,
+      "checked_at": "2026-11-19T02:26:20.814003+00:00",
+      "status": "toc_metadata",
+      "issue": "2026-08",
       "issue_date": null,
-      "article_count": 0,
-      "article_snapshot": [],
-      "reason": "TimeoutError: The read operation timed out",
+      "article_count": 9,
+      "last_known_issue": "2026-08",
+      "article_snapshot": [
+        {
+          "title": "世界大变局下的中国产业链韧性",
+          "url": "https://ncpssd.org/journal/details.aspx?gch=93800A",
+          "url_scope": "issue_catalog",
+          "issue": "2026-08",
+          "authors": "张辉[1];王桂军[2]",
+          "pages": "5-26",
+          "toc_online_at": null,
+          "doi": null,
+          "published_at": null,
+          "date_verified": false,
+          "link_verified": false,
+          "role": "current_issue"
+        },
+        {
+          "title": "中国经济数字化的广度、深度测算及其增长效应",
+          "url": "https://ncpssd.org/journal/details.aspx?gch=93800A",
+          "url_scope": "issue_catalog",
+          "issue": "2026-08",
+          "authors": "关会娟[1];许宪春[2];徐丽笑[3]",
+          "pages": "27-50",
+          "toc_online_at": null,
+          "doi": null,
+          "published_at": null,
+          "date_verified": false,
+          "link_verified": false,
+          "role": "current_issue"
+        },
+        {
+          "title": "人工智能技术创新与贸易比较优势跃迁",
+          "url": "https://ncpssd.org/journal/details.aspx?gch=93800A",
+          "url_scope": "issue_catalog",
+          "issue": "2026-08",
+          "authors": "刘啟仁[1];蓝慧霞[1];冯桂媚[1];梁婷[1]",
+          "pages": "51-74",
+          "toc_online_at": null,
+          "doi": null,
+          "published_at": null,
+          "date_verified": false,
+          "link_verified": false,
+          "role": "current_issue"
+        },
+        {
+          "title": "服务业开放与企业进口供应链结构调整——基于核心与非核心中间品分层采购的证据",
+          "url": "https://ncpssd.org/journal/details.aspx?gch=93800A",
+          "url_scope": "issue_catalog",
+          "issue": "2026-08",
+          "authors": "顾乃华[1];邓石军[2]",
+          "pages": "75-98",
+          "toc_online_at": null,
+          "doi": null,
+          "published_at": null,
+          "date_verified": false,
+          "link_verified": false,
+          "role": "current_issue"
+        },
+        {
+          "title": "劳动者增收与企业出口调整——基于用工成本群聚效应的证据",
+          "url": "https://ncpssd.org/journal/details.aspx?gch=93800A",
+          "url_scope": "issue_catalog",
+          "issue": "2026-08",
+          "authors": "包群[1];樊军锋[1]",
+          "pages": "99-121",
+          "toc_online_at": null,
+          "doi": null,
+          "published_at": null,
+          "date_verified": false,
+          "link_verified": false,
+          "role": "current_issue"
+        },
+        {
+          "title": "金融科技创新如何赋能银行普惠金融——来自小微企业创业的证据",
+          "url": "https://ncpssd.org/journal/details.aspx?gch=93800A",
+          "url_scope": "issue_catalog",
+          "issue": "2026-08",
+          "authors": "张博[1];崔世豪[1];张景静[2]",
+          "pages": "122-145",
+          "toc_online_at": null,
+          "doi": null,
+          "published_at": null,
+          "date_verified": false,
+          "link_verified": false,
+          "role": "current_issue"
+        },
+        {
+          "title": "政府采购全流程电子化与企业跨区域竞争",
+          "url": "https://ncpssd.org/journal/details.aspx?gch=93800A",
+          "url_scope": "issue_catalog",
+          "issue": "2026-08",
+          "authors": "王伟同[1];席胜杰[1];刘冲[2];李秀华[3]",
+          "pages": "146-169",
+          "toc_online_at": null,
+          "doi": null,
+          "published_at": null,
+          "date_verified": false,
+          "link_verified": false,
+          "role": "current_issue"
+        },
+        {
+          "title": "人工智能如何影响管理层角色演变",
+          "url": "https://ncpssd.org/journal/details.aspx?gch=93800A",
+          "url_scope": "issue_catalog",
+          "issue": "2026-08",
+          "authors": "杨继东[1];王菲[1];魏冉[2]",
+          "pages": "170-192",
+          "toc_online_at": null,
+          "doi": null,
+          "published_at": null,
+          "date_verified": false,
+          "link_verified": false,
+          "role": "current_issue"
+        },
+        {
+          "title": "数智链主驱动产业链韧性提升的路径解构：从节点突破到韧性生态",
+          "url": "https://ncpssd.org/journal/details.aspx?gch=93800A",
+          "url_scope": "issue_catalog",
+          "issue": "2026-08",
+          "authors": "刘友金[1];姜海锋[1];程伟华[2]",
+          "pages": "193-216",
+          "toc_online_at": null,
+          "doi": null,
+          "published_at": null,
+          "date_verified": false,
+          "link_verified": false,
+          "role": "current_issue"
+        }
+      ],
+      "article_link_count": 0,
+      "issue_metadata_count": 9,
+      "coverage_kind": "issue_metadata",
       "rss": {
         "url": "https://navi.cnki.net/knavi/rss/GGYY",
         "status": "failed",
         "article_count": 0,
-        "reason": "URLError: <urlopen error [Errno -2] Name or service not known>"
+        "reason": "OSError: host_circuit_open: navi.cnki.net: dns_resolution_failed"
       }
     },
     "management_world": {
       "journal": "管理世界",
       "source_kind": "catalog",
       "url": "https://ncpssd.org/journal/details?gch=95499X&langType=1",
-      "checked_at": "2026-11-18T18:51:07.127043+00:00",
-      "status": "failed",
-      "issue": null,
+      "checked_at": "2026-11-19T02:26:20.814003+00:00",
+      "status": "stale_index",
+      "issue": "2026-09",
       "issue_date": null,
       "article_count": 0,
+      "last_known_issue": "2026-10",
       "article_snapshot": [],
-      "reason": "TimeoutError: The read operation timed out",
+      "reason": "catalog_regressed",
       "rss": {
         "url": "https://navi.cnki.net/knavi/rss/GLSJ",
         "status": "failed",
         "article_count": 0,
-        "reason": "URLError: <urlopen error [Errno -2] Name or service not known>"
+        "reason": "OSError: host_circuit_open: navi.cnki.net: dns_resolution_failed"
       }
     },
     "world_economy": {
       "journal": "世界经济",
       "source_kind": "publisher",
       "url": "https://sjjj.magtech.com.cn/CN/home",
-      "checked_at": "2026-11-18T18:51:07.127043+00:00",
+      "checked_at": "2026-11-19T02:26:20.814003+00:00",
       "status": "ok",
       "issue": "2026-11",
       "issue_date": "2026-11-10",
       "article_count": 7,
+      "last_known_issue": "2026-11",
       "article_snapshot": [
         {
           "title": "政企协同与绿色创新：链长制的硬约束与强牵引",
@@ -1303,18 +1711,19 @@
         "url": "https://navi.cnki.net/knavi/rss/SJJJ",
         "status": "failed",
         "article_count": 0,
-        "reason": "URLError: <urlopen error [Errno -2] Name or service not known>"
+        "reason": "OSError: host_circuit_open: navi.cnki.net: dns_resolution_failed"
       }
     },
     "quant_economics": {
       "journal": "数量经济技术经济研究",
       "source_kind": "publisher",
       "url": "https://www.jqte.net/sljjjsjjyj/ch/index.aspx",
-      "checked_at": "2026-11-18T18:51:07.127043+00:00",
+      "checked_at": "2026-11-19T02:26:20.814003+00:00",
       "status": "ok",
       "issue": "2026-10",
       "issue_date": null,
       "article_count": 10,
+      "last_known_issue": "2026-10",
       "article_snapshot": [
         {
           "title": "因地制宜发展新质生产力的理论逻辑与路径范式",
@@ -1444,18 +1853,19 @@
         "url": "https://navi.cnki.net/knavi/rss/SLJY",
         "status": "failed",
         "article_count": 0,
-        "reason": "URLError: <urlopen error [Errno -2] Name or service not known>"
+        "reason": "OSError: host_circuit_open: navi.cnki.net: dns_resolution_failed"
       }
     },
     "finance_economics": {
       "journal": "财经研究",
       "source_kind": "publisher",
       "url": "https://qks.sufe.edu.cn/J/CJYJ/Article/Latest",
-      "checked_at": "2026-11-18T18:51:07.127043+00:00",
+      "checked_at": "2026-11-19T02:26:20.814003+00:00",
       "status": "mixed_links",
       "issue": "2026-09",
       "issue_date": null,
       "article_count": 20,
+      "last_known_issue": "2026-09",
       "article_snapshot": [
         {
           "title": "供应链信息隐藏如何影响企业创新：基于专有化成本的解释",
@@ -1706,36 +2116,43 @@
         "url": "https://navi.cnki.net/knavi/rss/CJYJ",
         "status": "failed",
         "article_count": 0,
-        "reason": "URLError: <urlopen error [Errno -2] Name or service not known>"
+        "reason": "OSError: host_circuit_open: navi.cnki.net: dns_resolution_failed"
       }
     },
     "financial_research": {
       "journal": "金融研究",
-      "source_kind": "publisher",
-      "url": "https://www.jryj.org.cn/CN/1002-7246/current.shtml",
-      "checked_at": "2026-11-18T18:51:07.127043+00:00",
-      "status": "failed",
-      "issue": null,
+      "source_kind": "catalog",
+      "url": "https://m.ncpssd.cn/journal/details?gch=97926X&langType=1&nav=1",
+      "checked_at": "2026-11-19T02:26:20.814003+00:00",
+      "status": "catalog_only",
+      "issue": "2026-07",
       "issue_date": null,
       "article_count": 0,
+      "last_known_issue": "2026-07",
       "article_snapshot": [],
-      "reason": "TimeoutError: The read operation timed out",
+      "primary_url": "https://www.jryj.org.cn/CN/1002-7246/current.shtml",
+      "primary_failure": "URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'www.jryj.org.cn'",
+      "article_link_count": 0,
+      "issue_metadata_count": 0,
+      "coverage_kind": "issue_only",
+      "reason": "publisher_unavailable; issue_visible_but_articles_not_verified",
       "rss": {
         "url": "https://navi.cnki.net/knavi/rss/JRYJ",
         "status": "failed",
         "article_count": 0,
-        "reason": "URLError: <urlopen error [Errno -2] Name or service not known>"
+        "reason": "OSError: host_circuit_open: navi.cnki.net: dns_resolution_failed"
       }
     },
     "international_trade": {
       "journal": "国际贸易问题",
       "source_kind": "publisher",
       "url": "https://gjmw.cbpt.cnki.net/portal/journal/portal/client/paper_list/type_benqi",
-      "checked_at": "2026-11-18T18:51:07.127043+00:00",
+      "checked_at": "2026-11-19T02:26:20.814003+00:00",
       "status": "ok",
       "issue": "2026-10",
       "issue_date": null,
       "article_count": 10,
+      "last_known_issue": "2026-10",
       "article_snapshot": [
         {
           "title": "从规模扩张到质量提升:中国文化企业出海的现实考验与路径选择",
@@ -1865,18 +2282,19 @@
         "url": "https://navi.cnki.net/knavi/rss/GJMW",
         "status": "failed",
         "article_count": 0,
-        "reason": "URLError: <urlopen error [Errno -2] Name or service not known>"
+        "reason": "OSError: host_circuit_open: navi.cnki.net: dns_resolution_failed"
       }
     },
     "world_economy_studies": {
       "journal": "世界经济研究",
       "source_kind": "publisher",
       "url": "https://jing.cbpt.cnki.net/portal/journal/portal/client/paper_list/type_benqi",
-      "checked_at": "2026-11-18T18:51:07.127043+00:00",
+      "checked_at": "2026-11-19T02:26:20.814003+00:00",
       "status": "ok",
       "issue": "2026-11",
       "issue_date": null,
       "article_count": 9,
+      "last_known_issue": "2026-11",
       "article_snapshot": [
         {
           "title": "对外直接投资如何影响企业出口：来自中国上市公司的差异化证据",
@@ -1994,190 +2412,9 @@
         "url": "https://navi.cnki.net/knavi/rss/JING",
         "status": "failed",
         "article_count": 0,
-        "reason": "URLError: <urlopen error [Errno -2] Name or service not known>"
+        "reason": "OSError: host_circuit_open: navi.cnki.net: dns_resolution_failed"
       }
     }
   },
-  "chinese_new_candidates": [
-    {
-      "id": "journal:world_economy_studies:afb404666ada47ba",
-      "title": "对外直接投资如何影响企业出口：来自中国上市公司的差异化证据",
-      "authors": null,
-      "pages": null,
-      "url_scope": "article_detail",
-      "journal": "世界经济研究",
-      "url": "https://jing.cbpt.cnki.net/portal/journal/portal/client/paper/658a7489402698caf368e30f134c1156",
-      "source": "chinese_journal_toc",
-      "source_kind": "publisher",
-      "issue": "2026-11",
-      "issue_date": null,
-      "published_at": null,
-      "toc_online_at": null,
-      "doi": null,
-      "first_observed_at": "2026-11-18",
-      "event_type": "first_seen_in_toc",
-      "date_verified": false,
-      "note": "TOC online date may differ from article detail publication date; verify both."
-    },
-    {
-      "id": "journal:world_economy_studies:826accd224bb4e90",
-      "title": "目的国地缘政治风险下中国企业跨国供应关系调整研究",
-      "authors": null,
-      "pages": null,
-      "url_scope": "article_detail",
-      "journal": "世界经济研究",
-      "url": "https://jing.cbpt.cnki.net/portal/journal/portal/client/paper/ea25a14aef4547e4e652de28ccdb4d03",
-      "source": "chinese_journal_toc",
-      "source_kind": "publisher",
-      "issue": "2026-11",
-      "issue_date": null,
-      "published_at": null,
-      "toc_online_at": null,
-      "doi": null,
-      "first_observed_at": "2026-11-18",
-      "event_type": "first_seen_in_toc",
-      "date_verified": false,
-      "note": "TOC online date may differ from article detail publication date; verify both."
-    },
-    {
-      "id": "journal:world_economy_studies:b32a0e524af8b65a",
-      "title": "贸易协定环境规则深化能否缓解全球碳转移不公平",
-      "authors": null,
-      "pages": null,
-      "url_scope": "article_detail",
-      "journal": "世界经济研究",
-      "url": "https://jing.cbpt.cnki.net/portal/journal/portal/client/paper/d2dc0d410addf25196386814a48278c0",
-      "source": "chinese_journal_toc",
-      "source_kind": "publisher",
-      "issue": "2026-11",
-      "issue_date": null,
-      "published_at": null,
-      "toc_online_at": null,
-      "doi": null,
-      "first_observed_at": "2026-11-18",
-      "event_type": "first_seen_in_toc",
-      "date_verified": false,
-      "note": "TOC online date may differ from article detail publication date; verify both."
-    },
-    {
-      "id": "journal:world_economy_studies:0df7a83f78c2c25c",
-      "title": "跨境人民币结算改革与企业进出口供应链多元化：基于货币结算类交易成本的视角",
-      "authors": null,
-      "pages": null,
-      "url_scope": "article_detail",
-      "journal": "世界经济研究",
-      "url": "https://jing.cbpt.cnki.net/portal/journal/portal/client/paper/c27e84a6d1ed04f9a3216bd8664bc18f",
-      "source": "chinese_journal_toc",
-      "source_kind": "publisher",
-      "issue": "2026-11",
-      "issue_date": null,
-      "published_at": null,
-      "toc_online_at": null,
-      "doi": null,
-      "first_observed_at": "2026-11-18",
-      "event_type": "first_seen_in_toc",
-      "date_verified": false,
-      "note": "TOC online date may differ from article detail publication date; verify both."
-    },
-    {
-      "id": "journal:world_economy_studies:f914abf4c7ab9731",
-      "title": "人民币增加值实际有效汇率弹性重估及解析",
-      "authors": null,
-      "pages": null,
-      "url_scope": "article_detail",
-      "journal": "世界经济研究",
-      "url": "https://jing.cbpt.cnki.net/portal/journal/portal/client/paper/081f9490d956f71d3eece99d02b30a63",
-      "source": "chinese_journal_toc",
-      "source_kind": "publisher",
-      "issue": "2026-11",
-      "issue_date": null,
-      "published_at": null,
-      "toc_online_at": null,
-      "doi": null,
-      "first_observed_at": "2026-11-18",
-      "event_type": "first_seen_in_toc",
-      "date_verified": false,
-      "note": "TOC online date may differ from article detail publication date; verify both."
-    },
-    {
-      "id": "journal:world_economy_studies:96cca1067f3ed426",
-      "title": "绿色标准升级能够提升中国制造业出口企业加成率吗?:基于能效标识制度的准自然实验",
-      "authors": null,
-      "pages": null,
-      "url_scope": "article_detail",
-      "journal": "世界经济研究",
-      "url": "https://jing.cbpt.cnki.net/portal/journal/portal/client/paper/f705032d7dcbdc2cb57e7c34ac271949",
-      "source": "chinese_journal_toc",
-      "source_kind": "publisher",
-      "issue": "2026-11",
-      "issue_date": null,
-      "published_at": null,
-      "toc_online_at": null,
-      "doi": null,
-      "first_observed_at": "2026-11-18",
-      "event_type": "first_seen_in_toc",
-      "date_verified": false,
-      "note": "TOC online date may differ from article detail publication date; verify both."
-    },
-    {
-      "id": "journal:world_economy_studies:8726d4dc83846b42",
-      "title": "“寒蝉效应”还是“压力测试”:贸易政策冲击下企业供应链韧性的响应逻辑",
-      "authors": null,
-      "pages": null,
-      "url_scope": "article_detail",
-      "journal": "世界经济研究",
-      "url": "https://jing.cbpt.cnki.net/portal/journal/portal/client/paper/a647f3988cf7199cb402968c8794fd5e",
-      "source": "chinese_journal_toc",
-      "source_kind": "publisher",
-      "issue": "2026-11",
-      "issue_date": null,
-      "published_at": null,
-      "toc_online_at": null,
-      "doi": null,
-      "first_observed_at": "2026-11-18",
-      "event_type": "first_seen_in_toc",
-      "date_verified": false,
-      "note": "TOC online date may differ from article detail publication date; verify both."
-    },
-    {
-      "id": "journal:world_economy_studies:94c785875f01c557",
-      "title": "标准国际化与企业全球价值链前向参与：来自中国制造业上市公司的证据",
-      "authors": null,
-      "pages": null,
-      "url_scope": "article_detail",
-      "journal": "世界经济研究",
-      "url": "https://jing.cbpt.cnki.net/portal/journal/portal/client/paper/3a21d46a3db560ac03e708c1c7e1e08d",
-      "source": "chinese_journal_toc",
-      "source_kind": "publisher",
-      "issue": "2026-11",
-      "issue_date": null,
-      "published_at": null,
-      "toc_online_at": null,
-      "doi": null,
-      "first_observed_at": "2026-11-18",
-      "event_type": "first_seen_in_toc",
-      "date_verified": false,
-      "note": "TOC online date may differ from article detail publication date; verify both."
-    },
-    {
-      "id": "journal:world_economy_studies:d1208585a5ed9ac5",
-      "title": "绿色算力供给如何赋能企业绿色转型：基于双重机器学习的因果推断",
-      "authors": null,
-      "pages": null,
-      "url_scope": "article_detail",
-      "journal": "世界经济研究",
-      "url": "https://jing.cbpt.cnki.net/portal/journal/portal/client/paper/026b4c13e1d9c8ed7d6693467cbdde4d",
-      "source": "chinese_journal_toc",
-      "source_kind": "publisher",
-      "issue": "2026-11",
-      "issue_date": null,
-      "published_at": null,
-      "toc_online_at": null,
-      "doi": null,
-      "first_observed_at": "2026-11-18",
-      "event_type": "first_seen_in_toc",
-      "date_verified": false,
-      "note": "TOC online date may differ from article detail publication date; verify both."
-    }
-  ]
+  "chinese_new_candidates": []
 }

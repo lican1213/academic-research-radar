@@ -28,7 +28,7 @@ class PdfProbeTests(unittest.TestCase):
 
     def test_success_needs_real_magic_and_eof(self):
         responses = {
-            PAGE: b'<a href="/CN/article/downloadArticleFile.do?attachType=PDF&amp;id=1663">正文 PDF</a>',
+            PAGE: '\u003ca href="/CN/article/downloadArticleFile.do?attachType=PDF&amp;id=1663">正文 PDF\u003c/a>'.encode(),
             PDF: BLOB,
         }
         result = probe("target", PAGE, reader=lambda u, size: responses[u],
@@ -39,7 +39,7 @@ class PdfProbeTests(unittest.TestCase):
 
     def test_pdf_server_returns_html_is_not_success(self):
         responses = {
-            PAGE: b'<a href="/CN/article/downloadArticleFile.do?attachType=PDF&amp;id=1663">正文</a>',
+            PAGE: '\u003ca href="/CN/article/downloadArticleFile.do?attachType=PDF&amp;id=1663">正文\u003c/a>'.encode(),
             PDF: b"<html>access denied</html>",
         }
         r = probe("target", PAGE, reader=lambda u, size: responses[u])

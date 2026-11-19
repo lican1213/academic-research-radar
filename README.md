@@ -104,3 +104,8 @@ Ponytail 最小验证：`.github/workflows/pdf-probe.yml` 只在 PDF 验收代�
 ### 2026-11-19 《金融研究》2026年第10期：官方 HTTP PDF 获取修正
 
 真实 Runner [诊断 44469550771](https://github.com/lican1213/academic-research-radar/actions/runs/44469550771) 证明该期刊公开使用的 `http://www.jryj.org.cn/CN/abstract/abstract1663.shtml` 返回200、含正确论文题名和出版方给出的 PDF href；同域 `/CN/article/downloadArticleFile.do?attachType=PDF&id=1663` 亦返回200及真实 `%PDF-` 头。**不是验证码或浏览器自动化问题，原下载器把所有 HTTP 排除导致假阴性。** 官方 HTTPS 证书仍错配，不能禁用证书校验；仅为官方公开的6篇文章 `1662..1667` 开放严格同域、同协议和固定路径的 HTTP 访问。HTTP 不具备传输完整性/服务端身份加密认证，后续证书修复时应优先恢复 HTTPS；当前必须另外核对 PDF 正文题名、期次页数、字节大小、SHA256和可提取文本。PDF 和版权正文仍只在内存中处理，不提交到仓库/Artifact。独立 `PDF Acceptance` 实际验收6篇均需下载和正文对应核验通过；主研究雷达及调度不变。
+
+
+### 2026-11-19 PDF 验收已通过（不是摘要链接）
+
+实网 [Actions #44470870725](https://github.com/lican1213/academic-research-radar/actions/runs/44470870725) 已完整下载并在 Runner 内存中解析《金融研究》2026年第10期前6篇，全部 `pdf_download_verified=true`、`text_extraction=ok`、`title_match=true`、`page_count_matches=true`（共112页、约536万字节 PDF 二进制文件）。这是与每日雷达独立的按需验收脚本，不是全期12篇的生产覆盖，也没有审读回归表。正式PDF入口是期刊公开 `http://www.jryj.org.cn/CN/article/downloadArticleFile.do?attachType=PDF&id=1662..1667`（逐个实际页面发现并下载）。官网HTTPS证书仍错配，HTTP有传输完整性风险；不关闭TLS验证或使用代理/登录。原始PDF和全文不存 GitHub，只保存SHA、页数、可提取性等元数据。将来证书正确时优先恢复HTTPS；正文分析仍要人工/模型根据可核页码和表号独立证据进行。

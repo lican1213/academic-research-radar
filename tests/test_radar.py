@@ -918,13 +918,16 @@ class IssueOnlyRecoveryTests(unittest.TestCase):
                 self.assertEqual(first["new_candidates"],[])
                 self.assertEqual(first["source_status"]["journals"]["world_economy"]["status"],"catalog_only")
                 second=cj.scan_chinese_journals(folder,UTC_NOW,get=lambda _:detail_page)
-                self.assertEqual(len(second["new_candidates"]),1)
-                lead=second["new_candidates"][0]
+                self.assertEqual(second["new_candidates"],[])
+                self.assertEqual(len(second["historical_backfill_leads"]),1)
+                lead=second["historical_backfill_leads"][0]
                 self.assertEqual(lead["event_type"],"issue_backfill")
                 self.assertEqual(lead["issue"],"2026-10")
                 self.assertIsNone(lead["published_at"])
                 self.assertFalse(lead["date_verified"])
-                self.assertEqual(cj.scan_chinese_journals(folder,UTC_NOW,get=lambda _:detail_page)["new_candidates"],[])
+                repeat=cj.scan_chinese_journals(folder,UTC_NOW,get=lambda _:detail_page)
+                self.assertEqual(repeat["new_candidates"],[])
+                self.assertEqual(repeat["historical_backfill_leads"],[])
 
     def test_priority_source_full_failure_exposes_each_diagnostic(self):
         import chinese_journals as cj

@@ -1,4 +1,4 @@
-# Academic Research Radar — 2026-11-19T13:46:31.666618+00:00
+# Academic Research Radar — 2026-11-19T13:51:48.387204+00:00
 
 **Status:** degraded; **New or changed candidates:** 0; **Metadata prefilter passes:** 11
 
@@ -6,7 +6,7 @@ This is metadata triage, not a verified reading or recommendation.
 
 - crossref: ok; 14/14 queries; 420 records
 - arxiv: ok; 4/4 queries; 34 records
-- chinese_journals: degraded; 8/9 queries; 78 records
+- chinese_journals: degraded; article-level TOC 6/9 journals; nonempty sources 8/9; optional RSS=degraded; 78 metadata rows
   - Error: 经济研究: toc_metadata (); RSS=failed
   - Error: 中国工业经济: toc_metadata (); RSS=failed
   - Error: 管理世界: catalog_only (issue_visible_but_articles_not_verified); RSS=failed

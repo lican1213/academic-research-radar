@@ -94,6 +94,46 @@ MAX_CANDIDATES = 30
 PROJECT_CAPS = {"P0": 12, "P1": 7, "P1A": 6, "P2": 7, "P3": 3, "P4": 3}
 
 
+def load_research_profile(path: Path) -> dict | None:
+    """Optional fork-local public research keywords; never changes upstream defaults."""
+    if not path.exists():
+        return None
+    profile = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(profile, dict):
+        raise ValueError("research_profile must be a JSON object")
+    name = profile.get("name")
+    if not isinstance(name, str) or not 1 <= len(name.strip()) <= 90:
+        raise ValueError("profile name required (max 90 characters)")
+    for key, minimum, maximum in (("crossref_queries", 1, 16),
+                                  ("arxiv_queries", 0, 4),
+                                  ("keywords", 2, 30)):
+        items = profile.get(key)
+        if (not isinstance(items, list) or not minimum <= len(items) <= maximum
+                or any(not isinstance(x, str) or not 2 <= len(x.strip()) <= 100 for x in items)):
+            raise ValueError(f"{key} requires {minimum}..{maximum} nonempty strings")
+    hits = profile.get("min_keyword_hits", 2)
+    if not isinstance(hits, int) or isinstance(hits, bool) or not 1 <= hits <= len(profile["keywords"]):
+        raise ValueError("min_keyword_hits out of bounds")
+    return {"name": name.strip(),
+            "crossref_queries": [x.strip() for x in profile["crossref_queries"]],
+            "arxiv_queries": [x.strip() for x in profile["arxiv_queries"]],
+            "keywords": [x.strip().casefold() for x in profile["keywords"]],
+            "min_keyword_hits": hits}
+
+
+def profile_prefilter(item: dict, profile: dict) -> dict:
+    """Term-based candidate prefilter, not a scholarly relevance/quality score."""
+    title = item["title"].casefold()
+    abstract = (item.get("abstract") or "").casefold()
+    title_hits = sum(term in title for term in profile["keywords"])
+    abstract_only = sum(term not in title and term in abstract for term in profile["keywords"])
+    result = dict(item)
+    result["project"] = "RESEARCH"
+    result["eligible"] = title_hits + abstract_only >= profile["min_keyword_hits"]
+    result["prefilter_score"] = min(100, 20 + 25 * title_hits + 12 * abstract_only)
+    return result
+
+
 class _TextExtractor(HTMLParser):
     def __init__(self) -> None:
         super().__init__()
@@ -303,11 +343,13 @@ def consolidate(items: list[dict]) -> list[dict]:
     return list(grouped.values())
 
 
-def select_new(items: list[dict], seen: dict, now: datetime, *, limit: int = MAX_CANDIDATES) -> tuple[list[dict], dict]:
+def select_new(items: list[dict], seen: dict, now: datetime, *, limit: int = MAX_CANDIDATES,
+               caps: dict[str, int] | None = None) -> tuple[list[dict], dict]:
+    caps = caps if caps is not None else PROJECT_CAPS
     state = dict(seen)
     new = []
-    selected_by_project = {project: 0 for project in PROJECT_CAPS}
-    for item in sorted(items, key=lambda p: (list(PROJECT_CAPS).index(p["project"]), -p["prefilter_score"], p["title"])):
+    selected_by_project = {project: 0 for project in caps}
+    for item in sorted(items, key=lambda p: (list(caps).index(p["project"]), -p["prefilter_score"], p["title"])):
         if not item.get("eligible") or item["prefilter_score"] < 40:
             continue
         keys = identity_keys(item) + item.get("alternate_ids", [])
@@ -324,7 +366,7 @@ def select_new(items: list[dict], seen: dict, now: datetime, *, limit: int = MAX
         newly_published = bool(old and "doi" in old and item.get("doi") and not old.get("doi"))
         legacy_changed = bool(old and "title_norm" not in old and old.get("fingerprint") != record["fingerprint"])
         must_emit = not emitted_before or updated_version or changed_title or newly_published or legacy_changed
-        can_emit = selected_by_project[item["project"]] < PROJECT_CAPS[item["project"]] and len(new) < limit
+        can_emit = selected_by_project[item["project"]] < caps[item["project"]] and len(new) < limit
         if must_emit and can_emit:
             item = {k: v for k, v in item.items() if k != "abstract"}
             item["change"] = ("new" if not old else "newly_selected" if not emitted_before
@@ -364,11 +406,12 @@ def get_url(url: str, *, timeout: int = 20) -> bytes:
     raise AssertionError("unreachable")
 
 
-def fetch_crossref(since: str, get=get_url) -> tuple[list[dict], dict]:
+def fetch_crossref(since: str, get=get_url, *, queries: list[str] | None = None) -> tuple[list[dict], dict]:
+    queries = QUERIES if queries is None else queries
     all_items = []
     errors = []
     ok = 0
-    for query in QUERIES:
+    for query in queries:
         params = urllib.parse.urlencode({
             "query.bibliographic": query, "filter": "from-created-date:" + since,
             "rows": 30, "select": "DOI,title,author,created,published-online,published,published-print,issued,container-title,abstract,type",
@@ -382,15 +425,16 @@ def fetch_crossref(since: str, get=get_url) -> tuple[list[dict], dict]:
             errors.append(f"{query}: {type(exc).__name__}: {str(exc)[:120]}")
         time.sleep(0.75)  # Leave headroom for shared-runner rate limiting.
     return all_items, {"status": "ok" if not errors else "degraded" if ok else "failed",
-                       "queries_ok": ok, "queries_total": len(QUERIES),
+                       "queries_ok": ok, "queries_total": len(queries),
                        "records": len(all_items), "errors": errors}
 
 
-def fetch_arxiv(since: str, get=get_url) -> tuple[list[dict], dict]:
+def fetch_arxiv(since: str, get=get_url, *, queries: list[str] | None = None) -> tuple[list[dict], dict]:
+    queries = ARXIV_QUERIES if queries is None else queries
     all_items = []
     errors = []
     ok = 0
-    for n, query in enumerate(ARXIV_QUERIES):
+    for n, query in enumerate(queries):
         if n:
             time.sleep(3)  # arXiv asks for a 3s interval between requests.
         params = urllib.parse.urlencode({"search_query": query, "start": 0, "max_results": 30,
@@ -402,7 +446,7 @@ def fetch_arxiv(since: str, get=get_url) -> tuple[list[dict], dict]:
         except (OSError, ValueError, KeyError, TypeError, ET.ParseError) as exc:
             errors.append(f"{query}: {type(exc).__name__}: {str(exc)[:120]}")
     return all_items, {"status": "ok" if not errors else "degraded" if ok else "failed",
-                       "queries_ok": ok, "queries_total": len(ARXIV_QUERIES),
+                       "queries_ok": ok, "queries_total": len(queries),
                        "records": len(all_items), "errors": errors}
 
 
@@ -460,7 +504,8 @@ def markdown_report(report: dict) -> str:
 
 
 def run(out: Path, now: datetime, lookback_days: int | None = None,
-        crossref=fetch_crossref, arxiv=fetch_arxiv, chinese=None) -> dict:
+        crossref=fetch_crossref, arxiv=fetch_arxiv, chinese=None,
+        profile: dict | None = None) -> dict:
     out.mkdir(parents=True, exist_ok=True)
     seen_file = out / "seen.json"
     if seen_file.exists():
@@ -471,9 +516,18 @@ def run(out: Path, now: datetime, lookback_days: int | None = None,
         seen = {}
     days = lookback_days if lookback_days is not None else (3 if seen else 7)
     since = (now.date() - timedelta(days=days)).isoformat()
-    cross_items, cross_status = crossref(since)
-    arxiv_items_result, arxiv_status = arxiv(since)
-    sources = {"crossref": cross_status, "arxiv": arxiv_status}
+    if profile is None:
+        cross_items, cross_status = crossref(since)
+        arxiv_items_result, arxiv_status = arxiv(since)
+    else:
+        cross_items, cross_status = crossref(since, queries=profile["crossref_queries"])
+        if profile["arxiv_queries"]:
+            arxiv_items_result, arxiv_status = arxiv(since, queries=profile["arxiv_queries"])
+        else:
+            arxiv_items_result, arxiv_status = [], None
+    sources = {"crossref": cross_status}
+    if arxiv_status is not None:
+        sources["arxiv"] = arxiv_status
     chinese_result = None
     if chinese is not None:
         chinese_result = chinese(out, now)
@@ -483,12 +537,14 @@ def run(out: Path, now: datetime, lookback_days: int | None = None,
     status = ("failed" if successful == 0 else
               "ok" if successful == total and all(s["status"] == "ok" for s in sources.values())
               else "degraded")
-    candidates = consolidate([prefilter(item) for item in cross_items + arxiv_items_result])
+    caps = PROJECT_CAPS if profile is None else {"RESEARCH": MAX_CANDIDATES}
+    candidate_filter = prefilter if profile is None else lambda item: profile_prefilter(item, profile)
+    candidates = consolidate([candidate_filter(item) for item in cross_items + arxiv_items_result])
     # Crossref registered date and arXiv updated date are events, not a shared publication date.
     candidates = [item for item in candidates if item.get("event_at") and since <= item["event_at"] <= now.date().isoformat()]
     ranked = sorted((item for item in candidates if item.get("eligible")),
-                    key=lambda p: (list(PROJECT_CAPS).index(p["project"]), -p["prefilter_score"], p["title"]))
-    new, state = select_new(candidates, seen, now)
+                    key=lambda p: (list(caps).index(p["project"]), -p["prefilter_score"], p["title"]))
+    new, state = select_new(candidates, seen, now, caps=caps)
     report = {
         "generated_at": now.isoformat(), "status": status, "since": since,
         "source_status": sources, "scanned_candidates": len(candidates),
@@ -500,6 +556,8 @@ def run(out: Path, now: datetime, lookback_days: int | None = None,
         } for item in ranked[:12] if item["prefilter_score"] >= 40],
         "new_candidates": new, "note": "Metadata candidates only; verify paper content and bibliographic dates at primary sources."
     }
+    if profile is not None:
+        report["research_profile"] = {"name": profile["name"], "mode": "fork_keywords"}
     if chinese_result is not None:
         report["chinese_journals"] = chinese_result["source_status"]["journals"]
         report["chinese_new_candidates"] = chinese_result["new_candidates"]
@@ -517,12 +575,14 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--out", type=Path, default=Path("data"))
     parser.add_argument("--lookback-days", type=int)
+    parser.add_argument("--profile", type=Path, default=Path("radar_profile.json"))
     args = parser.parse_args()
     if args.lookback_days is not None and not 1 <= args.lookback_days <= 30:
         parser.error("--lookback-days must be from 1 to 30")
     from chinese_journals import scan_chinese_journals
+    profile = load_research_profile(args.profile)
     report = run(args.out, datetime.now(timezone.utc), args.lookback_days,
-                 chinese=scan_chinese_journals)
+                 chinese=scan_chinese_journals, profile=profile)
     print(json.dumps({k: v for k, v in report.items() if k != "new_candidates"}, ensure_ascii=False))
     return 2 if report["status"] == "failed" else 0
 

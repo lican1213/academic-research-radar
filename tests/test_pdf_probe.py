@@ -109,6 +109,25 @@ class PdfProbeTests(unittest.TestCase):
         self.assertIn("id=1663", pdf_link(page, html))
 
 
+    def test_pdf_fetch_retries_timeout_but_not_non_retryable_errors(self):
+        from unittest.mock import patch
+        import pdf_probe
+        class Response:
+            def __enter__(self): return self
+            def __exit__(self, *args): return False
+            def geturl(self): return "http://www.jryj.org.cn/CN/abstract/abstract1663.shtml"
+            def read(self, size): return b"ok"
+        with patch.object(pdf_probe, "urlopen", side_effect=[
+            TimeoutError("timeout"), Response()]) as opener:
+            blob = pdf_probe.fetch(
+                "http://www.jryj.org.cn/CN/abstract/abstract1663.shtml", 100)
+            self.assertEqual(blob, b"ok")
+            self.assertEqual(opener.call_count, 2)
+        with patch.object(pdf_probe, "urlopen", side_effect=TimeoutError("timeout")) as opener:
+            with self.assertRaises(TimeoutError):
+                pdf_probe.fetch("http://www.jryj.org.cn/CN/abstract/abstract1663.shtml", 100)
+            self.assertEqual(opener.call_count, 3)
+
     def test_delivery_zip_contains_exact_six_pdfs(self):
         import hashlib
         from pathlib import Path

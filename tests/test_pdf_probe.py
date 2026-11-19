@@ -59,6 +59,13 @@ class PdfProbeTests(unittest.TestCase):
         self.assertTrue(r["pdf_download_verified"])
         self.assertEqual(r["source_url"], PDF)
 
+    def test_text_extraction_rejects_corrupt_fixture(self):
+        from pdf_probe import inspect_pdf
+        result = inspect_pdf(BLOB)
+        self.assertEqual(result["pdf_bytes"], len(BLOB))
+        self.assertIn(result["text_extraction"], ("failed", "unavailable", "low_confidence"))
+        self.assertEqual(len(result["pdf_sha256"]), 64)
+
 
 if __name__ == "__main__":
     unittest.main()

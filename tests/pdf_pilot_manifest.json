@@ -3,11 +3,14 @@
     "key": "sufe_ofdi_ip",
     "journal": "财经研究",
     "title": "政府赋能企业“出海”：国家海外知识产权纠纷应对指导中心与企业对外直接投资",
-    "article_url": "https://qks.shufe.edu.cn/J/CJYJ/Article/Details/A0pgbFuTsz-vRzo-GypL-0h9O-AptmzpGperJG/CN",
-    "verified_pdf_url": "https://qks.shufe.edu.cn/J/PDFFullDown/A20260909?lang=cn",
+    "article_url": "https://wjgl.sufe.edu.cn/J/CJYJ/Article/Details/pgbFuTsz-vRzo-GypL-0h9O-AptmzpGperJG",
+    "verified_pdf_url": "https://qks.sufe.edu.cn/J/PDFFull/pgbFuTsz-vRzo-GypL-0h9O-AptmzpGperJG.pdf",
     "doi": "10.16538/j.cnki.jfe.20260611.202",
     "expected_pages": 15,
-    "required": true
+    "required": true,
+    "approved_pdf_hosts": [
+      "qks.sufe.edu.cn"
+    ]
   },
   {
     "key": "ecnu_supply_chain_resilience",

@@ -32,3 +32,11 @@ This repository gathers **public bibliographic metadata**. It does not make scho
 - `data/chinese_seen.json` and `data/latest.json` must be committed together by the scan Action; editorial/HTML indexing gaps must be listed for daily independent research.
 
 - Treat mixed_links as partial; current-issue snapshots retain parsed metadata, not verified link reachability. Never promote historical/unbound audit rows to normal incremental candidates. Do not update article-success time for issue-only responses. Add DOI and canonical stable article URL aliases without clearing the prior ledger. Stage 3 differentiates prefilter passes, new delivery, historical backfill and incomplete coverage.
+
+
+## Stage-2/3 source and backfill contract (2026-11-19)
+- For 管理世界/金融研究, use immutable independent trusted URLs only. `www.cqvip.com` is an index, not the publisher, and a verified year/issue or `index_claimed_paper_count` is **never** an article link or publication date.
+- Preserve each `source_attempts` diagnostic, including when every source fails. Never downgrade TLS verification or treat DNS/timeout as no-paper evidence. Do not replace current verified source with a regressed issue.
+- `catalog_only` can update last observed *issue* but cannot refresh last article-success time or invent an article identity.
+- When article-detail links first recover on the SAME issue after only issue-level baseline, put those audit leads under `chinese_historical_backfill_leads`; keep `chinese_new_candidates` unchanged and `published_at=null/date_verified=false`. Do not silence the lead, falsely date it, or turn an entire historical issue into daily new papers.
+- Test fixtures are not production proof. Require exact head SHA, real action run, committed latest JSON, and independently check the details before reporting article-level coverage. Stage-3 cross-source DOI/URL identities must preserve the existing issued/emitted ledger.

@@ -15,9 +15,9 @@
       "自动化发展如何影响收入分配水平扩张和垂直进步的技术分解"
     ],
     "baselined": true,
-    "last_success_at": "2026-11-19T13:11:31.567328+00:00",
+    "last_success_at": "2026-11-19T13:41:20.753965+00:00",
     "rss_baselined": false,
-    "last_issue_observed_at": "2026-11-19T13:11:31.567328+00:00",
+    "last_issue_observed_at": "2026-11-19T13:41:20.753965+00:00",
     "last_article_issue": "2026-09"
   },
   "china_industrial": {
@@ -34,9 +34,9 @@
       "金融科技创新如何赋能银行普惠金融来自小微企业创业的证据"
     ],
     "baselined": true,
-    "last_success_at": "2026-11-19T13:11:31.567328+00:00",
+    "last_success_at": "2026-11-19T13:41:20.753965+00:00",
     "rss_baselined": false,
-    "last_issue_observed_at": "2026-11-19T13:11:31.567328+00:00",
+    "last_issue_observed_at": "2026-11-19T13:41:20.753965+00:00",
     "last_article_issue": "2026-08"
   },
   "management_world": {
@@ -45,7 +45,7 @@
     "baselined": true,
     "last_success_at": "2026-11-15T07:33:20.207643+00:00",
     "rss_baselined": false,
-    "last_issue_observed_at": "2026-11-19T13:11:31.567328+00:00"
+    "last_issue_observed_at": "2026-11-19T13:41:20.753965+00:00"
   },
   "world_economy": {
     "issue": "2026-11",
@@ -72,9 +72,9 @@
       "研发税收激励与企业数字资本深化"
     ],
     "baselined": true,
-    "last_success_at": "2026-11-19T13:11:31.567328+00:00",
+    "last_success_at": "2026-11-19T13:41:20.753965+00:00",
     "rss_baselined": false,
-    "last_issue_observed_at": "2026-11-19T13:11:31.567328+00:00",
+    "last_issue_observed_at": "2026-11-19T13:41:20.753965+00:00",
     "last_article_issue": "2026-11"
   },
   "finance_economics": {
@@ -129,7 +129,7 @@
     "baselined": true,
     "last_success_at": "2026-11-19T13:11:31.567328+00:00",
     "rss_baselined": false,
-    "last_issue_observed_at": "2026-11-19T13:11:31.567328+00:00",
+    "last_issue_observed_at": "2026-11-19T13:41:20.753965+00:00",
     "last_article_issue": "2026-09"
   },
   "quant_economics": {
@@ -190,18 +190,42 @@
       "需求引致增长三大结构效应的时空演化"
     ],
     "baselined": true,
-    "last_success_at": "2026-11-19T13:11:31.567328+00:00",
+    "last_success_at": "2026-11-19T13:41:20.753965+00:00",
     "rss_baselined": false,
-    "last_issue_observed_at": "2026-11-19T13:11:31.567328+00:00",
+    "last_issue_observed_at": "2026-11-19T13:41:20.753965+00:00",
     "last_article_issue": "2026-10"
   },
   "financial_research": {
     "issue": "2026-10",
-    "articles": [],
+    "articles": [
+      "url:www.jryj.org.cn/CN/abstract/abstract1662.shtml",
+      "url:www.jryj.org.cn/CN/abstract/abstract1663.shtml",
+      "url:www.jryj.org.cn/CN/abstract/abstract1664.shtml",
+      "url:www.jryj.org.cn/CN/abstract/abstract1665.shtml",
+      "url:www.jryj.org.cn/CN/abstract/abstract1666.shtml",
+      "url:www.jryj.org.cn/CN/abstract/abstract1667.shtml",
+      "url:www.jryj.org.cn/CN/abstract/abstract1668.shtml",
+      "url:www.jryj.org.cn/CN/abstract/abstract1669.shtml",
+      "url:www.jryj.org.cn/CN/abstract/abstract1670.shtml",
+      "url:www.jryj.org.cn/CN/abstract/abstract1671.shtml",
+      "url:www.jryj.org.cn/CN/abstract/abstract1672.shtml",
+      "中国企业价格加成和劳动收入份额基于非中性技术进步视角",
+      "企业主动披露违规的短期溢出效应研究来自同行企业信息披露改善的经验证据",
+      "公共数据开放有助于破解银行业小微企业贷款三元悖论难题吗",
+      "分化之谜绿色信贷纳入mpa考核如何影响工业企业风险承担能力",
+      "地缘政治风险跨境供应链与中国企业债券信用利差",
+      "外贸下乡自贸试验区农村劳动力增收效应的空间断点研究",
+      "市场化退市改革中的价格压力机制研究基于一元退市磁吸效应的微观证据",
+      "数据共享与企业创新来自用户数字足迹的证据",
+      "股权结构的流动性冲击敞口如何影响债券信用利差基于不确定性风险和治理效应视角的检验",
+      "贸易冲突下企业提前布局战略性新兴产业的韧性效应基于美国对华出口管制的场景",
+      "银行资产负债结构放贷能力与货币政策传导效果基于政府债券增持的视角"
+    ],
     "baselined": true,
-    "last_success_at": "2026-11-16T02:02:24.413024+00:00",
+    "last_success_at": "2026-11-19T13:41:20.753965+00:00",
     "rss_baselined": false,
-    "last_issue_observed_at": "2026-11-19T13:11:31.567328+00:00"
+    "last_issue_observed_at": "2026-11-19T13:41:20.753965+00:00",
+    "last_article_issue": "2026-10"
   },
   "international_trade": {
     "issue": "2026-10",
@@ -251,9 +275,9 @@
       "连接广度与通行深度贸易协定网络中心度对全球价值链参与韧性的影响"
     ],
     "baselined": true,
-    "last_success_at": "2026-11-19T13:11:31.567328+00:00",
+    "last_success_at": "2026-11-19T13:41:20.753965+00:00",
     "rss_baselined": false,
-    "last_issue_observed_at": "2026-11-19T13:11:31.567328+00:00",
+    "last_issue_observed_at": "2026-11-19T13:41:20.753965+00:00",
     "last_article_issue": "2026-10"
   },
   "world_economy_studies": {
@@ -318,9 +342,9 @@
       "逆向知识转移与企业出口韧性基于母子公司专利文本语义匹配的经验证据"
     ],
     "baselined": true,
-    "last_success_at": "2026-11-19T13:11:31.567328+00:00",
+    "last_success_at": "2026-11-19T13:41:20.753965+00:00",
     "rss_baselined": false,
-    "last_issue_observed_at": "2026-11-19T13:11:31.567328+00:00",
+    "last_issue_observed_at": "2026-11-19T13:41:20.753965+00:00",
     "last_article_issue": "2026-11"
   }
 }

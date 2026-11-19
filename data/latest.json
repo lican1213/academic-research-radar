@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-19T14:05:48.309441+00:00",
+  "generated_at": "2026-11-19T14:12:54.806703+00:00",
   "status": "ok",
   "since": "2026-11-16",
   "source_status": {
@@ -42,7 +42,7 @@
           "journal": "经济研究",
           "source_kind": "catalog",
           "url": "https://ncpssd.org/journal/details.aspx?gch=95645X",
-          "checked_at": "2026-11-19T14:05:48.309441+00:00",
+          "checked_at": "2026-11-19T14:12:54.806703+00:00",
           "status": "ok",
           "issue": "2026-09",
           "issue_date": null,
@@ -51,7 +51,7 @@
           "article_snapshot": [
             {
               "title": "加快构建中国特色社会主义政治经济学自主知识体系",
-              "url": "https://ncpssd.org/Literature/articleinfo?id=JJYJ2026009001&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+              "url": "https://ncpssd.org/Literature/articleinfo?id=JJYJ2026009001&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
               "url_scope": "article_detail",
               "issue": "2026-09",
               "authors": "李建平[1,2];叶琪[1,2]",
@@ -65,7 +65,7 @@
             },
             {
               "title": "机器人应用与制造业企业生产链延伸——基于稳链强链视角的考察",
-              "url": "https://ncpssd.org/Literature/articleinfo?id=JJYJ2026009002&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+              "url": "https://ncpssd.org/Literature/articleinfo?id=JJYJ2026009002&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
               "url_scope": "article_detail",
               "issue": "2026-09",
               "authors": "吴腊梅[1,2];彭水军[3];张亮[4,5];周上尧[4,5]",
@@ -79,7 +79,7 @@
             },
             {
               "title": "制造企业数字技术提升过程中补贴退坡与市场需求的均衡分析",
-              "url": "https://ncpssd.org/Literature/articleinfo?id=JJYJ2026009003&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+              "url": "https://ncpssd.org/Literature/articleinfo?id=JJYJ2026009003&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
               "url_scope": "article_detail",
               "issue": "2026-09",
               "authors": "王玉燕[1];林飞[2];申亮[2]",
@@ -93,7 +93,7 @@
             },
             {
               "title": "个人情绪传播与平台信息治理",
-              "url": "https://ncpssd.org/Literature/articleinfo?id=JJYJ2026009004&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+              "url": "https://ncpssd.org/Literature/articleinfo?id=JJYJ2026009004&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
               "url_scope": "article_detail",
               "issue": "2026-09",
               "authors": "柯荣住[1];黄佳琦[1]",
@@ -107,7 +107,7 @@
             },
             {
               "title": "供给侧结构性改革的扩内需效应——基于信息消费示范城市建设的分析",
-              "url": "https://ncpssd.org/Literature/articleinfo?id=JJYJ2026009005&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+              "url": "https://ncpssd.org/Literature/articleinfo?id=JJYJ2026009005&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
               "url_scope": "article_detail",
               "issue": "2026-09",
               "authors": "彭冲[1,2];孙伟增[3];易行健[4]",
@@ -121,7 +121,7 @@
             },
             {
               "title": "中国对外基础设施投资的经济效应与微观作用机制——来自非洲发展走廊项目的证据",
-              "url": "https://ncpssd.org/Literature/articleinfo?id=JJYJ2026009006&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+              "url": "https://ncpssd.org/Literature/articleinfo?id=JJYJ2026009006&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
               "url_scope": "article_detail",
               "issue": "2026-09",
               "authors": "李涵[1];周倩[2];李超[3]",
@@ -135,7 +135,7 @@
             },
             {
               "title": "数据要素冲击、信息摩擦与供应链关系建立",
-              "url": "https://ncpssd.org/Literature/articleinfo?id=JJYJ2026009007&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+              "url": "https://ncpssd.org/Literature/articleinfo?id=JJYJ2026009007&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
               "url_scope": "article_detail",
               "issue": "2026-09",
               "authors": "施炳展[1,2];李启正[3];熊治[4]",
@@ -149,7 +149,7 @@
             },
             {
               "title": "中国微观增值税税负测度与结构特征",
-              "url": "https://ncpssd.org/Literature/articleinfo?id=JJYJ2026009008&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+              "url": "https://ncpssd.org/Literature/articleinfo?id=JJYJ2026009008&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
               "url_scope": "article_detail",
               "issue": "2026-09",
               "authors": "刘志阔[1];汪殊逸[1]",
@@ -163,7 +163,7 @@
             },
             {
               "title": "地方政府股权资产测算与财政可持续性评估——基于复杂股权网络的穿透识别",
-              "url": "https://ncpssd.org/Literature/articleinfo?id=JJYJ2026009009&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+              "url": "https://ncpssd.org/Literature/articleinfo?id=JJYJ2026009009&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
               "url_scope": "article_detail",
               "issue": "2026-09",
               "authors": "李戎[1,2];蔡彦皞[1];刘岩[3]",
@@ -177,7 +177,7 @@
             },
             {
               "title": "自动化发展如何影响收入分配：水平扩张和垂直进步的技术分解",
-              "url": "https://ncpssd.org/Literature/articleinfo?id=JJYJ2026009010&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+              "url": "https://ncpssd.org/Literature/articleinfo?id=JJYJ2026009010&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
               "url_scope": "article_detail",
               "issue": "2026-09",
               "authors": "叶智程[1];李鹏飞[1,2];刘思远[1]",
@@ -191,7 +191,7 @@
             },
             {
               "title": "新型农业经营主体与共同富裕",
-              "url": "https://ncpssd.org/Literature/articleinfo?id=JJYJ2026009011&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+              "url": "https://ncpssd.org/Literature/articleinfo?id=JJYJ2026009011&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
               "url_scope": "article_detail",
               "issue": "2026-09",
               "authors": "王悦静[1];张红[1];杨宇超[1]",
@@ -218,7 +218,7 @@
           "journal": "中国工业经济",
           "source_kind": "catalog",
           "url": "https://ncpssd.org/journal/details.aspx?gch=93800A",
-          "checked_at": "2026-11-19T14:05:48.309441+00:00",
+          "checked_at": "2026-11-19T14:12:54.806703+00:00",
           "status": "ok",
           "issue": "2026-08",
           "issue_date": null,
@@ -227,7 +227,7 @@
           "article_snapshot": [
             {
               "title": "世界大变局下的中国产业链韧性",
-              "url": "https://ncpssd.org/Literature/articleinfo?id=ZGGYJJ2026008002&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+              "url": "https://ncpssd.org/Literature/articleinfo?id=ZGGYJJ2026008002&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
               "url_scope": "article_detail",
               "issue": "2026-08",
               "authors": "张辉[1];王桂军[2]",
@@ -241,7 +241,7 @@
             },
             {
               "title": "中国经济数字化的广度、深度测算及其增长效应",
-              "url": "https://ncpssd.org/Literature/articleinfo?id=ZGGYJJ2026008003&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+              "url": "https://ncpssd.org/Literature/articleinfo?id=ZGGYJJ2026008003&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
               "url_scope": "article_detail",
               "issue": "2026-08",
               "authors": "关会娟[1];许宪春[2];徐丽笑[3]",
@@ -255,7 +255,7 @@
             },
             {
               "title": "人工智能技术创新与贸易比较优势跃迁",
-              "url": "https://ncpssd.org/Literature/articleinfo?id=ZGGYJJ2026008004&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+              "url": "https://ncpssd.org/Literature/articleinfo?id=ZGGYJJ2026008004&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
               "url_scope": "article_detail",
               "issue": "2026-08",
               "authors": "刘啟仁[1];蓝慧霞[1];冯桂媚[1];梁婷[1]",
@@ -269,7 +269,7 @@
             },
             {
               "title": "服务业开放与企业进口供应链结构调整——基于核心与非核心中间品分层采购的证据",
-              "url": "https://ncpssd.org/Literature/articleinfo?id=ZGGYJJ2026008005&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+              "url": "https://ncpssd.org/Literature/articleinfo?id=ZGGYJJ2026008005&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
               "url_scope": "article_detail",
               "issue": "2026-08",
               "authors": "顾乃华[1];邓石军[2]",
@@ -283,7 +283,7 @@
             },
             {
               "title": "劳动者增收与企业出口调整——基于用工成本群聚效应的证据",
-              "url": "https://ncpssd.org/Literature/articleinfo?id=ZGGYJJ2026008006&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+              "url": "https://ncpssd.org/Literature/articleinfo?id=ZGGYJJ2026008006&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
               "url_scope": "article_detail",
               "issue": "2026-08",
               "authors": "包群[1];樊军锋[1]",
@@ -297,7 +297,7 @@
             },
             {
               "title": "金融科技创新如何赋能银行普惠金融——来自小微企业创业的证据",
-              "url": "https://ncpssd.org/Literature/articleinfo?id=ZGGYJJ2026008007&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+              "url": "https://ncpssd.org/Literature/articleinfo?id=ZGGYJJ2026008007&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
               "url_scope": "article_detail",
               "issue": "2026-08",
               "authors": "张博[1];崔世豪[1];张景静[2]",
@@ -311,7 +311,7 @@
             },
             {
               "title": "政府采购全流程电子化与企业跨区域竞争",
-              "url": "https://ncpssd.org/Literature/articleinfo?id=ZGGYJJ2026008008&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+              "url": "https://ncpssd.org/Literature/articleinfo?id=ZGGYJJ2026008008&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
               "url_scope": "article_detail",
               "issue": "2026-08",
               "authors": "王伟同[1];席胜杰[1];刘冲[2];李秀华[3]",
@@ -325,7 +325,7 @@
             },
             {
               "title": "人工智能如何影响管理层角色演变",
-              "url": "https://ncpssd.org/Literature/articleinfo?id=ZGGYJJ2026008009&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+              "url": "https://ncpssd.org/Literature/articleinfo?id=ZGGYJJ2026008009&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
               "url_scope": "article_detail",
               "issue": "2026-08",
               "authors": "杨继东[1];王菲[1];魏冉[2]",
@@ -339,7 +339,7 @@
             },
             {
               "title": "数智链主驱动产业链韧性提升的路径解构：从节点突破到韧性生态",
-              "url": "https://ncpssd.org/Literature/articleinfo?id=ZGGYJJ2026008010&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+              "url": "https://ncpssd.org/Literature/articleinfo?id=ZGGYJJ2026008010&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
               "url_scope": "article_detail",
               "issue": "2026-08",
               "authors": "刘友金[1];姜海锋[1];程伟华[2]",
@@ -366,7 +366,7 @@
           "journal": "管理世界",
           "source_kind": "catalog",
           "url": "https://m.ncpssd.cn/journal/details?gch=95499X&langType=1&nav=1",
-          "checked_at": "2026-11-19T14:05:48.309441+00:00",
+          "checked_at": "2026-11-19T14:12:54.806703+00:00",
           "status": "ok",
           "issue": "2026-11",
           "issue_date": null,
@@ -375,7 +375,7 @@
           "article_snapshot": [
             {
               "title": "面向国家重大战略需求的有组织科研管理经验探索——以管理科学为例",
-              "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011001&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+              "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011001&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
               "toc_online_at": null,
               "issue": "2026-11",
               "url_scope": "article_detail",
@@ -387,7 +387,7 @@
             },
             {
               "title": "中国式现代化与中国经济管理自主知识体系建构",
-              "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011002&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+              "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011002&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
               "toc_online_at": null,
               "issue": "2026-11",
               "url_scope": "article_detail",
@@ -399,7 +399,7 @@
             },
             {
               "title": "中国省以下增值税分税的模式与成因研究",
-              "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011003&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+              "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011003&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
               "toc_online_at": null,
               "issue": "2026-11",
               "url_scope": "article_detail",
@@ -411,7 +411,7 @@
             },
             {
               "title": "中国制造业企业全要素生产率的估计改进与驱动力分析",
-              "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011004&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+              "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011004&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
               "toc_online_at": null,
               "issue": "2026-11",
               "url_scope": "article_detail",
@@ -423,7 +423,7 @@
             },
             {
               "title": "自愿参保原则与城职保扩面困境：再分配效应对灵活就业人员参保行为的影响",
-              "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011005&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+              "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011005&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
               "toc_online_at": null,
               "issue": "2026-11",
               "url_scope": "article_detail",
@@ -435,7 +435,7 @@
             },
             {
               "title": "服务业深化、通缩风险与货币政策的非对称效应",
-              "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011006&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+              "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011006&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
               "toc_online_at": null,
               "issue": "2026-11",
               "url_scope": "article_detail",
@@ -447,7 +447,7 @@
             },
             {
               "title": "货币政策冲击、央行沟通与企业宏观经济感知",
-              "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011007&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+              "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011007&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
               "toc_online_at": null,
               "issue": "2026-11",
               "url_scope": "article_detail",
@@ -459,7 +459,7 @@
             },
             {
               "title": "适度规模经营：提升粮食全要素生产率的中国方案",
-              "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011008&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+              "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011008&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
               "toc_online_at": null,
               "issue": "2026-11",
               "url_scope": "article_detail",
@@ -471,7 +471,7 @@
             },
             {
               "title": "高标准农田建设、资本深化与粮食增产",
-              "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011009&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+              "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011009&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
               "toc_online_at": null,
               "issue": "2026-11",
               "url_scope": "article_detail",
@@ -483,7 +483,7 @@
             },
             {
               "title": "数智化背景下人与智能体混合劳动力研究——基于角色融合视角",
-              "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011010&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+              "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011010&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
               "toc_online_at": null,
               "issue": "2026-11",
               "url_scope": "article_detail",
@@ -495,7 +495,7 @@
             },
             {
               "title": "新创高技术企业新产品如何赢得客户信任？——基于天通瑞宏的案例研究",
-              "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011011&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+              "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011011&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
               "toc_online_at": null,
               "issue": "2026-11",
               "url_scope": "article_detail",
@@ -507,7 +507,7 @@
             },
             {
               "title": "重塑分析式营销的生成式人工智能营销框架",
-              "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011012&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+              "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011012&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
               "toc_online_at": null,
               "issue": "2026-11",
               "url_scope": "article_detail",
@@ -519,7 +519,7 @@
             },
             {
               "title": "翻译视角下地方非遗赋能区域经济模式研究——评《非物质文化遗产的产业化与多维创新发展路径》",
-              "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011013&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+              "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011013&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
               "toc_online_at": null,
               "issue": "2026-11",
               "url_scope": "article_detail",
@@ -531,7 +531,7 @@
             },
             {
               "title": "数字化时代红色旅游资源管理与思政育人融合发展——评《数字化赋能红色旅游资源与思政育人融合发展》",
-              "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011014&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+              "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011014&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
               "toc_online_at": null,
               "issue": "2026-11",
               "url_scope": "article_detail",
@@ -543,7 +543,7 @@
             },
             {
               "title": "数字经济核心产业创新生态系统的结构、共生与效率：基于产业组织理论视角——评《数字经济核心产业创新生态系统研究》",
-              "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011015&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+              "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011015&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
               "toc_online_at": null,
               "issue": "2026-11",
               "url_scope": "article_detail",
@@ -555,7 +555,7 @@
             },
             {
               "title": "面向国家重大战略需求的有组织科研管理经验探索——以管理科学为例",
-              "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011001&synUpdateType=&type=journalArticle&nav=1&langType=1",
+              "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011001&type=journalArticle&nav=1&langType=1",
               "toc_online_at": null,
               "issue": "2026-11",
               "url_scope": "article_detail",
@@ -567,7 +567,7 @@
             },
             {
               "title": "中国式现代化与中国经济管理自主知识体系建构",
-              "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011002&synUpdateType=&type=journalArticle&nav=1&langType=1",
+              "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011002&type=journalArticle&nav=1&langType=1",
               "toc_online_at": null,
               "issue": "2026-11",
               "url_scope": "article_detail",
@@ -579,7 +579,7 @@
             },
             {
               "title": "中国省以下增值税分税的模式与成因研究",
-              "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011003&synUpdateType=&type=journalArticle&nav=1&langType=1",
+              "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011003&type=journalArticle&nav=1&langType=1",
               "toc_online_at": null,
               "issue": "2026-11",
               "url_scope": "article_detail",
@@ -591,7 +591,7 @@
             },
             {
               "title": "中国制造业企业全要素生产率的估计改进与驱动力分析",
-              "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011004&synUpdateType=&type=journalArticle&nav=1&langType=1",
+              "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011004&type=journalArticle&nav=1&langType=1",
               "toc_online_at": null,
               "issue": "2026-11",
               "url_scope": "article_detail",
@@ -603,7 +603,7 @@
             },
             {
               "title": "自愿参保原则与城职保扩面困境：再分配效应对灵活就业人员参保行为的影响",
-              "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011005&synUpdateType=&type=journalArticle&nav=1&langType=1",
+              "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011005&type=journalArticle&nav=1&langType=1",
               "toc_online_at": null,
               "issue": "2026-11",
               "url_scope": "article_detail",
@@ -615,7 +615,7 @@
             },
             {
               "title": "服务业深化、通缩风险与货币政策的非对称效应",
-              "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011006&synUpdateType=&type=journalArticle&nav=1&langType=1",
+              "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011006&type=journalArticle&nav=1&langType=1",
               "toc_online_at": null,
               "issue": "2026-11",
               "url_scope": "article_detail",
@@ -627,7 +627,7 @@
             },
             {
               "title": "货币政策冲击、央行沟通与企业宏观经济感知",
-              "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011007&synUpdateType=&type=journalArticle&nav=1&langType=1",
+              "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011007&type=journalArticle&nav=1&langType=1",
               "toc_online_at": null,
               "issue": "2026-11",
               "url_scope": "article_detail",
@@ -639,7 +639,7 @@
             },
             {
               "title": "适度规模经营：提升粮食全要素生产率的中国方案",
-              "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011008&synUpdateType=&type=journalArticle&nav=1&langType=1",
+              "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011008&type=journalArticle&nav=1&langType=1",
               "toc_online_at": null,
               "issue": "2026-11",
               "url_scope": "article_detail",
@@ -651,7 +651,7 @@
             },
             {
               "title": "高标准农田建设、资本深化与粮食增产",
-              "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011009&synUpdateType=&type=journalArticle&nav=1&langType=1",
+              "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011009&type=journalArticle&nav=1&langType=1",
               "toc_online_at": null,
               "issue": "2026-11",
               "url_scope": "article_detail",
@@ -663,7 +663,7 @@
             },
             {
               "title": "数智化背景下人与智能体混合劳动力研究——基于角色融合视角",
-              "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011010&synUpdateType=&type=journalArticle&nav=1&langType=1",
+              "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011010&type=journalArticle&nav=1&langType=1",
               "toc_online_at": null,
               "issue": "2026-11",
               "url_scope": "article_detail",
@@ -675,7 +675,7 @@
             },
             {
               "title": "新创高技术企业新产品如何赢得客户信任？——基于天通瑞宏的案例研究",
-              "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011011&synUpdateType=&type=journalArticle&nav=1&langType=1",
+              "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011011&type=journalArticle&nav=1&langType=1",
               "toc_online_at": null,
               "issue": "2026-11",
               "url_scope": "article_detail",
@@ -687,7 +687,7 @@
             },
             {
               "title": "重塑分析式营销的生成式人工智能营销框架",
-              "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011012&synUpdateType=&type=journalArticle&nav=1&langType=1",
+              "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011012&type=journalArticle&nav=1&langType=1",
               "toc_online_at": null,
               "issue": "2026-11",
               "url_scope": "article_detail",
@@ -699,7 +699,7 @@
             },
             {
               "title": "翻译视角下地方非遗赋能区域经济模式研究——评《非物质文化遗产的产业化与多维创新发展路径》",
-              "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011013&synUpdateType=&type=journalArticle&nav=1&langType=1",
+              "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011013&type=journalArticle&nav=1&langType=1",
               "toc_online_at": null,
               "issue": "2026-11",
               "url_scope": "article_detail",
@@ -711,7 +711,7 @@
             },
             {
               "title": "数字化时代红色旅游资源管理与思政育人融合发展——评《数字化赋能红色旅游资源与思政育人融合发展》",
-              "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011014&synUpdateType=&type=journalArticle&nav=1&langType=1",
+              "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011014&type=journalArticle&nav=1&langType=1",
               "toc_online_at": null,
               "issue": "2026-11",
               "url_scope": "article_detail",
@@ -723,7 +723,7 @@
             },
             {
               "title": "数字经济核心产业创新生态系统的结构、共生与效率：基于产业组织理论视角——评《数字经济核心产业创新生态系统研究》",
-              "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011015&synUpdateType=&type=journalArticle&nav=1&langType=1",
+              "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011015&type=journalArticle&nav=1&langType=1",
               "toc_online_at": null,
               "issue": "2026-11",
               "url_scope": "article_detail",
@@ -769,7 +769,7 @@
           "journal": "世界经济",
           "source_kind": "publisher",
           "url": "https://sjjj.magtech.com.cn/CN/home",
-          "checked_at": "2026-11-19T14:05:48.309441+00:00",
+          "checked_at": "2026-11-19T14:12:54.806703+00:00",
           "status": "ok",
           "issue": "2026-11",
           "issue_date": "2026-11-10",
@@ -875,7 +875,7 @@
           "journal": "数量经济技术经济研究",
           "source_kind": "publisher",
           "url": "https://www.jqte.net/sljjjsjjyj/ch/index.aspx",
-          "checked_at": "2026-11-19T14:05:48.309441+00:00",
+          "checked_at": "2026-11-19T14:12:54.806703+00:00",
           "status": "ok",
           "issue": "2026-10",
           "issue_date": null,
@@ -1017,7 +1017,7 @@
           "journal": "财经研究",
           "source_kind": "publisher",
           "url": "https://qks.sufe.edu.cn/J/CJYJ/Article/CurrentIssue/CN",
-          "checked_at": "2026-11-19T14:05:48.309441+00:00",
+          "checked_at": "2026-11-19T14:12:54.806703+00:00",
           "status": "ok",
           "issue": "2026-09",
           "issue_date": null,
@@ -1171,7 +1171,7 @@
           "journal": "金融研究",
           "source_kind": "publisher",
           "url": "http://www.jryj.org.cn/CN/1002-7246/current.shtml",
-          "checked_at": "2026-11-19T14:05:48.309441+00:00",
+          "checked_at": "2026-11-19T14:12:54.806703+00:00",
           "status": "ok",
           "issue": "2026-10",
           "issue_date": "2026-10-25",
@@ -1334,7 +1334,7 @@
           "journal": "国际贸易问题",
           "source_kind": "publisher",
           "url": "https://gjmw.cbpt.cnki.net/portal/journal/portal/client/paper_list/type_benqi",
-          "checked_at": "2026-11-19T14:05:48.309441+00:00",
+          "checked_at": "2026-11-19T14:12:54.806703+00:00",
           "status": "ok",
           "issue": "2026-10",
           "issue_date": null,
@@ -1476,7 +1476,7 @@
           "journal": "世界经济研究",
           "source_kind": "publisher",
           "url": "https://jing.cbpt.cnki.net/portal/journal/portal/client/paper_list/type_benqi",
-          "checked_at": "2026-11-19T14:05:48.309441+00:00",
+          "checked_at": "2026-11-19T14:12:54.806703+00:00",
           "status": "ok",
           "issue": "2026-11",
           "issue_date": null,
@@ -1612,7 +1612,7 @@
       }
     }
   },
-  "scanned_candidates": 374,
+  "scanned_candidates": 375,
   "prefilter_pass_count": 11,
   "prefilter_diagnostics": [
     {
@@ -1671,7 +1671,7 @@
       "journal": "经济研究",
       "source_kind": "catalog",
       "url": "https://ncpssd.org/journal/details.aspx?gch=95645X",
-      "checked_at": "2026-11-19T14:05:48.309441+00:00",
+      "checked_at": "2026-11-19T14:12:54.806703+00:00",
       "status": "ok",
       "issue": "2026-09",
       "issue_date": null,
@@ -1680,7 +1680,7 @@
       "article_snapshot": [
         {
           "title": "加快构建中国特色社会主义政治经济学自主知识体系",
-          "url": "https://ncpssd.org/Literature/articleinfo?id=JJYJ2026009001&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+          "url": "https://ncpssd.org/Literature/articleinfo?id=JJYJ2026009001&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
           "url_scope": "article_detail",
           "issue": "2026-09",
           "authors": "李建平[1,2];叶琪[1,2]",
@@ -1694,7 +1694,7 @@
         },
         {
           "title": "机器人应用与制造业企业生产链延伸——基于稳链强链视角的考察",
-          "url": "https://ncpssd.org/Literature/articleinfo?id=JJYJ2026009002&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+          "url": "https://ncpssd.org/Literature/articleinfo?id=JJYJ2026009002&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
           "url_scope": "article_detail",
           "issue": "2026-09",
           "authors": "吴腊梅[1,2];彭水军[3];张亮[4,5];周上尧[4,5]",
@@ -1708,7 +1708,7 @@
         },
         {
           "title": "制造企业数字技术提升过程中补贴退坡与市场需求的均衡分析",
-          "url": "https://ncpssd.org/Literature/articleinfo?id=JJYJ2026009003&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+          "url": "https://ncpssd.org/Literature/articleinfo?id=JJYJ2026009003&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
           "url_scope": "article_detail",
           "issue": "2026-09",
           "authors": "王玉燕[1];林飞[2];申亮[2]",
@@ -1722,7 +1722,7 @@
         },
         {
           "title": "个人情绪传播与平台信息治理",
-          "url": "https://ncpssd.org/Literature/articleinfo?id=JJYJ2026009004&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+          "url": "https://ncpssd.org/Literature/articleinfo?id=JJYJ2026009004&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
           "url_scope": "article_detail",
           "issue": "2026-09",
           "authors": "柯荣住[1];黄佳琦[1]",
@@ -1736,7 +1736,7 @@
         },
         {
           "title": "供给侧结构性改革的扩内需效应——基于信息消费示范城市建设的分析",
-          "url": "https://ncpssd.org/Literature/articleinfo?id=JJYJ2026009005&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+          "url": "https://ncpssd.org/Literature/articleinfo?id=JJYJ2026009005&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
           "url_scope": "article_detail",
           "issue": "2026-09",
           "authors": "彭冲[1,2];孙伟增[3];易行健[4]",
@@ -1750,7 +1750,7 @@
         },
         {
           "title": "中国对外基础设施投资的经济效应与微观作用机制——来自非洲发展走廊项目的证据",
-          "url": "https://ncpssd.org/Literature/articleinfo?id=JJYJ2026009006&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+          "url": "https://ncpssd.org/Literature/articleinfo?id=JJYJ2026009006&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
           "url_scope": "article_detail",
           "issue": "2026-09",
           "authors": "李涵[1];周倩[2];李超[3]",
@@ -1764,7 +1764,7 @@
         },
         {
           "title": "数据要素冲击、信息摩擦与供应链关系建立",
-          "url": "https://ncpssd.org/Literature/articleinfo?id=JJYJ2026009007&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+          "url": "https://ncpssd.org/Literature/articleinfo?id=JJYJ2026009007&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
           "url_scope": "article_detail",
           "issue": "2026-09",
           "authors": "施炳展[1,2];李启正[3];熊治[4]",
@@ -1778,7 +1778,7 @@
         },
         {
           "title": "中国微观增值税税负测度与结构特征",
-          "url": "https://ncpssd.org/Literature/articleinfo?id=JJYJ2026009008&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+          "url": "https://ncpssd.org/Literature/articleinfo?id=JJYJ2026009008&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
           "url_scope": "article_detail",
           "issue": "2026-09",
           "authors": "刘志阔[1];汪殊逸[1]",
@@ -1792,7 +1792,7 @@
         },
         {
           "title": "地方政府股权资产测算与财政可持续性评估——基于复杂股权网络的穿透识别",
-          "url": "https://ncpssd.org/Literature/articleinfo?id=JJYJ2026009009&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+          "url": "https://ncpssd.org/Literature/articleinfo?id=JJYJ2026009009&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
           "url_scope": "article_detail",
           "issue": "2026-09",
           "authors": "李戎[1,2];蔡彦皞[1];刘岩[3]",
@@ -1806,7 +1806,7 @@
         },
         {
           "title": "自动化发展如何影响收入分配：水平扩张和垂直进步的技术分解",
-          "url": "https://ncpssd.org/Literature/articleinfo?id=JJYJ2026009010&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+          "url": "https://ncpssd.org/Literature/articleinfo?id=JJYJ2026009010&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
           "url_scope": "article_detail",
           "issue": "2026-09",
           "authors": "叶智程[1];李鹏飞[1,2];刘思远[1]",
@@ -1820,7 +1820,7 @@
         },
         {
           "title": "新型农业经营主体与共同富裕",
-          "url": "https://ncpssd.org/Literature/articleinfo?id=JJYJ2026009011&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+          "url": "https://ncpssd.org/Literature/articleinfo?id=JJYJ2026009011&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
           "url_scope": "article_detail",
           "issue": "2026-09",
           "authors": "王悦静[1];张红[1];杨宇超[1]",
@@ -1847,7 +1847,7 @@
       "journal": "中国工业经济",
       "source_kind": "catalog",
       "url": "https://ncpssd.org/journal/details.aspx?gch=93800A",
-      "checked_at": "2026-11-19T14:05:48.309441+00:00",
+      "checked_at": "2026-11-19T14:12:54.806703+00:00",
       "status": "ok",
       "issue": "2026-08",
       "issue_date": null,
@@ -1856,7 +1856,7 @@
       "article_snapshot": [
         {
           "title": "世界大变局下的中国产业链韧性",
-          "url": "https://ncpssd.org/Literature/articleinfo?id=ZGGYJJ2026008002&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+          "url": "https://ncpssd.org/Literature/articleinfo?id=ZGGYJJ2026008002&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
           "url_scope": "article_detail",
           "issue": "2026-08",
           "authors": "张辉[1];王桂军[2]",
@@ -1870,7 +1870,7 @@
         },
         {
           "title": "中国经济数字化的广度、深度测算及其增长效应",
-          "url": "https://ncpssd.org/Literature/articleinfo?id=ZGGYJJ2026008003&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+          "url": "https://ncpssd.org/Literature/articleinfo?id=ZGGYJJ2026008003&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
           "url_scope": "article_detail",
           "issue": "2026-08",
           "authors": "关会娟[1];许宪春[2];徐丽笑[3]",
@@ -1884,7 +1884,7 @@
         },
         {
           "title": "人工智能技术创新与贸易比较优势跃迁",
-          "url": "https://ncpssd.org/Literature/articleinfo?id=ZGGYJJ2026008004&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+          "url": "https://ncpssd.org/Literature/articleinfo?id=ZGGYJJ2026008004&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
           "url_scope": "article_detail",
           "issue": "2026-08",
           "authors": "刘啟仁[1];蓝慧霞[1];冯桂媚[1];梁婷[1]",
@@ -1898,7 +1898,7 @@
         },
         {
           "title": "服务业开放与企业进口供应链结构调整——基于核心与非核心中间品分层采购的证据",
-          "url": "https://ncpssd.org/Literature/articleinfo?id=ZGGYJJ2026008005&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+          "url": "https://ncpssd.org/Literature/articleinfo?id=ZGGYJJ2026008005&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
           "url_scope": "article_detail",
           "issue": "2026-08",
           "authors": "顾乃华[1];邓石军[2]",
@@ -1912,7 +1912,7 @@
         },
         {
           "title": "劳动者增收与企业出口调整——基于用工成本群聚效应的证据",
-          "url": "https://ncpssd.org/Literature/articleinfo?id=ZGGYJJ2026008006&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+          "url": "https://ncpssd.org/Literature/articleinfo?id=ZGGYJJ2026008006&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
           "url_scope": "article_detail",
           "issue": "2026-08",
           "authors": "包群[1];樊军锋[1]",
@@ -1926,7 +1926,7 @@
         },
         {
           "title": "金融科技创新如何赋能银行普惠金融——来自小微企业创业的证据",
-          "url": "https://ncpssd.org/Literature/articleinfo?id=ZGGYJJ2026008007&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+          "url": "https://ncpssd.org/Literature/articleinfo?id=ZGGYJJ2026008007&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
           "url_scope": "article_detail",
           "issue": "2026-08",
           "authors": "张博[1];崔世豪[1];张景静[2]",
@@ -1940,7 +1940,7 @@
         },
         {
           "title": "政府采购全流程电子化与企业跨区域竞争",
-          "url": "https://ncpssd.org/Literature/articleinfo?id=ZGGYJJ2026008008&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+          "url": "https://ncpssd.org/Literature/articleinfo?id=ZGGYJJ2026008008&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
           "url_scope": "article_detail",
           "issue": "2026-08",
           "authors": "王伟同[1];席胜杰[1];刘冲[2];李秀华[3]",
@@ -1954,7 +1954,7 @@
         },
         {
           "title": "人工智能如何影响管理层角色演变",
-          "url": "https://ncpssd.org/Literature/articleinfo?id=ZGGYJJ2026008009&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+          "url": "https://ncpssd.org/Literature/articleinfo?id=ZGGYJJ2026008009&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
           "url_scope": "article_detail",
           "issue": "2026-08",
           "authors": "杨继东[1];王菲[1];魏冉[2]",
@@ -1968,7 +1968,7 @@
         },
         {
           "title": "数智链主驱动产业链韧性提升的路径解构：从节点突破到韧性生态",
-          "url": "https://ncpssd.org/Literature/articleinfo?id=ZGGYJJ2026008010&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+          "url": "https://ncpssd.org/Literature/articleinfo?id=ZGGYJJ2026008010&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
           "url_scope": "article_detail",
           "issue": "2026-08",
           "authors": "刘友金[1];姜海锋[1];程伟华[2]",
@@ -1995,7 +1995,7 @@
       "journal": "管理世界",
       "source_kind": "catalog",
       "url": "https://m.ncpssd.cn/journal/details?gch=95499X&langType=1&nav=1",
-      "checked_at": "2026-11-19T14:05:48.309441+00:00",
+      "checked_at": "2026-11-19T14:12:54.806703+00:00",
       "status": "ok",
       "issue": "2026-11",
       "issue_date": null,
@@ -2004,7 +2004,7 @@
       "article_snapshot": [
         {
           "title": "面向国家重大战略需求的有组织科研管理经验探索——以管理科学为例",
-          "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011001&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+          "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011001&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
           "toc_online_at": null,
           "issue": "2026-11",
           "url_scope": "article_detail",
@@ -2016,7 +2016,7 @@
         },
         {
           "title": "中国式现代化与中国经济管理自主知识体系建构",
-          "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011002&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+          "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011002&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
           "toc_online_at": null,
           "issue": "2026-11",
           "url_scope": "article_detail",
@@ -2028,7 +2028,7 @@
         },
         {
           "title": "中国省以下增值税分税的模式与成因研究",
-          "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011003&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+          "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011003&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
           "toc_online_at": null,
           "issue": "2026-11",
           "url_scope": "article_detail",
@@ -2040,7 +2040,7 @@
         },
         {
           "title": "中国制造业企业全要素生产率的估计改进与驱动力分析",
-          "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011004&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+          "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011004&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
           "toc_online_at": null,
           "issue": "2026-11",
           "url_scope": "article_detail",
@@ -2052,7 +2052,7 @@
         },
         {
           "title": "自愿参保原则与城职保扩面困境：再分配效应对灵活就业人员参保行为的影响",
-          "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011005&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+          "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011005&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
           "toc_online_at": null,
           "issue": "2026-11",
           "url_scope": "article_detail",
@@ -2064,7 +2064,7 @@
         },
         {
           "title": "服务业深化、通缩风险与货币政策的非对称效应",
-          "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011006&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+          "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011006&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
           "toc_online_at": null,
           "issue": "2026-11",
           "url_scope": "article_detail",
@@ -2076,7 +2076,7 @@
         },
         {
           "title": "货币政策冲击、央行沟通与企业宏观经济感知",
-          "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011007&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+          "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011007&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
           "toc_online_at": null,
           "issue": "2026-11",
           "url_scope": "article_detail",
@@ -2088,7 +2088,7 @@
         },
         {
           "title": "适度规模经营：提升粮食全要素生产率的中国方案",
-          "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011008&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+          "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011008&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
           "toc_online_at": null,
           "issue": "2026-11",
           "url_scope": "article_detail",
@@ -2100,7 +2100,7 @@
         },
         {
           "title": "高标准农田建设、资本深化与粮食增产",
-          "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011009&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+          "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011009&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
           "toc_online_at": null,
           "issue": "2026-11",
           "url_scope": "article_detail",
@@ -2112,7 +2112,7 @@
         },
         {
           "title": "数智化背景下人与智能体混合劳动力研究——基于角色融合视角",
-          "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011010&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+          "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011010&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
           "toc_online_at": null,
           "issue": "2026-11",
           "url_scope": "article_detail",
@@ -2124,7 +2124,7 @@
         },
         {
           "title": "新创高技术企业新产品如何赢得客户信任？——基于天通瑞宏的案例研究",
-          "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011011&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+          "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011011&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
           "toc_online_at": null,
           "issue": "2026-11",
           "url_scope": "article_detail",
@@ -2136,7 +2136,7 @@
         },
         {
           "title": "重塑分析式营销的生成式人工智能营销框架",
-          "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011012&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+          "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011012&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
           "toc_online_at": null,
           "issue": "2026-11",
           "url_scope": "article_detail",
@@ -2148,7 +2148,7 @@
         },
         {
           "title": "翻译视角下地方非遗赋能区域经济模式研究——评《非物质文化遗产的产业化与多维创新发展路径》",
-          "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011013&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+          "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011013&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
           "toc_online_at": null,
           "issue": "2026-11",
           "url_scope": "article_detail",
@@ -2160,7 +2160,7 @@
         },
         {
           "title": "数字化时代红色旅游资源管理与思政育人融合发展——评《数字化赋能红色旅游资源与思政育人融合发展》",
-          "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011014&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+          "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011014&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
           "toc_online_at": null,
           "issue": "2026-11",
           "url_scope": "article_detail",
@@ -2172,7 +2172,7 @@
         },
         {
           "title": "数字经济核心产业创新生态系统的结构、共生与效率：基于产业组织理论视角——评《数字经济核心产业创新生态系统研究》",
-          "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011015&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+          "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011015&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
           "toc_online_at": null,
           "issue": "2026-11",
           "url_scope": "article_detail",
@@ -2184,7 +2184,7 @@
         },
         {
           "title": "面向国家重大战略需求的有组织科研管理经验探索——以管理科学为例",
-          "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011001&synUpdateType=&type=journalArticle&nav=1&langType=1",
+          "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011001&type=journalArticle&nav=1&langType=1",
           "toc_online_at": null,
           "issue": "2026-11",
           "url_scope": "article_detail",
@@ -2196,7 +2196,7 @@
         },
         {
           "title": "中国式现代化与中国经济管理自主知识体系建构",
-          "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011002&synUpdateType=&type=journalArticle&nav=1&langType=1",
+          "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011002&type=journalArticle&nav=1&langType=1",
           "toc_online_at": null,
           "issue": "2026-11",
           "url_scope": "article_detail",
@@ -2208,7 +2208,7 @@
         },
         {
           "title": "中国省以下增值税分税的模式与成因研究",
-          "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011003&synUpdateType=&type=journalArticle&nav=1&langType=1",
+          "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011003&type=journalArticle&nav=1&langType=1",
           "toc_online_at": null,
           "issue": "2026-11",
           "url_scope": "article_detail",
@@ -2220,7 +2220,7 @@
         },
         {
           "title": "中国制造业企业全要素生产率的估计改进与驱动力分析",
-          "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011004&synUpdateType=&type=journalArticle&nav=1&langType=1",
+          "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011004&type=journalArticle&nav=1&langType=1",
           "toc_online_at": null,
           "issue": "2026-11",
           "url_scope": "article_detail",
@@ -2232,7 +2232,7 @@
         },
         {
           "title": "自愿参保原则与城职保扩面困境：再分配效应对灵活就业人员参保行为的影响",
-          "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011005&synUpdateType=&type=journalArticle&nav=1&langType=1",
+          "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011005&type=journalArticle&nav=1&langType=1",
           "toc_online_at": null,
           "issue": "2026-11",
           "url_scope": "article_detail",
@@ -2244,7 +2244,7 @@
         },
         {
           "title": "服务业深化、通缩风险与货币政策的非对称效应",
-          "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011006&synUpdateType=&type=journalArticle&nav=1&langType=1",
+          "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011006&type=journalArticle&nav=1&langType=1",
           "toc_online_at": null,
           "issue": "2026-11",
           "url_scope": "article_detail",
@@ -2256,7 +2256,7 @@
         },
         {
           "title": "货币政策冲击、央行沟通与企业宏观经济感知",
-          "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011007&synUpdateType=&type=journalArticle&nav=1&langType=1",
+          "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011007&type=journalArticle&nav=1&langType=1",
           "toc_online_at": null,
           "issue": "2026-11",
           "url_scope": "article_detail",
@@ -2268,7 +2268,7 @@
         },
         {
           "title": "适度规模经营：提升粮食全要素生产率的中国方案",
-          "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011008&synUpdateType=&type=journalArticle&nav=1&langType=1",
+          "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011008&type=journalArticle&nav=1&langType=1",
           "toc_online_at": null,
           "issue": "2026-11",
           "url_scope": "article_detail",
@@ -2280,7 +2280,7 @@
         },
         {
           "title": "高标准农田建设、资本深化与粮食增产",
-          "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011009&synUpdateType=&type=journalArticle&nav=1&langType=1",
+          "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011009&type=journalArticle&nav=1&langType=1",
           "toc_online_at": null,
           "issue": "2026-11",
           "url_scope": "article_detail",
@@ -2292,7 +2292,7 @@
         },
         {
           "title": "数智化背景下人与智能体混合劳动力研究——基于角色融合视角",
-          "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011010&synUpdateType=&type=journalArticle&nav=1&langType=1",
+          "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011010&type=journalArticle&nav=1&langType=1",
           "toc_online_at": null,
           "issue": "2026-11",
           "url_scope": "article_detail",
@@ -2304,7 +2304,7 @@
         },
         {
           "title": "新创高技术企业新产品如何赢得客户信任？——基于天通瑞宏的案例研究",
-          "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011011&synUpdateType=&type=journalArticle&nav=1&langType=1",
+          "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011011&type=journalArticle&nav=1&langType=1",
           "toc_online_at": null,
           "issue": "2026-11",
           "url_scope": "article_detail",
@@ -2316,7 +2316,7 @@
         },
         {
           "title": "重塑分析式营销的生成式人工智能营销框架",
-          "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011012&synUpdateType=&type=journalArticle&nav=1&langType=1",
+          "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011012&type=journalArticle&nav=1&langType=1",
           "toc_online_at": null,
           "issue": "2026-11",
           "url_scope": "article_detail",
@@ -2328,7 +2328,7 @@
         },
         {
           "title": "翻译视角下地方非遗赋能区域经济模式研究——评《非物质文化遗产的产业化与多维创新发展路径》",
-          "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011013&synUpdateType=&type=journalArticle&nav=1&langType=1",
+          "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011013&type=journalArticle&nav=1&langType=1",
           "toc_online_at": null,
           "issue": "2026-11",
           "url_scope": "article_detail",
@@ -2340,7 +2340,7 @@
         },
         {
           "title": "数字化时代红色旅游资源管理与思政育人融合发展——评《数字化赋能红色旅游资源与思政育人融合发展》",
-          "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011014&synUpdateType=&type=journalArticle&nav=1&langType=1",
+          "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011014&type=journalArticle&nav=1&langType=1",
           "toc_online_at": null,
           "issue": "2026-11",
           "url_scope": "article_detail",
@@ -2352,7 +2352,7 @@
         },
         {
           "title": "数字经济核心产业创新生态系统的结构、共生与效率：基于产业组织理论视角——评《数字经济核心产业创新生态系统研究》",
-          "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011015&synUpdateType=&type=journalArticle&nav=1&langType=1",
+          "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011015&type=journalArticle&nav=1&langType=1",
           "toc_online_at": null,
           "issue": "2026-11",
           "url_scope": "article_detail",
@@ -2398,7 +2398,7 @@
       "journal": "世界经济",
       "source_kind": "publisher",
       "url": "https://sjjj.magtech.com.cn/CN/home",
-      "checked_at": "2026-11-19T14:05:48.309441+00:00",
+      "checked_at": "2026-11-19T14:12:54.806703+00:00",
       "status": "ok",
       "issue": "2026-11",
       "issue_date": "2026-11-10",
@@ -2504,7 +2504,7 @@
       "journal": "数量经济技术经济研究",
       "source_kind": "publisher",
       "url": "https://www.jqte.net/sljjjsjjyj/ch/index.aspx",
-      "checked_at": "2026-11-19T14:05:48.309441+00:00",
+      "checked_at": "2026-11-19T14:12:54.806703+00:00",
       "status": "ok",
       "issue": "2026-10",
       "issue_date": null,
@@ -2646,7 +2646,7 @@
       "journal": "财经研究",
       "source_kind": "publisher",
       "url": "https://qks.sufe.edu.cn/J/CJYJ/Article/CurrentIssue/CN",
-      "checked_at": "2026-11-19T14:05:48.309441+00:00",
+      "checked_at": "2026-11-19T14:12:54.806703+00:00",
       "status": "ok",
       "issue": "2026-09",
       "issue_date": null,
@@ -2800,7 +2800,7 @@
       "journal": "金融研究",
       "source_kind": "publisher",
       "url": "http://www.jryj.org.cn/CN/1002-7246/current.shtml",
-      "checked_at": "2026-11-19T14:05:48.309441+00:00",
+      "checked_at": "2026-11-19T14:12:54.806703+00:00",
       "status": "ok",
       "issue": "2026-10",
       "issue_date": "2026-10-25",
@@ -2963,7 +2963,7 @@
       "journal": "国际贸易问题",
       "source_kind": "publisher",
       "url": "https://gjmw.cbpt.cnki.net/portal/journal/portal/client/paper_list/type_benqi",
-      "checked_at": "2026-11-19T14:05:48.309441+00:00",
+      "checked_at": "2026-11-19T14:12:54.806703+00:00",
       "status": "ok",
       "issue": "2026-10",
       "issue_date": null,
@@ -3105,7 +3105,7 @@
       "journal": "世界经济研究",
       "source_kind": "publisher",
       "url": "https://jing.cbpt.cnki.net/portal/journal/portal/client/paper_list/type_benqi",
-      "checked_at": "2026-11-19T14:05:48.309441+00:00",
+      "checked_at": "2026-11-19T14:12:54.806703+00:00",
       "status": "ok",
       "issue": "2026-11",
       "issue_date": null,
@@ -3233,186 +3233,5 @@
     }
   },
   "chinese_new_candidates": [],
-  "chinese_historical_backfill_leads": [
-    {
-      "title": "面向国家重大战略需求的有组织科研管理经验探索——以管理科学为例",
-      "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011001&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
-      "journal": "管理世界",
-      "issue": "2026-11",
-      "source": "chinese_journal_toc",
-      "event_type": "issue_backfill",
-      "first_observed_at": "2026-11-19",
-      "published_at": null,
-      "date_verified": false,
-      "url_scope": "article_detail"
-    },
-    {
-      "title": "中国式现代化与中国经济管理自主知识体系建构",
-      "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011002&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
-      "journal": "管理世界",
-      "issue": "2026-11",
-      "source": "chinese_journal_toc",
-      "event_type": "issue_backfill",
-      "first_observed_at": "2026-11-19",
-      "published_at": null,
-      "date_verified": false,
-      "url_scope": "article_detail"
-    },
-    {
-      "title": "中国省以下增值税分税的模式与成因研究",
-      "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011003&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
-      "journal": "管理世界",
-      "issue": "2026-11",
-      "source": "chinese_journal_toc",
-      "event_type": "issue_backfill",
-      "first_observed_at": "2026-11-19",
-      "published_at": null,
-      "date_verified": false,
-      "url_scope": "article_detail"
-    },
-    {
-      "title": "中国制造业企业全要素生产率的估计改进与驱动力分析",
-      "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011004&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
-      "journal": "管理世界",
-      "issue": "2026-11",
-      "source": "chinese_journal_toc",
-      "event_type": "issue_backfill",
-      "first_observed_at": "2026-11-19",
-      "published_at": null,
-      "date_verified": false,
-      "url_scope": "article_detail"
-    },
-    {
-      "title": "自愿参保原则与城职保扩面困境：再分配效应对灵活就业人员参保行为的影响",
-      "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011005&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
-      "journal": "管理世界",
-      "issue": "2026-11",
-      "source": "chinese_journal_toc",
-      "event_type": "issue_backfill",
-      "first_observed_at": "2026-11-19",
-      "published_at": null,
-      "date_verified": false,
-      "url_scope": "article_detail"
-    },
-    {
-      "title": "服务业深化、通缩风险与货币政策的非对称效应",
-      "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011006&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
-      "journal": "管理世界",
-      "issue": "2026-11",
-      "source": "chinese_journal_toc",
-      "event_type": "issue_backfill",
-      "first_observed_at": "2026-11-19",
-      "published_at": null,
-      "date_verified": false,
-      "url_scope": "article_detail"
-    },
-    {
-      "title": "货币政策冲击、央行沟通与企业宏观经济感知",
-      "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011007&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
-      "journal": "管理世界",
-      "issue": "2026-11",
-      "source": "chinese_journal_toc",
-      "event_type": "issue_backfill",
-      "first_observed_at": "2026-11-19",
-      "published_at": null,
-      "date_verified": false,
-      "url_scope": "article_detail"
-    },
-    {
-      "title": "适度规模经营：提升粮食全要素生产率的中国方案",
-      "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011008&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
-      "journal": "管理世界",
-      "issue": "2026-11",
-      "source": "chinese_journal_toc",
-      "event_type": "issue_backfill",
-      "first_observed_at": "2026-11-19",
-      "published_at": null,
-      "date_verified": false,
-      "url_scope": "article_detail"
-    },
-    {
-      "title": "高标准农田建设、资本深化与粮食增产",
-      "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011009&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
-      "journal": "管理世界",
-      "issue": "2026-11",
-      "source": "chinese_journal_toc",
-      "event_type": "issue_backfill",
-      "first_observed_at": "2026-11-19",
-      "published_at": null,
-      "date_verified": false,
-      "url_scope": "article_detail"
-    },
-    {
-      "title": "数智化背景下人与智能体混合劳动力研究——基于角色融合视角",
-      "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011010&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
-      "journal": "管理世界",
-      "issue": "2026-11",
-      "source": "chinese_journal_toc",
-      "event_type": "issue_backfill",
-      "first_observed_at": "2026-11-19",
-      "published_at": null,
-      "date_verified": false,
-      "url_scope": "article_detail"
-    },
-    {
-      "title": "新创高技术企业新产品如何赢得客户信任？——基于天通瑞宏的案例研究",
-      "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011011&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
-      "journal": "管理世界",
-      "issue": "2026-11",
-      "source": "chinese_journal_toc",
-      "event_type": "issue_backfill",
-      "first_observed_at": "2026-11-19",
-      "published_at": null,
-      "date_verified": false,
-      "url_scope": "article_detail"
-    },
-    {
-      "title": "重塑分析式营销的生成式人工智能营销框架",
-      "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011012&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
-      "journal": "管理世界",
-      "issue": "2026-11",
-      "source": "chinese_journal_toc",
-      "event_type": "issue_backfill",
-      "first_observed_at": "2026-11-19",
-      "published_at": null,
-      "date_verified": false,
-      "url_scope": "article_detail"
-    },
-    {
-      "title": "翻译视角下地方非遗赋能区域经济模式研究——评《非物质文化遗产的产业化与多维创新发展路径》",
-      "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011013&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
-      "journal": "管理世界",
-      "issue": "2026-11",
-      "source": "chinese_journal_toc",
-      "event_type": "issue_backfill",
-      "first_observed_at": "2026-11-19",
-      "published_at": null,
-      "date_verified": false,
-      "url_scope": "article_detail"
-    },
-    {
-      "title": "数字化时代红色旅游资源管理与思政育人融合发展——评《数字化赋能红色旅游资源与思政育人融合发展》",
-      "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011014&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
-      "journal": "管理世界",
-      "issue": "2026-11",
-      "source": "chinese_journal_toc",
-      "event_type": "issue_backfill",
-      "first_observed_at": "2026-11-19",
-      "published_at": null,
-      "date_verified": false,
-      "url_scope": "article_detail"
-    },
-    {
-      "title": "数字经济核心产业创新生态系统的结构、共生与效率：基于产业组织理论视角——评《数字经济核心产业创新生态系统研究》",
-      "url": "https://m.ncpssd.cn/Literature/articleinfo?id=GLSJ2026011015&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
-      "journal": "管理世界",
-      "issue": "2026-11",
-      "source": "chinese_journal_toc",
-      "event_type": "issue_backfill",
-      "first_observed_at": "2026-11-19",
-      "published_at": null,
-      "date_verified": false,
-      "url_scope": "article_detail"
-    }
-  ]
+  "chinese_historical_backfill_leads": []
 }

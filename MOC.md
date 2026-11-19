@@ -287,3 +287,25 @@
 
 - **Security limits:** HTTP was explicitly advertised by the publisher and reachable, unlike HTTPS, but is not transport-encrypted or cryptographically authenticated. Page content/embedded explicit direct link + extracted PDF title/page count provide strong *content consistency*, not authenticity against a network man-in-the-middle. Re-probe an authenticated HTTPS publisher endpoint when the operator fixes its certificate. No access-control bypass; no proxy, CAPTCHA solver, TLS verification disable, downloaded PDF in Git, or copyright text in artifacts.
 - **Next research gate:** The ability to extract 112 pages does **not** prove individual regression tables/identification schemes were interpreted or audited. For P1A prioritize id1663, P1 id1665, P0 id1667; use limited page-based evidence notes (variable definitions, identification, mechanism tables), carefully cross-check against official PDF tables before changing manuscript. Current standalone PDF workflow is triggered on its code changes or manual dispatch, not added to twice-daily scans; preserve original schedule, data ledgers, and scoring.
+
+
+### 2026-11-19 / 六篇《金融研究》PDF「真实交付」闭环（Ponytail gate，优先于旧版仅验收记录）
+
+**用户验收标准更新：** 论文详情可打开、Runner 校验值成功、或生成仅含 JSON 的 Action Artifact，都**不等于**可以交付 PDF。用户要求的是六份真实原始 PDF 文件和可下载 ZIP；应将「取得原始字节 → 验证 → 临时保存 → 取回 → 交付/打开」作为完整 gate。这个用户明确要求下的**短期交付例外**覆盖本文件及 `AGENTS.md` 旧版「任何 PDF 均不得进入 Artifact」的一刀切说法；仍禁止将受版权保护的 PDF、全文或批量提取文本提交 Git、建立公开永久存储、未经授权二次发布。
+
+**本轮真实过程（不是模拟）：**
+- [PR #16](https://github.com/lican1213/academic-research-radar/pull/16) 合并提交 `f0c9e2808b497d90f32bf72526683bab03f7895a`，在现有 `pdf_probe.py` 增加 `--zip-out`：每个原文保存为本次 Runner 临时内存字节，与 [首次6/6正文验收 run 44470870725](https://github.com/lican1213/academic-research-radar/actions/runs/44470870725) 的**逐篇 SHA-256** 精确比对，任何一篇缺失/校验失败都不生成 ZIP。真正的交付 ZIP 上传为独立 Actions Artifact，`retention-days: 1`；JSON 元数据仍单独保留14天。未更改文献扫描与去重。
+- 第一次交付运行 [44473449505](https://github.com/lican1213/academic-research-radar/actions/runs/44473449505) **cancelled**：前五篇下载/哈希通过，第1667篇遇临时超时，原独立工作流4分钟上限截断了 ZIP 交付；只有元数据 Artifact，**没有**交付成功。不能把 PR/CI 绿色或前五篇成功当成六篇完整交付。
+- [PR #17](https://github.com/lican1213/academic-research-radar/pull/17) 合并提交 `e451a9c2379b858cf88abc5be5752633850105de`：只给独立 PDF 交付加3次有界 `TimeoutError` 重试、单次连接20秒以及12分钟作业上限；ZIP 模式不再重复请求独立对照论文，原 `.github/workflows/scan.yml` 的两次每日 cron/12分钟扫描上限未改。新增失败封闭的 ZIP 和超时测试。
+- **最终验收 PASS**：[GitHub Actions run 44474347819](https://github.com/lican1213/academic-research-radar/actions/runs/44474347819) `completed/success`、`head_sha=e451a9c2379b858cf88abc5be5752633850105de`，相同 SHA 的 [main CI 44474347831](https://github.com/lican1213/academic-research-radar/actions/runs/44474347831) success。6/6 `pdf_download_verified=true`、`text_extraction=ok`、`title_match=true`、`page_count_matches=true`、`sha256_matches_previous_run=true`。总计112页、5,364,410字节原始 PDF；**内部 ZIP `JRYJ_2026_10_Six_Papers.zip` 为4,504,911字节**，随后 `actions/upload-artifact` 产生的外层 GitHub Artifact ZIP 大小4,506,284字节。校验日志 `delivery_zip_name`、`delivery_zip_bytes` 均已实网回读。
+- 交付 Artifact：`JRYJ_2026_10_Six_Papers`，`artifact_id=14505487442`，来自上述 run；到期 `2026-11-20T06:46:21Z`（**仅一天**）。它已经通过 GitHub 连接器 `download_workflow_artifact` 从 Runner 拉回当前对话，并提供了 **6个单篇 PDF 与一份实际原文 ZIP** 给用户。有效期过后不可依赖同一 Artifact；需要重新进行受允许的官方来源下载及交付校验。**MOC 永远只保存源 URL/哈希/运行信息，不保存文献全文。**
+- 本次6篇 ID 1662—1667的原文 SHA-256 与各篇页数详见本 MOC 上节 `SIX JRYJ PDFs: real production gate PASS`。不要把这组固定 ID、`REFERENCE_SHA256` 或标题/页码当成通用期刊下载器；新论文需要各自真实 URL、书目信息和新的原文校验基线，不应因预置哈希不同就误判合法新版文件伪造。若后续版本改变，明确“版本更新/哈希变化，待原文复核”，不得静默覆盖旧验证记录。
+
+**供后续 Agent 执行的最小通用流程：**
+1. 从 `data/latest.json`、`chinese_new_candidates`、`chinese_historical_backfill_leads`、独立官网/目录找到与 P0/P1A/P1 高度相关的文章；先核标题、作者、期次、DOI/稳定详情地址、可访问性。不要从期次或 RSS 更新日臆推发表日期，也不要因为后补 PDF 将旧文章重新推为今日新增。
+2. 在**公开、允许访问**的出版方详情页查找 HTML 链接、脚本或数据属性里的**真实 PDF URL**；站点传输方式由实网确定。优先证书有效的 HTTPS；对期刊明确公开但仅支持 HTTP 的特殊站点，应逐刊限制到已证实官方域名和具体下载路径，保留 HTTP 无真实性/传输完整性保障的风险。严禁关闭 TLS 校验、登录绕行、猜文章 ID、泛化任意 HTTP/代理。
+3. 下载原始 PDF 字节并核验 PDF 头尾、长度、SHA-256、题名及页数，使用 PyMuPDF 只做文字提取能力检查；**提取文字 ≠ 已独立核验回归表、系数、固定效应或机制**。需要做学术判断时检查对应 PDF 原始页面、表号和模型定义。
+4. 用户**明确要求领取原文**时，才在独立临时 Actions 作业构建受限 PDF ZIP Artifact（短期保存，按出版方许可和合理使用处理）；通过 GitHub 工具取回文件，并检查 ZIP 里文件数、名称、PDF 字节/哈希、可打开性后再交付。不能只有链接、脚本、JSON 或 Action success。若只是每日研究雷达，不主动批量打包或持久上传全文。
+5. 日报优先输出高价值研究信号而非下载数量。每篇标注 `仅题录/摘要`、`全文已取得`、`关键表页码已核验` 三层证据，并对 P0/P1A/P1 给出与现稿主线、测度、识别策略和竞争性贡献对应的**一个可执行建议**。若只读了摘要，不能宣称审查过回归表；若 PDF 下载失败，单独报告失败原因并继续不依赖下载的文献发现。不能自动修改现稿。
+
+**阶段边界/成本控制：** 目前验证的是《金融研究》2026(10) 前六篇的**固定集合**，不是九刊通用 PDF 爬取、自动回归表验证、永久PDF库或日报自动编排。下一阶段只在新的高相关论文确有成功取样后，才抽取公共下载辅助函数与来源适配，避免把为一次验收写的代码膨胀成难维护的框架。PDF Artifact 1日失效是有意的最小权限策略；长期知识应留在短量研究证据卡（标题、链接、版本、页码/表号、有限摘要、审计结论），不留原文复制品。

@@ -70,3 +70,12 @@ This repository gathers **public bibliographic metadata**. It does not make scho
 - Distinguish `pdf_verified`, `text_verified`, and `table_verified`. 3/3 true for first two, **all `table_verified=false`**. A successful PDF extraction never licenses fabrication of regression table claims.
 - Keep CI and real Action acceptance separate. Gate for this pilot requires two *different* publisher domains on real Github Runner with verified PDF text; an optional third failure must remain visible. New candidate/host/version requires revalidation, not copying the six legacy JRYJ article IDs or hashes.
 - Main twice-daily metadata scan and ChatGPT daily report remain independent and read-only. Do not silently connect PDF requests to the scheduled scan or save copyrighted PDFs/paragraphs in the repository; user-authorized temporary original-PDF handoff uses its separately documented ephemeral workflow.
+
+
+## Independent classmate fork onboarding (2026-11-19)
+
+- Fork user instructions: `docs/FORK_START_HERE.md` and `docs/CHATGPT_DAILY_TASK_TEMPLATE.md`. Users connect their own GitHub access in ChatGPT and create their own scheduled tasks; no inheritance of the upstream owner's Task, credentials or project memories.
+- `radar_profile.json` is optional and intentionally absent on upstream. If provided, `load_research_profile` validates an independent public research profile, changing Crossref/arXiv discovery and the `RESEARCH` keyword prefilter only; original P0–P4 scan with no file **must remain byte-compatible in behavior**. The nine Chinese journal catalogs remain fixed; this is a student-friendly economics fork, not an arbitrary-discipline plugin system.
+- The existing `scan.yml` runs `fork_bootstrap.py` once per independent GitHub repo, clearing inherited seen ledgers and stale latest output, then committing `data/fork_initialized.json`. It must never reset the upstream `lican1213/academic-research-radar` or a fork already initialized. Verify idempotency before touching dedup/schedules.
+- Public forks have scheduled workflows disabled by default and may lack write permissions. Tell classmates to enable Actions on their fork, grant GITHUB_TOKEN write access where allowed, manually run and **read back produced latest.json**; CI is not a production scan.
+- Keep research reviews read-only and separate from metadata crawling. Do not expand PDF artifact storage/scheduling or change the source author's ChatGPT daily Task as part of classmate onboarding.

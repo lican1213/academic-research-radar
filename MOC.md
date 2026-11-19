@@ -335,3 +335,18 @@
 **Gate 结果和学术证据层级：** 3/3 `pdf_verified=true`、`text_verified=true`、`title_match=true`、`page_count_match=true`、中文文字可抽取；**3/3 `table_verified=false`**：表格标识命中数量不等于系数、识别策略或经济学结论已逐页核验。若 ChatGPT 研究日报要引用原文表格，需单独复核 PDF 实际页码、表号与数字；不能因本次技术验收而推断 P0/P1A 实证结论。
 
 **阶段限制与下轮入口：** 此为“两个不同期刊平台+第三个真实独立官网”的跨源验证（共三种出版者），不是九刊/所有文章 100% 自动获取；目前受审查的官方主机名单仍有限，Manifest 是人工抽样，原研究雷达的 `chinese_new_candidates` 尚**未**自动驱动 PDF 任务。未来只对高相关、真实新发现候选先核书目信息与 URL，再按需扩展官方域名适配及单篇实际下载验收；不得从这三篇成功推出全期PDF自动化。现有 `.github/workflows/scan.yml` SHA `d5e4d1e82c7a18fa2fbd8657a98a7a6a4ea17602`、每日两次 cron `17 10,22 * * *`、去重账本及 ChatGPT 每日09:30任务**未更改**。独立 PDF workflow 无 cron，仅代码变动/手动触发；不建立PDF仓库，不自动上传原文。
+
+
+### 2026-11-19 / 可 Fork 给同学的学术雷达：独立选题与 ChatGPT 周期任务上线准备
+
+**用户需求：** 让经济学同学 Fork `lican1213/academic-research-radar`，在各自 GitHub 中完成元数据定时扫描，并从同学自己的 ChatGPT 账号建立每日研究简报。不能自动把上游 P0/耐心资本与 P1A/协同出海当成同学选题；不能继承上游 `seen` 去重导致漏报或把老的 `latest` 当成同学的新数据。GitHub Fork 不会复制 ChatGPT 的 Scheduled 任务、连接授权或聊天记忆。
+
+**方案（可选、小范围、向后兼容）：**
+- 增 `radar_profile.example.json`（数字经济/劳动收入份额的非个人示例）；同学自己在 Fork 新建 `radar_profile.json`，写入 `name`、`crossref_queries`、`arxiv_queries`（可空）、`keywords`（2—30）及 `min_keyword_hits`。只调整 Crossref/arXiv 的检索词和自定义 `RESEARCH` 元数据预筛；不改变中文九刊覆盖，也**不声称通用任意学科**。上游不添加激活的个人配置，保持原 P0—P4 检索行为与历史账本。
+- 增 `fork_bootstrap.py`：仅当实际 `GITHUB_REPOSITORY` 不等于 `lican1213/academic-research-radar` 且缺少 `data/fork_initialized.json` 时清空继承的 `data/seen.json`、`data/chinese_seen.json`、旧 `latest.json/md`；记录 Fork 归属标记，第二次及以后的扫描不再重置。现有 `scan.yml` 插入初始化，`git add` 包含标记，**cron `17 10,22 * * *` 原样保留**，`contents: write` 保留。上游执行该步骤为空操作。
+- 新增 `docs/FORK_START_HERE.md` 一页上手说明，明确公开 Fork 的 schedule 默认禁用、需在本人 Fork 的 Actions 启用并先人工 Run workflow、GitHub token 仓库内容写权限和生成状态的实际 readback。新增 `docs/CHATGPT_DAILY_TASK_TEMPLATE.md` 供同学在自己 ChatGPT Scheduled 创建中文研究日报；明确证据层级、去重、学术增量、PDF 获取失败、不可读旧上游数据、只读边界。
+- 只向公开仓库上传非敏感的研究主题关键词；不在仓库中存放私有稿件/个人凭据。原仓库目前未声明 LICENSE，不得声称已获 MIT/GPL 再分发许可证，若需要清晰的外部代码授权须由仓库所有者另行选择。
+
+**验收门：** A. 单元测试用临时目录证明上游 ledger 不变、Fork 第一次去重清空、第二次不清空；B. 自定义 profile 让非 P0 的样本被选择为 `RESEARCH`，缺省无 profile 的旧用例全部不退化；C. 原仓库当前 SHA 的 GitHub CI 和一次正常生产扫描校验不受影响；D. 文档明确真正新 Fork 仍需要同学在自己的账号启用 Actions/GitHub 和 ChatGPT，不能把上游 CI 当成同学 Fork 完成的实时验收。
+
+**当前状态：** 代码、测试和上手文档在独立 PR 分支内，待 CI 与真实源仓库生产检查后记录通过/未验收范围。

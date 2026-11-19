@@ -1,0 +1,27 @@
+{
+  "name": "示例：数字经济与劳动收入份额（请改为你自己的选题）",
+  "crossref_queries": [
+    "digital transformation labor income share firms",
+    "artificial intelligence wages firm productivity",
+    "数字经济 劳动收入份额",
+    "人工智能 企业工资 劳动收入"
+  ],
+  "arxiv_queries": [
+    "all:\"artificial intelligence\" AND (all:wages OR all:productivity)"
+  ],
+  "keywords": [
+    "digital transformation",
+    "digital economy",
+    "artificial intelligence",
+    "labor share",
+    "wage inequality",
+    "firm productivity",
+    "数字经济",
+    "数字化转型",
+    "人工智能",
+    "劳动收入份额",
+    "工资",
+    "生产率"
+  ],
+  "min_keyword_hits": 2
+}

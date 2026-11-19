@@ -28,38 +28,6 @@ jobs:
           python -m unittest discover -s tests -p 'test_pdf_candidate.py' -v
       - name: Install PDF reader only in this isolated job
         run: python -m pip install 'PyMuPDF>=1.24,<2'
-      - name: Bounded publisher link diagnostics (read-only)
-        run: |
-          python - <<'PY'
-          import json, re
-          from urllib.request import Request, urlopen
-          targets = {
-            "sufe_pdffull_static": "https://qks.sufe.edu.cn/J/PDFFull/pgbFuTsz-vRzo-GypL-0h9O-AptmzpGperJG.pdf",
-            "sufe_publisher_down": "https://wjgl.sufe.edu.cn/J/PDFFullDown/A20260909?lang=cn",
-            "sufe_publisher_detail": "https://wjgl.sufe.edu.cn/J/CJYJ/Article/Details/pgbFuTsz-vRzo-GypL-0h9O-AptmzpGperJG",
-            "world_econ_html": "https://sjjj.magtech.com.cn/CN/Y2026/V49/I8/3",
-          }
-          for name, url in targets.items():
-            try:
-              req=Request(url, headers={"User-Agent":"Mozilla/5.0 (public source research check)"})
-              with urlopen(req, timeout=8) as r:
-                blob = r.read(140000)
-                print("SOURCE",json.dumps({"source":name,"status":r.status,
-                      "final_url":r.geturl(),"type":r.headers.get("Content-Type"),
-                      "bytes":len(blob),"pdf_header":b"%PDF-" in blob[:50]},ensure_ascii=False))
-              if name=="world_econ_html":
-                html=blob.decode("utf-8","replace")
-                pats=list(re.finditer(r'(?i)(?:download|pdf|fileup|attachType|quanwen|fulltext)',html))
-                snippets=[]
-                for mt in pats[:80]:
-                  t=html[max(mt.start()-100,0):mt.end()+130]
-                  if any(w in t.lower() for w in ("fileup","downloadarticle","href","onclick","pdf","iframe","attachment")):
-                    snippets.append(re.sub(r'\\s+',' ',t)[:260])
-                print("LINK_SNIPPETS",json.dumps(snippets[:22],ensure_ascii=False))
-            except Exception as e:
-              print("SOURCE",json.dumps({"source":name,"error_kind":type(e).__name__,
-                      "error":str(e)[:160]},ensure_ascii=False))
-          PY
       - name: Verify independent official publisher PDFs
         id: pilot
         continue-on-error: true

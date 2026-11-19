@@ -18,6 +18,33 @@ class GenericPdfEvidenceTests(unittest.TestCase):
         self.assertEqual(find_pdf_url(u, page),
                          "https://sjjj.magtech.com.cn/CN/article/downloadArticleFile.do?attachType=PDF&id=1551")
 
+    def test_magtech_standard_citation_pdf_meta(self):
+        url = "https://sjjj.magtech.com.cn/CN/Y2026/V49/I8/3"
+        markup = (b'<meta name="citation_pdf_url" '
+                  b'content="https://sjjj.magtech.com.cn/CN/PDF/1232">')
+        self.assertEqual(find_pdf_url(url, markup),
+                         "https://sjjj.magtech.com.cn/CN/PDF/1232")
+
+    def test_cross_host_pdf_requires_explicit_trusted_permission(self):
+        article = "https://wjgl.sufe.edu.cn/J/CJYJ/Article/Details/test"
+        fileurl = "https://qks.sufe.edu.cn/J/PDFFull/test.pdf"
+        title = "国际知识产权与对外投资"
+        def get(url, size):
+            if url == article:
+                raise TimeoutError("temporarily unavailable detail")
+            self.assertEqual(url, fileurl)
+            return b"%PDF-1.7" + b"z" * 1300 + b"%%EOF"
+        spec = {"key":"new","journal":"财经研究","title":title,
+                "article_url":article,"verified_pdf_url":fileurl,
+                "expected_pages":15}
+        self.assertEqual(verify_candidate(spec,reader=get)["status"],"unapproved_pdf_url")
+        spec["approved_pdf_hosts"] = ["qks.sufe.edu.cn"]
+        good = verify_candidate(spec, reader=get, inspector=lambda data, text:{
+            "title_match":True,"text_extraction":"ok","page_count":15})
+        self.assertEqual(good["status"],"verified_full_pdf")
+        spec["approved_pdf_hosts"] = ["evil.example"]
+        self.assertEqual(verify_candidate(spec,reader=get)["status"],"unapproved_pdf_publisher")
+
     def test_no_pdf_without_explicit_link(self):
         self.assertIsNone(find_pdf_url(P, b'<p>Full text PDF available</p>'))
 

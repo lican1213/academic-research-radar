@@ -19,6 +19,7 @@ from pdf_probe import fetch, inspect_pdf, valid_pdf, MAX_HTML, MAX_PDF
 # Deliberately narrow until each new publisher has an actual production readback.
 APPROVED_PUBLISHERS = frozenset({
     "qks.sufe.edu.cn",
+    "qks.shufe.edu.cn",
     "sjjj.magtech.com.cn",
     "xbzs.ecnu.edu.cn",
 })

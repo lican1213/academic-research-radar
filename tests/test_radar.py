@@ -900,3 +900,45 @@ class IndependentIndexAdapterTests(unittest.TestCase):
             (("catalog_index",alternate),))
         self.assertEqual((kind,url,issue,len(rows)),("publisher",primary,"2026-10",1))
         self.assertNotIn("index_claimed_paper_count",metadata)
+
+
+class IssueOnlyRecoveryTests(unittest.TestCase):
+    def test_index_only_then_article_details_same_issue_deliver_backfill_once(self):
+        import chinese_journals as cj
+        from unittest.mock import patch
+        url="https://sjjj.magtech.com.cn/CN/home"
+        issue_page="<html><body>世界经济 2026年 第10期</body></html>".encode()
+        detail_page=('<html><body>世界经济 2026年 第10期'
+                     '<a href="/CN/Y2026/V49/I10/12">长期资本与国际专利国别布局研究</a>'
+                     '</body></html>').encode()
+        with tempfile.TemporaryDirectory() as tmp:
+            folder=Path(tmp)
+            with patch.object(cj,"JOURNALS",(("world_economy","世界经济","publisher",url),)):
+                first=cj.scan_chinese_journals(folder,UTC_NOW,get=lambda _:issue_page)
+                self.assertEqual(first["new_candidates"],[])
+                self.assertEqual(first["source_status"]["journals"]["world_economy"]["status"],"catalog_only")
+                second=cj.scan_chinese_journals(folder,UTC_NOW,get=lambda _:detail_page)
+                self.assertEqual(len(second["new_candidates"]),1)
+                lead=second["new_candidates"][0]
+                self.assertEqual(lead["event_type"],"issue_backfill")
+                self.assertEqual(lead["issue"],"2026-10")
+                self.assertIsNone(lead["published_at"])
+                self.assertFalse(lead["date_verified"])
+                self.assertEqual(cj.scan_chinese_journals(folder,UTC_NOW,get=lambda _:detail_page)["new_candidates"],[])
+
+    def test_priority_source_full_failure_exposes_each_diagnostic(self):
+        import chinese_journals as cj
+        from unittest.mock import patch
+        url="https://www.jryj.org.cn/CN/1002-7246/current.shtml"
+        alt="https://www.cqvip.com/journal/97926X/97926X"
+        with tempfile.TemporaryDirectory() as tmp:
+            folder=Path(tmp)
+            with patch.object(cj,"JOURNALS",(("financial_research","金融研究","publisher",url),)):
+                result=cj.scan_chinese_journals(folder,UTC_NOW,
+                    get=lambda u: (_ for _ in ()).throw(TimeoutError("timed out")),
+                    priority_sources={"financial_research":(("catalog_index",alt),)})
+            j=result["source_status"]["journals"]["financial_research"]
+            self.assertEqual(j["status"],"failed")
+            self.assertEqual(len(j["source_attempts"]),2)
+            self.assertTrue(all(x["status"]=="failed" for x in j["source_attempts"]))
+            self.assertEqual(result["new_candidates"],[])

@@ -87,7 +87,7 @@ def find_pdf_url(article_url: str, page: bytes) -> str | None:
     parser.feed(content)
     # Extract literal URLs which are present in a JS field (not guessed).
     embedded = re.findall(
-        r"""(?:https?://[A-Za-z0-9.-]+)?/(?:CN/article/downloadArticleFile\.do|J/PDFFullDown/)[^"'<>\\s;]+|https?://[A-Za-z0-9.-]+/[^"'<>\\s;]+\.pdf(?:\?[^"'<>\\s;]+)?""",
+        r"""(?:https?://[A-Za-z0-9.-]+)?/(?:CN/article/downloadArticleFile\.do|J/PDFFullDown/)[^"'<>\s;]+|https?://[A-Za-z0-9.-]+/[^"'<>\s;]+\.pdf(?:\?[^"'<>\s;]+)?""",
         content, flags=re.I)
     for candidate, _label in parser.urls + [(item, "") for item in embedded]:
         url = urljoin(article_url, candidate.strip().rstrip(");"))

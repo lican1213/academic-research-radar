@@ -57,26 +57,34 @@ jobs:
                   anchor_snip=re.sub(r"\\s+"," ",source[max(0,at-250):at+400])[:650] if at>=0 else ""
                   links=[{"name":a,"href":b} for a,b in p.items if re.search(r"(?:article|detail|paper|secure|literature|机器人|供应链|世界大变局|href)",str(a)+" "+str(b),re.I)]
                   if name in ("management_mobile","economic_catalog","industrial_catalog"):
-                      tags=re.findall(r'<a\\b[^>]*onclick=["\\\']openDetail\\([^>]+>[^<]{0,150}</a>',source,flags=re.I|re.S)
-                      print("ARTICLE_TAGS",json.dumps({"id":name,"count":len(tags),
-                          "samples":[re.sub(r'\\s+',' ',t)[:500] for t in tags[:4]]},ensure_ascii=False))
-                      ids={"management_mobile":"GLSJ2026011001","economic_catalog":"JJYJ2026009002",
-                           "industrial_catalog":"ZGGYJJ2026008002"}
-                      for tag in tags:
-                          if ids[name] not in tag:continue
-                          match=re.search(r"openDetail\\(\\s*['\\\']([^'\\\']+)['\\\']",tag)
-                          if match:
-                              detail=urljoin(url,match.group(1))
-                              try:
-                                  with urllib.request.urlopen(urllib.request.Request(detail,headers={"User-Agent":"Mozilla/5.0"}),timeout=7) as res2:
-                                      b2=res2.read(100000)
-                                      print("DETAIL",json.dumps({"id":name,"url":detail,"status":res2.status,
-                                           "bytes":len(b2),"content_type":res2.headers.get("Content-Type"),
-                                           "id_present":ids[name] in b2.decode("utf-8","replace")},ensure_ascii=False))
-                              except Exception as e:
-                                  print("DETAIL",json.dumps({"id":name,"url":detail,"error":type(e).__name__,
-                                       "message":str(e)[:120]},ensure_ascii=False))
-                          break
+                      ident={"management_mobile":"GLSJ2026011001",
+                             "economic_catalog":"JJYJ2026009002",
+                             "industrial_catalog":"ZGGYJJ2026008002"}[name]
+                      pos=source.find(ident)
+                      print("ID_CONTEXT",json.dumps({"id":name,
+                          "found":pos>=0,"snippet":re.sub(r"\\s+"," ",source[max(0,pos-150):pos+330])[:480]
+                          if pos>=0 else ""},ensure_ascii=False))
+                      if pos>=0:
+                          from urllib.parse import urlencode
+                          path="/Literature/articleinfo?"+urlencode({
+                              "id":ident,"type":"journalArticle","typename":"中文期刊文章",
+                              "nav":"1","langType":"1"})
+                          detail=urljoin(url,path)
+                          try:
+                              with urllib.request.urlopen(urllib.request.Request(detail,headers={"User-Agent":"Mozilla/5.0"}),timeout=7) as response2:
+                                  payload2=response2.read(160000)
+                                  status2=response2.status
+                                  final2=response2.geturl()
+                                  ctype2=response2.headers.get("Content-Type")
+                              print("DETAIL",json.dumps({"id":name,"url":detail,"status":status2,"final":final2,
+                                "bytes":len(payload2),"content_type":ctype2,
+                                "title_present":( {"management_mobile":"面向国家重大战略需求的有组织科研管理经验探索",
+                                "economic_catalog":"机器人应用与制造业企业生产链延伸",
+                                "industrial_catalog":"世界大变局下的中国产业链韧性"}[name]
+                                  in payload2.decode("utf-8","replace"))},ensure_ascii=False))
+                          except Exception as error2:
+                              print("DETAIL",json.dumps({"id":name,"url":detail,"error":type(error2).__name__,
+                                   "message":str(error2)[:180]},ensure_ascii=False))
                   print("INDEX",json.dumps({"id":name,"status":200,"final":dest,"content_type":ctype,
                       "bytes":len(body),"total_anchors":len(p.items),
                       "relevant_anchors":links[:12],"needle_found":at>=0,

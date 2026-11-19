@@ -76,6 +76,14 @@ jobs:
                                   status2=response2.status
                                   final2=response2.geturl()
                                   ctype2=response2.headers.get("Content-Type")
+                              bodytext=payload2.decode("utf-8","replace")
+                              title_meta=re.findall(r"(?is)<title[^>]*>(.*?)</title>",bodytext)
+                              print("DETAIL_META",json.dumps({"id":name,"page_titles":[re.sub(r"\\s+"," ",t)[:130] for t in title_meta[:2]],
+                                "has_article_id":ident in bodytext,
+                                "has_articleinfo":"/Literature/articleinfo" in bodytext,
+                                "has_login":any(x in bodytext for x in ("请登录","登录后阅读","需要登录")),
+                                "has_react":any(x in bodytext.lower() for x in ("<app", "react", "vue")),
+                                "html_head":re.sub(r"\\s+"," ",bodytext[:500])[:500]},ensure_ascii=False))
                               print("DETAIL",json.dumps({"id":name,"url":detail,"status":status2,"final":final2,
                                 "bytes":len(payload2),"content_type":ctype2,
                                 "title_present":( {"management_mobile":"面向国家重大战略需求的有组织科研管理经验探索",

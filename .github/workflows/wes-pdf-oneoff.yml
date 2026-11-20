@@ -5,6 +5,9 @@ on:
     branches: [main]
     paths:
       - '.github/workflows/wes-pdf-oneoff.yml'
+  pull_request:
+    paths:
+      - 'docs/wes-pdf-trigger.md'
 
 permissions:
   contents: read

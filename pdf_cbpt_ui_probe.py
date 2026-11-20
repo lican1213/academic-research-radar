@@ -123,6 +123,26 @@ def diagnose_one(spec):
                         row.setdefault("errors",[]).append(type(err).__name__)
                 if not pressed:
                     row["result"]="no_clickable_visible_exact_label"
+            # Inspect CNKI window opened by the publisher's documented null-PDF fallback.
+            # Never copy v/token query values, cookies, or full article contents.
+            result["cnki_fallback_pages"] = []
+            for child in ctx.pages:
+                if child == page:
+                    continue
+                entry = {"url": shape_url(child.url)}
+                try:
+                    child.wait_for_load_state("domcontentloaded", timeout=10000)
+                    entry["url"] = shape_url(child.url)
+                    if urlsplit(child.url).hostname == "kns.cnki.net":
+                        body = child.locator("body").inner_text(timeout=2500)[:12000]
+                        entry["title_seen"] = spec["title"][:10] in body
+                        entry["login_prompt_seen"] = any(word in body for word in ("登录", "请登录", "机构登录"))
+                        entry["pdf_download_controls"] = sum(child.get_by_text(word, exact=False).count()
+                                                             for word in ("PDF下载", "PDF 下载", "CAJ下载"))
+                        entry["body_char_count_scanned"] = len(body)
+                except Exception as err:
+                    entry["inspection_error"] = type(err).__name__
+                result["cnki_fallback_pages"].append(entry)
             # On popup choose '中文数据' only if visible, no payment/auth.
             loc=page.get_by_text("中文数据", exact=True)
             if any(loc.nth(i).is_visible() for i in range(min(loc.count(),10))):

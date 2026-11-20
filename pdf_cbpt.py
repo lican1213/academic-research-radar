@@ -117,48 +117,79 @@ def find_explicit_pdfs(article_url: str, html_bytes: bytes) -> list[str]:
     return found
 
 
-def browser_discover(article_url: str) -> tuple[list[str], dict]:
-    """Anonymous normal-browser rendering; no login, CAPTCHA solution or cookies."""
+def browser_discover(article_url: str) -> tuple[list[str], dict, bytes | None]:
+    """Use the *visible* journal controls in observed order; capture browser downloads."""
     diagnostics: dict = {"attempted": True, "engine": "playwright_chromium"}
     links: list[str] = []
+    saved_pdf: bytes | None = None
     try:
         from playwright.sync_api import sync_playwright
     except ImportError:
-        return links, diagnostics | {"error": "playwright_not_installed"}
+        return links, diagnostics | {"error": "playwright_not_installed"}, None
     try:
         with sync_playwright() as p:
             browser = p.chromium.launch(headless=True, args=["--no-sandbox"])
             context = browser.new_context(accept_downloads=True)
             page = context.new_page()
+            downloads = []
             def collect(response):
                 if pdf_allowed(response.url) and response.url not in links:
                     links.append(response.url)
             page.on("response", collect)
+            page.on("download", lambda download: downloads.append(download))
             page.goto(article_url, wait_until="domcontentloaded", timeout=30000)
             page.wait_for_timeout(1600)
-            initial = page.content().encode("utf-8")
-            links.extend(u for u in find_explicit_pdfs(article_url, initial) if u not in links)
-            diagnostics["initial_pdf_links"] = len(links)
             title = next((item["title"] for item in TARGETS if item["article_url"] == article_url), "")
-            diagnostics["title_visible"] = bool(title and normalize_title(title)[:12] in normalize_title(page.content()))
+            diagnostics["title_visible"] = bool(
+                title and normalize_title(title)[:12] in normalize_title(page.content()))
             diagnostics["fulltext_cnki_prompt"] = "如需获取全文，请访问cnki.net" in page.content()
-            # Observe ordinary UI behavior; never navigate authenticated sessions.
-            for phrase in ("PDF", "下载本文"):
+            diagnostics["initial_pdf_links"] = len(find_explicit_pdfs(article_url, page.content().encode()))
+            # Verified live DOM: PDF is initially hidden. Download-this-paper reveals it;
+            # PDF calls the publisher's actual getSpecialPDFUrl() event handler.
+            for phrase in ("下载本文", "PDF", "中文数据"):
+                status = {"label": phrase, "matching": 0, "visible": 0}
+                locator = page.get_by_text(phrase, exact=True)
+                status["matching"] = min(locator.count(), 15)
+                for index in range(status["matching"]):
+                    button = locator.nth(index)
+                    if not button.is_visible():
+                        continue
+                    status["visible"] += 1
+                    try:
+                        button.click(timeout=4000)
+                        page.wait_for_timeout(1200)
+                        status["clicked"] = True
+                        break
+                    except Exception as exc:
+                        status["click_error"] = type(exc).__name__
+                diagnostics.setdefault("ui_steps", []).append(status)
+                links.extend(u for u in find_explicit_pdfs(
+                    article_url, page.content().encode("utf-8")) if u not in links)
+                if downloads:
+                    break
+            diagnostics["browser_download_events"] = len(downloads)
+            for item in downloads:
                 try:
-                    element = page.get_by_text(phrase, exact=True).first
-                    if element.count():
-                        element.click(timeout=2500)
-                        page.wait_for_timeout(1300)
-                        links.extend(u for u in find_explicit_pdfs(
-                            article_url, page.content().encode("utf-8")) if u not in links)
+                    path = item.path()
+                    if not path:
+                        continue
+                    if path.stat().st_size > MAX_PDF:
+                        diagnostics["download_rejected"] = "too_large"
+                        continue
+                    blob = path.read_bytes()
+                    if valid_pdf(blob):
+                        saved_pdf = blob
+                        diagnostics["browser_pdf_bytes"] = len(blob)
+                        break
+                    diagnostics["download_rejected"] = "not_a_valid_pdf"
                 except Exception as exc:
-                    diagnostics["ui_" + ("pdf" if phrase == "PDF" else "download")] = type(exc).__name__
-            diagnostics["final_url"] = urlsplit(page.url).hostname
+                    diagnostics["download_error"] = type(exc).__name__
+            diagnostics["final_url_host"] = urlsplit(page.url).hostname
             diagnostics["found_pdf_links"] = len(links)
             browser.close()
     except Exception as exc:
         diagnostics["error"] = type(exc).__name__ + ": " + str(exc)[:120]
-    return links, diagnostics
+    return links, diagnostics, saved_pdf
 
 
 def validate_document(data: bytes, title: str, inspector=inspect_pdf) -> dict:
@@ -192,8 +223,18 @@ def probe_target(spec: dict, *, fetcher=fetch_public, browser=browser_discover,
         outcome["static_error"] = type(exc).__name__ + ": " + str(exc)[:120]
 
     if not urls:
-        browser_urls, diagnostics = browser(spec["article_url"])
+        found = browser(spec["article_url"])
+        browser_urls, diagnostics = found[:2]
+        browser_blob = found[2] if len(found) > 2 else None
         outcome["browser"] = diagnostics
+        if browser_blob is not None:
+            verified = validate_document(browser_blob, spec["title"], inspector=inspector)
+            if verified["verified"]:
+                outcome.update(verified)
+                outcome["status"] = "verified_full_pdf"
+                outcome["link_source"] = "publisher_browser_download_event"
+                return outcome, browser_blob
+            outcome["browser_pdf_identity"] = verified["reason"]
         urls = browser_urls
 
     outcome["discovered_pdf_links"] = len(urls)

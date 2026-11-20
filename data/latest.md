@@ -1,13 +1,12 @@
-# Academic Research Radar — 2026-11-20T03:10:46.916851+00:00
+# Academic Research Radar — 2026-11-20T18:36:26.095174+00:00
 
-**Status:** degraded; **New or changed candidates:** 1; **Metadata prefilter passes:** 12
+**Status:** degraded; **New or changed candidates:** 0; **Metadata prefilter passes:** 12
 
 This is metadata triage, not a verified reading or recommendation.
 
 - crossref: ok; 14/14 queries; 420 records
 - arxiv: ok; 4/4 queries; 32 records
-- chinese_journals: degraded; article-level TOC 7/9 journals; nonempty sources 7/9; optional RSS=degraded; 89 metadata rows
-  - Error: 国际贸易问题: stale_index (catalog_regressed); RSS=failed
+- chinese_journals: degraded; article-level TOC 8/9 journals; nonempty sources 8/9; optional RSS=degraded; 99 metadata rows
   - Error: 世界经济研究: stale_index (catalog_regressed); RSS=failed
 - NCPSSD topic index: ok; 8/8 queries; 19 records
 
@@ -20,7 +19,7 @@ This is metadata triage, not a verified reading or recommendation.
 - [数量经济技术经济研究](https://www.jqte.net/sljjjsjjyj/ch/index.aspx): ok; 来源=publisher; 期次=2026-10; 可解析记录=10; 直接文章链接=10; 期次归属有证据=10; 覆盖类型=issue_bound_links; ; RSS=failed, RSS文章=0, RSS最新事件=未核验
 - [财经研究](https://qks.sufe.edu.cn/J/CJYJ/Article/CurrentIssue/CN): ok; 来源=publisher; 期次=2026-09; 可解析记录=11; 直接文章链接=11; 期次归属有证据=11; 覆盖类型=issue_bound_links; ; RSS=failed, RSS文章=0, RSS最新事件=未核验
 - [金融研究](http://www.jryj.org.cn/CN/1002-7246/current.shtml): ok; 来源=publisher; 期次=2026-10; 可解析记录=11; 直接文章链接=11; 期次归属有证据=11; 覆盖类型=issue_bound_links; ; RSS=failed, RSS文章=0, RSS最新事件=未核验
-- [国际贸易问题](https://ncpssd.org/journal/details?gch=96001X): stale_index; 来源=catalog; 期次=2026-09; 可解析记录=0; 直接文章链接=未核验; 期次归属有证据=未核验; 覆盖类型=未核验; catalog_regressed; RSS=failed, RSS文章=0, RSS最新事件=未核验
+- [国际贸易问题](https://gjmw.cbpt.cnki.net/portal/journal/portal/client/paper_list/type_benqi): ok; 来源=publisher; 期次=2026-10; 可解析记录=10; 直接文章链接=10; 期次归属有证据=10; 覆盖类型=issue_bound_links; ; RSS=failed, RSS文章=0, RSS最新事件=未核验
 - [世界经济研究](https://ncpssd.org/journal/details?gch=91453X): stale_index; 来源=catalog; 期次=2026-10; 可解析记录=0; 直接文章链接=未核验; 期次归属有证据=未核验; 覆盖类型=未核验; catalog_regressed; RSS=failed, RSS文章=0, RSS最新事件=未核验
 
 ### 本次首次观察到的中文文献（不等于今日发表）
@@ -29,4 +28,4 @@ This is metadata triage, not a verified reading or recommendation.
 
 ## New or revised candidates
 
-- [Assessing the Need for an International Patent Regime for Inventions in Outer Space](https://doi.org/10.37381/8mk45557) — P0, prefilter 54, crossref_registration 2026-11-19, new
+No new or changed candidates selected for delivery. This does not imply zero prefilter passes or no relevant papers.

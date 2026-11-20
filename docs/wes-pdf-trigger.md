@@ -1,1 +1,1 @@
-Second live acceptance: visible 下载本文 → PDF → 中文数据, browser download event capture, original 2/2 title checks. Branch fix/cbpt-pdf-ui-evidence-20261120 SHA 1ed3db9a8328e4dee0ba44474eb99988e9edeb52. Diagnostic only, never merge trigger.
+Run official getChinesDownloadInfoByEnglishPaper response inspection (no secrets or PDF bytes stored) from fix/cbpt-pdf-ui-evidence-20261120 SHA fe82b523f5bbdd58a7317ca980500040858fb95e. Disposable test trigger, never merge.

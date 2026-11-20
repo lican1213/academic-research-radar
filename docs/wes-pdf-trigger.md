@@ -1,1 +1,1 @@
-One-shot read-only WES 2026-11 two-paper PDF/UI acceptance run. Not for merging; delete diagnostic workflow after evidence readback.
+Second live acceptance: visible 下载本文 → PDF → 中文数据, browser download event capture, original 2/2 title checks. Branch fix/cbpt-pdf-ui-evidence-20261120 SHA 1ed3db9a8328e4dee0ba44474eb99988e9edeb52. Diagnostic only, never merge trigger.

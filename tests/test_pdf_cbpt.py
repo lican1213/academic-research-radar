@@ -105,5 +105,32 @@ class WESDeliveryTests(unittest.TestCase):
         self.assertEqual(data, BLOB)
 
 
+    def test_actual_browser_download_event_can_supply_two_verified_pdfs(self):
+        def reader(url, size):
+            return (next(t["title"] for t in TARGETS if url == t["article_url"]) +
+                    "<span>下载本文</span>").encode()
+        with tempfile.TemporaryDirectory() as tmp:
+            report = run(Path(tmp) / "report.json", Path(tmp) / "papers.zip",
+                         fetcher=reader,
+                         browser=lambda url: ([], {"ui_steps": [{"label": "下载本文", "clicked": True},
+                                                                     {"label": "PDF", "clicked": True}]}, BLOB),
+                         inspector=lambda blob, title: {
+                             "title_match": True, "text_extraction": "ok", "page_count": 16})
+            self.assertTrue(report["passed"])
+            self.assertEqual(report["verified_count"], 2)
+            self.assertTrue((Path(tmp) / "papers.zip").exists())
+
+    def test_browser_download_wrong_title_fails_closed(self):
+        spec = TARGETS[0]
+        row, blob = probe_target(
+            spec, fetcher=lambda u, s: spec["title"].encode(),
+            browser=lambda u: ([], {"ui_steps": []}, BLOB),
+            inspector=lambda data, title: {"title_match": False,
+                                           "text_extraction": "ok", "page_count": 16})
+        self.assertEqual(row["status"], "no_anonymous_pdf_link_found")
+        self.assertIsNone(blob)
+        self.assertEqual(row["browser_pdf_identity"], "pdf_identity_or_text_unverified")
+
+
 if __name__ == "__main__":
     unittest.main()

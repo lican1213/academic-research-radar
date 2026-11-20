@@ -139,7 +139,8 @@ def browser_discover(article_url: str) -> tuple[list[str], dict]:
             initial = page.content().encode("utf-8")
             links.extend(u for u in find_explicit_pdfs(article_url, initial) if u not in links)
             diagnostics["initial_pdf_links"] = len(links)
-            diagnostics["title_visible"] = "世界经济研究" in page.content()
+            title = next((item["title"] for item in TARGETS if item["article_url"] == article_url), "")
+            diagnostics["title_visible"] = bool(title and normalize_title(title)[:12] in normalize_title(page.content()))
             diagnostics["fulltext_cnki_prompt"] = "如需获取全文，请访问cnki.net" in page.content()
             # Observe ordinary UI behavior; never navigate authenticated sessions.
             for phrase in ("PDF", "下载本文"):
@@ -184,9 +185,8 @@ def probe_target(spec: dict, *, fetcher=fetch_public, browser=browser_discover,
         text = html.unescape(page.decode("utf-8", errors="replace"))
         outcome["article_title_seen"] = normalize_title(spec["title"])[:12] in normalize_title(text)
         outcome["fulltext_cnki_prompt"] = "如需获取全文，请访问cnki.net" in text
-        if not outcome["article_title_seen"]:
-            outcome["status"] = "article_title_missing"
-            return outcome, None
+        # A client-rendered portal can omit article text from static HTML.
+        # Continue to the real browser and enforce PDF-internal title matching.
         urls = find_explicit_pdfs(spec["article_url"], page)
     except Exception as exc:
         outcome["static_error"] = type(exc).__name__ + ": " + str(exc)[:120]

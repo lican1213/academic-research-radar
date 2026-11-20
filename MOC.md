@@ -406,3 +406,18 @@
 ### 2026-11-20 / 《世界经济研究》两篇PDF交付阻断与PR隔离验收
 
 本次针对2026年第11期两篇正式文章（DOI `10.13516/j.cnki.wes.2026.11.006`、`10.13516/j.cnki.wes.2026.11.002`）已做[PR #32](https://github.com/lican1213/academic-research-radar/pull/32)独立按需原文诊断，不改定时雷达、目录/去重和既有《金融研究》六篇流程。对抗测试与[PR CI #44660729841](https://github.com/lican1213/academic-research-radar/actions/runs/44660729841)通过；[真实 PDF Run #44660729857](https://github.com/lican1213/academic-research-radar/actions/runs/44660729857)完整执行了两篇正式文章的静态HTML和匿名Playwright Chromium真实浏览器路径，均可识别正确文章标题，但均显示需至CNKI获取全文，**0/2可下载且经原文核验的PDF**，0个实际PDF链接；PDF按钮交互未获得下载文件。按独立Gate工作流故意FAIL；只生成7日元数据证据[Artifact 14594963065](https://github.com/lican1213/academic-research-radar/actions/runs/44660729857/artifacts/14594963065)，没有伪造原版ZIP或引用旧哈希。失败含义是当前未证实匿名全文可取得，不能单凭“PDF”字样认定是解析器缺陷，更不能要求突破期刊登录/机构权限。**PR #32暂不合并main：原始PDF交付生产门未通过；保留隔离试验，避免把尚未成功的双篇下载器作为通用生产能力。**下一步需找到出版方授权的原文下载通道或用户已有学校机构访问授权并实际提供PDF；拿到原始文件后必须核验PDF magic/EOF、标题、页数、SHA256，且2/2通过后才交付ZIP。
+
+
+### 2026-11-20 / 《世界经济研究》两篇PDF从可见UI到官方API的根因验收（终审）
+
+**目标、范围：** 两篇2026(11)正式出版论文（`10.13516/j.cnki.wes.2026.11.006`、`10.13516/j.cnki.wes.2026.11.002`），用户只要求真实PDF原文，不接受摘要转PDF或虚构下载。专用代码在[Draft PR #33](https://github.com/lican1213/academic-research-radar/pull/33)隔离；原每日雷达、9刊目录/RSS、去重账本、两次GitHub扫描cron及ChatGPT日报不变。
+
+**实际成功复现并修复的识别缺陷：** 第一版按`get_by_text("PDF").first`先点击，实际命中隐藏模板；真实期刊按钮必须先点击**下载本文**，才能出现可见的**PDF**按钮，其`onclick`调用官方`getSpecialPDFUrl(articleUUID, "jing", englishTitle)`。已在PR #33实验代码中修复可见性与点击顺序，并增加浏览器原生下载事件接收、PDF头/EOF、题名/页数/中文正文、SHA256的失败封闭条件。模拟的2/2成功和错题名/缺一篇反例测试均通过，但**模拟测试不算原文交付**。
+
+**官方接口的独立实网决定性证据：** [Run #44664194148](https://github.com/lican1213/academic-research-radar/actions/runs/44664194148) 从两篇可见PDF按钮实际捕捉到 `POST /portal/journal/portal/journal/api/getChinesDownloadInfoByEnglishPaper?contentId=<articleUUID>`，两条请求`HTTP200`且JSON `success=true`，但`data.pdfUrl=null`、`previewPdfUrl=null`、`downFileIdBySource=null`，同时返回 `data.cnkiNodeUrl` 指向合法官方 `kns.cnki.net/kcms2/article/abstract`。页面公开JS `getSpecialPDFUrl()` 明确：只有非null`pdfUrl`才调用`downloadFullNew`；否则 `window.open(cnkiNodeUrl,"_blank")`。**所以官网PDF按钮存在≠官网此时能直接下载完整文件**；这是官方返回数据，不能通过猜文件ID或复制《金融研究》1662—1667哈希来修补。两篇都无浏览器下载事件，0/2真实PDF，不能生成ZIP。
+
+**后续单独探测局限：** [Run #44664460380](https://github.com/lican1213/academic-research-radar/actions/runs/44664460380) 尝试检查CNKI回退窗口时，期刊详情访问均为`HTTP504 Gateway Time-out`，页面只发生初始GET，无法加载可见按钮/触发API，故该次`0/2`是源可用性失败，不等于对CNKI节点授权性的独立验收；保留上一轮HTTP200的API证据。不把`504`或`null`统称“反爬封锁”，不把无PDF等同于论文不存在。
+
+**工程与清理Gate：** 独立实网[Run #44663641495](https://github.com/lican1213/academic-research-radar/actions/runs/44663641495)先揭示隐藏PDF选择器；[Run #44664194148](https://github.com/lican1213/academic-research-radar/actions/runs/44664194148)取得官方API决定性返回；后一次CNKI回退测试由于504不可用。专用反例测试通过，**真实原始PDF交付Gate FAIL：0/2**。主分支一次性`.github/workflows/wes-pdf-oneoff.yml`已删除，触发用[PR #34](https://github.com/lican1213/academic-research-radar/pull/34)关闭未合并；[PR #32](https://github.com/lican1213/academic-research-radar/pull/32)被#33取代已关闭；#33保留为**Draft隔离试验**而不是成熟生产功能。不提交原始全文、不保留永久Artifact、不新增cron/数据库/服务。仅有元数据证据可按7日保留期查看。
+
+**下一步正确获取边界：** 若 `kns.cnki.net` 的合法公开页面可提供PDF，可以在个人有权浏览的浏览器内取得并验证；若要求个人/学校机构权益，应由用户在自己设备的Chrome/Edge会话中完成正常授权，使用已有GitHub `ChengDSYJ-Studio/CNKI-Enhanced-MCP`（支持Windows/WorkBuddy）或 `Panda-of-Axin/Freepaper` 的明确用户会话方式下载，不向GitHub Secrets写账号密码或把登录Cookie公开提交。原文由用户合法取得后再依据严格的文件身份Gate做整理/双篇ZIP。CNKI正式节点尚未在本次成功打开，不能把“CNKI需登录”作为已实证事实；只能说期刊端明确回退到CNKI。

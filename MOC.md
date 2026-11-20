@@ -417,3 +417,6 @@
 
 
 **2026-11-20 真实生产读回（未通过全文交付门）：** [独立 Runner #44660729857](https://github.com/lican1213/academic-research-radar/actions/runs/44660729857) 运行在PR #32的`03ed4eba1d4fa4e4a9a53dc537d082d3390f1d9b`，安装PyMuPDF+Playwright Chromium后真实访问两篇官方详情页。8项专用对抗单测通过；[同SHA PR CI #44660729841](https://github.com/lican1213/academic-research-radar/actions/runs/44660729841) success。两篇官网均确认准确标题、`fulltext_cnki_prompt=true`；静态正文与匿名真实浏览器均未发现可下载PDF URL（`initial_pdf_links=0`, `found_pdf_links=0`），点击PDF控件未取得文件（`ui_pdf=TimeoutError`）。业务结果 `verified_count=0/target_count=2`, `passed=false`，最终GitHub Job故意标记FAIL；没有原文ZIP，只有7日保留的元数据证据 Artifact [14594963065](https://github.com/lican1213/academic-research-radar/actions/runs/44660729857/artifacts/14594963065)。**不能把单测/CI成功称为PDF下载成功。** 原因指向正式出版方跳转CNKI的全文可访问性缺口，而非代码能凭旧固定ID修补的链接；这轮不绕过登录/收费/验证码，不将占位PDF当成原文。后续若通过合法授权的CNKI机构会话取得原版，仍应按相同PDF内容Gate验收；当前0/2原文交付暂不放行。
+
+
+**2026-11-20 / 追加可见UI对抗诊断**：首次Run `44660729857` 的 `ui_pdf=TimeoutError` 不能证明点击的是用户可见的PDF按钮，旧实现 `get_by_text("PDF", exact=True).first` 可能命中隐藏模板元素。按第一性原理新增 `pdf_cbpt_ui_probe.py`，采集可见元素/父节点真实`href`与`onclick`、只记录CNKI官方域名下请求的host/path及参数名称（不记录token值/cookie）、PDF MIME响应、正常浏览器下载事件，优先点击真实可见PDF按钮及“中文数据”弹窗。它不绕过付款/身份验证，也不保存PDF。对照GitHub `ChengDSYJ-Studio/CNKI-Enhanced-MCP` 与 `Panda-of-Axin/Freepaper` 的技术边界：动态PDF可能需页面会话和浏览器原生下载事件，HTML中的“PDF”文案不是链接。**本追加探测仍须真实新Run核验，不能凭新增诊断器推断已下载。**只影响独立PR运行，不动主扫描调度和历史账本。

@@ -1,0 +1,127 @@
+"""One-off anonymous CBPT journal PDF UI diagnostics. No sign-in or content archive.
+
+Reports visible PDF controls and sanitized request/response metadata. Does not
+follow paywalls, bypass CAPTCHA, save PDFs, or capture cookies/token query values.
+"""
+import json
+import re
+from pathlib import Path
+from urllib.parse import urlsplit
+from pdf_cbpt import TARGETS
+
+KEYWORDS = ("pdf", "download", "fulltext", "fulltextdownload", "minio",
+            "paper", "article", "file", "export", "cnki", "reader")
+
+
+def shape_url(url):
+    p = urlsplit(url)
+    return {"host": p.hostname or "", "path": p.path[:150],
+            "query_names": sorted(set(re.findall(r"(?:^|&)([A-Za-z_]+)=", p.query)))[:10]}
+
+
+def visible_actions(page):
+    # DOM-assisted audit to distinguish hidden template elements from visible buttons.
+    return page.evaluate(r"""() => {
+      const words = ['PDF', '下载本文', '中文数据', '英文数据'];
+      const nodes = Array.from(document.querySelectorAll('a,button,span,div,li,input,[role=button]'));
+      return nodes.filter(el => words.includes((el.innerText || el.value || '').trim()) &&
+        Array.from(el.children || []).every(c => !words.includes((c.innerText || '').trim())))
+        .slice(0,35).map(el => {
+          const box = el.getBoundingClientRect(), style = getComputedStyle(el);
+          const p = el.closest('a,button,[role=button]') || el;
+          return {tag:el.tagName, text:(el.innerText||el.value||'').trim(),
+            visible:!!(box.width && box.height) && style.visibility!=='hidden' && style.display!=='none',
+            parent_tag:p.tagName, parent_class: String(p.className || '').slice(0,100),
+            parent_href: p.getAttribute('href')?.slice(0,120) || null,
+            parent_onclick: p.getAttribute('onclick')?.slice(0,160) || null};
+        })
+    }""")
+
+
+def diagnose_one(spec):
+    from playwright.sync_api import sync_playwright
+    result = {"key": spec["key"], "article_url": spec["article_url"],
+              "requests": [], "pdf_responses": [], "downloads": [], "ui": []}
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=True, args=["--no-sandbox"])
+        ctx = browser.new_context(accept_downloads=True)
+        page = ctx.new_page()
+        def request(req):
+            u = req.url
+            parsed = urlsplit(u)
+            if parsed.hostname and (parsed.hostname.endswith("cnki.net") or
+                                    parsed.hostname.endswith("cbpt.cnki.net")):
+                if any(k in parsed.path.lower() for k in KEYWORDS):
+                    if len(result["requests"]) < 90:
+                        result["requests"].append({"method":req.method, **shape_url(u)})
+        def response(resp):
+            content_type = resp.headers.get("content-type","").lower()
+            if ("pdf" in content_type or "octet-stream" in content_type or
+                ".pdf" in urlsplit(resp.url).path.lower()):
+                result["pdf_responses"].append(
+                    {"status":resp.status, "mime":content_type, **shape_url(resp.url)})
+        def download(d):
+            result["downloads"].append({"suggested_filename":d.suggested_filename[:100]})
+        page.on("request", request)
+        page.on("response", response)
+        page.on("download", download)
+        try:
+            page.goto(spec["article_url"], wait_until="domcontentloaded", timeout=30000)
+            page.wait_for_timeout(1800)
+            result["initial_buttons"] = visible_actions(page)
+            result["initial_visible_pdf"] = sum(x["visible"] and x["text"]=="PDF"
+                                                for x in result["initial_buttons"])
+            # Only click clear, visible public PDF/download controls. No login/captcha.
+            for label in ("PDF", "下载本文"):
+                loc = page.get_by_text(label, exact=True)
+                row={"label":label,"matching":loc.count(),"visible":sum(
+                    loc.nth(i).is_visible() for i in range(min(loc.count(),15)))}
+                result["ui"].append(row)
+                pressed=False
+                for i in range(min(loc.count(),15)):
+                    el = loc.nth(i)
+                    if not el.is_visible():
+                        continue
+                    try:
+                        el.click(timeout=4000)
+                        page.wait_for_timeout(1600)
+                        pressed=True
+                        row["clicked_index"]=i
+                        row["after_buttons"]=visible_actions(page)
+                        row["after_domain"]=urlsplit(page.url).hostname
+                        row["download_count"]=len(result["downloads"])
+                        break
+                    except Exception as err:
+                        row.setdefault("errors",[]).append(type(err).__name__)
+                if not pressed:
+                    row["result"]="no_clickable_visible_exact_label"
+            # On popup choose '中文数据' only if visible, no payment/auth.
+            loc=page.get_by_text("中文数据", exact=True)
+            if any(loc.nth(i).is_visible() for i in range(min(loc.count(),10))):
+                for i in range(min(loc.count(),10)):
+                    if loc.nth(i).is_visible():
+                        try:
+                            loc.nth(i).click(timeout=2000)
+                            page.wait_for_timeout(1600)
+                            result["chinese_data_action"]="clicked_visible"
+                            result["after_chinese_buttons"]=visible_actions(page)
+                            break
+                        except Exception as err:
+                            result["chinese_data_action"]=type(err).__name__
+        except Exception as exc:
+            result["error"] = type(exc).__name__+":"+str(exc)[:110]
+        finally:
+            browser.close()
+    # Remove repeated URL patterns while preserving order and method.
+    seen=set()
+    result["requests"]=[x for x in result["requests"]
+                        if (k:=json.dumps(x,sort_keys=True)) not in seen and not seen.add(k)]
+    return result
+
+
+if __name__=="__main__":
+    out=[diagnose_one(s) for s in TARGETS]
+    Path("wes-cbpt-ui-diagnostics.json").write_text(
+        json.dumps(out,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+    for row in out:
+        print(json.dumps(row,ensure_ascii=False)[:10000])

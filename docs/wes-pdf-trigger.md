@@ -1,1 +1,1 @@
-Run official getChinesDownloadInfoByEnglishPaper response inspection (no secrets or PDF bytes stored) from fix/cbpt-pdf-ui-evidence-20261120 SHA fe82b523f5bbdd58a7317ca980500040858fb95e. Disposable test trigger, never merge.
+Final read-only CNKI fallback page inspection from official publisher pdfUrl-null response, branch SHA 510abb2434aa827fd3d4a94c1c13a2a89fa78226. No authentication or bypass; trigger only, never merge.

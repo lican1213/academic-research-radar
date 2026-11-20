@@ -72,7 +72,7 @@ def diagnose_one(spec):
             result["initial_visible_pdf"] = sum(x["visible"] and x["text"]=="PDF"
                                                 for x in result["initial_buttons"])
             # Only click clear, visible public PDF/download controls. No login/captcha.
-            for label in ("PDF", "下载本文"):
+            for label in ("下载本文", "PDF"):
                 loc = page.get_by_text(label, exact=True)
                 row={"label":label,"matching":loc.count(),"visible":sum(
                     loc.nth(i).is_visible() for i in range(min(loc.count(),15)))}

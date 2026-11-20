@@ -41,7 +41,8 @@ def visible_actions(page):
 def diagnose_one(spec):
     from playwright.sync_api import sync_playwright
     result = {"key": spec["key"], "article_url": spec["article_url"],
-              "requests": [], "pdf_responses": [], "downloads": [], "ui": []}
+              "requests": [], "pdf_responses": [], "downloads": [], "ui": [],
+              "download_api": []}
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True, args=["--no-sandbox"])
         ctx = browser.new_context(accept_downloads=True)
@@ -60,6 +61,28 @@ def diagnose_one(spec):
                 ".pdf" in urlsplit(resp.url).path.lower()):
                 result["pdf_responses"].append(
                     {"status":resp.status, "mime":content_type, **shape_url(resp.url)})
+            if "getChinesDownloadInfoByEnglishPaper" in urlsplit(resp.url).path:
+                record = {"http_status":resp.status, "mime":content_type,
+                          "route":shape_url(resp.url)}
+                try:
+                    value = resp.json()
+                    def summarize(obj, depth=0):
+                        if depth >= 3:
+                            return type(obj).__name__
+                        if isinstance(obj,dict):
+                            return {str(k)[:50]:summarize(v,depth+1)
+                                    for k,v in list(obj.items())[:20]}
+                        if isinstance(obj,list):
+                            return [summarize(v,depth+1) for v in obj[:3]]
+                        if isinstance(obj,str):
+                            if obj.startswith(("http://","https://")):
+                                return shape_url(obj)
+                            return obj[:100] if len(obj)<150 else ("str_length:"+str(len(obj)))
+                        return obj
+                    record["body_shape"]=summarize(value)
+                except Exception as exc:
+                    record["body_parse_error"]=type(exc).__name__
+                result["download_api"].append(record)
         def download(d):
             result["downloads"].append({"suggested_filename":d.suggested_filename[:100]})
         page.on("request", request)
@@ -68,6 +91,11 @@ def diagnose_one(spec):
         try:
             page.goto(spec["article_url"], wait_until="domcontentloaded", timeout=30000)
             page.wait_for_timeout(1800)
+            try:
+                code = page.evaluate("typeof getSpecialPDFUrl === 'function' ? getSpecialPDFUrl.toString() : ''")
+                result["pdf_handler_excerpt"] = code[:1500]
+            except Exception:
+                result["pdf_handler_excerpt"] = "not_available"
             result["initial_buttons"] = visible_actions(page)
             result["initial_visible_pdf"] = sum(x["visible"] and x["text"]=="PDF"
                                                 for x in result["initial_buttons"])

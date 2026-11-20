@@ -414,3 +414,6 @@
 **独立验收Gate：** PR触发一次无周期任务的真实GitHub Runner；先过反例单测，之后独立实网探测并写7日元数据证据Artifact。唯有2/2 PDF正文完整核验PASS才上传1日有效ZIP Artifact；缺一篇即失败，保留原因与可复验的Run ID。现阶段**仅代码/测试提交，生产Gate尚未核验**。不得将PR/CI通过称作PDF已交付。
 
 **不影响范围：** `scan.yml`、原每日两次扫描cron、ChatGPT日报时间、`radar.py`、`chinese_journals.py`、历史去重账本、同学Fork、既有《金融研究》原文流程均不修改。
+
+
+**2026-11-20 真实生产读回（未通过全文交付门）：** [独立 Runner #44660729857](https://github.com/lican1213/academic-research-radar/actions/runs/44660729857) 运行在PR #32的`03ed4eba1d4fa4e4a9a53dc537d082d3390f1d9b`，安装PyMuPDF+Playwright Chromium后真实访问两篇官方详情页。8项专用对抗单测通过；[同SHA PR CI #44660729841](https://github.com/lican1213/academic-research-radar/actions/runs/44660729841) success。两篇官网均确认准确标题、`fulltext_cnki_prompt=true`；静态正文与匿名真实浏览器均未发现可下载PDF URL（`initial_pdf_links=0`, `found_pdf_links=0`），点击PDF控件未取得文件（`ui_pdf=TimeoutError`）。业务结果 `verified_count=0/target_count=2`, `passed=false`，最终GitHub Job故意标记FAIL；没有原文ZIP，只有7日保留的元数据证据 Artifact [14594963065](https://github.com/lican1213/academic-research-radar/actions/runs/44660729857/artifacts/14594963065)。**不能把单测/CI成功称为PDF下载成功。** 原因指向正式出版方跳转CNKI的全文可访问性缺口，而非代码能凭旧固定ID修补的链接；这轮不绕过登录/收费/验证码，不将占位PDF当成原文。后续若通过合法授权的CNKI机构会话取得原版，仍应按相同PDF内容Gate验收；当前0/2原文交付暂不放行。

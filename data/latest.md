@@ -1,13 +1,12 @@
-# Academic Research Radar — 2026-11-20T18:36:26.095174+00:00
+# Academic Research Radar — 2026-11-21T03:12:16.489511+00:00
 
-**Status:** degraded; **New or changed candidates:** 0; **Metadata prefilter passes:** 12
+**Status:** ok; **New or changed candidates:** 0; **Metadata prefilter passes:** 10
 
 This is metadata triage, not a verified reading or recommendation.
 
-- crossref: ok; 14/14 queries; 420 records
-- arxiv: ok; 4/4 queries; 32 records
-- chinese_journals: degraded; article-level TOC 8/9 journals; nonempty sources 8/9; optional RSS=degraded; 99 metadata rows
-  - Error: 世界经济研究: stale_index (catalog_regressed); RSS=failed
+- crossref: ok; 14/14 queries; 418 records
+- arxiv: ok; 4/4 queries; 30 records
+- chinese_journals: ok; article-level TOC 9/9 journals; nonempty sources 9/9; optional RSS=degraded; 108 metadata rows
 - NCPSSD topic index: ok; 8/8 queries; 19 records
 
 ## 中文重点期刊逐刊监测（公开目录和RSS，非文章审读）
@@ -20,7 +19,7 @@ This is metadata triage, not a verified reading or recommendation.
 - [财经研究](https://qks.sufe.edu.cn/J/CJYJ/Article/CurrentIssue/CN): ok; 来源=publisher; 期次=2026-09; 可解析记录=11; 直接文章链接=11; 期次归属有证据=11; 覆盖类型=issue_bound_links; ; RSS=failed, RSS文章=0, RSS最新事件=未核验
 - [金融研究](http://www.jryj.org.cn/CN/1002-7246/current.shtml): ok; 来源=publisher; 期次=2026-10; 可解析记录=11; 直接文章链接=11; 期次归属有证据=11; 覆盖类型=issue_bound_links; ; RSS=failed, RSS文章=0, RSS最新事件=未核验
 - [国际贸易问题](https://gjmw.cbpt.cnki.net/portal/journal/portal/client/paper_list/type_benqi): ok; 来源=publisher; 期次=2026-10; 可解析记录=10; 直接文章链接=10; 期次归属有证据=10; 覆盖类型=issue_bound_links; ; RSS=failed, RSS文章=0, RSS最新事件=未核验
-- [世界经济研究](https://ncpssd.org/journal/details?gch=91453X): stale_index; 来源=catalog; 期次=2026-10; 可解析记录=0; 直接文章链接=未核验; 期次归属有证据=未核验; 覆盖类型=未核验; catalog_regressed; RSS=failed, RSS文章=0, RSS最新事件=未核验
+- [世界经济研究](https://jing.cbpt.cnki.net/portal/journal/portal/client/paper_list/type_benqi): ok; 来源=publisher; 期次=2026-11; 可解析记录=9; 直接文章链接=9; 期次归属有证据=9; 覆盖类型=issue_bound_links; ; RSS=failed, RSS文章=0, RSS最新事件=未核验
 
 ### 本次首次观察到的中文文献（不等于今日发表）
 

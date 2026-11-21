@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-21T03:12:16.489511+00:00",
+  "generated_at": "2026-11-21T17:29:10.310469+00:00",
   "status": "ok",
   "since": "2026-11-18",
   "source_status": {
@@ -7,7 +7,7 @@
       "status": "ok",
       "queries_ok": 14,
       "queries_total": 14,
-      "records": 418,
+      "records": 419,
       "errors": []
     },
     "arxiv": {
@@ -42,7 +42,7 @@
           "journal": "经济研究",
           "source_kind": "catalog",
           "url": "https://ncpssd.org/journal/details.aspx?gch=95645X",
-          "checked_at": "2026-11-21T03:12:16.489511+00:00",
+          "checked_at": "2026-11-21T17:29:10.310469+00:00",
           "status": "ok",
           "issue": "2026-09",
           "issue_date": null,
@@ -218,7 +218,7 @@
           "journal": "中国工业经济",
           "source_kind": "catalog",
           "url": "https://ncpssd.org/journal/details.aspx?gch=93800A",
-          "checked_at": "2026-11-21T03:12:16.489511+00:00",
+          "checked_at": "2026-11-21T17:29:10.310469+00:00",
           "status": "ok",
           "issue": "2026-08",
           "issue_date": null,
@@ -366,7 +366,7 @@
           "journal": "管理世界",
           "source_kind": "catalog",
           "url": "https://m.ncpssd.cn/journal/details?gch=95499X&langType=1&nav=1",
-          "checked_at": "2026-11-21T03:12:16.489511+00:00",
+          "checked_at": "2026-11-21T17:29:10.310469+00:00",
           "status": "ok",
           "issue": "2026-11",
           "issue_date": null,
@@ -769,7 +769,7 @@
           "journal": "世界经济",
           "source_kind": "publisher",
           "url": "https://sjjj.magtech.com.cn/CN/home",
-          "checked_at": "2026-11-21T03:12:16.489511+00:00",
+          "checked_at": "2026-11-21T17:29:10.310469+00:00",
           "status": "ok",
           "issue": "2026-11",
           "issue_date": "2026-11-10",
@@ -875,7 +875,7 @@
           "journal": "数量经济技术经济研究",
           "source_kind": "publisher",
           "url": "https://www.jqte.net/sljjjsjjyj/ch/index.aspx",
-          "checked_at": "2026-11-21T03:12:16.489511+00:00",
+          "checked_at": "2026-11-21T17:29:10.310469+00:00",
           "status": "ok",
           "issue": "2026-10",
           "issue_date": null,
@@ -1017,7 +1017,7 @@
           "journal": "财经研究",
           "source_kind": "publisher",
           "url": "https://qks.sufe.edu.cn/J/CJYJ/Article/CurrentIssue/CN",
-          "checked_at": "2026-11-21T03:12:16.489511+00:00",
+          "checked_at": "2026-11-21T17:29:10.310469+00:00",
           "status": "ok",
           "issue": "2026-09",
           "issue_date": null,
@@ -1171,7 +1171,7 @@
           "journal": "金融研究",
           "source_kind": "publisher",
           "url": "http://www.jryj.org.cn/CN/1002-7246/current.shtml",
-          "checked_at": "2026-11-21T03:12:16.489511+00:00",
+          "checked_at": "2026-11-21T17:29:10.310469+00:00",
           "status": "ok",
           "issue": "2026-10",
           "issue_date": "2026-10-25",
@@ -1334,7 +1334,7 @@
           "journal": "国际贸易问题",
           "source_kind": "publisher",
           "url": "https://gjmw.cbpt.cnki.net/portal/journal/portal/client/paper_list/type_benqi",
-          "checked_at": "2026-11-21T03:12:16.489511+00:00",
+          "checked_at": "2026-11-21T17:29:10.310469+00:00",
           "status": "ok",
           "issue": "2026-10",
           "issue_date": null,
@@ -1476,7 +1476,7 @@
           "journal": "世界经济研究",
           "source_kind": "publisher",
           "url": "https://jing.cbpt.cnki.net/portal/journal/portal/client/paper_list/type_benqi",
-          "checked_at": "2026-11-21T03:12:16.489511+00:00",
+          "checked_at": "2026-11-21T17:29:10.310469+00:00",
           "status": "ok",
           "issue": "2026-11",
           "issue_date": null,
@@ -1612,9 +1612,17 @@
       }
     }
   },
-  "scanned_candidates": 361,
-  "prefilter_pass_count": 10,
+  "scanned_candidates": 358,
+  "prefilter_pass_count": 13,
   "prefilter_diagnostics": [
+    {
+      "title": "International Patent and Emerging Market VC Funding",
+      "project": "P0",
+      "score": 58,
+      "source": "crossref",
+      "event_at": "2026-11-21",
+      "url": "https://doi.org/10.2139/ssrn.7709958"
+    },
     {
       "title": "Assessing the Need for an International Patent Regime for Inventions in Outer Space",
       "project": "P0",
@@ -1648,30 +1656,98 @@
       "url": "https://doi.org/10.69968/ijisem.2026v5i4289-294"
     },
     {
-      "title": "Pandemic crisis and the race for supply chain resilience through organizational learning and agility",
+      "title": "ARTIFICIAL INTELLIGENCE, IOT, ROBOTICS, AND BLOCKCHAIN IN MENA SHIPPING LOGISTICS: EFFECTS ON OPERATIONAL PERFORMANCE AND SUPPLY CHAIN RESILIENCE",
       "project": "P1",
       "score": 50,
       "source": "crossref",
-      "event_at": "2026-11-18",
-      "url": "https://doi.org/10.1007/s43621-026-05370-4"
-    },
-    {
-      "title": "SUPPLY CHAIN RESILIENCE AMIDST GEOPOLITICAL UNCERTAINTY",
-      "project": "P1",
-      "score": 50,
-      "source": "crossref",
-      "event_at": "2026-11-18",
-      "url": "https://doi.org/10.36871/ek.up.p.r.2026.10.10.030"
+      "event_at": "2026-11-21",
+      "url": "https://doi.org/10.62441/actainnovations.vi.3770"
     }
   ],
-  "new_candidates": [],
+  "new_candidates": [
+    {
+      "id": "doi:10.2139/ssrn.7709958",
+      "title": "International Patent and Emerging Market VC Funding",
+      "authors": [
+        "Congshan Li",
+        "Jiaju Justin Yan",
+        "Dennis Park"
+      ],
+      "url": "https://doi.org/10.2139/ssrn.7709958",
+      "doi": "10.2139/ssrn.7709958",
+      "source": "crossref",
+      "sources": [
+        "crossref"
+      ],
+      "venue": "",
+      "type": "posted-content",
+      "published_at": "2026-01-01",
+      "metadata_created_at": "2026-11-21",
+      "event_at": "2026-11-21",
+      "event_type": "crossref_registration",
+      "version": "",
+      "project": "P0",
+      "eligible": true,
+      "prefilter_score": 58,
+      "alternate_ids": [
+        "doi:10.2139/ssrn.7709958"
+      ],
+      "change": "new"
+    },
+    {
+      "id": "doi:10.62441/actainnovations.vi.3770",
+      "title": "ARTIFICIAL INTELLIGENCE, IOT, ROBOTICS, AND BLOCKCHAIN IN MENA SHIPPING LOGISTICS: EFFECTS ON OPERATIONAL PERFORMANCE AND SUPPLY CHAIN RESILIENCE",
+      "authors": [],
+      "url": "https://doi.org/10.62441/actainnovations.vi.3770",
+      "doi": "10.62441/actainnovations.vi.3770",
+      "source": "crossref",
+      "sources": [
+        "crossref"
+      ],
+      "venue": "Acta Innovations",
+      "type": "journal-article",
+      "published_at": "2026-11-07",
+      "metadata_created_at": "2026-11-21",
+      "event_at": "2026-11-21",
+      "event_type": "crossref_registration",
+      "version": "",
+      "project": "P1",
+      "eligible": true,
+      "prefilter_score": 50,
+      "change": "new"
+    },
+    {
+      "id": "doi:10.1080/21693277.2026.2765769",
+      "title": "Supply chain resilience under geopolitical chokepoint disruption: a multiple case study of the GCC countries during the 2026 Strait of Hormuz crisis",
+      "authors": [
+        "Abdulaziz Alshalfan"
+      ],
+      "url": "https://doi.org/10.1080/21693277.2026.2765769",
+      "doi": "10.1080/21693277.2026.2765769",
+      "source": "crossref",
+      "sources": [
+        "crossref"
+      ],
+      "venue": "Production &amp; Manufacturing Research",
+      "type": "journal-article",
+      "published_at": "2026-11-20",
+      "metadata_created_at": "2026-11-21",
+      "event_at": "2026-11-21",
+      "event_type": "crossref_registration",
+      "version": "",
+      "project": "P1",
+      "eligible": true,
+      "prefilter_score": 50,
+      "change": "new"
+    }
+  ],
   "note": "Metadata candidates only; verify paper content and bibliographic dates at primary sources. Chinese catalog first_seen is NOT publication date; incomplete catalogs require manual checking.",
   "chinese_journals": {
     "economic_research": {
       "journal": "经济研究",
       "source_kind": "catalog",
       "url": "https://ncpssd.org/journal/details.aspx?gch=95645X",
-      "checked_at": "2026-11-21T03:12:16.489511+00:00",
+      "checked_at": "2026-11-21T17:29:10.310469+00:00",
       "status": "ok",
       "issue": "2026-09",
       "issue_date": null,
@@ -1847,7 +1923,7 @@
       "journal": "中国工业经济",
       "source_kind": "catalog",
       "url": "https://ncpssd.org/journal/details.aspx?gch=93800A",
-      "checked_at": "2026-11-21T03:12:16.489511+00:00",
+      "checked_at": "2026-11-21T17:29:10.310469+00:00",
       "status": "ok",
       "issue": "2026-08",
       "issue_date": null,
@@ -1995,7 +2071,7 @@
       "journal": "管理世界",
       "source_kind": "catalog",
       "url": "https://m.ncpssd.cn/journal/details?gch=95499X&langType=1&nav=1",
-      "checked_at": "2026-11-21T03:12:16.489511+00:00",
+      "checked_at": "2026-11-21T17:29:10.310469+00:00",
       "status": "ok",
       "issue": "2026-11",
       "issue_date": null,
@@ -2398,7 +2474,7 @@
       "journal": "世界经济",
       "source_kind": "publisher",
       "url": "https://sjjj.magtech.com.cn/CN/home",
-      "checked_at": "2026-11-21T03:12:16.489511+00:00",
+      "checked_at": "2026-11-21T17:29:10.310469+00:00",
       "status": "ok",
       "issue": "2026-11",
       "issue_date": "2026-11-10",
@@ -2504,7 +2580,7 @@
       "journal": "数量经济技术经济研究",
       "source_kind": "publisher",
       "url": "https://www.jqte.net/sljjjsjjyj/ch/index.aspx",
-      "checked_at": "2026-11-21T03:12:16.489511+00:00",
+      "checked_at": "2026-11-21T17:29:10.310469+00:00",
       "status": "ok",
       "issue": "2026-10",
       "issue_date": null,
@@ -2646,7 +2722,7 @@
       "journal": "财经研究",
       "source_kind": "publisher",
       "url": "https://qks.sufe.edu.cn/J/CJYJ/Article/CurrentIssue/CN",
-      "checked_at": "2026-11-21T03:12:16.489511+00:00",
+      "checked_at": "2026-11-21T17:29:10.310469+00:00",
       "status": "ok",
       "issue": "2026-09",
       "issue_date": null,
@@ -2800,7 +2876,7 @@
       "journal": "金融研究",
       "source_kind": "publisher",
       "url": "http://www.jryj.org.cn/CN/1002-7246/current.shtml",
-      "checked_at": "2026-11-21T03:12:16.489511+00:00",
+      "checked_at": "2026-11-21T17:29:10.310469+00:00",
       "status": "ok",
       "issue": "2026-10",
       "issue_date": "2026-10-25",
@@ -2963,7 +3039,7 @@
       "journal": "国际贸易问题",
       "source_kind": "publisher",
       "url": "https://gjmw.cbpt.cnki.net/portal/journal/portal/client/paper_list/type_benqi",
-      "checked_at": "2026-11-21T03:12:16.489511+00:00",
+      "checked_at": "2026-11-21T17:29:10.310469+00:00",
       "status": "ok",
       "issue": "2026-10",
       "issue_date": null,
@@ -3105,7 +3181,7 @@
       "journal": "世界经济研究",
       "source_kind": "publisher",
       "url": "https://jing.cbpt.cnki.net/portal/journal/portal/client/paper_list/type_benqi",
-      "checked_at": "2026-11-21T03:12:16.489511+00:00",
+      "checked_at": "2026-11-21T17:29:10.310469+00:00",
       "status": "ok",
       "issue": "2026-11",
       "issue_date": null,

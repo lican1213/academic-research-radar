@@ -1,15 +1,11 @@
-# Academic Research Radar — 2026-11-22T04:32:04.236691+00:00
+# Academic Research Radar — 2026-11-22T09:13:44.303051+00:00
 
-**Status:** degraded; **New or changed candidates:** 0; **Metadata prefilter passes:** 6
+**Status:** ok; **New or changed candidates:** 0; **Metadata prefilter passes:** 6
 
 This is metadata triage, not a verified reading or recommendation.
 
 - crossref: ok; 16/16 queries; 471 records
-- arxiv: failed; 0/4 queries; 0 records
-  - Error: all:patent AND (all:embedding OR all:semantic): TimeoutError: The read operation timed out
-  - Error: all:innovation AND all:patent: HTTPError: HTTP Error 429: Unknown Error
-  - Error: all:"supply chain" AND (all:resilience OR all:geopolitical): HTTPError: HTTP Error 429: Unknown Error
-  - Error: all:"artificial intelligence" AND (all:wages OR all:productivity): TimeoutError: The read operation timed out
+- arxiv: ok; 4/4 queries; 11 records
 - chinese_journals: ok; article-level TOC 9/9 journals; nonempty sources 9/9; optional RSS=degraded; 108 metadata rows
 - NCPSSD topic index: ok; 8/8 queries; 19 records
 

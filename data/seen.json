@@ -1354,7 +1354,11 @@
     "version": "",
     "doi": "10.3390/systems14111486",
     "last_seen": "2026-11-22",
-    "emitted": true
+    "emitted": true,
+    "author_keys": [
+      "taekookkim",
+      "taewankim"
+    ]
   },
   "title:kuwaitsinnovationpipelineincrosscountryperspectiveuniversityindustrycollaborationandtheassociationbetweenscientificresearchandinternationalpatentapplications": {
     "fingerprint": "1449a8a6765a233d1835",
@@ -1362,7 +1366,11 @@
     "version": "",
     "doi": "10.3390/systems14111486",
     "last_seen": "2026-11-22",
-    "emitted": true
+    "emitted": true,
+    "author_keys": [
+      "taekookkim",
+      "taewankim"
+    ]
   },
   "doi:10.3390/economies14110562": {
     "fingerprint": "e45483aac0ca0a476f09",
@@ -1370,7 +1378,10 @@
     "version": "",
     "doi": "10.3390/economies14110562",
     "last_seen": "2026-11-22",
-    "emitted": true
+    "emitted": true,
+    "author_keys": [
+      "nivinabdelmeguid"
+    ]
   },
   "title:geopoliticalriskandrenewableenergyinvestmentinegyptatechnoeconomicassessmentamidgeopoliticaluncertainty": {
     "fingerprint": "e45483aac0ca0a476f09",
@@ -1378,7 +1389,10 @@
     "version": "",
     "doi": "10.3390/economies14110562",
     "last_seen": "2026-11-22",
-    "emitted": true
+    "emitted": true,
+    "author_keys": [
+      "nivinabdelmeguid"
+    ]
   },
   "doi:10.37381/8mk45557": {
     "fingerprint": "4d8646d6c7101f5b7433",
@@ -1386,7 +1400,10 @@
     "version": "",
     "doi": "10.37381/8mk45557",
     "last_seen": "2026-11-22",
-    "emitted": true
+    "emitted": true,
+    "author_keys": [
+      "christophermiles"
+    ]
   },
   "title:assessingtheneedforaninternationalpatentregimeforinventionsinouterspace": {
     "fingerprint": "4d8646d6c7101f5b7433",
@@ -1394,7 +1411,10 @@
     "version": "",
     "doi": "10.37381/8mk45557",
     "last_seen": "2026-11-22",
-    "emitted": true
+    "emitted": true,
+    "author_keys": [
+      "christophermiles"
+    ]
   },
   "doi:10.2139/ssrn.7709958": {
     "fingerprint": "d16d0459587ea6f35493",
@@ -1402,7 +1422,12 @@
     "version": "",
     "doi": "10.2139/ssrn.7709958",
     "last_seen": "2026-11-22",
-    "emitted": true
+    "emitted": true,
+    "author_keys": [
+      "congshanli",
+      "dennispark",
+      "jiajujustinyan"
+    ]
   },
   "title:internationalpatentandemergingmarketvcfunding": {
     "fingerprint": "d16d0459587ea6f35493",
@@ -1410,7 +1435,12 @@
     "version": "",
     "doi": "10.2139/ssrn.7709958",
     "last_seen": "2026-11-22",
-    "emitted": true
+    "emitted": true,
+    "author_keys": [
+      "congshanli",
+      "dennispark",
+      "jiajujustinyan"
+    ]
   },
   "doi:10.62441/actainnovations.vi.3770": {
     "fingerprint": "318f0b0fccdf8eef8715",
@@ -1418,7 +1448,8 @@
     "version": "",
     "doi": "10.62441/actainnovations.vi.3770",
     "last_seen": "2026-11-22",
-    "emitted": true
+    "emitted": true,
+    "author_keys": []
   },
   "title:artificialintelligenceiotroboticsandblockchaininmenashippinglogisticseffectsonoperationalperformanceandsupplychainresilience": {
     "fingerprint": "318f0b0fccdf8eef8715",
@@ -1426,7 +1457,8 @@
     "version": "",
     "doi": "10.62441/actainnovations.vi.3770",
     "last_seen": "2026-11-22",
-    "emitted": true
+    "emitted": true,
+    "author_keys": []
   },
   "doi:10.1080/21693277.2026.2765769": {
     "fingerprint": "ce5ce2c5fd9b9dd96834",
@@ -1434,7 +1466,10 @@
     "version": "",
     "doi": "10.1080/21693277.2026.2765769",
     "last_seen": "2026-11-22",
-    "emitted": true
+    "emitted": true,
+    "author_keys": [
+      "abdulazizalshalfan"
+    ]
   },
   "title:supplychainresilienceundergeopoliticalchokepointdisruptionamultiplecasestudyofthegcccountriesduringthe2026straitofhormuzcrisis": {
     "fingerprint": "ce5ce2c5fd9b9dd96834",
@@ -1442,6 +1477,9 @@
     "version": "",
     "doi": "10.1080/21693277.2026.2765769",
     "last_seen": "2026-11-22",
-    "emitted": true
+    "emitted": true,
+    "author_keys": [
+      "abdulazizalshalfan"
+    ]
   }
 }

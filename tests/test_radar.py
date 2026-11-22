@@ -168,6 +168,42 @@ class DedupTests(unittest.TestCase):
         self.assertEqual(recovered[0]["change"], "newly_selected")
         self.assertTrue(updated[item["id"]]["emitted"])
 
+    def test_crossref_rejects_fake_doi_metadata(self):
+        for bad_doi in ("not-a-doi", "10.123/no-four-digits",
+                        "https://doi.org/10.1000/real", "10.1000/has space"):
+            with self.subTest(doi=bad_doi):
+                record = {"title": ["International Patent Families and Patient Capital"],
+                          "DOI": bad_doi, "author": [{"given": "A", "family": "Researcher"}]}
+                self.assertIsNone(crossref_item(record))
+
+    def test_same_title_different_authors_and_dois_are_distinct(self):
+        original = prefilter(example_crossref())
+        different = prefilter({**example_crossref("10.1000/different"),
+                               "authors": ["B Economist"]})
+        merged = consolidate([original, different])
+        self.assertEqual({paper["id"] for paper in merged},
+                         {original["id"], different["id"]})
+        selected, state = select_new(merged, {}, UTC_NOW)
+        self.assertEqual(len(selected), 2)
+        self.assertEqual(select_new(merged, state, UTC_NOW)[0], [])
+        _, prior = select_new([original], {}, UTC_NOW)
+        selected_later, _ = select_new([different], prior, UTC_NOW)
+        self.assertEqual([item["id"] for item in selected_later], [different["id"]])
+
+    def test_same_doi_with_different_title_remains_one_paper(self):
+        original = prefilter(example_crossref())
+        revised_metadata = {**original, "title": original["title"] + ": Evidence"}
+        merged = consolidate([original, revised_metadata])
+        self.assertEqual(len(merged), 1)
+        self.assertEqual(merged[0]["doi"], original["doi"])
+
+    def test_same_title_without_author_evidence_is_not_blindly_merged(self):
+        original = prefilter(example_crossref())
+        ambiguous = prefilter({**example_crossref("10.1000/another"),
+                               "authors": []})
+        merged = consolidate([original, ambiguous])
+        self.assertEqual(len(merged), 2)
+
     def test_crossref_and_arxiv_same_title_merge(self):
         merged = consolidate([prefilter(example_arxiv("v2")), prefilter(example_crossref())])
         self.assertEqual(len(merged), 1)

@@ -221,7 +221,7 @@ def crossref_item(item: dict) -> dict | None:
     titles = item.get("title") or []
     title = strip_html(str(titles[0])) if titles else ""
     doi = str(item.get("DOI") or "").strip().lower()
-    if not title or not doi:
+    if not title or not re.fullmatch(r"10\.\d{4,9}/\S+", doi, re.I):
         return None
     authors = []
     for author in item.get("author") or []:
@@ -351,32 +351,54 @@ def identity_keys(item: dict) -> list[str]:
     return result
 
 
-def consolidate(items: list[dict]) -> list[dict]:
-    grouped: dict[str, dict] = {}
-    for item in items:
-        key = normalize_title(item["title"]) or item["id"]
-        previous = grouped.get(key)
-        if previous is None:
-            grouped[key] = item
-            continue
-        # Prefer the journal's canonical DOI while preserving the preprint source.
-        preferred = item if item.get("doi") and not previous.get("doi") else previous
-        other = previous if preferred is item else item
-        preferred = dict(preferred)
-        preferred["sources"] = sorted(set(preferred["sources"] + other["sources"]))
-        preferred["alternate_ids"] = sorted(set(
-            preferred.get("alternate_ids", []) + other.get("alternate_ids", []) + [other["id"]]
-        ))
-        if other.get("version") and not preferred.get("version"):
-            preferred["version"] = other["version"]
-        if len(other.get("abstract") or "") > len(preferred.get("abstract") or ""):
-            preferred["abstract"] = other["abstract"]
-        if other.get("event_at") and (not preferred.get("event_at") or other["event_at"] > preferred["event_at"]):
-            preferred["event_at"] = other["event_at"]
-            preferred["event_type"] = other["event_type"]
-        grouped[key] = preferred
-    return list(grouped.values())
+def author_keys(item: dict) -> set[str]:
+    return {normalize_title(str(name)) for name in item.get("authors") or [] if name}
 
+
+def consolidate(items: list[dict]) -> list[dict]:
+    # ponytail: DOI is decisive; a common title needs an overlapping author.
+    # Indexed lookups avoid all-pairs comparison as query volume grows.
+    merged: list[dict] = []
+    by_doi: dict[str, int] = {}
+    by_title: dict[str, list[int]] = {}
+    for item in items:
+        title = normalize_title(item["title"])
+        doi = item.get("doi") or ""
+        position = by_doi.get(doi) if doi else None
+        if position is None:
+            authors = author_keys(item)
+            position = next((index for index in by_title.get(title, [])
+                             if authors and authors & author_keys(merged[index])), None)
+        if position is None:
+            position = len(merged)
+            merged.append(item)
+        else:
+            previous = merged[position]
+            # Prefer the journal's canonical DOI while preserving the preprint source.
+            preferred = item if item.get("doi") and not previous.get("doi") else previous
+            other = previous if preferred is item else item
+            preferred = dict(preferred)
+            preferred["sources"] = sorted(set(preferred["sources"] + other["sources"]))
+            preferred["alternate_ids"] = sorted(set(
+                preferred.get("alternate_ids", []) + other.get("alternate_ids", []) + [other["id"]]
+            ))
+            if other.get("version") and not preferred.get("version"):
+                preferred["version"] = other["version"]
+            if len(other.get("abstract") or "") > len(preferred.get("abstract") or ""):
+                preferred["abstract"] = other["abstract"]
+            if other.get("event_at") and (not preferred.get("event_at") or other["event_at"] > preferred["event_at"]):
+                preferred["event_at"] = other["event_at"]
+                preferred["event_type"] = other["event_type"]
+            merged[position] = preferred
+        if doi:
+            by_doi[doi] = position
+        if merged[position].get("doi"):
+            by_doi[merged[position]["doi"]] = position
+        for alias in {title, normalize_title(merged[position]["title"])} - {""}:
+            slots = by_title.setdefault(alias, [])
+            if position not in slots:
+                slots.append(position)
+    return merged
 
 def select_new(items: list[dict], seen: dict, now: datetime, *, limit: int = MAX_CANDIDATES,
                caps: dict[str, int] | None = None,
@@ -391,14 +413,19 @@ def select_new(items: list[dict], seen: dict, now: datetime, *, limit: int = MAX
         keys = identity_keys(item) + item.get("alternate_ids", [])
         if namespace:
             keys = [namespace + ":" + key for key in keys]
-        old = next((state[k] for k in keys if k in state), None)
+        authors = author_keys(item)
+        old = next((state[k] for k in keys if k in state and
+                    (not state[k].get("author_keys") or not authors or
+                     authors & set(state[k]["author_keys"]) or
+                     (item.get("doi") and state[k].get("doi") == item["doi"]))), None)
         emitted_before = bool(old and old.get("emitted", False))
         title_norm = normalize_title(item["title"])
         version = item.get("version") or (old.get("version", "") if old else "")
         doi = item.get("doi") or (old.get("doi", "") if old else "")
         record = {"fingerprint": fingerprint({**item, "version": version}),
                   "title_norm": title_norm, "version": version, "doi": doi,
-                  "last_seen": now.date().isoformat(), "emitted": emitted_before}
+                  "last_seen": now.date().isoformat(), "emitted": emitted_before,
+                   "author_keys": sorted(authors)}
         updated_version = bool(old and item.get("version") and old.get("version") and item["version"] != old["version"])
         changed_title = bool(old and old.get("title_norm") and old["title_norm"] != title_norm)
         newly_published = bool(old and "doi" in old and item.get("doi") and not old.get("doi"))

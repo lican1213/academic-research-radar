@@ -1,12 +1,13 @@
-# Academic Research Radar — 2026-11-22T09:13:44.303051+00:00
+# Academic Research Radar — 2026-11-22T17:48:52.970340+00:00
 
-**Status:** ok; **New or changed candidates:** 0; **Metadata prefilter passes:** 6
+**Status:** degraded; **New or changed candidates:** 0; **Metadata prefilter passes:** 6
 
 This is metadata triage, not a verified reading or recommendation.
 
-- crossref: ok; 16/16 queries; 471 records
+- crossref: ok; 16/16 queries; 470 records
 - arxiv: ok; 4/4 queries; 11 records
-- chinese_journals: ok; article-level TOC 9/9 journals; nonempty sources 9/9; optional RSS=degraded; 108 metadata rows
+- chinese_journals: degraded; article-level TOC 8/9 journals; nonempty sources 8/9; optional RSS=degraded; 97 metadata rows
+  - Error: 财经研究: failed (OSError: host_circuit_open: qks.sufe.edu.cn: dns_resolution_failed); RSS=failed
 - NCPSSD topic index: ok; 8/8 queries; 19 records
 
 ## 中文重点期刊逐刊监测（公开目录和RSS，非文章审读）
@@ -16,7 +17,7 @@ This is metadata triage, not a verified reading or recommendation.
 - [管理世界](https://m.ncpssd.cn/journal/details?gch=95499X&langType=1&nav=1): ok; 来源=catalog; 期次=2026-11; 可解析记录=30; 直接文章链接=30; 期次归属有证据=30; 覆盖类型=issue_bound_links; ; RSS=failed, RSS文章=0, RSS最新事件=未核验
 - [世界经济](https://sjjj.magtech.com.cn/CN/home): ok; 来源=publisher; 期次=2026-11; 可解析记录=7; 直接文章链接=7; 期次归属有证据=7; 覆盖类型=issue_bound_links; ; RSS=failed, RSS文章=0, RSS最新事件=未核验
 - [数量经济技术经济研究](https://www.jqte.net/sljjjsjjyj/ch/index.aspx): ok; 来源=publisher; 期次=2026-10; 可解析记录=10; 直接文章链接=10; 期次归属有证据=10; 覆盖类型=issue_bound_links; ; RSS=failed, RSS文章=0, RSS最新事件=未核验
-- [财经研究](https://qks.sufe.edu.cn/J/CJYJ/Article/CurrentIssue/CN): ok; 来源=publisher; 期次=2026-09; 可解析记录=11; 直接文章链接=11; 期次归属有证据=11; 覆盖类型=issue_bound_links; ; RSS=failed, RSS文章=0, RSS最新事件=未核验
+- [财经研究](https://qks.sufe.edu.cn/J/CJYJ/Article/CurrentIssue/CN): failed; 来源=publisher; 期次=未核验; 可解析记录=0; 直接文章链接=未核验; 期次归属有证据=未核验; 覆盖类型=未核验; OSError: host_circuit_open: qks.sufe.edu.cn: dns_resolution_failed; RSS=failed, RSS文章=0, RSS最新事件=未核验
 - [金融研究](http://www.jryj.org.cn/CN/1002-7246/current.shtml): ok; 来源=publisher; 期次=2026-10; 可解析记录=11; 直接文章链接=11; 期次归属有证据=11; 覆盖类型=issue_bound_links; ; RSS=failed, RSS文章=0, RSS最新事件=未核验
 - [国际贸易问题](https://gjmw.cbpt.cnki.net/portal/journal/portal/client/paper_list/type_benqi): ok; 来源=publisher; 期次=2026-10; 可解析记录=10; 直接文章链接=10; 期次归属有证据=10; 覆盖类型=issue_bound_links; ; RSS=failed, RSS文章=0, RSS最新事件=未核验
 - [世界经济研究](https://jing.cbpt.cnki.net/portal/journal/portal/client/paper_list/type_benqi): ok; 来源=publisher; 期次=2026-11; 可解析记录=9; 直接文章链接=9; 期次归属有证据=9; 覆盖类型=issue_bound_links; ; RSS=failed, RSS文章=0, RSS最新事件=未核验

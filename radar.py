@@ -33,6 +33,8 @@ QUERIES = [
     "buyer supplier relationship termination foreign affiliate",
     "产业链 协同出海 供应链关系",
     "customer following FDI supplier relationship survival",
+    "US entity list export controls foreign supplier relationships",
+    "OFDI geographic diversification supply chain resilience",
 ]
 
 ARXIV_QUERIES = [
@@ -57,6 +59,9 @@ PROJECT_TERMS = {
         "global value chain": 16, "multinational": 11,
         "地缘政治": 23, "跨境布局": 24, "海外子公司": 25,
         "供应链韧性": 28, "对外直接投资": 23,
+        "entity list": 26, "export control": 24,
+        "geographic diversification": 20, "upstream supplier": 18,
+        "实体清单": 27, "出口管制": 24, "区位多元": 25, "境外上游": 22,
     },
     "P1A": {
         "buyer-supplier": 20, "buyer supplier": 20, "supplier-customer": 20,
@@ -68,6 +73,9 @@ PROJECT_TERMS = {
         "co-location": 24, "geographic proximity": 22, "sales subsidiary": 25,
         "协同出海": 30, "抱团出海": 25, "邻近布局": 25, "供需关系": 23,
         "供应链关系": 25, "境外子公司": 22, "海外销售": 24,
+        "supplier entry": 23, "supplier exit": 23, "supplier switching": 22,
+        "new supplier": 18, "供应商进入": 23, "供应商退出": 23,
+        "新供应商": 18, "替代供应商": 19, "关系存续": 24,
     },
     "P2": {
         "patent embedding": 27, "patent text": 23,
@@ -285,9 +293,13 @@ def prefilter(item: dict) -> dict:
     investor = any_term("institutional investor", "institutional ownership", "机构投资者", "机构持股")
     innovation = any_term("innovation", "r&d", "研发", "创新")
     crossborder = any_term("international", "global", "cross-border", "foreign", "overseas", "pct", "多国", "国际", "海外", "跨境")
-    fdi = any_term("foreign direct investment", "ofdi", "overseas subsidiary", "跨境布局", "海外子公司", "对外直接投资")
-    supply = any_term("supply chain", "global value chain", "供应链", "产业链")
-    shock = any_term("geopolitical", "trade war", "tariff", "geoeconomic", "地缘政治", "贸易摩擦")
+    fdi = any_term("foreign direct investment", "ofdi", "overseas subsidiary", "跨境布局", "海外子公司", "对外直接投资",
+                   "foreign subsidiary", "foreign affiliate", "overseas investment", "区位多元", "海外投资")
+    supply = any_term("supply chain", "global value chain", "供应链", "产业链",
+                      "supplier relationship", "buyer-supplier", "foreign supplier", "上游供应")
+    shock = any_term("geopolitical", "trade war", "tariff", "geoeconomic", "地缘政治", "贸易摩擦",
+                     "entity list", "export control", "export restriction", "trade sanction",
+                     "实体清单", "出口管制", "经济制裁")
     ai = any_term("artificial intelligence", "generative ai", "machine learning", "人工智能", "大模型")
     relation = any_term("buyer-supplier", "buyer supplier", "supplier-customer", "customer-supplier",
                         "supplier relationship", "customer relationship", "supply chain relationship",

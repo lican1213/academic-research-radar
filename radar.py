@@ -303,7 +303,9 @@ def prefilter(item: dict) -> dict:
     ai = any_term("artificial intelligence", "generative ai", "machine learning", "人工智能", "大模型")
     relation = any_term("buyer-supplier", "buyer supplier", "supplier-customer", "customer-supplier",
                         "supplier relationship", "customer relationship", "supply chain relationship",
-                        "供需关系", "供应链关系", "上下游")
+                        "供需关系", "供应链关系", "上下游",
+                        "supplier entry", "supplier exit", "supplier switching",
+                        "供应商进入", "供应商退出", "供应商替代")
     follow = any_term("customer-following", "customer following", "follow the customer", "协同出海", "抱团出海")
     overseas_node = any_term("foreign subsidiar", "foreign affiliate", "overseas subsidiar",
                               "foreign direct investment", "境外子公司", "海外子公司", "海外布局") or bool(re.search(r"\b(?:o?fdi)\b", combined))

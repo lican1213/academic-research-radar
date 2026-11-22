@@ -1,5 +1,33 @@
 # Academic Radar MOC
 
+## 2026-11-22 / 科研信息质量对抗式审查与文献身份修复（PR #36）
+
+**研究目标与边界**：本轮审查 main、README、AGENTS、历史 PR/Issues、Actions、latest.json/latest.md、中文目录/NCPSSD/CNKI适配、PDF 证据及既有 MOC。按照 Karpathy + Ponytail Skill 的「复用—stdlib—最小改动—可重复证伪」原则执行，不引入新爬虫框架、数据库或模型依赖；不触碰每日 09:30 ChatGPT 日报、原双时段 scan cron、通知策略、既有去重账本、PDF 交付权限及未发表稿件。参考 OpenAI Codex 迭代修复、Skills Evals、Structured Outputs 与 VeriRefer/traceable-research-mcp 的文献身份验证及证据分级思路，仅采用本次有实证支持的窄修复。
+
+**已确认根因与修复**：
+- `radar.py:consolidate` 原来只按规范化标题合并：不同 DOI、作者互不重合的同名文章会被吞并；`select_new` 同样可能经标题别名误判“已推送”。现以同 DOI 优先识别；仅凭标题合并时要求作者集合有交集；新状态记录 `author_keys`，保留原 `seen.json` 不迁移/清空。已有同作者同标题跨来源、arXiv 新版本与首次正式 DOI 逻辑由既有测试保护。
+- `crossref_item` 原来允许任意非空 DOI 字符串进入 `doi.org` URL。现增加 DOI 形态检查；**格式合法不等于已经 DOI 解析或证明标题匹配**，日报继续要求官方证据。
+- 增加4项反例测试：伪 DOI、同标题不同 DOI/作者、同 DOI 标题差异、作者缺失不盲并。修复使用现有函数与测试框架，无第三方依赖。
+
+**提交、CI、生产真实读回**：
+- [PR #36](https://github.com/lican1213/academic-research-radar/pull/36) 合并；分支 HEAD `e1986676772332747845589b07fab8e7a9fced43`；合并 SHA `01e00493c169280b62107acca7b9293183310cd2`。
+- 分支 [CI 45006434578](https://github.com/lican1213/academic-research-radar/actions/runs/45006434578) / 合并后主线 CI 45006496439，编译及 **139/139 单元测试通过**。
+- 主线 [Scan 45006496488](https://github.com/lican1213/academic-research-radar/actions/runs/45006496488) `completed/success`，`head_sha=01e00493...`，`generated_at=2026-11-22T09:13:44.303051+00:00`，真实数据提交 [6d984602c8a5](https://github.com/lican1213/academic-research-radar/commit/6d984602c8a5a417b6b5a037ffcd720693cbb807)。`latest.json.status=ok`；Crossref 16/16（471条）、arXiv 4/4（11条）、中文九刊 9/9（108条期次绑定详情链接）、NCPSSD专题8/8（19条）；预筛通过6、新候选0、中文新增0、历史回补0。此前 arXiv 429/超时未在新 run 重现，属于本次未再发生的来源故障，并未改其重试机制。
+- 真实扫描验证采集、状态写回和原有去重流程未被破坏；**没有真实同名异作者碰撞的生产样本**，该修复的直接行为证据仍是回归测试，不要宣称已实网覆盖此边界。
+
+**未完成的科研证据质量门（不得被 9/9 目录成功掩盖）**：
+- 本次108条 `article_snapshot` 中，作者字段20条；DOI **0**、摘要 **0**、单篇发表日期已核验 **0**、详情页 `link_verified=true` **0**。`coverage_kind=issue_bound_links` 只表示抓到与当期期次绑定的文章 URL，未完成逐篇页面或 PDF 审查。九刊 CNKI RSS 均失败，主线 `status=ok` 是**必选元数据源**成功，不代表可选RSS或全文成功。
+- 九刊最近目录：经济研究2026-09（11）、中国工业经济2026-08（9）、管理世界2026-11（30）、世界经济2026-11（7）、数量经济技术经济研究2026-10（10）、财经研究2026-09（11）、金融研究2026-10（11）、国际贸易问题2026-10（10）、世界经济研究2026-11（9）。日期是目录期次，不可擅自认作单篇实际发布日期；滞后刊继续人工补检。
+- 《金融研究》固定1662—1667六篇真实PDF历史验收仍仅适用于该固定名单，不能复用哈希证明其他 PDF。《世界经济研究》[PR #33](https://github.com/lican1213/academic-research-radar/pull/33) 仍 open；最近真实探测 0/2，官方 PDF API `pdfUrl:null`/HTTP504 的独立全文门继续 FAIL。本轮未触碰其 PDF 逻辑、未恢复其过期 artifact、未尝试绕过认证。
+- 机构登录（包括图书馆至CNKI的受权跳转）只能由用户在合法浏览器会话中完成并遵守服务条款，不把 OAuth、Cookies 或机构凭据放进 Actions；无法取 PDF 时保留合法摘要/题录监控，绝不推断全文、模型表格或回归结论。
+- `seen.json` 旧记录未必有 `author_keys`；不能反推其历史同名冲突已消除。较早 DOI 的真实解析、Crossref 更新事件/网络首发日期、跨来源细粒度冲突仍须人工核验及后续专项评估。
+
+**下一阶段（不提前开发复杂架构）**：
+1. Stage 1 文章级审读质量：按P0>P1A≈P1优先，从九刊抽取具体高相关文章逐篇核对正式详情页、作者、DOI、首发/修订日期、摘要与原文状态；将 `metadata_only/abstract_only/pdf_verified/table_page_verified` 人工证据等级与候选评分分开。出现具体可复现的网页模式及来源许可后才考虑新增最小适配，不批量冲击源站。
+2. Stage 2 语义评估：整理20—30篇已人工判定的正例、难负例及直接竞争文献；用既有 ChatGPT/Undermind 按需交叉查漏，依 OpenAI Skills Evals 量化漏报/误报/证据越级；Structured Outputs 只限定记录结构，不当作外部事实核验；不把模型放进GitHub Runner常规抓取。
+3. Stage 3 长期研究知识库：先复用 DOI、arXiv、文章URL及历史账本，用稳定来源和原文页码形成可回溯证据关系；确有跨论文检索瓶颈时再引入知识库服务。不得替换或重置历史记录。
+
+
 ## 2026-11-22 / 导师区位多元—实体清单—境外上游伙伴文献监控（本轮部署记录）
 
 - **需求边界**：用户明确要求把最新论文所对应的导师研究方向纳入长期学术**监测**，不是分析或评价论文。本次只提取公开可检索的研究问题；不上传未发表论文、导师原文/语音或私有实证表。

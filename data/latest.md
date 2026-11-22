@@ -1,11 +1,11 @@
-# Academic Research Radar — 2026-11-21T17:29:10.310469+00:00
+# Academic Research Radar — 2026-11-22T02:12:29.139176+00:00
 
-**Status:** ok; **New or changed candidates:** 3; **Metadata prefilter passes:** 13
+**Status:** ok; **New or changed candidates:** 0; **Metadata prefilter passes:** 6
 
 This is metadata triage, not a verified reading or recommendation.
 
-- crossref: ok; 14/14 queries; 419 records
-- arxiv: ok; 4/4 queries; 30 records
+- crossref: ok; 14/14 queries; 413 records
+- arxiv: ok; 4/4 queries; 11 records
 - chinese_journals: ok; article-level TOC 9/9 journals; nonempty sources 9/9; optional RSS=degraded; 108 metadata rows
 - NCPSSD topic index: ok; 8/8 queries; 19 records
 
@@ -27,6 +27,4 @@ This is metadata triage, not a verified reading or recommendation.
 
 ## New or revised candidates
 
-- [International Patent and Emerging Market VC Funding](https://doi.org/10.2139/ssrn.7709958) — P0, prefilter 58, crossref_registration 2026-11-21, new
-- [ARTIFICIAL INTELLIGENCE, IOT, ROBOTICS, AND BLOCKCHAIN IN MENA SHIPPING LOGISTICS: EFFECTS ON OPERATIONAL PERFORMANCE AND SUPPLY CHAIN RESILIENCE](https://doi.org/10.62441/actainnovations.vi.3770) — P1, prefilter 50, crossref_registration 2026-11-21, new
-- [Supply chain resilience under geopolitical chokepoint disruption: a multiple case study of the GCC countries during the 2026 Strait of Hormuz crisis](https://doi.org/10.1080/21693277.2026.2765769) — P1, prefilter 50, crossref_registration 2026-11-21, new
+No new or changed candidates selected for delivery. This does not imply zero prefilter passes or no relevant papers.

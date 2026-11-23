@@ -1481,5 +1481,155 @@
     "author_keys": [
       "abdulazizalshalfan"
     ]
+  },
+  "doi:10.1080/09537325.2026.2767844": {
+    "fingerprint": "4358a8cabc5e2f8f49d1",
+    "title_norm": "artificialintelligenceopeninnovationandprivateenterpriseresiliencethemoderatingeffectofpatientcapital",
+    "version": "",
+    "doi": "10.1080/09537325.2026.2767844",
+    "last_seen": "2026-11-23",
+    "emitted": true,
+    "author_keys": [
+      "huajunliu",
+      "jingtingluo",
+      "nali"
+    ]
+  },
+  "title:artificialintelligenceopeninnovationandprivateenterpriseresiliencethemoderatingeffectofpatientcapital": {
+    "fingerprint": "4358a8cabc5e2f8f49d1",
+    "title_norm": "artificialintelligenceopeninnovationandprivateenterpriseresiliencethemoderatingeffectofpatientcapital",
+    "version": "",
+    "doi": "10.1080/09537325.2026.2767844",
+    "last_seen": "2026-11-23",
+    "emitted": true,
+    "author_keys": [
+      "huajunliu",
+      "jingtingluo",
+      "nali"
+    ]
+  },
+  "doi:10.54536/ajlsc.v1i1.8637": {
+    "fingerprint": "0b78d09ba97431b43200",
+    "title_norm": "artificialintelligenceandpharmaceuticalsupplychainresilienceaproposedadministrativedecisionsupportmodelforimprovingefficiencyandmanagingoperationalrisk",
+    "version": "",
+    "doi": "10.54536/ajlsc.v1i1.8637",
+    "last_seen": "2026-11-23",
+    "emitted": true,
+    "author_keys": [
+      "mohanadelassadi"
+    ]
+  },
+  "title:artificialintelligenceandpharmaceuticalsupplychainresilienceaproposedadministrativedecisionsupportmodelforimprovingefficiencyandmanagingoperationalrisk": {
+    "fingerprint": "0b78d09ba97431b43200",
+    "title_norm": "artificialintelligenceandpharmaceuticalsupplychainresilienceaproposedadministrativedecisionsupportmodelforimprovingefficiencyandmanagingoperationalrisk",
+    "version": "",
+    "doi": "10.54536/ajlsc.v1i1.8637",
+    "last_seen": "2026-11-23",
+    "emitted": true,
+    "author_keys": [
+      "mohanadelassadi"
+    ]
+  },
+  "doi:10.3390/su182311883": {
+    "fingerprint": "3d5e6838043246af2c2d",
+    "title_norm": "ensembleforecastingandrealoptionsforsustainablesupplychainresiliencemanagingcurrencyriskinemergingmarkets",
+    "version": "",
+    "doi": "10.3390/su182311883",
+    "last_seen": "2026-11-23",
+    "emitted": true,
+    "author_keys": [
+      "georgeazsidisin",
+      "oğuzhankırılmaz",
+      "rezaaskary",
+      "sararafat"
+    ]
+  },
+  "title:ensembleforecastingandrealoptionsforsustainablesupplychainresiliencemanagingcurrencyriskinemergingmarkets": {
+    "fingerprint": "3d5e6838043246af2c2d",
+    "title_norm": "ensembleforecastingandrealoptionsforsustainablesupplychainresiliencemanagingcurrencyriskinemergingmarkets",
+    "version": "",
+    "doi": "10.3390/su182311883",
+    "last_seen": "2026-11-23",
+    "emitted": true,
+    "author_keys": [
+      "georgeazsidisin",
+      "oğuzhankırılmaz",
+      "rezaaskary",
+      "sararafat"
+    ]
+  },
+  "doi:10.55463/issn.1674-2974.53.10.3": {
+    "fingerprint": "de1c9f72814c4180df8b",
+    "title_norm": "sustainableseatransportationmanagementforreducingmaritimeemissionsandstrengtheningglobalsupplychainresilience",
+    "version": "",
+    "doi": "10.55463/issn.1674-2974.53.10.3",
+    "last_seen": "2026-11-23",
+    "emitted": true,
+    "author_keys": [
+      "agusbudiono"
+    ]
+  },
+  "title:sustainableseatransportationmanagementforreducingmaritimeemissionsandstrengtheningglobalsupplychainresilience": {
+    "fingerprint": "de1c9f72814c4180df8b",
+    "title_norm": "sustainableseatransportationmanagementforreducingmaritimeemissionsandstrengtheningglobalsupplychainresilience",
+    "version": "",
+    "doi": "10.55463/issn.1674-2974.53.10.3",
+    "last_seen": "2026-11-23",
+    "emitted": true,
+    "author_keys": [
+      "agusbudiono"
+    ]
+  },
+  "doi:10.61255/jeemba.v4i5.1949": {
+    "fingerprint": "f143106771b6583f56e6",
+    "title_norm": "ustariffsinterestratesforeigndirectinvestmentandmanufacturingresilienceinindonesiaevidencefrom20162024",
+    "version": "",
+    "doi": "10.61255/jeemba.v4i5.1949",
+    "last_seen": "2026-11-23",
+    "emitted": true,
+    "author_keys": [
+      "faizulmubarok",
+      "martinowibowo",
+      "vesarachaumeebonsuke"
+    ]
+  },
+  "title:ustariffsinterestratesforeigndirectinvestmentandmanufacturingresilienceinindonesiaevidencefrom20162024": {
+    "fingerprint": "f143106771b6583f56e6",
+    "title_norm": "ustariffsinterestratesforeigndirectinvestmentandmanufacturingresilienceinindonesiaevidencefrom20162024",
+    "version": "",
+    "doi": "10.61255/jeemba.v4i5.1949",
+    "last_seen": "2026-11-23",
+    "emitted": true,
+    "author_keys": [
+      "faizulmubarok",
+      "martinowibowo",
+      "vesarachaumeebonsuke"
+    ]
+  },
+  "doi:10.1057/s41267-026-00912-4": {
+    "fingerprint": "8fe070c55bf981ffc502",
+    "title_norm": "adaptingtothenewabnormalmultinationalcorporationsforeignsubsidiaryinvestmentandcountryresiliencetoclimatechange",
+    "version": "",
+    "doi": "10.1057/s41267-026-00912-4",
+    "last_seen": "2026-11-23",
+    "emitted": true,
+    "author_keys": [
+      "changhoonoh",
+      "jenniferoetzel",
+      "jorgerivera"
+    ]
+  },
+  "title:adaptingtothenewabnormalmultinationalcorporationsforeignsubsidiaryinvestmentandcountryresiliencetoclimatechange": {
+    "fingerprint": "8fe070c55bf981ffc502",
+    "title_norm": "adaptingtothenewabnormalmultinationalcorporationsforeignsubsidiaryinvestmentandcountryresiliencetoclimatechange",
+    "version": "",
+    "doi": "10.1057/s41267-026-00912-4",
+    "last_seen": "2026-11-23",
+    "emitted": true,
+    "author_keys": [
+      "changhoonoh",
+      "jenniferoetzel",
+      "jorgerivera"
+    ]
   }
 }

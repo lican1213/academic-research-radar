@@ -1,11 +1,11 @@
-# Academic Research Radar — 2026-11-23T22:02:00.076110+00:00
+# Academic Research Radar — 2026-11-24T05:59:21.912729+00:00
 
-**Status:** ok; **New or changed candidates:** 6; **Metadata prefilter passes:** 8
+**Status:** ok; **New or changed candidates:** 0; **Metadata prefilter passes:** 8
 
 This is metadata triage, not a verified reading or recommendation.
 
-- crossref: ok; 16/16 queries; 470 records
-- arxiv: ok; 4/4 queries; 17 records
+- crossref: ok; 16/16 queries; 477 records
+- arxiv: ok; 4/4 queries; 22 records
 - chinese_journals: ok; article-level TOC 9/9 journals; nonempty sources 9/9; optional RSS=degraded; 108 metadata rows
 - NCPSSD topic index: ok; 8/8 queries; 19 records
 
@@ -27,9 +27,4 @@ This is metadata triage, not a verified reading or recommendation.
 
 ## New or revised candidates
 
-- [Artificial intelligence, open innovation, and private enterprise resilience: the moderating effect of patient capital](https://doi.org/10.1080/09537325.2026.2767844) — P0, prefilter 45, crossref_registration 2026-11-23, new
-- [Artificial Intelligence and Pharmaceutical Supply Chain Resilience: A Proposed Administrative Decision-Support Model for Improving Efficiency and Managing Operational Risk](https://doi.org/10.54536/ajlsc.v1i1.8637) — P1, prefilter 50, crossref_registration 2026-11-23, new
-- [Ensemble Forecasting and Real Options for Sustainable Supply Chain Resilience: Managing Currency Risk in Emerging Markets](https://doi.org/10.3390/su182311883) — P1, prefilter 50, crossref_registration 2026-11-23, new
-- [Sustainable Sea Transportation Management for Reducing Maritime Emissions and Strengthening Global Supply Chain Resilience](https://doi.org/10.55463/issn.1674-2974.53.10.3) — P1, prefilter 50, crossref_registration 2026-11-23, new
-- [U.S. tariffs, interest rates, foreign direct investment, and manufacturing resilience in Indonesia: Evidence from 2016–2024](https://doi.org/10.61255/jeemba.v4i5.1949) — P1, prefilter 45, crossref_registration 2026-11-23, new
-- [Adapting to the new abnormal: multinational corporations’ foreign subsidiary investment and country resilience to climate change](https://doi.org/10.1057/s41267-026-00912-4) — P1A, prefilter 50, crossref_registration 2026-11-23, new
+No new or changed candidates selected for delivery. This does not imply zero prefilter passes or no relevant papers.

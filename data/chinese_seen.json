@@ -1,6 +1,6 @@
 {
   "economic_research": {
-    "issue": "2026-09",
+    "issue": "2026-10",
     "articles": [
       "url:ncpssd.org/Literature/articleinfo?id=JJYJ2026009001&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
       "url:ncpssd.org/Literature/articleinfo?id=JJYJ2026009001&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
@@ -24,9 +24,11 @@
       "url:ncpssd.org/Literature/articleinfo?id=JJYJ2026009010&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
       "url:ncpssd.org/Literature/articleinfo?id=JJYJ2026009011&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
       "url:ncpssd.org/Literature/articleinfo?id=JJYJ2026009011&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+      "url:ncpssd.org/Literature/articleinfo?id=JJYJ2026010011&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
       "个人情绪传播与平台信息治理",
       "中国对外基础设施投资的经济效应与微观作用机制来自非洲发展走廊项目的证据",
       "中国微观增值税税负测度与结构特征",
+      "传统生育观念转变代际承诺与需求侧生育政策",
       "供给侧结构性改革的扩内需效应基于信息消费示范城市建设的分析",
       "制造企业数字技术提升过程中补贴退坡与市场需求的均衡分析",
       "加快构建中国特色社会主义政治经济学自主知识体系",
@@ -37,13 +39,13 @@
       "自动化发展如何影响收入分配水平扩张和垂直进步的技术分解"
     ],
     "baselined": true,
-    "last_success_at": "2026-11-24T05:59:21.912729+00:00",
+    "last_success_at": "2026-11-24T20:39:01.108363+00:00",
     "rss_baselined": false,
-    "last_issue_observed_at": "2026-11-24T05:59:21.912729+00:00",
-    "last_article_issue": "2026-09"
+    "last_issue_observed_at": "2026-11-24T20:39:01.108363+00:00",
+    "last_article_issue": "2026-10"
   },
   "china_industrial": {
-    "issue": "2026-08",
+    "issue": "2026-09",
     "articles": [
       "url:ncpssd.org/Literature/articleinfo?id=ZGGYJJ2026008002&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
       "url:ncpssd.org/Literature/articleinfo?id=ZGGYJJ2026008002&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
@@ -63,10 +65,12 @@
       "url:ncpssd.org/Literature/articleinfo?id=ZGGYJJ2026008009&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
       "url:ncpssd.org/Literature/articleinfo?id=ZGGYJJ2026008010&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
       "url:ncpssd.org/Literature/articleinfo?id=ZGGYJJ2026008010&type=journalArticle&typename=中文期刊文章&nav=1&langType=1",
+      "url:ncpssd.org/Literature/articleinfo?id=ZGGYJJ2026009008&type=journalArticle&typename=%E4%B8%AD%E6%96%87%E6%9C%9F%E5%88%8A%E6%96%87%E7%AB%A0&nav=1&langType=1",
       "世界大变局下的中国产业链韧性",
       "中国经济数字化的广度深度测算及其增长效应",
       "人工智能如何影响管理层角色演变",
       "人工智能技术创新与贸易比较优势跃迁",
+      "减税激励对关键核心技术创新的异质性影响效应",
       "劳动者增收与企业出口调整基于用工成本群聚效应的证据",
       "政府采购全流程电子化与企业跨区域竞争",
       "数智链主驱动产业链韧性提升的路径解构从节点突破到韧性生态",
@@ -74,10 +78,10 @@
       "金融科技创新如何赋能银行普惠金融来自小微企业创业的证据"
     ],
     "baselined": true,
-    "last_success_at": "2026-11-24T05:59:21.912729+00:00",
+    "last_success_at": "2026-11-24T20:39:01.108363+00:00",
     "rss_baselined": false,
-    "last_issue_observed_at": "2026-11-24T05:59:21.912729+00:00",
-    "last_article_issue": "2026-08"
+    "last_issue_observed_at": "2026-11-24T20:39:01.108363+00:00",
+    "last_article_issue": "2026-09"
   },
   "management_world": {
     "issue": "2026-11",
@@ -159,9 +163,9 @@
       "高标准农田建设资本深化与粮食增产"
     ],
     "baselined": true,
-    "last_success_at": "2026-11-24T05:59:21.912729+00:00",
+    "last_success_at": "2026-11-24T20:39:01.108363+00:00",
     "rss_baselined": false,
-    "last_issue_observed_at": "2026-11-24T05:59:21.912729+00:00",
+    "last_issue_observed_at": "2026-11-24T20:39:01.108363+00:00",
     "last_article_issue": "2026-11"
   },
   "world_economy": {
@@ -189,9 +193,9 @@
       "研发税收激励与企业数字资本深化"
     ],
     "baselined": true,
-    "last_success_at": "2026-11-24T05:59:21.912729+00:00",
+    "last_success_at": "2026-11-24T20:39:01.108363+00:00",
     "rss_baselined": false,
-    "last_issue_observed_at": "2026-11-24T05:59:21.912729+00:00",
+    "last_issue_observed_at": "2026-11-24T20:39:01.108363+00:00",
     "last_article_issue": "2026-11"
   },
   "finance_economics": {
@@ -244,9 +248,9 @@
       "面值退市制度对企业高送转行为的治理效应研究"
     ],
     "baselined": true,
-    "last_success_at": "2026-11-24T05:59:21.912729+00:00",
+    "last_success_at": "2026-11-24T20:39:01.108363+00:00",
     "rss_baselined": false,
-    "last_issue_observed_at": "2026-11-24T05:59:21.912729+00:00",
+    "last_issue_observed_at": "2026-11-24T20:39:01.108363+00:00",
     "last_article_issue": "2026-09"
   },
   "quant_economics": {
@@ -307,9 +311,9 @@
       "需求引致增长三大结构效应的时空演化"
     ],
     "baselined": true,
-    "last_success_at": "2026-11-24T05:59:21.912729+00:00",
+    "last_success_at": "2026-11-24T20:39:01.108363+00:00",
     "rss_baselined": false,
-    "last_issue_observed_at": "2026-11-24T05:59:21.912729+00:00",
+    "last_issue_observed_at": "2026-11-24T20:39:01.108363+00:00",
     "last_article_issue": "2026-10"
   },
   "financial_research": {
@@ -339,9 +343,9 @@
       "银行资产负债结构放贷能力与货币政策传导效果基于政府债券增持的视角"
     ],
     "baselined": true,
-    "last_success_at": "2026-11-24T05:59:21.912729+00:00",
+    "last_success_at": "2026-11-24T20:39:01.108363+00:00",
     "rss_baselined": false,
-    "last_issue_observed_at": "2026-11-24T05:59:21.912729+00:00",
+    "last_issue_observed_at": "2026-11-24T20:39:01.108363+00:00",
     "last_article_issue": "2026-10"
   },
   "international_trade": {
@@ -392,9 +396,9 @@
       "连接广度与通行深度贸易协定网络中心度对全球价值链参与韧性的影响"
     ],
     "baselined": true,
-    "last_success_at": "2026-11-24T05:59:21.912729+00:00",
+    "last_success_at": "2026-11-24T20:39:01.108363+00:00",
     "rss_baselined": false,
-    "last_issue_observed_at": "2026-11-24T05:59:21.912729+00:00",
+    "last_issue_observed_at": "2026-11-24T20:39:01.108363+00:00",
     "last_article_issue": "2026-10"
   },
   "world_economy_studies": {
@@ -459,9 +463,9 @@
       "逆向知识转移与企业出口韧性基于母子公司专利文本语义匹配的经验证据"
     ],
     "baselined": true,
-    "last_success_at": "2026-11-24T05:59:21.912729+00:00",
+    "last_success_at": "2026-11-24T20:39:01.108363+00:00",
     "rss_baselined": false,
-    "last_issue_observed_at": "2026-11-24T05:59:21.912729+00:00",
+    "last_issue_observed_at": "2026-11-24T20:39:01.108363+00:00",
     "last_article_issue": "2026-11"
   }
 }

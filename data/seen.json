@@ -1631,5 +1631,51 @@
       "jenniferoetzel",
       "jorgerivera"
     ]
+  },
+  "doi:10.83817/ijems.v5i5.210": {
+    "fingerprint": "cb1bd371648017718d78",
+    "title_norm": "artificialintelligenceinsupplychainsaliteraturereviewofitsrelationshipwithsupplychainresiliencedynamiccapabilitiesandsustainabilitysupplychainwithaproposedconceptualmodel",
+    "version": "",
+    "doi": "10.83817/ijems.v5i5.210",
+    "last_seen": "2026-11-24",
+    "emitted": true,
+    "author_keys": [
+      "abderahmanechouhbi",
+      "ayoubsliman"
+    ]
+  },
+  "title:artificialintelligenceinsupplychainsaliteraturereviewofitsrelationshipwithsupplychainresiliencedynamiccapabilitiesandsustainabilitysupplychainwithaproposedconceptualmodel": {
+    "fingerprint": "cb1bd371648017718d78",
+    "title_norm": "artificialintelligenceinsupplychainsaliteraturereviewofitsrelationshipwithsupplychainresiliencedynamiccapabilitiesandsustainabilitysupplychainwithaproposedconceptualmodel",
+    "version": "",
+    "doi": "10.83817/ijems.v5i5.210",
+    "last_seen": "2026-11-24",
+    "emitted": true,
+    "author_keys": [
+      "abderahmanechouhbi",
+      "ayoubsliman"
+    ]
+  },
+  "doi:10.21474/ijar01/24548": {
+    "fingerprint": "f5d963dae408e66bb2bb",
+    "title_norm": "buildingsupplychainresilienceinaustraliaagainstglobaldisruptions",
+    "version": "",
+    "doi": "10.21474/ijar01/24548",
+    "last_seen": "2026-11-24",
+    "emitted": true,
+    "author_keys": [
+      "azeemkhan"
+    ]
+  },
+  "title:buildingsupplychainresilienceinaustraliaagainstglobaldisruptions": {
+    "fingerprint": "f5d963dae408e66bb2bb",
+    "title_norm": "buildingsupplychainresilienceinaustraliaagainstglobaldisruptions",
+    "version": "",
+    "doi": "10.21474/ijar01/24548",
+    "last_seen": "2026-11-24",
+    "emitted": true,
+    "author_keys": [
+      "azeemkhan"
+    ]
   }
 }

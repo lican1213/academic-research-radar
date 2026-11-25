@@ -1677,5 +1677,107 @@
     "author_keys": [
       "azeemkhan"
     ]
+  },
+  "doi:10.2139/ssrn.7727041": {
+    "fingerprint": "9a7c1dccfa06d8a759ba",
+    "title_norm": "preacquisitioninventortiesandpostacquisitionpatentcosignaturesevidencefromchineseacquisitions",
+    "version": "",
+    "doi": "10.2139/ssrn.7727041",
+    "last_seen": "2026-11-25",
+    "emitted": true,
+    "author_keys": [
+      "yansendou"
+    ]
+  },
+  "title:preacquisitioninventortiesandpostacquisitionpatentcosignaturesevidencefromchineseacquisitions": {
+    "fingerprint": "9a7c1dccfa06d8a759ba",
+    "title_norm": "preacquisitioninventortiesandpostacquisitionpatentcosignaturesevidencefromchineseacquisitions",
+    "version": "",
+    "doi": "10.2139/ssrn.7727041",
+    "last_seen": "2026-11-25",
+    "emitted": true,
+    "author_keys": [
+      "yansendou"
+    ]
+  },
+  "doi:10.3390/su182311954": {
+    "fingerprint": "45adbb7102f1cc461e99",
+    "title_norm": "digitalrealtechnologyconvergenceandsupplychainresilienceaperspectivefromthesupplychainconcentrationparadox",
+    "version": "",
+    "doi": "10.3390/su182311954",
+    "last_seen": "2026-11-25",
+    "emitted": true,
+    "author_keys": [
+      "yingma",
+      "zhaozhaotuo"
+    ]
+  },
+  "title:digitalrealtechnologyconvergenceandsupplychainresilienceaperspectivefromthesupplychainconcentrationparadox": {
+    "fingerprint": "45adbb7102f1cc461e99",
+    "title_norm": "digitalrealtechnologyconvergenceandsupplychainresilienceaperspectivefromthesupplychainconcentrationparadox",
+    "version": "",
+    "doi": "10.3390/su182311954",
+    "last_seen": "2026-11-25",
+    "emitted": true,
+    "author_keys": [
+      "yingma",
+      "zhaozhaotuo"
+    ]
+  },
+  "doi:10.1504/ijpqm.2026.10082552": {
+    "fingerprint": "f362b2be53e8ac995d2e",
+    "title_norm": "influenceofartificialintelligencecapabilityonsupplychainresilienceinthepharmaceuticalsectorthemediatingroleofsupplychainvisibilityandinformationsharing",
+    "version": "",
+    "doi": "10.1504/ijpqm.2026.10082552",
+    "last_seen": "2026-11-25",
+    "emitted": true,
+    "author_keys": [
+      "ashokkumar",
+      "ashwanikumaryadav",
+      "bhoopendrabharti",
+      "manojkumar",
+      "priyankarastogi",
+      "sauravverma"
+    ]
+  },
+  "title:influenceofartificialintelligencecapabilityonsupplychainresilienceinthepharmaceuticalsectorthemediatingroleofsupplychainvisibilityandinformationsharing": {
+    "fingerprint": "f362b2be53e8ac995d2e",
+    "title_norm": "influenceofartificialintelligencecapabilityonsupplychainresilienceinthepharmaceuticalsectorthemediatingroleofsupplychainvisibilityandinformationsharing",
+    "version": "",
+    "doi": "10.1504/ijpqm.2026.10082552",
+    "last_seen": "2026-11-25",
+    "emitted": true,
+    "author_keys": [
+      "ashokkumar",
+      "ashwanikumaryadav",
+      "bhoopendrabharti",
+      "manojkumar",
+      "priyankarastogi",
+      "sauravverma"
+    ]
+  },
+  "doi:10.4102/jtscm.v20i0.1496": {
+    "fingerprint": "94b23b3b3adb53ad3490",
+    "title_norm": "supplychainresiliencethesequentialrolesofartificialintelligencecapabilitysmartlogisticsadoptionandgreenlogisticsinvietnameselogisticsfirms",
+    "version": "",
+    "doi": "10.4102/jtscm.v20i0.1496",
+    "last_seen": "2026-11-25",
+    "emitted": true,
+    "author_keys": [
+      "cuonghungnguyen",
+      "huongttnguyen"
+    ]
+  },
+  "title:supplychainresiliencethesequentialrolesofartificialintelligencecapabilitysmartlogisticsadoptionandgreenlogisticsinvietnameselogisticsfirms": {
+    "fingerprint": "94b23b3b3adb53ad3490",
+    "title_norm": "supplychainresiliencethesequentialrolesofartificialintelligencecapabilitysmartlogisticsadoptionandgreenlogisticsinvietnameselogisticsfirms",
+    "version": "",
+    "doi": "10.4102/jtscm.v20i0.1496",
+    "last_seen": "2026-11-25",
+    "emitted": true,
+    "author_keys": [
+      "cuonghungnguyen",
+      "huongttnguyen"
+    ]
   }
 }

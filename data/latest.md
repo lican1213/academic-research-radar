@@ -1,10 +1,10 @@
-# Academic Research Radar — 2026-11-26T04:08:40.179640+00:00
+# Academic Research Radar — 2026-11-26T19:36:50.796145+00:00
 
-**Status:** ok; **New or changed candidates:** 1; **Metadata prefilter passes:** 13
+**Status:** ok; **New or changed candidates:** 2; **Metadata prefilter passes:** 15
 
 This is metadata triage, not a verified reading or recommendation.
 
-- crossref: ok; 16/16 queries; 463 records
+- crossref: ok; 16/16 queries; 465 records
 - arxiv: ok; 4/4 queries; 34 records
 - chinese_journals: ok; article-level TOC 9/9 journals; nonempty sources 9/9; optional RSS=degraded; 107 metadata rows
 - NCPSSD topic index: ok; 8/8 queries; 18 records
@@ -27,4 +27,5 @@ This is metadata triage, not a verified reading or recommendation.
 
 ## New or revised candidates
 
-- [Patient capital and the debut economy: A synergistic path to innovation persistence](https://doi.org/10.1016/j.jik.2026.101205) — P0, prefilter 45, crossref_registration 2026-11-25, new
+- [Patient Capital and Corporate Green Transformation from a Resource Orchestration Perspective](https://doi.org/10.3390/su182312043) — P0, prefilter 47, crossref_registration 2026-11-26, new
+- [FOREIGN DIRECT INVESTMENT AND REGIONAL DEVELOPMENT IN THE CONTEXT OF REINDUSTRIALIZATION AND GREEN TRANSITION](https://doi.org/10.7251/zrefis2633021r) — P1, prefilter 45, crossref_registration 2026-11-26, new

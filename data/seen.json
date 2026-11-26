@@ -1803,5 +1803,53 @@
       "qianchengzhang",
       "yuxuanhuang"
     ]
+  },
+  "doi:10.3390/su182312043": {
+    "fingerprint": "d768ff505b068ad08e65",
+    "title_norm": "patientcapitalandcorporategreentransformationfromaresourceorchestrationperspective",
+    "version": "",
+    "doi": "10.3390/su182312043",
+    "last_seen": "2026-11-26",
+    "emitted": true,
+    "author_keys": [
+      "cunkuanbao",
+      "jieren"
+    ]
+  },
+  "title:patientcapitalandcorporategreentransformationfromaresourceorchestrationperspective": {
+    "fingerprint": "d768ff505b068ad08e65",
+    "title_norm": "patientcapitalandcorporategreentransformationfromaresourceorchestrationperspective",
+    "version": "",
+    "doi": "10.3390/su182312043",
+    "last_seen": "2026-11-26",
+    "emitted": true,
+    "author_keys": [
+      "cunkuanbao",
+      "jieren"
+    ]
+  },
+  "doi:10.7251/zrefis2633021r": {
+    "fingerprint": "f1264c871efd55b69bd1",
+    "title_norm": "foreigndirectinvestmentandregionaldevelopmentinthecontextofreindustrializationandgreentransition",
+    "version": "",
+    "doi": "10.7251/zrefis2633021r",
+    "last_seen": "2026-11-26",
+    "emitted": true,
+    "author_keys": [
+      "matjažrihtaršič",
+      "tanjarihtaršič"
+    ]
+  },
+  "title:foreigndirectinvestmentandregionaldevelopmentinthecontextofreindustrializationandgreentransition": {
+    "fingerprint": "f1264c871efd55b69bd1",
+    "title_norm": "foreigndirectinvestmentandregionaldevelopmentinthecontextofreindustrializationandgreentransition",
+    "version": "",
+    "doi": "10.7251/zrefis2633021r",
+    "last_seen": "2026-11-26",
+    "emitted": true,
+    "author_keys": [
+      "matjažrihtaršič",
+      "tanjarihtaršič"
+    ]
   }
 }

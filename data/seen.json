@@ -1879,5 +1879,27 @@
       "maximilianschoen",
       "thorstenclaus"
     ]
+  },
+  "doi:10.1007/978-3-032-42351-1_7": {
+    "fingerprint": "80bb67e830eb335d050b",
+    "title_norm": "francesforeigndirectinvestmentscreeningmechanismregulationspolicyandpracticeinachanginggeopoliticallandscape",
+    "version": "",
+    "doi": "10.1007/978-3-032-42351-1_7",
+    "last_seen": "2026-11-27",
+    "emitted": true,
+    "author_keys": [
+      "rubenkoslar"
+    ]
+  },
+  "title:francesforeigndirectinvestmentscreeningmechanismregulationspolicyandpracticeinachanginggeopoliticallandscape": {
+    "fingerprint": "80bb67e830eb335d050b",
+    "title_norm": "francesforeigndirectinvestmentscreeningmechanismregulationspolicyandpracticeinachanginggeopoliticallandscape",
+    "version": "",
+    "doi": "10.1007/978-3-032-42351-1_7",
+    "last_seen": "2026-11-27",
+    "emitted": true,
+    "author_keys": [
+      "rubenkoslar"
+    ]
   }
 }

@@ -1,20 +1,20 @@
 {
-  "generated_at": "2026-11-27T19:27:44.359221+00:00",
+  "generated_at": "2026-11-28T03:53:43.560067+00:00",
   "status": "ok",
-  "since": "2026-11-24",
+  "since": "2026-11-25",
   "source_status": {
     "crossref": {
       "status": "ok",
       "queries_ok": 16,
       "queries_total": 16,
-      "records": 468,
+      "records": 462,
       "errors": []
     },
     "arxiv": {
       "status": "ok",
       "queries_ok": 4,
       "queries_total": 4,
-      "records": 31,
+      "records": 15,
       "errors": []
     },
     "chinese_journals": {
@@ -42,7 +42,7 @@
           "journal": "经济研究",
           "source_kind": "catalog",
           "url": "https://ncpssd.org/journal/details.aspx?gch=95645X",
-          "checked_at": "2026-11-27T19:27:44.359221+00:00",
+          "checked_at": "2026-11-28T03:53:43.560067+00:00",
           "status": "ok",
           "issue": "2026-10",
           "issue_date": null,
@@ -218,7 +218,7 @@
           "journal": "中国工业经济",
           "source_kind": "catalog",
           "url": "https://ncpssd.org/journal/details.aspx?gch=93800A",
-          "checked_at": "2026-11-27T19:27:44.359221+00:00",
+          "checked_at": "2026-11-28T03:53:43.560067+00:00",
           "status": "ok",
           "issue": "2026-09",
           "issue_date": null,
@@ -366,7 +366,7 @@
           "journal": "管理世界",
           "source_kind": "catalog",
           "url": "https://m.ncpssd.cn/journal/details?gch=95499X&langType=1&nav=1",
-          "checked_at": "2026-11-27T19:27:44.359221+00:00",
+          "checked_at": "2026-11-28T03:53:43.560067+00:00",
           "status": "ok",
           "issue": "2026-11",
           "issue_date": null,
@@ -770,7 +770,7 @@
           "journal": "世界经济",
           "source_kind": "publisher",
           "url": "https://sjjj.magtech.com.cn/CN/home",
-          "checked_at": "2026-11-27T19:27:44.359221+00:00",
+          "checked_at": "2026-11-28T03:53:43.560067+00:00",
           "status": "ok",
           "issue": "2026-11",
           "issue_date": "2026-11-10",
@@ -876,7 +876,7 @@
           "journal": "数量经济技术经济研究",
           "source_kind": "publisher",
           "url": "https://www.jqte.net/sljjjsjjyj/ch/index.aspx",
-          "checked_at": "2026-11-27T19:27:44.359221+00:00",
+          "checked_at": "2026-11-28T03:53:43.560067+00:00",
           "status": "ok",
           "issue": "2026-11",
           "issue_date": null,
@@ -1006,7 +1006,7 @@
           "journal": "财经研究",
           "source_kind": "publisher",
           "url": "https://qks.sufe.edu.cn/J/CJYJ/Article/CurrentIssue/CN",
-          "checked_at": "2026-11-27T19:27:44.359221+00:00",
+          "checked_at": "2026-11-28T03:53:43.560067+00:00",
           "status": "ok",
           "issue": "2026-09",
           "issue_date": null,
@@ -1160,7 +1160,7 @@
           "journal": "金融研究",
           "source_kind": "publisher",
           "url": "http://www.jryj.org.cn/CN/1002-7246/current.shtml",
-          "checked_at": "2026-11-27T19:27:44.359221+00:00",
+          "checked_at": "2026-11-28T03:53:43.560067+00:00",
           "status": "ok",
           "issue": "2026-10",
           "issue_date": "2026-10-25",
@@ -1323,7 +1323,7 @@
           "journal": "国际贸易问题",
           "source_kind": "publisher",
           "url": "https://gjmw.cbpt.cnki.net/portal/journal/portal/client/paper_list/type_benqi",
-          "checked_at": "2026-11-27T19:27:44.359221+00:00",
+          "checked_at": "2026-11-28T03:53:43.560067+00:00",
           "status": "ok",
           "issue": "2026-10",
           "issue_date": null,
@@ -1465,7 +1465,7 @@
           "journal": "世界经济研究",
           "source_kind": "publisher",
           "url": "https://jing.cbpt.cnki.net/portal/journal/portal/client/paper_list/type_benqi",
-          "checked_at": "2026-11-27T19:27:44.359221+00:00",
+          "checked_at": "2026-11-28T03:53:43.560067+00:00",
           "status": "ok",
           "issue": "2026-11",
           "issue_date": null,
@@ -1601,8 +1601,8 @@
       }
     }
   },
-  "scanned_candidates": 394,
-  "prefilter_pass_count": 11,
+  "scanned_candidates": 366,
+  "prefilter_pass_count": 9,
   "prefilter_diagnostics": [
     {
       "title": "Patient Capital and Corporate Green Transformation from a Resource Orchestration Perspective",
@@ -1629,22 +1629,6 @@
       "url": "https://doi.org/10.2139/ssrn.7727041"
     },
     {
-      "title": "Artificial Intelligence in Supply Chains : A Literature Review of Its Relationship with Supply Chain Resilience, Dynamic Capabilities, and Sustainability Supply chain, with a Proposed Conceptual Model",
-      "project": "P1",
-      "score": 50,
-      "source": "crossref",
-      "event_at": "2026-11-24",
-      "url": "https://doi.org/10.83817/ijems.v5i5.210"
-    },
-    {
-      "title": "BUILDING SUPPLY CHAIN RESILIENCE IN AUSTRALIA AGAINST GLOBAL DISRUPTIONS",
-      "project": "P1",
-      "score": 50,
-      "source": "crossref",
-      "event_at": "2026-11-24",
-      "url": "https://doi.org/10.21474/ijar01/24548"
-    },
-    {
       "title": "Digital–Real Technology Convergence and Supply Chain Resilience: A Perspective from the Supply Chain Concentration Paradox",
       "project": "P1",
       "score": 50,
@@ -1667,41 +1651,40 @@
       "source": "crossref",
       "event_at": "2026-11-25",
       "url": "https://doi.org/10.1504/ijpqm.2026.10082552"
-    }
-  ],
-  "new_candidates": [
+    },
     {
-      "id": "doi:10.1007/978-3-032-42351-1_7",
-      "title": "France’s Foreign Direct Investment Screening Mechanism: Regulations, Policy, and Practice in a Changing Geopolitical Landscape",
-      "authors": [
-        "Ruben Koslar"
-      ],
-      "url": "https://doi.org/10.1007/978-3-032-42351-1_7",
-      "doi": "10.1007/978-3-032-42351-1_7",
-      "source": "crossref",
-      "sources": [
-        "crossref"
-      ],
-      "venue": "YSEC Yearbook of Socio-Economic Constitutions",
-      "type": "book-chapter",
-      "published_at": "2026-11-28",
-      "metadata_created_at": "2026-11-27",
-      "event_at": "2026-11-27",
-      "event_type": "crossref_registration",
-      "version": "",
+      "title": "Supply chain resilience: The sequential roles of artificial intelligence capability, smart logistics adoption and green logistics in Vietnamese logistics firms",
       "project": "P1",
-      "eligible": true,
-      "prefilter_score": 45,
-      "change": "new"
+      "score": 50,
+      "source": "crossref",
+      "event_at": "2026-11-25",
+      "url": "https://doi.org/10.4102/jtscm.v20i0.1496"
+    },
+    {
+      "title": "FOREIGN DIRECT INVESTMENT AND REGIONAL DEVELOPMENT IN THE CONTEXT OF REINDUSTRIALIZATION AND GREEN TRANSITION",
+      "project": "P1",
+      "score": 45,
+      "source": "crossref",
+      "event_at": "2026-11-26",
+      "url": "https://doi.org/10.7251/zrefis2633021r"
+    },
+    {
+      "title": "France’s Foreign Direct Investment Screening Mechanism: Regulations, Policy, and Practice in a Changing Geopolitical Landscape",
+      "project": "P1",
+      "score": 45,
+      "source": "crossref",
+      "event_at": "2026-11-27",
+      "url": "https://doi.org/10.1007/978-3-032-42351-1_7"
     }
   ],
+  "new_candidates": [],
   "note": "Metadata candidates only; verify paper content and bibliographic dates at primary sources. Chinese catalog first_seen is NOT publication date; incomplete catalogs require manual checking.",
   "chinese_journals": {
     "economic_research": {
       "journal": "经济研究",
       "source_kind": "catalog",
       "url": "https://ncpssd.org/journal/details.aspx?gch=95645X",
-      "checked_at": "2026-11-27T19:27:44.359221+00:00",
+      "checked_at": "2026-11-28T03:53:43.560067+00:00",
       "status": "ok",
       "issue": "2026-10",
       "issue_date": null,
@@ -1877,7 +1860,7 @@
       "journal": "中国工业经济",
       "source_kind": "catalog",
       "url": "https://ncpssd.org/journal/details.aspx?gch=93800A",
-      "checked_at": "2026-11-27T19:27:44.359221+00:00",
+      "checked_at": "2026-11-28T03:53:43.560067+00:00",
       "status": "ok",
       "issue": "2026-09",
       "issue_date": null,
@@ -2025,7 +2008,7 @@
       "journal": "管理世界",
       "source_kind": "catalog",
       "url": "https://m.ncpssd.cn/journal/details?gch=95499X&langType=1&nav=1",
-      "checked_at": "2026-11-27T19:27:44.359221+00:00",
+      "checked_at": "2026-11-28T03:53:43.560067+00:00",
       "status": "ok",
       "issue": "2026-11",
       "issue_date": null,
@@ -2429,7 +2412,7 @@
       "journal": "世界经济",
       "source_kind": "publisher",
       "url": "https://sjjj.magtech.com.cn/CN/home",
-      "checked_at": "2026-11-27T19:27:44.359221+00:00",
+      "checked_at": "2026-11-28T03:53:43.560067+00:00",
       "status": "ok",
       "issue": "2026-11",
       "issue_date": "2026-11-10",
@@ -2535,7 +2518,7 @@
       "journal": "数量经济技术经济研究",
       "source_kind": "publisher",
       "url": "https://www.jqte.net/sljjjsjjyj/ch/index.aspx",
-      "checked_at": "2026-11-27T19:27:44.359221+00:00",
+      "checked_at": "2026-11-28T03:53:43.560067+00:00",
       "status": "ok",
       "issue": "2026-11",
       "issue_date": null,
@@ -2665,7 +2648,7 @@
       "journal": "财经研究",
       "source_kind": "publisher",
       "url": "https://qks.sufe.edu.cn/J/CJYJ/Article/CurrentIssue/CN",
-      "checked_at": "2026-11-27T19:27:44.359221+00:00",
+      "checked_at": "2026-11-28T03:53:43.560067+00:00",
       "status": "ok",
       "issue": "2026-09",
       "issue_date": null,
@@ -2819,7 +2802,7 @@
       "journal": "金融研究",
       "source_kind": "publisher",
       "url": "http://www.jryj.org.cn/CN/1002-7246/current.shtml",
-      "checked_at": "2026-11-27T19:27:44.359221+00:00",
+      "checked_at": "2026-11-28T03:53:43.560067+00:00",
       "status": "ok",
       "issue": "2026-10",
       "issue_date": "2026-10-25",
@@ -2982,7 +2965,7 @@
       "journal": "国际贸易问题",
       "source_kind": "publisher",
       "url": "https://gjmw.cbpt.cnki.net/portal/journal/portal/client/paper_list/type_benqi",
-      "checked_at": "2026-11-27T19:27:44.359221+00:00",
+      "checked_at": "2026-11-28T03:53:43.560067+00:00",
       "status": "ok",
       "issue": "2026-10",
       "issue_date": null,
@@ -3124,7 +3107,7 @@
       "journal": "世界经济研究",
       "source_kind": "publisher",
       "url": "https://jing.cbpt.cnki.net/portal/journal/portal/client/paper_list/type_benqi",
-      "checked_at": "2026-11-27T19:27:44.359221+00:00",
+      "checked_at": "2026-11-28T03:53:43.560067+00:00",
       "status": "ok",
       "issue": "2026-11",
       "issue_date": null,

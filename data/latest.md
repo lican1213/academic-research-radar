@@ -1,10 +1,10 @@
-# Academic Research Radar — 2026-11-28T03:53:43.560067+00:00
+# Academic Research Radar — 2026-11-28T18:13:55.766101+00:00
 
-**Status:** ok; **New or changed candidates:** 0; **Metadata prefilter passes:** 9
+**Status:** ok; **New or changed candidates:** 1; **Metadata prefilter passes:** 10
 
 This is metadata triage, not a verified reading or recommendation.
 
-- crossref: ok; 16/16 queries; 462 records
+- crossref: ok; 16/16 queries; 464 records
 - arxiv: ok; 4/4 queries; 15 records
 - chinese_journals: ok; article-level TOC 9/9 journals; nonempty sources 9/9; optional RSS=degraded; 107 metadata rows
 - NCPSSD topic index: ok; 8/8 queries; 18 records
@@ -27,4 +27,4 @@ This is metadata triage, not a verified reading or recommendation.
 
 ## New or revised candidates
 
-No new or changed candidates selected for delivery. This does not imply zero prefilter passes or no relevant papers.
+- [Dynamic links between renewable energy, economic development, foreign direct investment, geopolitical risk, and carbon intensity in Vietnam: quantile ARDL evidence](https://doi.org/10.1007/s43621-026-05528-0) — P1, prefilter 68, crossref_registration 2026-11-28, new

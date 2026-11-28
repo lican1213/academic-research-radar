@@ -1901,5 +1901,31 @@
     "author_keys": [
       "rubenkoslar"
     ]
+  },
+  "doi:10.1007/s43621-026-05528-0": {
+    "fingerprint": "9d7b5bed29988523b0d0",
+    "title_norm": "dynamiclinksbetweenrenewableenergyeconomicdevelopmentforeigndirectinvestmentgeopoliticalriskandcarbonintensityinvietnamquantileardlevidence",
+    "version": "",
+    "doi": "10.1007/s43621-026-05528-0",
+    "last_seen": "2026-11-28",
+    "emitted": true,
+    "author_keys": [
+      "quynhhoale",
+      "thanhphucnguyen",
+      "trangthithuyduong"
+    ]
+  },
+  "title:dynamiclinksbetweenrenewableenergyeconomicdevelopmentforeigndirectinvestmentgeopoliticalriskandcarbonintensityinvietnamquantileardlevidence": {
+    "fingerprint": "9d7b5bed29988523b0d0",
+    "title_norm": "dynamiclinksbetweenrenewableenergyeconomicdevelopmentforeigndirectinvestmentgeopoliticalriskandcarbonintensityinvietnamquantileardlevidence",
+    "version": "",
+    "doi": "10.1007/s43621-026-05528-0",
+    "last_seen": "2026-11-28",
+    "emitted": true,
+    "author_keys": [
+      "quynhhoale",
+      "thanhphucnguyen",
+      "trangthithuyduong"
+    ]
   }
 }
